@@ -116,7 +116,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 }
 
 void handle_signal(int signal) {
-    static int internal_state = 0;
+     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance();
     // should start everything back
     CCDirector* director = CCDirector::sharedDirector();
