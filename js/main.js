@@ -5,12 +5,21 @@ require("jsb_cocosbuilder.js");
 require("jsb_opengl.js");
 require("jsb_sys.js");
 
-require("hashlib.js")
+
+
+require("extra/http.js")
 
 SECRET_KEY = 'ebv2*u)qdlk+u9wdtl-1cl6ct5gfj-3wu$!6of*gjy+f2zsc@b'
 
 function main()
 {
+    carr = new Object()
+    carr.iii="hello"
+    t = carr.toJSONString()
+    cc.log(t)
+
+    o = parseJSON(t)
+    cc.log(o.iii)
 	//cc.FileUtils.getInstance().loadFilenameLookup("fileLookup.plist");
     //cc.Texture2D.setDefaultAlphaPixelFormat(6);
 	var director = cc.Director.getInstance();
@@ -21,19 +30,20 @@ function main()
     scene.addChild(scene.lbl)
 
     scene.httpclient = cc.HttpClient.getInstance()
+    scene.httpclient.setTimeoutForConnect(20)
     var req = new cc.HttpRequest()
     req.setRequestType(1)
-    var info = '{"id":"1","ip":"192.168.0.1","pwd":"123",time="1"}'
+    var info = '{"code":"login","id":"1","ip":"192.168.0.1","pwd":"222","time":"1"}'
     var sig = hex_md5(info+SECRET_KEY)
-    var data = 'info='+info+'&sig='+sig
-    req.setUrl('http://www.loviyou.com:8080/anotherworld/account/')
+    var data = info //'info='+info+'&sig='+sig
+    req.setUrl('http://www.loviyou.com:8080/anotherworld/account/'+sig)
 
     req.setRequestData(data,data.length)
 
     
     cc.log(data)
     scene.on_login = function(httpclient,response){
-        cc.log("login response:")
+        cc.log("login response:"+response.getResponseCode())
         cc.log(response.getResponseData())
         
     }
