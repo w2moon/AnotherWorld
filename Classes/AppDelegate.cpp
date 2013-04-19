@@ -85,7 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching()
             resDirOrders.push_back("resources-small");
         }
         
-        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
@@ -94,7 +94,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // turn on display FPS
     pDirector->setDisplayStats(true);
     
-    // set FPS. the default value is 1.0/60 if you don't call this
+    // set FPS. the default value is 1.0/60 if you don't call this  
     pDirector->setAnimationInterval(1.0 / 60);
     
     ScriptingCore* sc = ScriptingCore::getInstance();
