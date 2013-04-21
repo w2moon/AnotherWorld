@@ -14,6 +14,10 @@ httpclient.on_response = function(httpclient,response){
     if(response.getResponseCode() == 200)
     {
         var obj = response.getResponseData().parseJSON()
+        /*if(typeof(req.func)!="undefined" )
+        {
+            req.func(req.args)
+        }*/
         cc.log(obj.result)
     }
     else
@@ -26,14 +30,14 @@ httpclient.on_response = function(httpclient,response){
         }
         else
         {
-            cc.log("error response")
+            cc.log("error response,code:"+response.getResponseCode())
         }
     }
 }
  
 
 var http = new Object()
-http.send = function(obj)
+http.send = function(obj,func)
 {
     var msg = obj.toJSONString()
 
@@ -44,5 +48,11 @@ http.send = function(obj)
     req.setRequestData(msg,msg.length)
     req.setResponseCallback(httpclient,httpclient.on_response)
     req.reconnect_times = RECONNECT_TIMES
+    /*if(typeof(func) != "undefined")
+    {
+        req.func = func
+        req.args = arguments
+    }*/
+    cc.log(req.getUrl())
     httpclient.send(req)
 }

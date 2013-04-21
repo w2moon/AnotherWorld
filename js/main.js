@@ -11,6 +11,10 @@ require("msg.js")
 
 require("extra/http.js")
 
+function login()
+{
+    
+}
 
 function main()
 {
@@ -28,7 +32,7 @@ function main()
   
 
     var info = {"code":"login","userid":"1","ip":"192.168.0.1","pwd":"222","time":"1"}
-    http.send(info)
+    http.send(info,login,scene)
    
 
     var runningScene = director.getRunningScene();
