@@ -41,23 +41,25 @@ bool AppDelegate::applicationDidFinishLaunching()
     TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
-        searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
+              searchPaths.push_back("Published-iOS"); // Resources/Published-iOS
         CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
         if (screenSize.height > 480)
         {
             resourceSize = CCSizeMake(640, 960);
             resDirOrders.push_back("resources-iphonehd");
-        }
+        } 
         else
         {
-            resDirOrders.push_back("resources-iphone");
+             resDirOrders.push_back("resources-iphone");
         }
-        
-        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
-    }
+           
+         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+    } 
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
+		     searchPaths.push_back("AnotherWorldRes");
+		CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
 //        if (screenSize.height > 1024)
 //        {
@@ -66,7 +68,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //            resDirOrders.push_back("");
 //        }
 //        else 
-        if (screenSize.height > 960)
+        if (screenSize.height > 960) 
         {
             resourceSize = CCSizeMake(640, 960);
             resDirOrders.push_back("resources-large");
@@ -78,21 +80,21 @@ bool AppDelegate::applicationDidFinishLaunching()
             resourceSize = CCSizeMake(480, 720);
             resDirOrders.push_back("resources-medium");
             resDirOrders.push_back("resources-small");
-        }
-        else
+        }     
+        else     
         {
-            resourceSize = CCSizeMake(320, 568);
+                resourceSize = CCSizeMake(320, 568);
             resDirOrders.push_back("resources-small");
         }
-        
-         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+         
+          CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
     
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+    pDirector->setDisplayStats(true); 
     
     // set FPS. the default value is 1.0/60 if you don't call this  
     pDirector->setAnimationInterval(1.0 / 60);

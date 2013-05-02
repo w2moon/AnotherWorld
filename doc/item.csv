@@ -1,0 +1,3 @@
+baseid,type,name,icon,rarityclass,feedexp,pro1type,pro1value,pro2type,pro2value,pro3type,pro3value,pro4type,pro4value,pro5type,pro5value,pro6type,pro6value,pro7type,pro7value,pro8type,pro8value,pro9type,pro9value,pro10type,pro10value
+1001,soul,ITEM_NAME_1001,soul.png,1,10,skill,1,hp,150,attack,20,defense,5,specialattack,50,speed,5,dodge,1,crit,10,,,,
+2001,cloth,ITEM_NAME_2001,equipment.png,2,50,hp%,100,defense%,10,,,,,,,,,,,,,,,,

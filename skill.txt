@@ -1,0 +1,82 @@
+skilltype
+
+attack
+defense
+heal
+aura
+passive
+
+targettype
+allally
+
+triggerevent
+battle_start
+battle_end
+
+//user turn isenemy
+action_start
+action_end
+
+//user targets isenemy
+attack_before
+attack_after
+heal_before
+heal_after
+dodge_before
+dodge_after
+crit_before
+crit_after
+skill_before
+skill_after
+
+//user value isenemy
+hpadd
+hpminor
+attackadd
+attackminor
+defenseadd
+defenseminor
+specialattackadd
+specialattackminor
+specialdefenseadd
+specialdefenseminor
+speedadd
+speedminor
+dodgeadd
+dodgeminor
+critadd
+critminor
+
+//deader causer
+dead
+
+action
+slash
+magic
+dodge
+crit
+
+targettype
+all
+ally
+enemy
+self
+allyfront
+allyback
+enemyfront
+enemyback
+eventtrigger
+eventtarget
+
+expclass
+fast
+medium
+late
+extrem late
+
+skillproperty
+skillid icon type expclass specialrate eventid eventisenemy eventvalue rate cooldown  useraction userparticle target1type target1num target1action target1particle target1effecttype target1effectvalue target2type target2num target2action target2particle target2effecttype target2effectvalue
+
+classes
+chance to release skill replace normal attack
+chance to react event

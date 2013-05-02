@@ -1,0 +1,45 @@
+itemtype
+
+traveller
+weapon
+cloth
+trinket
+soul
+package
+shard
+factor
+food
+
+rarityclass
+id 1rate 2rate 3rate 4rate 5rate 6rate
+
+itembaseproperty
+
+baseid type icon rarityclass pro1type pro1value pro2type pro2value pro3type pro3value pro4type pro4value  pro5type pro5value pro6type pro6value pro7type pro7value pro8type pro8value pro9type pro9value pro10type pro10value
+
+
+protype
+feedexp
+skill
+hp
+elemtype
+attacktype
+attack
+defense
+specialattack
+specialdefense
+speed
+dodge
+crit
+
+hp%
+attack%
+defense%
+specialattack%
+specialdefense%
+speed%
+dodge%
+crit%
+
+itemdynamicproperty
+id baseid rarity containertype containerid charactor additionskill

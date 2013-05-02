@@ -1,0 +1,6 @@
+soul compose
+
+stat and skill
+skill num based on the sum level>100 =>2,>1000=>3
+
+20level inherit 5%,50level inherit 10%

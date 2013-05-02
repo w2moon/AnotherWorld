@@ -1,0 +1,7 @@
+water fire wood earth dark light
+
+posion rain fog ocean mountain rock 
+
+element protype
+
+id name icon attacktype1id attacktype1effect attacktype2id attacktype2effect attacktype3id attacktype3effect defensetype1id defensetype1effect defensetype2id defensetype2effect defensetype3id defensetype3effect

@@ -1,0 +1,16 @@
+brave
+
+left
+right
+back
+minhp
+maxhp
+maxattack
+maxspecialattack
+
+%more attack when enemy hp lower than
+%more attack when self hp lower than
+%
+
+
+id name icon

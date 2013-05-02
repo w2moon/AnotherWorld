@@ -518,6 +518,13 @@ if (typeof JSON !== 'object') {
 // These forms are obsolete. It is recommended that JSON.stringify and
 // JSON.parse be used instead.
 
+wl.toJSONString = function(obj){
+    return JSON.stringify(obj)
+}
+wl.parseJSON = function(obj){
+    return JSON.parse(obj)
+}
+/*
     if (!Object.prototype.toJSONString) {
         Object.prototype.toJSONString = function (filter) {
             return JSON.stringify(this, filter);
@@ -526,4 +533,6 @@ if (typeof JSON !== 'object') {
             return JSON.parse(this, filter);
         };
     }
+    */
+    
 }());

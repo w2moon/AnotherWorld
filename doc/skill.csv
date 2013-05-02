@@ -1,0 +1,2 @@
+id,name,type,expclass ,specialrate ,eventtype,eventttriger,eventvalue,rate,cooldown,useraction,userparticle,target1type,target1num,target1action,target1particle,target1effecttype,target1effectvalue,target2type ,target2num ,target2action ,target2particle ,target2effecttype ,target2effectvalue
+1,SKILL_NAME_1,attack,fast,1,attack_after,self,0,0.5,1,slash,,eventtarget,0,beattacked,,hpminor,5,,,,,,
