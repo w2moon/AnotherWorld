@@ -54,6 +54,10 @@ cat.init = function(self,n){
     }
 wl.extend(cat,animal)
 
+function login()
+{
+    
+}
 
 function main()
 {
@@ -77,8 +81,7 @@ cc.log("info:"+t)
 	var director = cc.Director.getInstance();
     var scene = wl.create_loginscene();//cc.BuilderReader.loadAsScene("MainScene");
 
-
-
+    
 
 
     //var info = {"code":"login","userid":"1","ip":"192.168.0.1","pwd":"222","time":"1"}

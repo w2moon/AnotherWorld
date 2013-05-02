@@ -41,6 +41,7 @@ assets/
 local.properties
 
 
+
 # Ignore python compiled files
 *.pyc
 
@@ -74,3 +75,4 @@ Device-Release/
 
 # Ignore vim swaps
 *.swp
+
