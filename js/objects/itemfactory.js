@@ -7,7 +7,6 @@ if (typeof wl.itemfactory !== 'object') {
 (function(){
 
 
-
 wl.itemfactory.loaded = {}
 
 wl.itemfactory.create = function(type){

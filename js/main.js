@@ -65,9 +65,16 @@ function main()
 var c = new cat(1)
  c.p(1,2,3,4,5)
 var t = cc.UserDefault.getInstance().getStringForKey("account_info")
-cc.log("info:"+t)
+
+var d = {
+'fff' : 666
+}
+cc.log("log"+d.fff)
+
+
 
     var ttt = wl.itemfactory.create("soul")
+    ttt.init(999)
     ttt.getName()
     onLogin = function(userid,name){
         cc.log("login")

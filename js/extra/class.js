@@ -12,7 +12,7 @@ base.init = function(n){
 }
 
 var animal = function(n){ 
-    animal.init.apply(n)
+    animal.init.apply(this,n)
 }
 animal.init = function(n){
    base.prototype.init.apply(this,n)

@@ -2,13 +2,18 @@
 //(function(){
 
 
-var item = function(baseid){
-    this.baseid = baseid
-    this.getBase = function(){
-        return itembase.get(this.baseid)
-    }
+var item = function(){
    
 }
+
+ item.init = function(baseid){
+    this.baseid = baseid
+   }
+
+    item.getBase = function(){
+        return itembase.get(this.baseid)
+    }  
+
 
 //return item
 //}());

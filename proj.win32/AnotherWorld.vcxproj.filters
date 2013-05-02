@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\Classes\AppDelegate.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\Classes\AppDelegate.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\AnotherWorld.ico" />
+    <None Include="..\js\config.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\js\header.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\js\main.js">
+      <Filter>js</Filter>
+    </None>
+    <None Include="..\js\extra\json.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\extra\class.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\extra\dispatcher.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\extra\hashlib.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\extra\header.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\extra\http.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\objects\traveller.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\objects\equipment.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\objects\item.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\objects\itemfactory.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\objects\soul.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\extra\msg.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\data\itembase.js">
+      <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\objects\role.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\objects\player.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\scene\mainscene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\loginscene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\loading.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\extra\virtualhttp.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\extra\csv.js">
+      <Filter>js\extra</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AnotherWorld.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="js">
+      <UniqueIdentifier>{ddd80c51-f9ef-4438-a7da-878fda2e4393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\extra">
+      <UniqueIdentifier>{4d818b4c-4d15-4da1-b029-be7c86ce0c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\objects">
+      <UniqueIdentifier>{bc3a317c-68ac-4df1-b02a-40976c15f84d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\data">
+      <UniqueIdentifier>{cc20af63-f82f-472c-b8cc-09206fba8e6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\ui">
+      <UniqueIdentifier>{893bc8ae-e355-4779-9210-cdfc224bbe8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\scene">
+      <UniqueIdentifier>{0d786b61-e5cd-4f24-863b-81c9ef72db5f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
