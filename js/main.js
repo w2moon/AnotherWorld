@@ -64,7 +64,7 @@ function main()
 
 var c = new cat(1)
  c.p(1,2,3,4,5)
-var t = cc.UserDefault.getInstance().getStringForKey("account_info")
+//var t = cc.UserDefault.getInstance().getStringForKey("account_info")
 
 var d = {
 'fff' : 666
