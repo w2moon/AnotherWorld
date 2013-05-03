@@ -21,6 +21,7 @@ wl.msg.new = function(code)
 {
     var message = new Object()
     message.code = code
+    message.ver = VERSION
 
     var cur = new Date()
     message.time = cur.getTime()

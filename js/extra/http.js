@@ -27,6 +27,9 @@ httpclient.on_response = function(httpclient,response){
             req.args.push(obj)
             req.func.apply(req.obj,req.args)
         }
+        else{
+            cc.log("net handler function not be defined")
+        }
     }
     else
     {

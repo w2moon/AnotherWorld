@@ -11,7 +11,7 @@ var item = function(){
    }
 
     item.getBase = function(){
-        return itembase.get(this.baseid)
+        return 1//itembase.get(this.baseid)
     }  
 
 
