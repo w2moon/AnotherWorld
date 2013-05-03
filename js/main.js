@@ -73,9 +73,12 @@ cc.log("log"+d.fff)
 
 
 
-    var ttt = wl.itemfactory.create("soul")
-    ttt.init(999)
-    ttt.getName()
+
+
+
+   // var ttt = wl.itemfactory.create("soul")
+  //  ttt.init(999)
+   // ttt.getName()
     onLogin = function(userid,name){
         cc.log("login")
         cc.log(userid+name)
@@ -88,8 +91,8 @@ cc.log("log"+d.fff)
 	var director = cc.Director.getInstance();
     var scene = wl.create_loginscene();//cc.BuilderReader.loadAsScene("MainScene");
 
-    
 
+    cc.log(cc.Util.macAddress())
 
     //var info = {"code":"login","userid":"1","ip":"192.168.0.1","pwd":"222","time":"1"}
     //wl.http.send(info)
@@ -98,5 +101,23 @@ cc.log("log"+d.fff)
     var runningScene = director.getRunningScene();
     if (runningScene === null) director.runWithScene(scene);
     else director.replaceScene(scene);
+
+        var imagepicker = cc.ImagePicker.getInstance()
+    imagepicker.on_pick = function(pickdata){
+    cc.log("width:"+pickdata.getWidth())
+    cc.log("height:"+pickdata.getHeight())
+    cc.log("data:"+pickdata.toBase64().length)
+
+    var t2d = cc.Texture2D.create()
+    t2d.initWithImage(pickdata)
+    var spr = cc.Sprite.createWithTexture(t2d)
+
+    var runningScene = director.getRunningScene();
+    scene.addChild(spr)
+    spr.setPosition(cc.p(160,240))
+
+    cc.log(t2d)
+}
+imagepicker.useCamera(imagepicker,imagepicker.on_pick,true)
 }
 main();

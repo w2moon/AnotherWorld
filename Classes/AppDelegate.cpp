@@ -83,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         }     
         else     
         {
-                resourceSize = CCSizeMake(320, 568);
+            resourceSize = CCSizeMake(320, 568);
             resDirOrders.push_back("resources-small");
         }
          
@@ -118,7 +118,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 }
 
 void handle_signal(int signal) {
-       static int internal_state = 0;
+    static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance(); 
     // should start everything back
     CCDirector* director = CCDirector::sharedDirector();

@@ -23,11 +23,25 @@
          }
          scene.on_register = function(){
             this.stop_loading()
+
+            cc.log("registed")
+
+            this.req_login()
          }
 
          scene.req_login = function(){
+            var msg = wl.msg.new("login")
+            this.start_loading()
+
+            msg.userid = ''
+            msg.pwd = ''
+          
+            wl.http.send(msg,scene.on_login,this)
          }
          scene.on_login = function(){
+             this.stop_loading()
+
+            cc.log("logined")
          }
 
          scene.req_region = function(){
@@ -41,7 +55,7 @@
          scene.on_show_region = function(){
          }
 
-         scene.req_register()
+         scene.req_login()
 
          return scene
     }
