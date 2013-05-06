@@ -107,9 +107,14 @@ cc.log("log"+d.fff)
     cc.log("width:"+pickdata.getWidth())
     cc.log("height:"+pickdata.getHeight())
     cc.log("data:"+pickdata.toBase64().length)
+    cc.log("datazip:"+pickdata.toBase64())
+
+    var img = new cc.Image()
+    img.initWithBase64(pickdata.toBase64(),pickdata.getWidth(),pickdata.getHeight())
 
     var t2d = cc.Texture2D.create()
-    t2d.initWithImage(pickdata)
+    t2d.initWithImage(img)
+    //t2d.initWithImage(pickdata)
     var spr = cc.Sprite.createWithTexture(t2d)
 
     var runningScene = director.getRunningScene();

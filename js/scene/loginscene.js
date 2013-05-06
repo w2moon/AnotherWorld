@@ -3,12 +3,18 @@
          var scene = cc.Scene.create()
 
          scene.start_loading = function(){
+
             this._loadinglayer = wl.create_uiloading()
+
             this.addChild(this._loadinglayer)
+
          }
          scene.stop_loading = function(){
+
              this.removeChild(this._loadinglayer,true)
+
             this._loadinglayer = null
+
          }
 
          scene.req_register = function(){
@@ -33,9 +39,11 @@
             var msg = wl.msg.new("login")
             this.start_loading()
 
-            msg.userid = ''
-            msg.pwd = ''
-          
+            msg.userid = '1'
+            msg.pwd = '123'
+            msg.region = 'region1'
+            
+            cc.log("logining")
             wl.http.send(msg,scene.on_login,this)
          }
          scene.on_login = function(){

@@ -20,9 +20,13 @@ httpclient.setTimeoutForConnect(TIMEOUT_TIME)
 
 httpclient.on_response = function(httpclient,response){
     var req = response.getHttpRequest()
+    cc.log("on reponse:"+response.getResponseCode())
     if(response.getResponseCode() == 200)
     {
         var obj = wl.parseJSON(response.getResponseData())
+        if(obj.rc != 0){
+            cc.log("msg error:"+obj.rc)
+        }
         if(typeof req.func != "undefined"){
             req.args.push(obj)
             req.func.apply(req.obj,req.args)
@@ -78,6 +82,8 @@ wl.http.send = function(obj,func,funcobj)
         req.args = Array.prototype.slice.call(arguments, 3)
          
     }
+    cc.log(SERVER+sig)
+    cc.log(msg)
     httpclient.send(req)
 }
 }());
