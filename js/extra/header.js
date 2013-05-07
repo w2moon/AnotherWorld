@@ -1,5 +1,6 @@
 var wl = wl || {};
 
+require("extra/gfunc.js")
 require("extra/hashlib.js")
 require("extra/json.js")
 require("extra/class.js")

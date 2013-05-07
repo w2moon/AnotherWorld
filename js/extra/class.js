@@ -1,6 +1,12 @@
 wl.extend = function(c,parent){
 			c.prototype = parent
 }
+
+    wl.create = function (o) {  
+         function F() {}  
+         F.prototype = o;  
+         return new F();  
+     };  
 /*
 example:
 var base = function(n){

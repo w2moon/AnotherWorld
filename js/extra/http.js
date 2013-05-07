@@ -9,6 +9,8 @@ var TIMEOUT_TIME = 20
 
 var RECONNECT_TIMES = 3
 
+var SERVER = ""
+
 var httpclient = null
 if(USE_VIRTUAL_HTTP){
     httpclient = wl.virtualhttp_create()
@@ -18,14 +20,30 @@ else{
 }
 httpclient.setTimeoutForConnect(TIMEOUT_TIME)
 
-httpclient.on_response = function(httpclient,response){
+wl.http.on_error = function(res){
+    var req = res.getHttpRequest()
+      if(typeof wl.http.func_error != "undefined"){
+                if(typeof wl.http.obj_error != "undefined"){
+                    wl.http.func_error.apply(wl.http.obj_error,[req])
+                }
+                else{
+                    wl.http.func_error(req)
+                }
+            }
+            else{
+                
+                cc.log(res.getErrorBuffer())
+                
+            }
+}
+
+wl.http.on_response = function(hc,response){
     var req = response.getHttpRequest()
-    cc.log("on reponse:"+response.getResponseCode())
     if(response.getResponseCode() == 200)
     {
         var obj = wl.parseJSON(response.getResponseData())
         if(obj.rc != 0){
-            cc.log("msg error:"+obj.rc)
+            cc.log("http error:"+obj.rc)
         }
         if(typeof req.func != "undefined"){
             req.args.push(obj)
@@ -45,17 +63,7 @@ httpclient.on_response = function(httpclient,response){
         }
         else
         {
-            if(typeof wl.http.func_error != "undefined"){
-                if(typeof wl.http.obj_error != "undefined"){
-                    wl.http.func_error.apply(wl.http.obj_error,[req])
-                }
-                else{
-                    wl.http.func_error(req)
-                }
-            }
-            else{
-                cc.log(response.getErrorBuffer())
-            }
+            wl.http.on_error(response)
         }
     }
 }
@@ -65,16 +73,25 @@ wl.http.set_error_func = function(func,obj){
     wl.http.obj_error = obj
 }
 
+wl.http.set_server = function(s){
+    SERVER = s
+}
+
 wl.http.send = function(obj,func,funcobj)
 {
+    if(SERVER == ""){
+        cc.log("not set server")
+        return
+    }
     var msg = wl.toJSONString(obj)
 
     var req = new cc.HttpRequest()
     req.setRequestType(1)
     var sig = hex_md5(msg+SECRET_KEY)
+   
     req.setUrl(SERVER+sig)
     req.setRequestData(msg,msg.length)
-    req.setResponseCallback(httpclient,httpclient.on_response)
+    req.setResponseCallback(wl.http,wl.http.on_response)
     req.reconnect_times = RECONNECT_TIMES
     if(typeof func != "undefined"){
         req.func = func

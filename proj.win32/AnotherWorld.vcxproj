@@ -275,9 +275,11 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
   <ItemGroup>
     <None Include="..\js\config.js" />
     <None Include="..\js\data\itembase.js" />
+    <None Include="..\js\data\retcode.js" />
     <None Include="..\js\extra\class.js" />
     <None Include="..\js\extra\csv.js" />
     <None Include="..\js\extra\dispatcher.js" />
+    <None Include="..\js\extra\gfunc.js" />
     <None Include="..\js\extra\hashlib.js" />
     <None Include="..\js\extra\header.js" />
     <None Include="..\js\extra\http.js" />

@@ -80,6 +80,12 @@
     <None Include="..\js\extra\csv.js">
       <Filter>js\extra</Filter>
     </None>
+    <None Include="..\js\extra\gfunc.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\data\retcode.js">
+      <Filter>js\data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

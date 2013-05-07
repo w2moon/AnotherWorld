@@ -1,6 +1,3 @@
 
 
-var player = function(){
-   
-  
-}
+wl.player = Object.create(wl.role)

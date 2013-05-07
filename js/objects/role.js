@@ -1,3 +1,4 @@
-var role = function(){
-      
+wl.role = function(id,name){
+    this.id = id
+    this.name = name
 }
