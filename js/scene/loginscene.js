@@ -92,8 +92,9 @@
 
             var id = cc.Util.macAddress()
             var pwd = id
+             
 
-            if(wl.get("registed") == "")
+            if(wl.get("registed") == null || wl.get("registed") == "")
             {
                 this.req_register(id,pwd)
             }
