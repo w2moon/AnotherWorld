@@ -83,6 +83,8 @@
             wl.http.send(msg,scene.on_region_list,this)
          }
          scene.on_region_list = function(ret){
+            this.stop_loading()
+
            // cc.log("get region list:"+ret.regions.length())
             for(var k in ret.regions){
                 cc.log(k+" "+ret.regions[k].url)
@@ -121,6 +123,8 @@
             wl.http.send(msg,scene.on_region_enter,this)
          }
          scene.on_region_enter = function(ret){
+            this.stop_loading()
+
             if(ret.rc == retcode.PLAYER_NOTEXIST){
                 this.req_create_role()
             }
@@ -139,6 +143,8 @@
              wl.http.send(msg,scene.on_create_role,this)
          }
           scene.on_create_role = function(ret){
+            this.stop_loading()
+
             if(ret.rc != retcode.OK){
                 cc.log("create role error:"+ret.rc)
             }

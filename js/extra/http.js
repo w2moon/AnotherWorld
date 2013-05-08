@@ -11,7 +11,7 @@ var RECONNECT_TIMES = 3
 
 var SERVER = ""
 
-var httpclient = null
+var httpclient = httpclient || null
 if(USE_VIRTUAL_HTTP){
     httpclient = wl.virtualhttp_create()
 }
@@ -32,7 +32,7 @@ wl.http.on_error = function(res){
             }
             else{
                 
-                cc.log(res.getErrorBuffer())
+                cc.log(res.getResponseCode()+":"+res.getErrorBuffer())
                 
             }
 }
