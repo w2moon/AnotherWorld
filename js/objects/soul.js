@@ -6,5 +6,9 @@ var soul = function(){
     this.getName = function(){
         cc.log("soul"+this.getBase())
     }
+
+    this.getImg = function(){
+        return "soul.png"
+    }
 }
 wl.extend(soul,item)

@@ -31,7 +31,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-
+	  
     CCSize designSize = CCSizeMake(320, 480);
     CCSize resourceSize = CCSizeMake(320, 480);
     
@@ -41,7 +41,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
-         searchPaths.push_back("js"); // Resources/Published-iOS
+        searchPaths.push_back("js"); // Resources/Published-iOS
         CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
         if (screenSize.height > 480)
@@ -54,11 +54,11 @@ bool AppDelegate::applicationDidFinishLaunching()
              resDirOrders.push_back("resources-iphone");
         }
           
-         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     } 
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
-		  searchPaths.push_back("AnotherWorldRes");
+		searchPaths.push_back("AnotherWorldRes");
 		CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
 //        if (screenSize.height > 1024)
@@ -66,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //            resourceSize = CCSizeMake(1280, 1920);
 //            resDirOrders.push_back("resources-xlarge");
 //            resDirOrders.push_back("");
-//        }
+//         }
 //        else
         if (screenSize.height > 960) 
         {
@@ -87,7 +87,7 @@ bool AppDelegate::applicationDidFinishLaunching()
             resDirOrders.push_back("resources-small");
         }
          
-          CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
+        CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     }
     pDirector->setContentScaleFactor(resourceSize.width/designSize.width);
 

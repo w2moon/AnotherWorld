@@ -86,6 +86,24 @@
     <None Include="..\js\data\retcode.js">
       <Filter>js\data</Filter>
     </None>
+    <None Include="..\js\scene\battlescene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\pvpscene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\questscene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\storescene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\card.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\data\anim.js">
+      <Filter>js\data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

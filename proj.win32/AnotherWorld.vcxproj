@@ -131,7 +131,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\fork\scripting\javascript\spidermonkey-win32\lib
 if exist "$(OutDir)\AnotherWorldRes" rd /s /q "$(OutDir)\AnotherWorldRes"
 mkdir "$(OutDir)\AnotherWorldRes"
 xcopy "$(ProjectDir)..\..\fork\scripting\javascript\bindings\js\*.js" "$(OutDir)\AnotherWorldRes" /e /Y
-xcopy "$(ProjectDir)..\js" "$(OutDir)\AnotherWorldRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\js" "$(OutDir)\AnotherWorldRes\" /e /Y
+xcopy "$(ProjectDir)..\res" "$(OutDir)\AnotherWorldRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -274,6 +275,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
   </ItemGroup>
   <ItemGroup>
     <None Include="..\js\config.js" />
+    <None Include="..\js\data\anim.js" />
     <None Include="..\js\data\itembase.js" />
     <None Include="..\js\data\retcode.js" />
     <None Include="..\js\extra\class.js" />
@@ -295,8 +297,13 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\objects\role.js" />
     <None Include="..\js\objects\soul.js" />
     <None Include="..\js\objects\traveller.js" />
+    <None Include="..\js\scene\battlescene.js" />
     <None Include="..\js\scene\loginscene.js" />
     <None Include="..\js\scene\mainscene.js" />
+    <None Include="..\js\scene\pvpscene.js" />
+    <None Include="..\js\scene\questscene.js" />
+    <None Include="..\js\scene\storescene.js" />
+    <None Include="..\js\ui\card.js" />
     <None Include="..\js\ui\loading.js" />
     <None Include="res\AnotherWorld.ico" />
   </ItemGroup>
