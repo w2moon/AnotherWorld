@@ -42,6 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
         searchPaths.push_back("js"); // Resources/Published-iOS
+        searchPaths.push_back("res"); 
         CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 
         if (screenSize.height > 480)

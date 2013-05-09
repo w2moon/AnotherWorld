@@ -123,7 +123,7 @@ cc.log("log"+d.fff)
 
     cc.log(t2d)
 }
-imagepicker.useCamera(imagepicker,imagepicker.on_pick,256,256,true)
+//imagepicker.useCamera(imagepicker,imagepicker.on_pick,256,256,true)
     cc.log("used")
 }
 main();
