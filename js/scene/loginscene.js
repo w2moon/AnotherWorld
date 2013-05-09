@@ -130,6 +130,7 @@
             }
             else{
                 cc.log("region entered")
+                this.start_game()
             }
          }
 
@@ -150,7 +151,14 @@
             }
             else{
                 cc.log("role created")
+                this.start_game()
             }
+         }
+
+         ///////////////////////////////////////////
+         scene.start_game = function(){
+            var scene = wl.create_battlescene();
+            cc.Director.getInstance().replaceScene(scene)
          }
 
          scene.req_region_list()
