@@ -104,6 +104,9 @@
     <None Include="..\js\data\anim.js">
       <Filter>js\data</Filter>
     </None>
+    <None Include="..\js\data\skillbase.js">
+      <Filter>js\data</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

@@ -277,6 +277,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\data\anim.js" />
     <None Include="..\js\data\itembase.js" />
     <None Include="..\js\data\retcode.js" />
+    <None Include="..\js\data\skillbase.js" />
     <None Include="..\js\extra\class.js" />
     <None Include="..\js\extra\csv.js" />
     <None Include="..\js\extra\dispatcher.js" />
