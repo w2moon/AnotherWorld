@@ -139,12 +139,11 @@ xcopy "$(ProjectDir)..\res" "$(OutDir)\AnotherWorldRes\" /e /Y</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>if not exist "$(OutDir)..\..\published\win32" mkdir "$(OutDir)..\..\published\win32"
-if exist "$(OutDir)..\..\published\win32\AnotherWorldRes" rd /s /q "$(OutDir)..\..\published\win32\AnotherWorldRes"
-mkdir "$(OutDir)..\..\published\win32\AnotherWorldRes"
-xcopy "$(ProjectDir)..\..\fork\scripting\javascript\bindings\js\*.js" "$(OutDir)..\..\published\win32\AnotherWorldRes" /e /Y
-xcopy "$(ProjectDir)..\js" "$(OutDir)\..\..\published\win32\AnotherWorldRes\" /e /Y
-xcopy "$(OutDir)*.dll" "$(OutDir)\..\..\published\win32\" /e /Y
-xcopy "$(OutDir)*.exe" "$(OutDir)\..\..\published\win32\" /e /Y</Command>
+if exist "$(OutDir)..\..\jslib" rd /s /q "$(OutDir)..\..\jslib"
+mkdir "$(OutDir)..\..\jslib"
+xcopy "$(ProjectDir)..\..\fork\scripting\javascript\bindings\js\*.js" "$(OutDir)..\..\jslib" /e /Y
+xcopy "$(OutDir)*.dll" "$(OutDir)\..\..\published\win32\" /Y
+xcopy "$(OutDir)*.exe" "$(OutDir)\..\..\published\win32\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='publish|Win32'">

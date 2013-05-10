@@ -17,7 +17,7 @@ wl.msg.init = function(header)
     wl.msg.header.session=header.session
 }
 
-wl.msg.new = function(code)
+wl.msg.create = function(code)
 {
     var message = new Object()
     message.code = code

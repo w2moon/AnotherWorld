@@ -59,7 +59,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     } 
     else if (platform == kTargetAndroid || platform == kTargetWindows)
     {
-		searchPaths.push_back("AnotherWorldRes");
+		if(platform == kTargetWindows)
+		{
+			searchPaths.push_back("../../js");
+			searchPaths.push_back("../../jslib");
+			searchPaths.push_back("../../res");
+		}
+		    searchPaths.push_back("AnotherWorldRes");
 		CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
         // Comments it since opengles2.0 only supports texture size within 2048x2048.
 //        if (screenSize.height > 1024)
@@ -69,7 +75,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 //            resDirOrders.push_back("");
 //         }
 //        else
-        if (screenSize.height > 960) 
+         if (screenSize.height > 960) 
         {
             resourceSize = CCSizeMake(640, 960);
             resDirOrders.push_back("resources-large");

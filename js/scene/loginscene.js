@@ -1,108 +1,107 @@
 
     wl.create_loginscene = function(){
-         var scene = cc.Scene.create()
+         var scene = cc.Scene.create();
 
          ///////////////////////////////////////////////////
          scene.start_loading = function(){
 
-            this._loadinglayer = wl.create_uiloading()
+            this._loadinglayer = wl.create_uiloading();
 
-            this.addChild(this._loadinglayer)
+            this.addChild(this._loadinglayer);
 
          }
          scene.stop_loading = function(){
 
-             this.removeChild(this._loadinglayer,true)
+             this.removeChild(this._loadinglayer,true);
 
-            this._loadinglayer = null
+            this._loadinglayer = null;
 
          }
 
          ///////////////////////////////////////////////////////////
          scene.req_register = function(userid,pwd){
-            this.start_loading()
+            this.start_loading();
 
-            var msg = wl.msg.new("register")
-            msg.userid = userid
-            msg.pwd = pwd
-            wl.http.send(msg,scene.on_register,this)
+            var msg = wl.msg.create("register");
+            msg.userid = userid;
+            msg.pwd = pwd;
+            wl.http.send(msg,scene.on_register,this);
 
             
 
          }
          scene.on_register = function(ret){
-            this.stop_loading()
+            this.stop_loading();
 
-            if(ret.rc != retcode.OK){
-                cc.log("register failed")
-                return
+            if(ret.rc != retcode.OK && !(ret.rc == retcode.USERID_EXIST &&ret.userid == cc.Util.macAddress()) ){
+                cc.log("register failed");
+                return;
             }
-            wl.set("registed","true")
-            cc.log("registed")
+            wl.set("registed","true");
+            cc.log("registed");
 
-            this.req_region_enter()
+            this.req_login(ret.userid,ret.pwd,"region1");
          }
 
          ///////////////////////////////////////////////////////////////
          scene.req_login = function(userid,pwd,region){
-            this.start_loading()
+            this.start_loading();
 
-            var msg = wl.msg.new("login")
+            var msg = wl.msg.create("login");
             
 
-            msg.userid = userid
-            msg.pwd = pwd
-            msg.region = region
+            msg.userid = userid;
+            msg.pwd = pwd;
+            msg.region = region;
             
-            cc.log("logining")
-            wl.http.send(msg,scene.on_login,this)
+            cc.log("logining");
+            wl.http.send(msg,scene.on_login,this);
          }
          scene.on_login = function(ret){
-             this.stop_loading()
+             this.stop_loading();
 
-             wl.msg.init(ret)
+             wl.msg.init(ret);
 
-             g.id = ret.id
-             g.region = ret.region
+             g.id = ret.id;
+             g.region = ret.region;
 
              
 
-            cc.log("logined:"+ret.userid)
+            cc.log("logined:"+ret.userid);
 
-            this.req_region_enter()
+            this.req_region_enter();
          }
 
 
          ////////////////////////////////////////////////////////////////
          scene.req_region_list = function(){
-             this.start_loading()
+             this.start_loading();
 
-             wl.http.set_server(LOGIN_SERVER)
+             wl.http.set_server(LOGIN_SERVER);
 
-            var msg = wl.msg.new("region_list")
-            wl.http.send(msg,scene.on_region_list,this)
+            var msg = wl.msg.create("region_list");
+            wl.http.send(msg,scene.on_region_list,this);
          }
          scene.on_region_list = function(ret){
-            this.stop_loading()
+            this.stop_loading();
 
-           // cc.log("get region list:"+ret.regions.length())
             for(var k in ret.regions){
-                cc.log(k+" "+ret.regions[k].url)
+                cc.log(k+" "+ret.regions[k].url);
             }
 
-            g.regions = ret.regions
+            g.regions = ret.regions;
 
-            var id = cc.Util.macAddress()
-            var pwd = id
+            var id = cc.Util.macAddress();
+            var pwd = id;
              
 
             if(wl.get("registed") == null || wl.get("registed") == "")
             {
-                this.req_register(id,pwd)
+                this.req_register(id,pwd);
             }
             else
             {
-                this.req_login(id,pwd,"region1")
+                this.req_login(id,pwd,"region1");
             }
          }
 
@@ -115,58 +114,57 @@
 
          //////////////////////////////////////////////////////////
          scene.req_region_enter = function(){
-             this.start_loading()
+             this.start_loading();
+             wl.http.set_server(g.regions[g.region].url);
 
-             wl.http.set_server(g.regions[g.region].url)
+             var msg = wl.msg.create("region_enter");
 
-             var msg = wl.msg.new("region_enter")
-
-            wl.http.send(msg,scene.on_region_enter,this)
+            wl.http.send(msg,scene.on_region_enter,this);
          }
          scene.on_region_enter = function(ret){
-            this.stop_loading()
+            this.stop_loading();
 
             if(ret.rc == retcode.PLAYER_NOTEXIST){
-                this.req_create_role()
+                this.req_create_role();
             }
             else{
-                cc.log("region entered")
-                this.start_game()
+                cc.log("region entered");
+                this.start_game();
             }
          }
 
          /////////////////////////////////////////////////
          scene.req_create_role = function(){
-             this.start_loading()
-             cc.log("create role")
-             var msg = wl.msg.new("role_create")
-             msg.name = "tester"
+             this.start_loading();
+             cc.log("create role");
+             var msg = wl.msg.create("role_create");
+             msg.name = "tester";
 
-             wl.http.send(msg,scene.on_create_role,this)
+             wl.http.send(msg,scene.on_create_role,this);
          }
           scene.on_create_role = function(ret){
-            this.stop_loading()
+            this.stop_loading();
 
             if(ret.rc != retcode.OK){
-                cc.log("create role error:"+ret.rc)
+                cc.log("create role error:"+ret.rc);
             }
             else{
-                cc.log("role created")
-                this.start_game()
+                cc.log("role created");
+                this.start_game();
             }
          }
 
          ///////////////////////////////////////////
          scene.start_game = function(){
             var scene = wl.create_battlescene();
-            cc.Director.getInstance().replaceScene(scene)
+            cc.Director.getInstance().replaceScene(scene);
          }
 
-         scene.req_region_list()
+         scene.req_region_list();
 
          
 
-         return scene
+         return scene;
     }
    
 

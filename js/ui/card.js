@@ -43,7 +43,10 @@
          layer.attack = function(flip){
          //flip = 1 from left to right ,-1 from right to left
             flip = flip || 1
-            var slash = cc.Sequence.create(cc.ScaleTo.create(0.2,1.2),cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0),cc.ScaleTo.create(0.2,1))
+           // var slash = cc.Sequence.create(cc.ScaleTo.create(0.2,1.2),cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0),cc.ScaleTo.create(0.2,1))
+
+            var slash = cc.Sequence.create(cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0))
+           
             this.runAction(slash)
          }
          layer.defense = function(){
@@ -78,7 +81,7 @@
             var endfly = cc.EaseIn.create(cc.MoveTo.create(0.2,cc.p(pos.x,pos.y)),0.4)
             var end = cc.EaseIn.create(cc.ScaleTo.create(0.2,1),0.4)
 
-            var anim = cc.Sequence.create(start,fly,endfly,end)
+            var anim = cc.Sequence.create(fly,endfly)
             this.runAction(anim)
          }
 
