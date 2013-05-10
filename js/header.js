@@ -3,6 +3,7 @@ var g = g || {}
 require("config.js")
 
 require("data/retcode.js")
+require("data/skillbase.js")
 
 require("extra/header.js")
 
