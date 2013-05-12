@@ -1,5 +1,4 @@
 
-
 if (typeof wl.dispatcher !== 'object') {
     wl.dispatcher = {}
 }

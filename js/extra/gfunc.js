@@ -1,3 +1,4 @@
+
 wl.get = function(name){
    return cc.UserDefault.getInstance().getStringForKey(name)
 }

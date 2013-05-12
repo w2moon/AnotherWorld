@@ -1,5 +1,4 @@
 
-
 if (typeof wl.itemfactory !== 'object') {
     wl.itemfactory = {};
 }

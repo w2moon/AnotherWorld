@@ -168,3 +168,4 @@
     }
    
 
+var loginscene = function(){};

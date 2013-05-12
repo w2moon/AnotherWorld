@@ -1,9 +1,8 @@
 
-
 if (typeof wl.http !== 'object') {
     wl.http = {}
 }
-
+if(NOTUSE_CCB){
 (function(){
 var TIMEOUT_TIME = 20
 
@@ -105,5 +104,5 @@ wl.http.send = function(obj,func,funcobj)
 }
 }());
  
-
+}
 

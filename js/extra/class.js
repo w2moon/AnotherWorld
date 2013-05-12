@@ -1,3 +1,4 @@
+
 wl.extend = function(c,parent){
 			c.prototype = parent
 }
