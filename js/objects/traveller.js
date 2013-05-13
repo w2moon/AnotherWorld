@@ -1,8 +1,9 @@
 
 
 var traveller = function(){
-    this.init = function(cfg){
+    this.init = function(player,cfg){
         //traveller.prototype.init.apply(this,[baseid])
+        this.owner = player
         this.cfg = cfg
         this.hp = cfg.hp
         this.speed = cfg.speed
@@ -15,12 +16,30 @@ var traveller = function(){
         cc.log("soul"+this.getBase())
     }
 
+    this.getOwner = function(){
+        return this.owner;
+    }
+    this.getTargetType = function(){
+        return this.cfg.targettype;
+    }
+     this.getTargetNum = function(){
+        return this.cfg.targetnum;
+    }
+     this.getNature = function(){
+        return this.cfg.nature;
+    }
+
+    this.getMaxHP = function(){
+        return this.cfg.hp
+    }
+
     this.getHP = function(){
         return this.hp;
     }
     this.setHP = function(hp){
         if(hp<0){
             hp = 0;
+            this.card.removeFromParent(false)
         }
         this.hp = hp;
     }
@@ -39,6 +58,23 @@ var traveller = function(){
 
     this.getImg = function(){
         return this.cfg.img
+    }
+
+    this.defense = function(){
+        this.card.defense()
+    }
+
+    this.attack = function(targets){
+        this.card.attack()
+
+        for(var k in targets){
+            var damage = this.getAttack() - targets[k].getDefense()
+            targets[k].setHP(targets[k].getHP()-damage)
+            targets[k].card.setPercent(targets[k].getHP()/targets[k].getMaxHP())
+            targets[k].defense()
+        }
+
+        return false
     }
 }
 wl.extend(traveller,item)

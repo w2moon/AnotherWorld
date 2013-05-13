@@ -5,6 +5,25 @@
          var player1 = {};
           var player2 = {};
 
+          var target = {
+            'enemy':0,
+            'ally' : 1,
+            'all' : 2,
+            'self' : 3,
+            'allyfront' : 4,
+            'allyhero' : 5,
+            'enemyfront' : 6,
+            'enemyhero' : 7,
+            'eventtrigger' : 8,
+            'eventtarget' : 9
+          };
+
+          var nature = {
+            'left':0,
+            'right':1,
+            'random':2
+          }
+
         
 
          var position = [
@@ -24,40 +43,40 @@
          player2.travellers = []
 
          var cfg = {'img':'header.png','baseid':5,'level':9,'rarity':1,
-         'elemtype':'fire','hp':100,'attack':5,'defense':1,'specialattack':10,'speed':3,'dodge':0,'critical':0.2,
+         'elemtype':'fire','hp':10,'attack':5,'defense':1,'targettype':0,'targetnum':1,'nature':0,'specialattack':10,'speed':3,'dodge':0,'critical':0.2,
          'hp%':0.2,'attack%':0.1,'defense%':0.1,'specialattack%':0,'speed%':0,'dodge%':0,'crit%':0,'skillid':1}
 
          var traveller = wl.itemfactory.create("traveller");
          cfg.speed = 1;
-         traveller.init(cfg)
+         traveller.init(player1,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
          scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 2;
-         traveller.init(cfg)
+         traveller.init(player1,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
          scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 3;
-         traveller.init(cfg)
+         traveller.init(player1,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
          scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 4;
-         traveller.init(cfg)
+         traveller.init(player1,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
          scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 10;
-         traveller.init(cfg)
+         traveller.init(player1,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
          scene.travellers.push(traveller)
@@ -66,14 +85,14 @@
          /////
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 9;
-         traveller.init(cfg)
+         traveller.init(player2,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
          scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 8;
-         traveller.init(cfg)
+         traveller.init(player2,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
          scene.travellers.push(traveller)
@@ -81,7 +100,7 @@
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 7
          ;
-         traveller.init(cfg)
+         traveller.init(player2,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          cfg.speed = 6;
          player2.travellers.push(traveller)
@@ -89,14 +108,14 @@
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 5;
-         traveller.init(cfg)
+         traveller.init(player2,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
          scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 4;
-         traveller.init(cfg)
+         traveller.init(player2,cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
          scene.travellers.push(traveller)
@@ -119,7 +138,7 @@
                 var pos = position[player1.travellers.length-1][k]
                 card.setPosition(cc.p(x+pos[0],y+pos[1]));
 
-                 var lbl = cc.LabelTTF.create(""+k,"",24)
+                 var lbl = cc.LabelTTF.create(""+player1.travellers[k].getSpeed(),"",24)
                  lbl.setColor(cc.c3b(0,0,0))
                  card.addChild(lbl)
             if(k==0){
@@ -154,7 +173,7 @@
                     card.setPosition(cc.p(x-pos[0],y-pos[1]));
                 }
 
-                 var lbl = cc.LabelTTF.create(""+k,"",24)
+                 var lbl = cc.LabelTTF.create(""+player2.travellers[k].getSpeed(),"",24)
                   lbl.setColor(cc.c3b(0,0,0))
                  card.addChild(lbl)
             
@@ -179,6 +198,79 @@
             this.state.apply(this)
            
             
+          }
+
+          var nature_select = function(objs,nature_type,num,out_array){
+            switch(nature_type)
+            {
+            case nature.left:
+            {
+                for(var k in objs){
+                    if(num<=0){
+                        
+                        break;
+                    }
+                    if(!objs[k].isDead()){
+                            out_array.push(objs[k])
+                        }
+                    num--;
+                }
+            }
+            break;
+            case nature.right:
+            {
+                for(var k=objs.length-1;k>=0;k--){
+                    if(num<=0){
+                        break;
+                    }
+                    if(!objs[k].isDead()){
+                            out_array.push(objs[k])
+                        }
+                    num--;
+                }
+            }
+            break;
+            case nature.random:
+            {
+                var arr = []
+                for(var i in objs){
+                    if(!objs[i].isDead()){
+                        arr.push(objs[i]);
+                    }
+                }
+                while(arr.length >0 &&num>0){
+                    
+                    var k = Math.random()*arr.length
+                    out_array.push(arr[k])
+                    arr.splice(k,1)
+                    num--;
+                }
+            }
+            break;
+            }
+          }
+
+          scene.select_target = function(player,target_type,target_num,nature_type){
+            switch(target_type){
+                case target.enemy:
+                {
+                    var targets = [];
+                    for(var k in this.players){
+                        if(this.players[k] != player){
+                            var travellers = this.players[k].travellers;
+                            nature_select(this.players[k].travellers,nature_type,target_num,targets)
+          
+                        }
+                    }
+
+                    return targets;
+                }
+                case target.all:
+                {
+                    return this.travellers;
+                }
+            }
+            return 1;
           }
 
           scene.start()

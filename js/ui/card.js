@@ -90,7 +90,7 @@
          layer.addChild(layer.hpbar);
 
          layer.setPercent = function(p){
-            this.hpbar.setScale(p,1);
+            this.hpbar.setScaleX(p);
          }
 
         
