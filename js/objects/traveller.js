@@ -5,6 +5,7 @@ var traveller = function(){
         //traveller.prototype.init.apply(this,[baseid])
         this.cfg = cfg
         this.hp = cfg.hp
+        this.speed = cfg.speed
     }
 
     this.isDead = function(){
@@ -22,6 +23,10 @@ var traveller = function(){
             hp = 0;
         }
         this.hp = hp;
+    }
+
+    this.getSpeed = function(){
+        return this.speed
     }
 
     this.getAttack = function(){

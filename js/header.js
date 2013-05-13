@@ -16,5 +16,12 @@ require("ui/card.js")
 
 require("objects/item.js")
 
+require("state/normal.js")
+require("state/start.js")
+require("state/newturn.js")
+require("state/action.js")
+require("state/endturn.js")
+require("state/finish.js")
+
 require("scene/loginscene.js")
 require("scene/battlescene.js")

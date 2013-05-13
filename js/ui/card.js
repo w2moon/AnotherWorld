@@ -84,6 +84,14 @@
             var anim = cc.Sequence.create(fly,endfly)
             this.runAction(anim)
          }
+         layer.hpbar = cc.Sprite.create("boarder.png");
+         layer.hpbar.setAnchorPoint(cc.p(0,0.5));
+         layer.hpbar.setPosition(cc.p(-size.width/2,size.width/2+20));
+         layer.addChild(layer.hpbar);
+
+         layer.setPercent = function(p){
+            this.hpbar.setScale(p,1);
+         }
 
         
          return layer;

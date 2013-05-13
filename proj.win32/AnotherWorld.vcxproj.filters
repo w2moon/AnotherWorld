@@ -17,9 +17,6 @@
     <None Include="..\js\header.js">
       <Filter>js</Filter>
     </None>
-    <None Include="..\js\main.js">
-      <Filter>js</Filter>
-    </None>
     <None Include="..\js\extra\json.js">
       <Filter>js\extra</Filter>
     </None>
@@ -106,6 +103,9 @@
     </None>
     <None Include="..\js\data\skillbase.js">
       <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\app.js">
+      <Filter>js</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

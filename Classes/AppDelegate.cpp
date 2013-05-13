@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     std::vector<std::string> searchPaths;
     std::vector<std::string> resDirOrders;
     
-    TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
+     TargetPlatform platform = CCApplication::sharedApplication()->getTargetPlatform();
     if (platform == kTargetIphone || platform == kTargetIpad)
     {
         searchPaths.push_back("js"); // Resources/Published-iOS
@@ -64,6 +64,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 			searchPaths.push_back("../../js");
 			searchPaths.push_back("../../jslib");
 			searchPaths.push_back("../../res");
+			searchPaths.push_back("../../ccb");
 		}
 		    searchPaths.push_back("AnotherWorldRes");
 		CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
@@ -119,13 +120,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     js_log("RUNNING Main");
     CCScriptEngineProtocol *pEngine = ScriptingCore::getInstance();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
-    ScriptingCore::getInstance()->runScript("main.js");
+    ScriptingCore::getInstance()->runScript("app.js");
        
     return true;
 }
 
 void handle_signal(int signal) {
-    static int internal_state = 0;
+     static int internal_state = 0;
     ScriptingCore* sc = ScriptingCore::getInstance(); 
     // should start everything back
     CCDirector* director = CCDirector::sharedDirector();

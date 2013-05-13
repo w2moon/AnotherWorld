@@ -1,13 +1,11 @@
   wl.create_battlescene = function(){
          var scene = cc.Scene.create();
 
+
          var player1 = {};
           var player2 = {};
 
-         var state = {
-            'normal':1,
-            'action':2
-         };
+        
 
          var position = [
          [[0,0]],
@@ -17,6 +15,11 @@
          [[30,0],[0,150],[80,120],[160,70],[180,-20]],
          ];
 
+         scene.players = []
+         scene.players.push(player1)
+         scene.players.push(player2)
+         scene.travellers = []
+
          player1.travellers = []
          player2.travellers = []
 
@@ -25,56 +28,78 @@
          'hp%':0.2,'attack%':0.1,'defense%':0.1,'specialattack%':0,'speed%':0,'dodge%':0,'crit%':0,'skillid':1}
 
          var traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 1;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 2;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 3;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 4;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 10;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player1.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
 
          /////
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 9;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 8;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 7
+         ;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
+         cfg.speed = 6;
          player2.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 5;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
          traveller = wl.itemfactory.create("traveller");
+         cfg.speed = 4;
          traveller.init(cfg)
          traveller.soul = wl.itemfactory.create("soul");
          player2.travellers.push(traveller)
+         scene.travellers.push(traveller)
 
         // player.travellers = [traveller,traveller,traveller,traveller,traveller];
 
@@ -86,7 +111,7 @@
          for(var k in player1.travellers){
             var card = wl.create_uicard(player1.travellers[k]);
 
-          
+          player1.travellers[k].card = card
 				var d = 90-k*degree;
 				var dx = x+radius*Math.cos(d/180*3.1415926);
 				var dy = y+radius*Math.sin(d/180*3.1415926);
@@ -107,26 +132,26 @@
 
           var size = cc.Director.getInstance().getWinSize();
           x = size.width-x
-          y= size.height-y
+          y = size.height-y
 
           for(var k in player2.travellers){
             var card = wl.create_uicard(player2.travellers[k]);
 
-          
+          player2.travellers[k].card = card
 				var d = 180+k*degree;
 				var dx = x-radius*Math.cos(d/180*3.1415926);
 				var dy = y-radius*Math.sin(d/180*3.1415926);
 
                 if(k==0)
                 {
-                card.setScale(1.5)
-                var pos = position[player2.travellers.length-1][k]
-                card.setPosition(cc.p(x-pos[0],y-pos[1]));
+                    card.setScale(1.5)
+                    var pos = position[player2.travellers.length-1][k]
+                    card.setPosition(cc.p(x-pos[0],y-pos[1]));
                 }
                 else
                 {
-                var pos = position[player2.travellers.length-1][player2.travellers.length-k]
-                card.setPosition(cc.p(x-pos[0],y-pos[1]));
+                    var pos = position[player2.travellers.length-1][player2.travellers.length-k]
+                    card.setPosition(cc.p(x-pos[0],y-pos[1]));
                 }
 
                  var lbl = cc.LabelTTF.create(""+k,"",24)
@@ -143,25 +168,16 @@
           ////////////////////////////////////////////
           scene.start = function(){
             this.turn = 1
-            this.state = state.normal
+            this.state = state_normal
             this.schedule(this.turn_process,1);
             cc.log("schedule")
           }
 
+          var sort_traveller = function(t1,t2){return t2.getSpeed()-t1.getSpeed();}
+
           scene.turn_process = function(){
-          cc.log("process")
-            switch(this.state){
-                case state.normal:
-                {
-                    cc.log("turn:"+this.turn)
-                    this.state = state.action;
-                }
-                break;
-                case state.action:
-                {
-                }
-                break;
-            }
+            this.state.apply(this)
+           
             
           }
 

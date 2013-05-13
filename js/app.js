@@ -21,13 +21,14 @@ function run()
 {
 
 
-    onLogin = function(userid,name){
+    /*onLogin = function(userid,name){
         cc.log("login")
         cc.log(userid+name)
     }
     wl.dispatcher.register("login",c.t,c,1)
 
     wl.dispatcher.notify("login","userid","name")
+    */
 	//cc.FileUtils.getInstance().loadFilenameLookup("fileLookup.plist");
     //cc.Texture2D.setDefaultAlphaPixelFormat(6);
 	var director = cc.Director.getInstance();
@@ -44,7 +45,7 @@ function run()
     if (runningScene === null) director.runWithScene(scene);
     else director.replaceScene(scene);
 
-        var imagepicker = cc.ImagePicker.getInstance()
+    /*    var imagepicker = cc.ImagePicker.getInstance()
     imagepicker.on_pick = function(pickdata){
     cc.log("width:"+pickdata.getWidth())
     cc.log("height:"+pickdata.getHeight())
@@ -64,7 +65,7 @@ function run()
     spr.setPosition(cc.p(160,240))
 
     cc.log(t2d)
-}
+}*/
 //imagepicker.useCamera(imagepicker,imagepicker.on_pick,256,256,true)
   
 }
