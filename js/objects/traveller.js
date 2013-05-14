@@ -28,6 +28,9 @@ var traveller = function(){
      this.getNature = function(){
         return this.cfg.nature;
     }
+    this.getTargetNeedAlive = function(){
+        return this.cfg.targetneedalive;
+    }
 
     this.getMaxHP = function(){
         return this.cfg.hp
@@ -62,7 +65,7 @@ var traveller = function(){
     this.defense = function(){
         this.card.defense()
     }
-
+    
     this.attack = function(targets){
         this.card.attack()
 
@@ -76,7 +79,7 @@ var traveller = function(){
             }
         }
 
-        return false
+        return 1
     }
 }
 wl.extend(traveller,item)

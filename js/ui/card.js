@@ -48,6 +48,11 @@
             var slash = cc.Sequence.create(cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0))
            
             this.runAction(slash)
+
+            var particle = cc.ParticleSystem.create("particles/taken-gem.plist");
+			particle.setPosition(-size.width/2,-size.height/2);
+			particle.setAutoRemoveOnFinish(true);
+            this.addChild(particle)
          }
          layer.defense = function(){
             var dis = 5

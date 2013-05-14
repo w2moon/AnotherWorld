@@ -11,18 +11,18 @@ var attack_end = function(){
 
 var func = function(){
      cc.log("action")
+     var dt = 0;
                     if(this.idx_acting < this.travellers.length){
                         var traveller = this.travellers[this.idx_acting];
                        
                        if(!traveller.isDead()){
 
-                        var targets = this.select_target(traveller.getOwner(),traveller.getTargetType(),traveller.getTargetNum(),traveller.getNature());
+                        var targets = this.select_target(traveller.getOwner(),traveller.getTargetType(),traveller.getTargetNum(),traveller.getNature(),traveller.getTargetNeedAlive());
                         cc.log("target:"+targets.length)
-
-                        if(traveller.attack(targets)){
-                           this.state = state_anim
+                        
+                        dt = traveller.attack(targets);
                         }
-                        }
+                        
                         
                         this.idx_acting++;
                         while(this.idx_acting < this.travellers.length && this.travellers[this.idx_acting].isDead()){
@@ -36,13 +36,14 @@ var func = function(){
                         for(var k in this.players){
                            if(this.players[k].travellers[0].isDead()){
                                this.state = state_finish
-                               return
+                               return 0
                            }
                         }
                         this.state = state_endturn
                     }
 
+                   return dt
                    
 }
 return func;
-}()
+}();

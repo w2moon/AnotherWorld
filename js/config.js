@@ -15,3 +15,5 @@ if(typeof( cc.Util) != "undefined"){
 }
 
 var MAX_BATTLE_TURN = 30;
+
+var ACTION_INTERVAL = 0.5;

@@ -8,6 +8,7 @@ require("data/skillbase.js")
 require("extra/header.js")
 
 require("objects/itemfactory.js")
+require("objects/skill.js")
 require("objects/role.js")
 require("objects/player.js")
 

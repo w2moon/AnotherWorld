@@ -4,4 +4,6 @@ state_start=function(){
                     
 
       this.state = state_newturn;
+
+      return 0;
 }

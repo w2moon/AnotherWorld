@@ -23,14 +23,14 @@
           var player2 = {};
 
           var target = {
-            'enemy':0,
-            'ally' : 1,
+            'enemy':0,//first front then hero
+            'ally' : 1,//first front then hero
             'all' : 2,
             'self' : 3,
-            'allyfront' : 4,
-            'allyhero' : 5,
-            'enemyfront' : 6,
-            'enemyhero' : 7,
+            'onlyallyfront' : 4,
+            'onlyallyhero' : 5,
+            'onlyenemyfront' : 6,
+            'onlyenemyhero' : 7,
             'eventtrigger' : 8,
             'eventtarget' : 9
           };
@@ -61,22 +61,23 @@
          player2.travellers = []
 
          var cfg = {'img':'header.png','baseid':5,'level':9,'rarity':1,
-         'elemtype':'fire','hp':10,'attack':5,'defense':1,'targettype':0,'targetnum':1,'nature':0,'specialattack':10,'speed':3,'dodge':0,'critical':0.2,
+         'elemtype':'fire','hp':10,'attack':5,'defense':1,'targettype':0,'targetnum':1,'targetneedalive':true,'nature':0,'specialattack':10,'speed':3,'dodge':0,'critical':0.2,
          'hp%':0.2,'attack%':0.1,'defense%':0.1,'specialattack%':0,'speed%':0,'dodge%':0,'crit%':0,'skillid':1}
 
          var traveller = wl.itemfactory.create("traveller");
          cfg.speed = 1;
-         traveller.init(player1,cfg)
+         traveller.init(player1,cfg);
          traveller.soul = wl.itemfactory.create("soul");
-         player1.travellers.push(traveller)
-         scene.travellers.push(traveller)
+         traveller.soul.skill = new wl.skill(1);
+         player1.travellers.push(traveller);
+         scene.travellers.push(traveller);
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 2;
-         traveller.init(player1,cfg)
+         traveller.init(player1,cfg);
          traveller.soul = wl.itemfactory.create("soul");
-         player1.travellers.push(traveller)
-         scene.travellers.push(traveller)
+         player1.travellers.push(traveller);
+         scene.travellers.push(traveller);
 
          traveller = wl.itemfactory.create("traveller");
          cfg.speed = 3;
@@ -206,20 +207,23 @@
          scene.addChild(menu)
 
 
+         scene.delayupdate = function(t){
+            this.runAction(cc.Sequence.create(cc.DelayTime.create(t),cc.CallFunc.create(scene.turn_process,this)));
+         }
 
           ////////////////////////////////////////////
           scene.start = function(){
             this.turn = 1
             this.state = state_normal
-            this.schedule(this.turn_process,1);
+            //this.schedule(this.turn_process,1);
+            this.delayupdate(ACTION_INTERVAL);
             cc.log("schedule")
           }
 
           var sort_traveller = function(t1,t2){return t2.getSpeed()-t1.getSpeed();}
 
           scene.turn_process = function(){
-            this.state.apply(this)
-           
+            this.delayupdate(this.state.apply(this))
             
           }
 
@@ -288,31 +292,99 @@
             }
           }
 
-          scene.select_target = function(player,target_type,target_num,nature_type){
+          
+
+          scene.select_target = function(player,target_type,target_num,nature_type,needalive){
+            var targets = [];
             switch(target_type){
                 case target.enemy:
                 {
-                    var targets = [];
+                    
                     for(var k in this.players){
                         if(this.players[k] != player){
                             var travellers = this.players[k].travellers;
-                            nature_select(this.players[k].travellers,nature_type,target_num,targets);
+                            nature_select(this.players[k].travellers,nature_type,target_num,targets,true,needalive);
           
                         }
                     }
 
-                    return targets;
                 }
+                break;
+                case target.ally:
+                {
+                    
+                    for(var k in this.players){
+                        if(this.players[k] == player){
+                            var travellers = this.players[k].travellers;
+                            nature_select(this.players[k].travellers,nature_type,target_num,targets,true,needalive);
+          
+                        }
+                    }
+
+                }
+                break;
                 case target.all:
                 {
-                    var targets = [];
                     for(var k in this.travellers){
-                        targets.push(this.travellers[k])
+                        if(!needalive || !this.travellers[k].isDead()){
+                            targets.push(this.travellers[k])
+                        }
                     }
-                    return targets;
                 }
+                break;
+                case target.self:
+                {
+                    if(!needalive || !player.isDead()){
+                            targets.push(player)
+                    }
+                }
+                break;
+                 case target.onlyallyfront:
+                {
+                    for(var k in this.players){
+                        if(this.players[k] == player){
+                            var travellers = this.players[k].travellers;
+                            nature_select(this.players[k].travellers,nature_type,target_num,targets,false,needalive);
+          
+                        }
+                    }
+                }
+                break;
+                 case target.onlyallyhero:
+                {
+                    for(var k in this.players){
+                        if(this.players[k] == player){
+                            if(!needalive || !this.players[k].travellers[0].isDead()){
+                                targets.push(this.players[k].travellers[0])
+                            }
+                        }
+                    }
+                }
+                break;
+                 case target.onlyenemyfront:
+                {
+                     for(var k in this.players){
+                        if(this.players[k] != player){
+                            var travellers = this.players[k].travellers;
+                            nature_select(this.players[k].travellers,nature_type,target_num,targets,false,needalive);
+          
+                        }
+                    }
+                }
+                break;
+                 case target.onlyenemyhero:
+                {
+                    for(var k in this.players){
+                        if(this.players[k] != player){
+                            if(!needalive || !this.players[k].travellers[0].isDead()){
+                                targets.push(this.players[k].travellers[0])
+                            }
+                        }
+                    }
+                }
+                break;
             }
-            return 1;
+            return targets;
           }
 
           scene.start()
