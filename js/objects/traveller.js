@@ -39,7 +39,6 @@ var traveller = function(){
     this.setHP = function(hp){
         if(hp<0){
             hp = 0;
-            this.card.removeFromParent(false)
         }
         this.hp = hp;
     }
@@ -72,6 +71,9 @@ var traveller = function(){
             targets[k].setHP(targets[k].getHP()-damage)
             targets[k].card.setPercent(targets[k].getHP()/targets[k].getMaxHP())
             targets[k].defense()
+            if(targets[k].getHP()<=0){
+                targets[k].card.dead()
+            }
         }
 
         return false

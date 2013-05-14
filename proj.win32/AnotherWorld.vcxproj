@@ -304,6 +304,13 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\scene\pvpscene.js" />
     <None Include="..\js\scene\questscene.js" />
     <None Include="..\js\scene\storescene.js" />
+    <None Include="..\js\state\action.js" />
+    <None Include="..\js\state\anim.js" />
+    <None Include="..\js\state\endturn.js" />
+    <None Include="..\js\state\finish.js" />
+    <None Include="..\js\state\newturn.js" />
+    <None Include="..\js\state\normal.js" />
+    <None Include="..\js\state\start.js" />
     <None Include="..\js\ui\card.js" />
     <None Include="..\js\ui\loading.js" />
     <None Include="res\AnotherWorld.ico" />

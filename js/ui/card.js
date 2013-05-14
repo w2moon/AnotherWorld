@@ -89,8 +89,19 @@
          layer.hpbar.setPosition(cc.p(-size.width/2,size.width/2+20));
          layer.addChild(layer.hpbar);
 
+         layer.deadmark = null;
+
+         layer.dead = function(){
+            if(this.deadmark == null){
+                    this.deadmark = cc.Sprite.create("dead.png");
+                    this.addChild(this.deadmark)
+                }
+         }
+
          layer.setPercent = function(p){
             this.hpbar.setScaleX(p);
+
+           
          }
 
         

@@ -1,6 +1,23 @@
   wl.create_battlescene = function(){
          var scene = cc.Scene.create();
 
+         scene.speeded = false;
+
+         scene.toggle_speed = function(){
+            cc.log("toggle")
+            var scheduler = cc.Director.getInstance().getScheduler()
+            if(this.speeded){
+                cc.log("speed1");
+                scheduler.setTimeScale(1);
+            }
+            else{
+                cc.log("speed4");
+                scheduler.setTimeScale(4);
+            }
+            this.speeded = !this.speeded;
+         }
+        
+
 
          var player1 = {};
           var player2 = {};
@@ -24,7 +41,8 @@
             'random':2
           }
 
-        
+          
+         
 
          var position = [
          [[0,0]],
@@ -182,6 +200,11 @@
 
           }
 
+           var menuitem = cc.MenuItemImage.create("speed.png","speed.png","speed.png",scene.toggle_speed,scene)
+         var menu = cc.Menu.create(menuitem)
+         menu.setPosition(cc.p(size.width/2,size.height/2))
+         scene.addChild(menu)
+
 
 
           ////////////////////////////////////////////
@@ -201,32 +224,47 @@
           }
 
           var nature_select = function(objs,nature_type,num,out_array){
+          //num can be negative
             switch(nature_type)
             {
             case nature.left:
             {
                 for(var k in objs){
-                    if(num<=0){
+                    if(k==0){
+                        continue;
+                    }
+                    if(num==0){
                         
                         break;
                     }
+                    cc.log("k:"+k)
                     if(!objs[k].isDead()){
-                            out_array.push(objs[k])
+                            out_array.push(objs[k]);
+                            num--;
                         }
-                    num--;
+                    
+                }
+                if(out_array.length==0){
+                    out_array.push(objs[0])
                 }
             }
             break;
             case nature.right:
             {
                 for(var k=objs.length-1;k>=0;k--){
-                    if(num<=0){
+                    if(k==0){
+                        continue;
+                    }
+                    if(num==0){
                         break;
                     }
                     if(!objs[k].isDead()){
-                            out_array.push(objs[k])
+                            out_array.push(objs[k]);
+                            num--;
                         }
-                    num--;
+                }
+                if(out_array.length==0){
+                    out_array.push(objs[0])
                 }
             }
             break;
@@ -258,7 +296,7 @@
                     for(var k in this.players){
                         if(this.players[k] != player){
                             var travellers = this.players[k].travellers;
-                            nature_select(this.players[k].travellers,nature_type,target_num,targets)
+                            nature_select(this.players[k].travellers,nature_type,target_num,targets);
           
                         }
                     }
@@ -267,7 +305,11 @@
                 }
                 case target.all:
                 {
-                    return this.travellers;
+                    var targets = [];
+                    for(var k in this.travellers){
+                        targets.push(this.travellers[k])
+                    }
+                    return targets;
                 }
             }
             return 1;

@@ -107,6 +107,27 @@
     <None Include="..\js\app.js">
       <Filter>js</Filter>
     </None>
+    <None Include="..\js\state\start.js">
+      <Filter>js\state</Filter>
+    </None>
+    <None Include="..\js\state\action.js">
+      <Filter>js\state</Filter>
+    </None>
+    <None Include="..\js\state\endturn.js">
+      <Filter>js\state</Filter>
+    </None>
+    <None Include="..\js\state\finish.js">
+      <Filter>js\state</Filter>
+    </None>
+    <None Include="..\js\state\newturn.js">
+      <Filter>js\state</Filter>
+    </None>
+    <None Include="..\js\state\normal.js">
+      <Filter>js\state</Filter>
+    </None>
+    <None Include="..\js\state\anim.js">
+      <Filter>js\state</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
@@ -129,6 +150,9 @@
     </Filter>
     <Filter Include="js\scene">
       <UniqueIdentifier>{0d786b61-e5cd-4f24-863b-81c9ef72db5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\state">
+      <UniqueIdentifier>{6f801eef-f6f1-4111-bfe1-0e87b16bdda5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
