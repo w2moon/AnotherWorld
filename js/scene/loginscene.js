@@ -169,3 +169,9 @@
    
 
 var loginscene = function(){};
+
+loginscene.prototype.onDidLoadFromCCB = function()
+{
+    cc.log("loaded")
+    this.lblRegion.setString("loading");
+};

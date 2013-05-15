@@ -1,4 +1,60 @@
 
+wl.traveller = function(dbobj,owner){
+    this.dbobj = dbobj;
+    this.owner = owner;
+}
+
+wl.traveller.prototype = {
+    getOwner:function(){return this.owner;},
+
+    getId : function(){return this.dbobj.id;},
+    setId : function(id){ this.dbobj.id = id;},
+
+    getName : function(){return this.dbobj.name;},
+    setName : function(name){ this.dbobj.name = name;},
+
+    getExp : function(){return this.dbobj.exp;},
+    setExp : function(id){ this.dbobj.exp = exp;},
+
+    getLevel : function(){return this.dbobj.level;},
+    setLevel : function(level){ this.dbobj.level = level;},
+
+    getView : function(){return this.dbobj.view;},
+    setView : function(view){ this.dbobj.view = view;},
+
+    getSkill1Id : function(){return this.dbobj.skill1id;},
+    setSkill1Id : function(v){ this.dbobj.skill1id = v;},
+
+    getSkill1Exp : function(){return this.dbobj.skill1exp;},
+    setSkill1Exp : function(v){ this.dbobj.skill1exp = v;},
+
+    getSkill1Level : function(){return this.dbobj.skill1level;},
+    setSkill1Level : function(v){ this.dbobj.skill1level = v;},
+
+    getSkill2Id : function(){return this.dbobj.skill2id;},
+    setSkill2Id : function(v){ this.dbobj.skill2id = v;},
+
+    getSkill2Exp : function(){return this.dbobj.skill2exp;},
+    setSkill2Exp : function(v){ this.dbobj.skill2exp = v;},
+
+    getSkill2Level : function(){return this.dbobj.skill2level;},
+    setSkill2Level : function(v){ this.dbobj.skill2level = v;},
+
+    getNature : function(){return this.dbobj.nature;},
+    setNature : function(v){ this.dbobj.nature = v;},
+
+    getSoulId : function(){return this.dbobj.soulid;},
+    setSoulId : function(v){ this.dbobj.soulid = v;},
+
+    getWeaponId : function(){return this.dbobj.weaponid;},
+    setWeaponId : function(v){ this.dbobj.weaponid = v;},
+
+    getClothId : function(){return this.dbobj.clothid;},
+    setClothId : function(v){ this.dbobj.clothid = v;},
+
+    getTrinketId : function(){return this.dbobj.trinketid;},
+    setTrinketId : function(v){ this.dbobj.trinketid = v;}
+};
 
 var traveller = function(){
     this.init = function(player,cfg){

@@ -1,6 +1,5 @@
   wl.create_battlescene = function(){
          var scene = cc.Scene.create();
-
          scene.speeded = false;
 
          scene.toggle_speed = function(){
