@@ -135,10 +135,12 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>clickme-down.png</string>
+									<string>start.png</string>
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
@@ -409,8 +411,6 @@
 				<true/>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
