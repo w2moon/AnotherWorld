@@ -131,6 +131,21 @@
     <None Include="..\js\objects\skill.js">
       <Filter>js\objects</Filter>
     </None>
+    <None Include="..\js\data\soulbase.js">
+      <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\data\equipmentbase.js">
+      <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\data\soulset.js">
+      <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\data\equipmentset.js">
+      <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\objects\warrior.js">
+      <Filter>js\objects</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

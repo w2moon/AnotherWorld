@@ -24,11 +24,11 @@ wl.tmp_dbrole = function(name){
         date_create:0,
 
         travellers:[
-            {id:1,name:"1",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:2,skill1exp:0,skill1level:1,nature:1,soulid:1,weaponid:1,clothid:2,trinketid:3},
-            {id:2,name:"2",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
-            {id:3,name:"3",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
-            {id:4,name:"4",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
-            {id:5,name:"5",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0}
+            {id:1,name:"1",img:"header.png",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:2,skill1exp:0,skill1level:1,nature:1,soulid:1,weaponid:1,clothid:2,trinketid:3},
+            {id:2,name:"2",img:"header.png",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
+            {id:3,name:"3",img:"header.png",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
+            {id:4,name:"4",img:"header.png",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
+            {id:5,name:"5",img:"header.png",exp:0,level:1,view:1,skill1id:1,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0}
         ],
         souls:[
             {id:1,baseid:1,exp:0,level:1,skillexp:0,skilllevel:1},
@@ -69,6 +69,8 @@ wl.role = function(dbobj){
 };
 
 wl.role.prototype = {
+
+
     getUserid : function(){return this.dbobj.userid;},
     setUserid : function(userid){ this.dbobj.userid = userid;},
 
@@ -112,7 +114,7 @@ wl.role.prototype = {
     setSlot4 : function(slot4){ this.dbobj.slot4 = slot4;},
 
     getSlot5 : function(){return this.dbobj.slot5;},
-    setSlot5 : function(slot5){ this.dbobj.slot1 = slot5;},
+    setSlot5 : function(slot5){ this.dbobj.slot5 = slot5;},
 
     getExtraSoulNum : function(){return this.dbobj.extrasoulnum;},
     setExtraSoulNum : function(extrasoulnum){ this.dbobj.extrasoulnum = extrasoulnum;},
@@ -130,5 +132,59 @@ wl.role.prototype = {
     setDateLastEnter : function(date_lastenter){ this.dbobj.date_lastenter = date_lastenter;},
 
     getDateCreate : function(){return this.dbobj.date_create;},
-    setDateCreate : function(date_create){ this.dbobj.date_create = date_create;}
+    setDateCreate : function(date_create){ this.dbobj.date_create = date_create;},
+
+    ////////////////////////////
+    
+    getTraveller : function(id){
+        if(id == 0){
+            return null;
+        }
+        for(var k in this.travellers){
+            if(this.travellers[k].getId() == id){
+                return this.travellers[k];
+            }
+        }
+        return null;
+    },
+    
+    getSlotTravellers : function(){
+        var slots = [];
+        var travellerid = 0;
+        for(var i=1;i<=5;i++){
+           travellerid = this.dbobj["slot"+i];
+           if(travellerid != 0){
+                slots.push(this.getTraveller(travellerid));
+           }
+           else
+           {
+                slots.push(null);
+           }
+        }
+        return slots;
+    },
+
+    getSoul : function(id){
+        if(id == 0){
+            return null;
+        }
+        for(var k in this.souls){
+            if(this.souls[k].getId() == id){
+                return this.souls[k];
+            }
+        }
+        return null;
+    },
+
+    getEquipment : function(id){
+        if(id == 0){
+            return null;
+        }
+        for(var k in this.equipments){
+            if(this.equipments[k].getId() == id){
+                return this.equipments[k];
+            }
+        }
+        return null;
+    }
 };

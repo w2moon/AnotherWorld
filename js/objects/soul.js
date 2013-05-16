@@ -35,5 +35,15 @@ wl.soul.prototype = {
     setSkillExp : function(v){ this.dbobj.skillexp = v;},
 
     getSkillLevel : function(){return this.dbobj.skilllevel;},
-    setSkillLevel : function(v){ this.dbobj.skilllevel = v;}
+    setSkillLevel : function(v){ this.dbobj.skilllevel = v;},
+
+    /////////////////
+    getBase : function() {return soulbase[this.dbobj.id-1];},
+    getSkillBase : function() { 
+        if(this.getBase().skillid == 0)
+        {
+            return null;
+         }; 
+         return skillbase[this.getBase().skillid-1];
+    }
 };

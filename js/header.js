@@ -4,11 +4,18 @@ require("config.js")
 
 require("data/retcode.js")
 require("data/skillbase.js")
+require("data/equipmentbase.js")
+require("data/soulbase.js")
+require("data/equipmentset.js")
+require("data/soulset.js")
 
 require("extra/header.js")
 
 require("objects/itemfactory.js")
 require("objects/skill.js")
+require("objects/item.js")
+require("objects/equipment.js")
+require("objects/traveller.js")
 require("objects/role.js")
 require("objects/player.js")
 

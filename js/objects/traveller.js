@@ -2,11 +2,11 @@
 wl.traveller = function(dbobj,owner){
     this.dbobj = dbobj;
     this.owner = owner;
+
+    this.hp = 0;
 }
 
 wl.traveller.prototype = {
-    getOwner:function(){return this.owner;},
-
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 
@@ -53,7 +53,80 @@ wl.traveller.prototype = {
     setClothId : function(v){ this.dbobj.clothid = v;},
 
     getTrinketId : function(){return this.dbobj.trinketid;},
-    setTrinketId : function(v){ this.dbobj.trinketid = v;}
+    setTrinketId : function(v){ this.dbobj.trinketid = v;},
+
+    getImg : function(){return this.dbobj.img;},
+    setImg : function(v){ this.dbobj.img = v;},
+
+    //////////////////////////////////////////
+    
+    getOwner:function(){return this.owner;},
+ 
+    getSkill1Base : function(){
+        if(this.getSkill1Id() == 0){
+            return null;
+        } 
+        return skillbase[this.getSkill1Id()-1];
+    },
+    getSkill2Base : function(){
+        if(this.getSkill2Id() == 0){
+            return null;
+        } 
+        return skillbase[this.getSkill2Id()-1];
+    },
+    getSkills : function(){
+        var skills = []
+        var soul = this.getSoul();
+        var skill = soul.getSkillBase();
+        if(skill != null){
+            skills.push(new wl.skill(soul.getSkillLevel(),skill));
+        }
+        skill = this.getSkill1Base();
+        if(skill != null){
+            skills.push(new wl.skill(soul.getSkill1Level(),skill));
+        }
+        skill = this.getSkill2Base();
+        if(skill != null){
+            skills.push(new wl.skill(soul.getSkill2Level(),skill));
+        }
+    },
+
+    getSoul : function(){return this.owner.getSoul(this.getSoulId());},
+
+    getWeapon : function(){return this.owner.getEquipment(this.getWeaponId());},
+    getCloth : function(){return this.owner.getEquipment(this.getClothId());},
+    getTrinket : function(){return this.owner.getEquipment(this.getTrinketId());},
+
+    ////////////////////////////////////////////////////////////
+
+    getProperty : function(name){
+        var v = 0;
+        if(this.getWeapon()){
+            v += this.getWeapon()[name];
+        }
+        if(this.getCloth()){
+            v += this.getCloth()[name];
+        }
+        if(this.getTrinket()){
+            v += this.getTrinket()[name];
+        }
+        if(this.getSoul()){
+            v += this.getSoul().getBase()[name];
+        }
+        return v;
+    },
+
+    getMaxHP : function(){ return this.getProperty("hp");},
+    getAttack : function(){ return this.getProperty("attack");},
+    getMagic : function(){ return this.getProperty("magic");},
+    getDefense : function(){ return this.getProperty("defense");},
+    getSpeed : function(){ return this.getProperty("speed");},
+    getDodge : function(){ return this.getProperty("dodge");},
+    getCrit : function(){ return this.getProperty("crit");}
+
+    //////////////////////////////////
+
+   
 };
 
 var traveller = function(){

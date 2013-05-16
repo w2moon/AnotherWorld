@@ -1,7 +1,7 @@
   wl.create_battlescene = function(){
          var scene = cc.Scene.create();
          scene.speeded = false;
-
+         var size = cc.Director.getInstance().getWinSize();
          scene.toggle_speed = function(){
             cc.log("toggle")
             var scheduler = cc.Director.getInstance().getScheduler()
@@ -15,6 +15,50 @@
             }
             this.speeded = !this.speeded;
          }
+
+         var group_position = [
+         [
+         [[60,80]],
+         [[60,80],[160,180]],
+         [[60,80],[90,200],[180,110]],
+         [[60,80],[60,200],[160,180],[180,80]],
+         [[90,80],[60,230],[140,200],[220,150],[240,-100]],
+         ],
+         [
+         [[260,400]],
+         [[260,400],[220,380]],
+         [[260,400],[200,450],[290,360]],
+         [[260,400],[200,480],[220,380],[320,360]],
+         [[230,400],[140,500],[160,410],[240,360],[320,330]],
+         ],
+         ]
+
+         scene.init = function(players){
+            this.players = players;
+            for(var k in this.players){               
+                this.init_role(this.players[k],k);
+            }
+         };
+
+         scene.init_role = function(player,idx){
+            var warriors = player.getWarriors();
+            var positions = group_position[idx][travellers.length-1]
+            for(var k in travellers){
+                  var card = wl.create_uicard(travellers[k]);
+                  card.setPosition(cc.p(positions[k][0],positions[k][1]));
+                  if(k==0){
+                        card.setScale(1.5)
+                  }
+                  scene.addChild(card);
+
+                  travellers[k].battle_init();
+                  this.travellers.push(travellers[k])
+            }
+            
+         };
+
+         scene.deinit_role = function(role){
+         };
         
 
 
@@ -43,13 +87,7 @@
           
          
 
-         var position = [
-         [[0,0]],
-         [[0,0],[100,100]],
-         [[0,0],[30,120],[120,30]],
-         [[0,0],[0,120],[100,100],[120,0]],
-         [[30,0],[0,150],[80,120],[160,70],[180,-20]],
-         ];
+       
 
          scene.players = []
          scene.players.push(player1)
@@ -144,7 +182,7 @@
          var y = 80;
          var radius = 200;
 		 var degree = 90/player1.travellers.length;
-
+         /*
          for(var k in player1.travellers){
             var card = wl.create_uicard(player1.travellers[k]);
 
@@ -167,7 +205,7 @@
 
           }
 
-          var size = cc.Director.getInstance().getWinSize();
+          
           x = size.width-x
           y = size.height-y
 
@@ -199,8 +237,8 @@
             scene.addChild(card);
 
           }
-
-           var menuitem = cc.MenuItemImage.create("speed.png","speed.png","speed.png",scene.toggle_speed,scene)
+          */
+         var menuitem = cc.MenuItemImage.create("speed.png","speed.png","speed.png",scene.toggle_speed,scene)
          var menu = cc.Menu.create(menuitem)
          menu.setPosition(cc.p(size.width/2,size.height/2))
          scene.addChild(menu)
@@ -212,8 +250,8 @@
 
           ////////////////////////////////////////////
           scene.start = function(){
-            this.turn = 1
-            this.state = state_normal
+            this.turn = 1;
+            this.state = state_normal;
             //this.schedule(this.turn_process,1);
             this.delayupdate(ACTION_INTERVAL);
             cc.log("schedule")
@@ -293,7 +331,7 @@
 
           
 
-          scene.select_target = function(player,target_type,target_num,nature_type,needalive){
+          scene.select_target = function(player,actor,target_type,target_num,nature_type,needalive){
             var targets = [];
             switch(target_type){
                 case target.enemy:
@@ -301,8 +339,8 @@
                     
                     for(var k in this.players){
                         if(this.players[k] != player){
-                            var travellers = this.players[k].travellers;
-                            nature_select(this.players[k].travellers,nature_type,target_num,targets,true,needalive);
+                            var travellers = this.players[k].getSlotTravellers();
+                            nature_select(travellers,nature_type,target_num,targets,true,needalive);
           
                         }
                     }
@@ -314,8 +352,8 @@
                     
                     for(var k in this.players){
                         if(this.players[k] == player){
-                            var travellers = this.players[k].travellers;
-                            nature_select(this.players[k].travellers,nature_type,target_num,targets,true,needalive);
+                            var travellers = this.players[k].getSlotTravellers();
+                            nature_select(travellers,nature_type,target_num,targets,true,needalive);
           
                         }
                     }
@@ -333,8 +371,8 @@
                 break;
                 case target.self:
                 {
-                    if(!needalive || !player.isDead()){
-                            targets.push(player)
+                    if(!needalive || !actor.isDead()){
+                            targets.push(actor)
                     }
                 }
                 break;
@@ -342,8 +380,8 @@
                 {
                     for(var k in this.players){
                         if(this.players[k] == player){
-                            var travellers = this.players[k].travellers;
-                            nature_select(this.players[k].travellers,nature_type,target_num,targets,false,needalive);
+                            var travellers = this.players[k].getSlotTravellers();
+                            nature_select(travellers,nature_type,target_num,targets,false,needalive);
           
                         }
                     }
@@ -353,8 +391,9 @@
                 {
                     for(var k in this.players){
                         if(this.players[k] == player){
-                            if(!needalive || !this.players[k].travellers[0].isDead()){
-                                targets.push(this.players[k].travellers[0])
+                            var travellers = this.players[k].getSlotTravellers();
+                            if(!needalive || !travellers[0].isDead()){
+                                targets.push(travellers[0])
                             }
                         }
                     }
@@ -364,8 +403,8 @@
                 {
                      for(var k in this.players){
                         if(this.players[k] != player){
-                            var travellers = this.players[k].travellers;
-                            nature_select(this.players[k].travellers,nature_type,target_num,targets,false,needalive);
+                            var travellers = this.players[k].getSlotTravellers();
+                            nature_select(travellers,nature_type,target_num,targets,false,needalive);
           
                         }
                     }
@@ -375,8 +414,9 @@
                 {
                     for(var k in this.players){
                         if(this.players[k] != player){
-                            if(!needalive || !this.players[k].travellers[0].isDead()){
-                                targets.push(this.players[k].travellers[0])
+                            var travellers = this.players[k].getSlotTravellers();
+                            if(!needalive || !travellers[0].isDead()){
+                                targets.push(travellers[0])
                             }
                         }
                     }
@@ -385,7 +425,8 @@
             }
             return targets;
           }
-
+          var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.tmp_dbrole("role1"))]
+          scene.init(roles)
           scene.start()
 
          return scene;

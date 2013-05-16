@@ -13,6 +13,9 @@ wl.equipment.prototype = {
     setExp : function(id){ this.dbobj.exp = exp;},
 
     getLevel : function(){return this.dbobj.level;},
-    setLevel : function(level){ this.dbobj.level = level;}
+    setLevel : function(level){ this.dbobj.level = level;},
+
+    //////////////////////////
+    getBase : function() { return equipmentbase[this.dbobj.id-1];}
 };
 

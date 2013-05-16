@@ -277,9 +277,13 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\app.js" />
     <None Include="..\js\config.js" />
     <None Include="..\js\data\anim.js" />
+    <None Include="..\js\data\equipmentbase.js" />
+    <None Include="..\js\data\equipmentset.js" />
     <None Include="..\js\data\itembase.js" />
     <None Include="..\js\data\retcode.js" />
     <None Include="..\js\data\skillbase.js" />
+    <None Include="..\js\data\soulbase.js" />
+    <None Include="..\js\data\soulset.js" />
     <None Include="..\js\extra\class.js" />
     <None Include="..\js\extra\csv.js" />
     <None Include="..\js\extra\dispatcher.js" />
@@ -299,6 +303,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\objects\skill.js" />
     <None Include="..\js\objects\soul.js" />
     <None Include="..\js\objects\traveller.js" />
+    <None Include="..\js\objects\warrior.js" />
     <None Include="..\js\scene\battlescene.js" />
     <None Include="..\js\scene\loginscene.js" />
     <None Include="..\js\scene\mainscene.js" />

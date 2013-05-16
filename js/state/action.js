@@ -17,7 +17,10 @@ var func = function(){
                        
                        if(!traveller.isDead()){
 
-                        var targets = this.select_target(traveller.getOwner(),traveller.getTargetType(),traveller.getTargetNum(),traveller.getNature(),traveller.getTargetNeedAlive());
+                      //  var targets = this.select_target(traveller.getOwner(),traveller,traveller.getTargetType(),traveller.getTargetNum(),traveller.getNature(),traveller.getTargetNeedAlive());
+
+                       var targets = this.select_target(traveller.getOwner(),traveller,0,1,0,true);
+                        
                         cc.log("target:"+targets.length)
                         
                         dt = traveller.attack(targets);
@@ -34,7 +37,7 @@ var func = function(){
                     else
                     {
                         for(var k in this.players){
-                           if(this.players[k].travellers[0].isDead()){
+                           if(this.players[k].getSlotTravellers()[0].isDead()){
                                this.state = state_finish
                                return 0
                            }
