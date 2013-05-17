@@ -74,6 +74,7 @@ wl.traveller.prototype = {
         } 
         return skillbase[this.getSkill2Id()-1];
     },
+    /*
     getSkills : function(){
         var skills = []
         var soul = this.getSoul();
@@ -90,6 +91,7 @@ wl.traveller.prototype = {
             skills.push(new wl.skill(soul.getSkill2Level(),skill));
         }
     },
+    */
 
 
     getSoul : function(){return this.owner.getSoul(this.getSoulId());},

@@ -8,14 +8,20 @@ wl.warrior = function(player,battlefield,traveller){
     this.energy = 0;
     this.maxenergy = 0;
 
+    this.extra_attack = 0;
+
+    this.skills = [];
+
     if(traveller.getSoul().getSkillBase() !== null){
-        this.skillsoul = new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase());
+        this.skills.push( new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase()) );
     }
-    else{
-        this.skillsoul = null;
+   
+    if(traveller.getSkill1Base() != null){
+        this.skills.push(  new wl.skill(this,battlefield,traveller.getSkill1Level(),traveller.getSkill1Base()));
     }
-    this.skillultimate = new wl.skill(this,battlefield,traveller.getSkill1Level(),traveller.getSkill1Base());
-    this.skillpassive = new wl.skill(this,battlefield,traveller.getSkill2Level(),traveller.getSkill2Base());
+    if(traveller.getSkill2Base() != null){
+        this.skills.push( new wl.skill(this,battlefield,traveller.getSkill2Level(),traveller.getSkill2Base()));
+    }
 };
 
 wl.warrior.prototype = {
@@ -23,7 +29,14 @@ wl.warrior.prototype = {
         this.setMaxHP(this.traveller.getMaxHP());
         this.setHP(this.traveller.getMaxHP());
         
-        this.setMaxEnergy(this.traveller.getSoul().getBase().energy);
+        var maxenergy = 0;
+        for(var k in this.skills){
+            this.skills[k].battle_init();
+            if(this.skills[k].getBase().energy > maxenergy){
+                maxenergy = this.skills[k].getBase().energy;
+            }
+        }
+        this.setMaxEnergy(maxenergy);
         this.setEnergy(0);
     },
 
@@ -55,6 +68,49 @@ wl.warrior.prototype = {
     getMaxHP : function(){
         return this.maxhp;
     },
+
+    incHP : function(v){
+        this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
+
+        wl.dispatcher.notify(this,"inc_hp",v);
+    },
+    decHP : function(v){
+        this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
+
+        wl.dispatcher.notify(this,"dec_hp",v);
+    },
+    incMaxHP : function(v){
+        this.setMaxHP(this.getMaxHP()+v)
+
+        wl.dispatcher.notify(this,"inc_maxhp",v);
+    },
+    decMaxHP : function(v){
+        this.setMaxHP(wl.clamp(this.getMaxHP()-v,0,this.getMaxHP()))
+
+        wl.dispatcher.notify(this,"dec_maxhp",v);
+    },
+
+    incEnergy : function(v){
+        this.setEnergy(wl.clamp(this.getEnergy()+v,0,this.getMaxEnergy()))
+
+        wl.dispatcher.notify(this,"inc_eng",v);
+    },
+    decEnergy : function(v){
+        this.setEnergy(wl.clamp(this.getEnergy()-v,0,this.getMaxEnergy()))
+
+        wl.dispatcher.notify(this,"dec_eng",v);
+    },
+    incMaxEnergy : function(v){
+        this.setMaxEnergy(this.getMaxEnergy()+v)
+
+        wl.dispatcher.notify(this,"inc_maxeng",v);
+    },
+    decMaxEnergy : function(v){
+        this.setMaxEnergy(wl.clamp(this.getMaxEnergy()-v,0,this.getMaxEnergy()))
+
+        wl.dispatcher.notify(this,"dec_maxeng",v);
+    },
+    
 
     isSkillUltimateActived : function(){
         return this.getEnergy() >= this.getMaxEnergy();
@@ -88,17 +144,25 @@ wl.warrior.prototype = {
     action : function(){
         if(!this.isDead()){
 
-                     
-              if(this.isSkillUltimateActived())
-              {
-                    return this.getSkillUltimate().cast();
+              for(var k in this.skills){
+                if(this.skills[k].canBeCast()){
+                    return this.skills[k].cast();
+                }
               }
-              else
-              {
-                    return this.attack();
-              }
+              
+              return this.attack();
+              
          }
          return 0;
+    },
+
+    newturn : function(){
+    },
+
+    endturn : function(){
+        for(var k in this.skills){
+              this.skills[k].stepCoolDown();
+        }
     },
 
     attack : function(){
@@ -113,9 +177,8 @@ wl.warrior.prototype = {
             targets[k].defense(this);
 
             var damage = this.calc_damage(this,targets[k]);
-            targets[k].setHP(wl.clamp(targets[k].getHP()-damage,0,targets[k].getMaxHP()))
-
-            wl.dispatcher.notify(targets[k],"hpdec",damage);
+            targets[k].decHP(damage);
+            
         }
         return 1;
     },
