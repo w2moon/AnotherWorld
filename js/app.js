@@ -32,7 +32,7 @@ function run()
 	//cc.FileUtils.getInstance().loadFilenameLookup("fileLookup.plist");
     //cc.Texture2D.setDefaultAlphaPixelFormat(6);
 	var director = cc.Director.getInstance();
-    var scene = wl.create_loginscene();//cc.BuilderReader.loadAsScene("loginscene");
+    var scene = cc.BuilderReader.loadAsScene("loginscene");
 
 
     cc.log(cc.Util.macAddress())

@@ -1,12 +1,13 @@
 
 
-wl.player = function(role){
+wl.player = function(role,battlefield){
     this.role = role;
+    this.battlefield = battlefield;
     
     this.warriors = [];
     var travellers = role.getSlotTravellers();
     for(var k in travellers){
-        this.warriors.push(new wl.warrior(travellers[k]));
+        this.warriors.push(new wl.warrior(this,battlefield,travellers[k]));
     }
 };
 

@@ -1,12 +1,12 @@
    
-   wl.create_uicard = function(traveller){
+   wl.create_uicard = function(warrior){
          var layer = cc.Layer.create();
 
          layer.setAnchorPoint(cc.p(0,0))
 
-         layer.traveller = traveller
+         layer.warrior = warrior
 
-         var header = cc.Sprite.create(traveller.getImg());
+         var header = cc.Sprite.create(warrior.getTraveller().getImg());
          layer.addChild(header);
 
          var btop = cc.Sprite.create("boarder.png");
@@ -25,36 +25,36 @@
          bright.setPosition(cc.p((size.width-size.height)/2,0));
          layer.addChild(bright);
 
-         if(traveller.getSoul() != null){
-            var soul = cc.Sprite.create(traveller.getSoul().getBase().icon);
+         if(warrior.getTraveller().getSoul() != null){
+            var soul = cc.Sprite.create(warrior.getTraveller().getSoul().getBase().icon);
             soul.setPosition(cc.p((size.width-size.height)/2,-size.width/2));
             layer.addChild(soul)
          }
 
          layer.register_event = function(){
-            wl.dispatcher.register("hpinc"+this.traveller.getId(),this.on_hpinc,this);
-            wl.dispatcher.register("hpdec"+this.traveller.getId(),this.on_hpdec,this);
+            wl.dispatcher.register(this.warrior,"hpinc",this.on_hpinc,this);
+            wl.dispatcher.register(this.warrior,"hpdec",this.on_hpdec,this);
 
-            wl.dispatcher.register("attack"+this.traveller.getId(),this.attack,this);
-            wl.dispatcher.register("defense"+this.traveller.getId(),this.defense,this);
+            wl.dispatcher.register(this.warrior,"attack",this.attack,this);
+            wl.dispatcher.register(this.warrior,"defense",this.defense,this);
          }
 
          layer.unregister_event = function(){
-            wl.dispatcher.unregister("hpinc"+this.traveller.getId(),this.on_hpinc,this);
-            wl.dispatcher.unregister("hpdec"+this.traveller.getId(),this.on_hpdec,this);
+            wl.dispatcher.unregister(this.warrior,"hpinc",this.on_hpinc,this);
+            wl.dispatcher.unregister(this.warrior,"hpdec",this.on_hpdec,this);
 
-            wl.dispatcher.unregister("attack"+this.traveller.getId(),this.attack,this);
-            wl.dispatcher.unregister("defense"+this.traveller.getId(),this.defense,this);
+            wl.dispatcher.unregister(this.warrior,"attack",this.attack,this);
+            wl.dispatcher.unregister(this.warrior,"defense",this.defense,this);
          }
 
          layer.on_hpinc = function(){
-            this.hpbar.setScaleX(this.traveller.getHP()/this.traveller.getMaxHP());
+            this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
          }
 
           layer.on_hpdec = function(){
-            this.hpbar.setScaleX(this.traveller.getHP()/this.traveller.getMaxHP());
+            this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
 
-            if(this.traveller.isDead()){
+            if(this.warrior.isDead()){
                 this.dead();
             }
          }
@@ -72,7 +72,7 @@
          //flip = 1 from left to right ,-1 from right to left
             flip = flip || 1
            // var slash = cc.Sequence.create(cc.ScaleTo.create(0.2,1.2),cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0),cc.ScaleTo.create(0.2,1))
-
+           cc.log("warrior"+this.warrior.getTraveller().getId())
             var slash = cc.Sequence.create(cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0))
            
             this.runAction(slash)
@@ -86,7 +86,7 @@
             var dis = 5
             var pos = this.getPosition()
             var anim = cc.Sequence.create(cc.MoveTo.create(0.1,cc.p(pos.x-dis,pos.y)),cc.MoveTo.create(0.2,cc.p(pos.x+dis,pos.y)),cc.MoveTo.create(0.1,cc.p(pos.x,pos.y)))
-            //this.runAction(anim)
+            this.runAction(anim)
          }
          layer.magic = function(){
             var dis = 3

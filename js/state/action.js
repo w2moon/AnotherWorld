@@ -10,34 +10,20 @@ var attack_end = function(){
 
 
 var func = function(){
-     cc.log("action")
-     var dt = 0;
-                    if(this.idx_acting < this.travellers.length){
-                        var traveller = this.travellers[this.idx_acting];
-                       
-                       if(!traveller.isDead()){
+                    cc.log("action")
+                    var dt = 0;
+                    if(this.idx_acting < this.warriors.length){
 
-                      //  var targets = this.select_target(traveller.getOwner(),traveller,traveller.getTargetType(),traveller.getTargetNum(),traveller.getNature(),traveller.getTargetNeedAlive());
+                        dt = this.warriors[this.idx_acting].action();
 
-                       var targets = this.select_target(traveller.getOwner(),traveller,0,1,0,true);
-                        
-                        cc.log("target:"+targets.length)
-                        
-                        dt = traveller.attack(targets);
-                        }
-                        
-                        
                         this.idx_acting++;
-                        while(this.idx_acting < this.travellers.length && this.travellers[this.idx_acting].isDead()){
+                        while(this.idx_acting < this.warriors.length && this.warriors[this.idx_acting].isDead()){
                               this.idx_acting++
                         }
-                        
-                        
                     }
-                    else
-                    {
+                    else{
                         for(var k in this.players){
-                           if(this.players[k].getSlotTravellers()[0].isDead()){
+                           if(this.players[k].isDead()){
                                this.state = state_finish
                                return 0
                            }

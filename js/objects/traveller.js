@@ -91,6 +91,7 @@ wl.traveller.prototype = {
         }
     },
 
+
     getSoul : function(){return this.owner.getSoul(this.getSoulId());},
 
     getWeapon : function(){return this.owner.getEquipment(this.getWeaponId());},
@@ -102,13 +103,13 @@ wl.traveller.prototype = {
     getProperty : function(name){
         var v = 0;
         if(this.getWeapon()){
-            v += this.getWeapon()[name];
+            v += this.getWeapon().getBase()[name];
         }
         if(this.getCloth()){
-            v += this.getCloth()[name];
+            v += this.getCloth().getBase()[name];
         }
         if(this.getTrinket()){
-            v += this.getTrinket()[name];
+            v += this.getTrinket().getBase()[name];
         }
         if(this.getSoul()){
             v += this.getSoul().getBase()[name];

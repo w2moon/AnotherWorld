@@ -16,6 +16,7 @@ require("objects/skill.js")
 require("objects/item.js")
 require("objects/equipment.js")
 require("objects/traveller.js")
+require("objects/warrior.js")
 require("objects/role.js")
 require("objects/player.js")
 

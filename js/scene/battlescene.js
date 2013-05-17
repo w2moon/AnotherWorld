@@ -33,26 +33,30 @@
          ],
          ]
 
-         scene.init = function(players){
-            this.players = players;
-            for(var k in this.players){               
-                this.init_role(this.players[k],k);
+         scene.init = function(roles){
+            this.players = [];
+            this.warriors = [];
+            for(var k in roles){
+                var player = new wl.player(roles[k],this);
+                this.players.push(player);
+                this.init_role(player,k);
             }
+           
          };
 
          scene.init_role = function(player,idx){
             var warriors = player.getWarriors();
-            var positions = group_position[idx][travellers.length-1]
-            for(var k in travellers){
-                  var card = wl.create_uicard(travellers[k]);
+            var positions = group_position[idx][warriors.length-1]
+            for(var k in warriors){
+                  var card = wl.create_uicard(warriors[k]);
                   card.setPosition(cc.p(positions[k][0],positions[k][1]));
                   if(k==0){
-                        card.setScale(1.5)
+                        card.setScale(1.5);
                   }
                   scene.addChild(card);
 
-                  travellers[k].battle_init();
-                  this.travellers.push(travellers[k])
+                  warriors[k].battle_init();
+                  this.warriors.push(warriors[k]);
             }
             
          };
@@ -278,14 +282,13 @@
                         
                         break;
                     }
-                    cc.log("k:"+k)
                     if(!objs[k].isDead()){
                             out_array.push(objs[k]);
                             num--;
                         }
                     
                 }
-                if(out_array.length==0){
+                if(out_array.length===0){
                     out_array.push(objs[0])
                 }
             }
@@ -339,9 +342,10 @@
                     
                     for(var k in this.players){
                         if(this.players[k] != player){
-                            var travellers = this.players[k].getSlotTravellers();
-                            nature_select(travellers,nature_type,target_num,targets,true,needalive);
-          
+                            nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
+                            if(targets.length >= target_num){
+                                break;
+                            }
                         }
                     }
 
@@ -352,9 +356,10 @@
                     
                     for(var k in this.players){
                         if(this.players[k] == player){
-                            var travellers = this.players[k].getSlotTravellers();
-                            nature_select(travellers,nature_type,target_num,targets,true,needalive);
-          
+                            nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
+                            if(targets.length >= target_num){
+                                break;
+                            }
                         }
                     }
 
@@ -362,9 +367,9 @@
                 break;
                 case target.all:
                 {
-                    for(var k in this.travellers){
-                        if(!needalive || !this.travellers[k].isDead()){
-                            targets.push(this.travellers[k])
+                    for(var k in this.warriors){
+                        if(!needalive || !this.warriors[k].isDead()){
+                            targets.push(this.warriors[k])
                         }
                     }
                 }
@@ -380,9 +385,10 @@
                 {
                     for(var k in this.players){
                         if(this.players[k] == player){
-                            var travellers = this.players[k].getSlotTravellers();
-                            nature_select(travellers,nature_type,target_num,targets,false,needalive);
-          
+                            nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,false,needalive);
+                            if(targets.length >= target_num){
+                                break;
+                            }
                         }
                     }
                 }
@@ -391,9 +397,9 @@
                 {
                     for(var k in this.players){
                         if(this.players[k] == player){
-                            var travellers = this.players[k].getSlotTravellers();
-                            if(!needalive || !travellers[0].isDead()){
-                                targets.push(travellers[0])
+                            var warriors = this.players[k].getWarriors();
+                            if(!needalive || !warriors[0].isDead()){
+                                targets.push(warriors[0])
                             }
                         }
                     }
@@ -405,7 +411,9 @@
                         if(this.players[k] != player){
                             var travellers = this.players[k].getSlotTravellers();
                             nature_select(travellers,nature_type,target_num,targets,false,needalive);
-          
+                            if(targets.length >= target_num){
+                                break;
+                            }
                         }
                     }
                 }
@@ -414,9 +422,9 @@
                 {
                     for(var k in this.players){
                         if(this.players[k] != player){
-                            var travellers = this.players[k].getSlotTravellers();
-                            if(!needalive || !travellers[0].isDead()){
-                                targets.push(travellers[0])
+                            var warriors = this.players[k].getWarriors();
+                            if(!needalive || !warriors[0].isDead()){
+                                targets.push(warriors[0])
                             }
                         }
                     }
@@ -425,7 +433,7 @@
             }
             return targets;
           }
-          var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.tmp_dbrole("role1"))]
+          var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.tmp_dbrole("role2"))]
           scene.init(roles)
           scene.start()
 

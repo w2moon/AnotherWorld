@@ -63,7 +63,7 @@ var roleaction = {
 
 var skillbase= [
     {'id':1,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
-    'eventid':gameevent.attack_after,'eventisenemy':0,'eventvalue':0,'rate':0.5,'cooldown':3,
+    'eventid':gameevent.attack_after,'eventisenemy':0,'eventvalue':0,'rate':0.5,'cooldown':3,energy:1,
     'useraction':'magic','userparticle':'',
     'target1type':'enemy','target1num':0,target1needalive:true,'target1action':'defense','target1particle':'','target1effecttype':'hp','target1effectvalue':-10,
      'target2type':'','target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
