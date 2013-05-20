@@ -9,6 +9,9 @@ wl.warrior = function(player,battlefield,traveller){
     this.maxenergy = 0;
 
     this.extra_attack = 0;
+    this.extra_defense = 0;
+    this.extra_magic = 0;
+    this.extra_speed = 0;
 
     this.skills = [];
 
