@@ -325,9 +325,7 @@
             break;
             }
 
-            if(num<0){
-                cc.log("targets"+out_array.length+" num:"+num)
-            }
+           
           }
 
           

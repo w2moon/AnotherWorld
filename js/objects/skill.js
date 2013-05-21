@@ -11,14 +11,33 @@ wl.skill = function(warrior,battlefield,level,skillbase){
 wl.skill.prototype = {
     battle_init : function(){
         this.cooldown = 0;
+
+        this.register_event()
     },
     register_event : function(){
+        wl.dispatcher.register(this.warrior,this.getBase().eventid,this.on_event,this);
     },
     unregister_event : function(){
+        wl.dispatcher.unregister(this.warrior,this.getBase().eventid,this.on_event,this);
+    },
+
+    on_event : function(){
+        cc.log("event")
     },
 
     getBase : function(){
         return this.skillbase
+    },
+
+    getNeedEnergy : function(){
+        return this.skillbase.energy;
+    },
+
+    getCoolDown : function(){
+        return this.cooldown;
+    },
+    setCoolDown : function(v){
+        this.cooldown = v;
     },
     startCoolDown : function(){
         this.cooldown = this.getBase().cooldown;
@@ -98,9 +117,7 @@ wl.skill.prototype = {
         return this.skillbase.triggertype == triggertype.active;
     },
 
-    getNeedEnergy : function(){
-        return this.skillbase.energy;
-    },
+    
 
     doEffect : function(){
     }

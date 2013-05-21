@@ -13,6 +13,10 @@ if(typeof wl.dispatcher.objects === "undefined"){
     wl.dispatcher.objects = []
 }
 
+if(typeof wl.dispatcher.objectsallevent === "undefined"){
+    wl.dispatcher.objectsallevent = []
+}
+
 var find_obj = function(obj){
     for(var k in wl.dispatcher.objects){
         if(wl.dispatcher.objects[k][0] == obj){
@@ -20,6 +24,50 @@ var find_obj = function(obj){
         }
     }
     return null;
+};
+
+var find_objallevent = function(obj){
+     for(var k in wl.dispatcher.objectsallevent){
+        if(wl.dispatcher.objectsallevent[k][0] == obj){
+            return wl.dispatcher.objectsallevent[k][1];
+        }
+    }
+    return null;
+};
+
+wl.dispatcher.registerobj = function(obj,func){
+    var processer = find_objallevent(obj);
+    if(processer == null){
+        processer = [];
+        wl.dispatcher.objectsallevent.push([obj,processer])
+    }
+
+     if(arguments.length === 3){
+        processer.push({func:func,args:null})
+     }
+     else{
+        processer.push({func:func,args:Array.prototype.slice.call(arguments, 3)})
+     }
+};
+
+wl.dispatcher.unregisterobj = function(obj,func){
+    var processer = find_objallevent(obj);
+    if(processer == null){
+        return;
+    }
+
+    for(var k in processer){
+        if(processer[k].func == func)
+        if(processer.func === func 
+        && equal_args(args.args,args2)
+        ){
+            wl.dispatcher.registed[event][k] = null
+        }
+        else
+        {
+            empty = false
+        }
+    }
 };
 
 wl.dispatcher.register = function(obj,event,func){

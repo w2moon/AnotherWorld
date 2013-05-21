@@ -54,7 +54,7 @@ skill_after:13,
 
 //user value isenemy
 hpinc:14,
-hpdec:15,
+decHP:15,
 attackinc:16,
 attackdec:17,
 defenseinc:18,
@@ -93,5 +93,13 @@ var skillbase= [
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'decHP','target1effectvalue':-5,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
+
+     {'id':2,'icon':'soul.png','name':'skill2','type':skilltype.heal,'expclass':1,'specialrate':1,triggertype:triggertype.active,
+    'eventid':"decHP",'eventisenemy':0,'eventvalue':0,'rate':0.5,'cooldown':1,energy:1,
+    'useraction':'magic','userparticle':'particles/taken-gem.plist',
+    battlefieldaction:"",battlefieldparticle:"",duration:1,
+    'target1type':targettype.eventtarget,'target1num':1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'decHP','target1effectvalue':-5,
+     'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
+
 ];
 

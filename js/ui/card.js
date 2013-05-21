@@ -33,7 +33,7 @@
 
          layer.register_event = function(){
             wl.dispatcher.register(this.warrior,"inc_hp",this.on_hpinc,this);
-            wl.dispatcher.register(this.warrior,"dec_hp",this.on_hpdec,this);
+            wl.dispatcher.register(this.warrior,"decHP",this.on_hpdec,this);
 
             wl.dispatcher.register(this.warrior,"attack",this.attack,this);
             wl.dispatcher.register(this.warrior,"defense",this.defense,this);
@@ -44,7 +44,7 @@
 
          layer.unregister_event = function(){
             wl.dispatcher.unregister(this.warrior,"inc_hp",this.on_hpinc,this);
-            wl.dispatcher.unregister(this.warrior,"dec_hp",this.on_hpdec,this);
+            wl.dispatcher.unregister(this.warrior,"decHP",this.on_hpdec,this);
 
             wl.dispatcher.unregister(this.warrior,"attack",this.attack,this);
             wl.dispatcher.unregister(this.warrior,"defense",this.defense,this);
@@ -70,7 +70,6 @@
          };
 
          layer.on_particle = function(particle){
-         cc.log("onparticle:"+particle)
             var inst = cc.ParticleSystem.create(particle);
             inst.setPosition(-size.width/2,-size.height/2);
 			inst.setAutoRemoveOnFinish(true);

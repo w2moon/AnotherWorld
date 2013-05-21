@@ -209,7 +209,7 @@ wl.warrior.prototype = {
     decHP : function(v){
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
 
-        wl.dispatcher.notify(this,"dec_hp",v);
+        wl.dispatcher.notify(this,"decHP",v);
     },
     incMaxHP : function(v){
         this.setMaxHP(this.getMaxHP()+v)
