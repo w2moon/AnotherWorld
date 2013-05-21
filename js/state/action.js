@@ -10,7 +10,7 @@ var attack_end = function(){
 
 
 var func = function(){
-                    cc.log("action")
+                   // cc.log("action")
                     var dt = 0;
                     if(this.idx_acting < this.warriors.length){
 

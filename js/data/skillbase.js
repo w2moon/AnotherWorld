@@ -7,6 +7,31 @@ var skilltype = {
     special:4
 };
 
+ var naturetype = {
+            'left':0,
+            'right':1,
+            'random':2
+          }
+
+ var targettype = {
+            none:-1,
+            'enemy':0,//first front then hero
+            'ally' : 1,//first front then hero
+            'all' : 2,
+            'self' : 3,
+            'onlyallyfront' : 4,
+            'onlyallyhero' : 5,
+            'onlyenemyfront' : 6,
+            'onlyenemyhero' : 7,
+            'eventtrigger' : 8,
+            'eventtarget' : 9
+          };
+
+var triggertype = {
+    active:0,
+    passive:1
+};
+
 var gameevent = {
     battle_start:0,
 battle_end:1,
@@ -16,8 +41,8 @@ action_start:2,
 action_end:3,
 
 //user targets isenemy
-attack_before:4,
-attack_after:5,
+attacke:4,
+defense:5,
 heal_before:6,
 heal_after:7,
 dodge_before:8,
@@ -62,10 +87,11 @@ var roleaction = {
 };
 
 var skillbase= [
-    {'id':1,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
-    'eventid':gameevent.attack_after,'eventisenemy':0,'eventvalue':0,'rate':0.5,'cooldown':3,energy:1,
-    'useraction':'magic','userparticle':'',
-    'target1type':'enemy','target1num':0,target1needalive:true,'target1action':'defense','target1particle':'','target1effecttype':'hp','target1effectvalue':-10,
-     'target2type':'','target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
+    {'id':1,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,triggertype:triggertype.active,
+    'eventid':gameevent.attack,'eventisenemy':0,'eventvalue':0,'rate':0.5,'cooldown':3,energy:1,
+    'useraction':'magic','userparticle':'particles/taken-gem.plist',
+    battlefieldaction:"",battlefieldparticle:"",duration:1,
+    'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'decHP','target1effectvalue':-5,
+     'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
 ];
 

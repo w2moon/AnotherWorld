@@ -119,10 +119,11 @@ wl.traveller.prototype = {
         return v;
     },
 
-    getMaxHP : function(){ return this.getProperty("hp");},
+    getMaxHP : function(){ return this.getProperty("maxhp");},
     getAttack : function(){ return this.getProperty("attack");},
     getMagic : function(){ return this.getProperty("magic");},
     getDefense : function(){ return this.getProperty("defense");},
+    getMagicDefense : function(){ return this.getProperty("magicdefense");},
     getSpeed : function(){ return this.getProperty("speed");},
     getDodge : function(){ return this.getProperty("dodge");},
     getCrit : function(){ return this.getProperty("crit");}

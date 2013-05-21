@@ -69,24 +69,9 @@
          var player1 = {};
           var player2 = {};
 
-          var target = {
-            'enemy':0,//first front then hero
-            'ally' : 1,//first front then hero
-            'all' : 2,
-            'self' : 3,
-            'onlyallyfront' : 4,
-            'onlyallyhero' : 5,
-            'onlyenemyfront' : 6,
-            'onlyenemyhero' : 7,
-            'eventtrigger' : 8,
-            'eventtarget' : 9
-          };
+         
 
-          var nature = {
-            'left':0,
-            'right':1,
-            'random':2
-          }
+         
 
           
          
@@ -268,11 +253,11 @@
             
           }
 
-          var nature_select = function(objs,nature_type,num,out_array){
+          var nature_select = function(objs,nature_type,num,out_array,selecthero,needalive){
           //num can be negative
             switch(nature_type)
             {
-            case nature.left:
+            case naturetype.left:
             {
                 for(var k in objs){
                     if(k==0){
@@ -282,18 +267,19 @@
                         
                         break;
                     }
-                    if(!objs[k].isDead()){
+                    if((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead())){
                             out_array.push(objs[k]);
                             num--;
                         }
                     
                 }
-                if(out_array.length===0){
+                if(selecthero && (out_array.length===0 || num < 0)){
                     out_array.push(objs[0])
                 }
             }
             break;
-            case nature.right:
+            case naturetype.right:
             {
                 for(var k=objs.length-1;k>=0;k--){
                     if(k==0){
@@ -302,22 +288,30 @@
                     if(num==0){
                         break;
                     }
-                    if(!objs[k].isDead()){
+                    if((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead())){
                             out_array.push(objs[k]);
                             num--;
                         }
                 }
-                if(out_array.length==0){
+                if(selecthero && (out_array.length==0  || num < 0)){
                     out_array.push(objs[0])
                 }
             }
             break;
-            case nature.random:
+            case naturetype.random:
             {
                 var arr = []
                 for(var i in objs){
-                    if(!objs[i].isDead()){
-                        arr.push(objs[i]);
+                    if((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead())){
+                        if(i == 0 && !selecthero)
+                        {
+                        }
+                        else
+                        {
+                            arr.push(objs[i]);
+                        }
                     }
                 }
                 while(arr.length >0 &&num>0){
@@ -330,6 +324,10 @@
             }
             break;
             }
+
+            if(num<0){
+                cc.log("targets"+out_array.length+" num:"+num)
+            }
           }
 
           
@@ -337,13 +335,13 @@
           scene.select_target = function(player,actor,target_type,target_num,nature_type,needalive){
             var targets = [];
             switch(target_type){
-                case target.enemy:
+                case targettype.enemy:
                 {
                     
                     for(var k in this.players){
                         if(this.players[k] != player){
                             nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
-                            if(targets.length >= target_num){
+                            if(target_num != -1 && targets.length >= target_num){
                                 break;
                             }
                         }
@@ -351,13 +349,13 @@
 
                 }
                 break;
-                case target.ally:
+                case targettype.ally:
                 {
                     
                     for(var k in this.players){
                         if(this.players[k] == player){
                             nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
-                            if(targets.length >= target_num){
+                            if(target_num != -1 && targets.length >= target_num){
                                 break;
                             }
                         }
@@ -365,7 +363,7 @@
 
                 }
                 break;
-                case target.all:
+                case targettype.all:
                 {
                     for(var k in this.warriors){
                         if(!needalive || !this.warriors[k].isDead()){
@@ -374,26 +372,26 @@
                     }
                 }
                 break;
-                case target.self:
+                case targettype.self:
                 {
                     if(!needalive || !actor.isDead()){
                             targets.push(actor)
                     }
                 }
                 break;
-                 case target.onlyallyfront:
+                 case targettype.onlyallyfront:
                 {
                     for(var k in this.players){
                         if(this.players[k] == player){
                             nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,false,needalive);
-                            if(targets.length >= target_num){
+                            if(target_num != -1 && targets.length >= target_num){
                                 break;
                             }
                         }
                     }
                 }
                 break;
-                 case target.onlyallyhero:
+                 case targettype.onlyallyhero:
                 {
                     for(var k in this.players){
                         if(this.players[k] == player){
@@ -405,20 +403,20 @@
                     }
                 }
                 break;
-                 case target.onlyenemyfront:
+                 case targettype.onlyenemyfront:
                 {
                      for(var k in this.players){
                         if(this.players[k] != player){
                             var travellers = this.players[k].getSlotTravellers();
                             nature_select(travellers,nature_type,target_num,targets,false,needalive);
-                            if(targets.length >= target_num){
+                            if(target_num != -1 && targets.length >= target_num){
                                 break;
                             }
                         }
                     }
                 }
                 break;
-                 case target.onlyenemyhero:
+                 case targettype.onlyenemyhero:
                 {
                     for(var k in this.players){
                         if(this.players[k] != player){

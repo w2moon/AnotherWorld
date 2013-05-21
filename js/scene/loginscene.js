@@ -205,7 +205,7 @@ loginscene.prototype.onPressStart = function()
             var msg = wl.msg.create("register");
             msg.userid = userid;
             msg.pwd = pwd;
-            wl.http.send(msg,scene.on_register,this);
+            wl.http.send(msg,this.on_register,this);
 
             
 

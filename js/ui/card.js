@@ -37,6 +37,9 @@
 
             wl.dispatcher.register(this.warrior,"attack",this.attack,this);
             wl.dispatcher.register(this.warrior,"defense",this.defense,this);
+
+            wl.dispatcher.register(this.warrior,"action",this.on_action,this);
+            wl.dispatcher.register(this.warrior,"particle",this.on_particle,this);
          }
 
          layer.unregister_event = function(){
@@ -45,19 +48,34 @@
 
             wl.dispatcher.unregister(this.warrior,"attack",this.attack,this);
             wl.dispatcher.unregister(this.warrior,"defense",this.defense,this);
+
+            wl.dispatcher.unregister(this.warrior,"action",this.on_action,this);
+            wl.dispatcher.unregister(this.warrior,"particle",this.on_particle,this);
          }
 
          layer.on_hpinc = function(){
             this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
          }
 
-          layer.on_hpdec = function(){
+          layer.on_hpdec = function(v){
             this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
 
             if(this.warrior.isDead()){
                 this.dead();
             }
          }
+
+         layer.on_action = function(action){
+            this[action]();
+         };
+
+         layer.on_particle = function(particle){
+         cc.log("onparticle:"+particle)
+            var inst = cc.ParticleSystem.create(particle);
+            inst.setPosition(-size.width/2,-size.height/2);
+			inst.setAutoRemoveOnFinish(true);
+            this.addChild(inst);
+         };
 
          layer.move = function(dt){
          cc.log("move")
@@ -68,11 +86,11 @@
          layer.stand = function(){
             this.stopAllActions()
          }
-         layer.attack = function(flip){
+         layer.attack = function(){
          //flip = 1 from left to right ,-1 from right to left
-            flip = flip || 1
+            flip =  1
            // var slash = cc.Sequence.create(cc.ScaleTo.create(0.2,1.2),cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0),cc.ScaleTo.create(0.2,1))
-           cc.log("warrior"+this.warrior.getTraveller().getId())
+        
             var slash = cc.Sequence.create(cc.RotateTo.create(0.2,-45*flip),cc.RotateTo.create(0.2,45*flip),cc.RotateTo.create(0.1,0))
            
             this.runAction(slash)
