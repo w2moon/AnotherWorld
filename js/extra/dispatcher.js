@@ -42,11 +42,11 @@ wl.dispatcher.registerobj = function(obj,func){
         wl.dispatcher.objectsallevent.push([obj,processer])
     }
 
-     if(arguments.length === 3){
+     if(arguments.length === 2){
         processer.push({func:func,args:null})
      }
      else{
-        processer.push({func:func,args:Array.prototype.slice.call(arguments, 3)})
+        processer.push({func:func,args:Array.prototype.slice.call(arguments, 2)})
      }
 };
 
@@ -55,18 +55,29 @@ wl.dispatcher.unregisterobj = function(obj,func){
     if(processer == null){
         return;
     }
-
+     if(arguments.length > 2){
+        args2 = Array.prototype.slice.call(arguments, 2)
+    }
+    var empty = true;
     for(var k in processer){
-        if(processer[k].func == func)
-        if(processer.func === func 
-        && equal_args(args.args,args2)
+        if(processer[k].func === func 
+        && equal_args(processer[k].args,args2)
         ){
-            wl.dispatcher.registed[event][k] = null
+            processer[k] = null
         }
         else
         {
             empty = false
         }
+    }
+
+    if(empty){
+         for(var k in wl.dispatcher.objectsallevent){
+        if(wl.dispatcher.objectsallevent[k][0] == obj){
+            wl.dispatcher.objectsallevent.splice(k,1);
+            break;
+        }
+    }
     }
 };
 
@@ -257,6 +268,53 @@ wl.dispatcher.notify = function(obj,event){
         }
         
     }
+    }
+
+
+    var processer = find_objallevent(obj);
+    if(processer != null){
+        
+        var args = null
+    if(arguments.length > 2){
+        args = Array.prototype.slice.call(arguments, 2)
+    }
+            
+            
+
+        for(var k in processer){
+            if(processer[k].args != null){
+            if( processer[k].args.length > 1){
+                 var newargs = new Array()
+                 newargs.push(obj);
+                 newargs.push(event);
+                for(var i=1;i<queue[k].args.length;++i){
+                    newargs.push(processer[k].args[i])
+                }
+                for(var i=0;i<args.length;++i){
+                    newargs.push(args[i])
+                }
+                processer[k].func.apply(processer[k].args[0],newargs)
+            }
+            else{
+                var newargs = new Array()
+                 newargs.push(obj);
+                 newargs.push(event);
+                  for(var i=0;i<args.length;++i){
+                    newargs.push(args[i])
+                }
+                processer[k].func.apply(processer[k].args[0],newargs)
+            }
+            }
+            else{
+                var newargs = new Array()
+                 newargs.push(obj);
+                 newargs.push(event);
+                  for(var i=0;i<args.length;++i){
+                    newargs.push(args[i])
+                }
+                processer[k].func.apply(null,newargs)
+            }
+        }
     }
 }
 

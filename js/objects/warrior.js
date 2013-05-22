@@ -46,6 +46,14 @@ wl.warrior.prototype = {
         this.setEnergy(0);
     },
 
+    isEnemy : function(warrior){
+        return this.getPlayer() != warrior.getPlayer();
+    },
+
+    isAlly : function(warrior){
+        return this.getPlayer() == warrior.getPlayer();
+    },
+
     getPlayer : function(){
         return this.player;
     },
@@ -387,13 +395,23 @@ wl.warrior.prototype = {
             targets[k].decHP(damage);
             
         }
-        wl.dispatcher.notify(this,"attack",this,targets);
+        wl.dispatcher.notify(this,"attack",targets);
         return 1;
     },
 
     defense : function(attacker){
-        wl.dispatcher.notify(this,"defense",this,attacker);
-    }
+        wl.dispatcher.notify(this,"defense",[attacker]);
+    },
 
+    ///////////////////////////////
+    on_event : function(){
+        var args = Array.prototype.slice.call(arguments, 0);
+         for(var k in this.skills){
+                if(!this.skills[k].isActiveSkill()){
+                    //this.skills[k].on_event.apply(this.skills[k],args);
+                    this.battlefield.addTask(this.skills[k],this.skills[k].on_event,args);
+                }
+         }
+    }
    
 };

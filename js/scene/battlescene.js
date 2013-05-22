@@ -1,16 +1,15 @@
   wl.create_battlescene = function(){
          var scene = cc.Scene.create();
+
+         scene.functask = new wl.functask();
          scene.speeded = false;
          var size = cc.Director.getInstance().getWinSize();
          scene.toggle_speed = function(){
-            cc.log("toggle")
             var scheduler = cc.Director.getInstance().getScheduler()
             if(this.speeded){
-                cc.log("speed1");
                 scheduler.setTimeScale(1);
             }
             else{
-                cc.log("speed4");
                 scheduler.setTimeScale(4);
             }
             this.speeded = !this.speeded;
@@ -32,6 +31,10 @@
          [[230,400],[140,500],[160,410],[240,360],[320,330]],
          ],
          ]
+
+         scene.addTask = function(){
+            this.functask.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+         }
 
          scene.init = function(roles){
             this.players = [];
@@ -57,9 +60,18 @@
 
                   warriors[k].battle_init();
                   this.warriors.push(warriors[k]);
+
+                  wl.dispatcher.registerobj(warriors[k],this.on_warrior_event,this);
             }
             
          };
+
+         scene.on_warrior_event = function(){
+            var args = Array.prototype.slice.call(arguments, 0);
+            for(var k in this.warriors){
+                this.warriors[k].on_event.apply(this.warriors[k],args);
+            }
+         }
 
          scene.deinit_role = function(role){
          };
@@ -249,6 +261,9 @@
           var sort_traveller = function(t1,t2){return t2.getSpeed()-t1.getSpeed();}
 
           scene.turn_process = function(){
+            if(this.functask.next()){
+                return;
+            }
             this.delayupdate(this.state.apply(this))
             
           }
@@ -330,7 +345,7 @@
 
           
 
-          scene.select_target = function(player,actor,target_type,target_num,nature_type,needalive){
+          scene.select_target = function(player,actor,target_type,target_num,nature_type,needalive,trigger,event_targets){
             var targets = [];
             switch(target_type){
                 case targettype.enemy:
@@ -364,7 +379,8 @@
                 case targettype.all:
                 {
                     for(var k in this.warriors){
-                        if(!needalive || !this.warriors[k].isDead()){
+                       if((needalive && !this.warriors[k].isDead())
+                        || (!needalive && this.warriors[k].isDead())){
                             targets.push(this.warriors[k])
                         }
                     }
@@ -372,7 +388,8 @@
                 break;
                 case targettype.self:
                 {
-                    if(!needalive || !actor.isDead()){
+                     if((needalive && !actor.isDead())
+                     || (!needalive && actor.isDead())){
                             targets.push(actor)
                     }
                 }
@@ -422,6 +439,24 @@
                             if(!needalive || !warriors[0].isDead()){
                                 targets.push(warriors[0])
                             }
+                        }
+                    }
+                }
+                break;
+                case targettype.eventtrigger:
+                {
+                     if((needalive && !trigger.isDead())
+                     || (!needalive && trigger.isDead())){
+                        targets.push(trigger);
+                     }
+                }
+                break;
+                case targettype.eventtarget:
+                {
+                    for(var k in event_targets){
+                        if((needalive && !event_targets[k].isDead())
+                     || (!needalive && event_targets[k].isDead())){
+                            targets.push(event_targets[k])
                         }
                     }
                 }
