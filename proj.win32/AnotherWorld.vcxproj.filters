@@ -146,6 +146,12 @@
     <None Include="..\js\objects\warrior.js">
       <Filter>js\objects</Filter>
     </None>
+    <None Include="..\js\extra\functask.js">
+      <Filter>js\extra</Filter>
+    </None>
+    <None Include="..\js\ui\indicator.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

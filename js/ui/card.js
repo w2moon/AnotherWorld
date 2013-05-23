@@ -25,6 +25,8 @@
          bright.setPosition(cc.p((size.width-size.height)/2,0));
          layer.addChild(bright);
 
+         
+
          if(warrior.getTraveller().getSoul() != null){
             var soul = cc.Sprite.create(warrior.getTraveller().getSoul().getBase().icon);
             soul.setPosition(cc.p((size.width-size.height)/2,-size.width/2));
@@ -32,8 +34,19 @@
          }
 
          layer.register_event = function(){
-            wl.dispatcher.register(this.warrior,"inc_hp",this.on_hpinc,this);
-            wl.dispatcher.register(this.warrior,"decHP",this.on_hpdec,this);
+
+            
+            wl.dispatcher.register(this.warrior,"battle_init",this.on_battle_init,this);
+
+            wl.dispatcher.register(this.warrior,"incHP",this.on_incHP,this);
+            wl.dispatcher.register(this.warrior,"decHP",this.on_decHP,this);
+
+
+            wl.dispatcher.register(this.warrior,"incEnergy",this.on_incEnergy,this);
+            wl.dispatcher.register(this.warrior,"decEnergy",this.on_decEnergy,this);
+
+            wl.dispatcher.register(this.warrior,"incMaxEnergy",this.on_incMaxEnergy,this);
+            wl.dispatcher.register(this.warrior,"decMaxEnergy",this.on_decMaxEnergy,this);
 
             wl.dispatcher.register(this.warrior,"attack",this.attack,this);
             wl.dispatcher.register(this.warrior,"defense",this.defense,this);
@@ -43,7 +56,7 @@
          }
 
          layer.unregister_event = function(){
-            wl.dispatcher.unregister(this.warrior,"inc_hp",this.on_hpinc,this);
+            wl.dispatcher.unregister(this.warrior,"incHP",this.on_hpinc,this);
             wl.dispatcher.unregister(this.warrior,"decHP",this.on_hpdec,this);
 
             wl.dispatcher.unregister(this.warrior,"attack",this.attack,this);
@@ -53,17 +66,28 @@
             wl.dispatcher.unregister(this.warrior,"particle",this.on_particle,this);
          }
 
-         layer.on_hpinc = function(){
+         layer.on_battle_init = function(){
+            this.indicator.setMax(this.warrior.getMaxEnergy());
+            this.indicator.setValue(this.warrior.getEnergy());
+            
+         };
+         layer.on_incHP = function(){
             this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
          }
 
-          layer.on_hpdec = function(v){
+          layer.on_decHP = function(v){
             this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
 
             if(this.warrior.isDead()){
                 this.dead();
             }
          }
+
+          layer.on_incEnergy = function(){
+          };
+
+           layer.on_decEnergy = function(){
+          };
 
          layer.on_action = function(action){
             this[action]();
@@ -138,6 +162,9 @@
          layer.hpbar.setAnchorPoint(cc.p(0,0.5));
          layer.hpbar.setPosition(cc.p(-size.width/2,size.width/2+20));
          layer.addChild(layer.hpbar);
+
+         layer.indicator = wl.create_indicator(warrior.getEnergy(),warrior.getMaxEnergy());
+         layer.addChild(layer.indicator);
 
          layer.deadmark = null;
 

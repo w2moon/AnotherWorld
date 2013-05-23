@@ -18,21 +18,20 @@ wl.skill.prototype = {
         if(this.getBase().eventid != event){
             return;
         }
-        if(this.getBase().eventisenemy != warrior.isEnemy(warrior)){
+        if(this.getBase().eventisenemy != this.warrior.isEnemy(warrior)){
             return;
         }
 
         if(this.getBase().eventisself == 1 && this.warrior != warrior){
-            cc.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!self")
             return;
         }
 
         if(!this.canBeCast(warrior,event_targets)){
             return;
         }
-        cc.log("event:"+event+" "+this.getBase().eventisself)
+        cc.log("event:"+event+" isself:"+this.getBase().eventisself)
 
-        this.cast(warrior,event_targets);
+        return this.cast(warrior,event_targets);
 
         
     },
@@ -110,7 +109,9 @@ wl.skill.prototype = {
             return;
         }
         var targets = this.battlefield.select_target(this.warrior.getPlayer(),this.warrior,type,num,this.warrior.getTraveller().getNature(),needalive,trigger,event_targets);
+
         for(var k in targets){
+            cc.log(targets[k].getTraveller().getName()+" "+this.warrior.getTraveller().getName()+" effectvalue")
             targets[k][effecttype](effectvalue);
             this.do_action_and_particle(targets[k],action,particle);
         }
@@ -126,7 +127,7 @@ wl.skill.prototype = {
     },
 
     isActiveSkill : function(){
-        return this.skillbase.eventid == triggertype.active;
+        return this.skillbase.eventid == gameevent.active;
     }
 
     

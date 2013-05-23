@@ -21,6 +21,7 @@ require("objects/role.js")
 require("objects/player.js")
 
 require("ui/loading.js")
+require("ui/indicator.js")
 require("ui/card.js")
 
 require("objects/item.js")

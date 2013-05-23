@@ -38,12 +38,15 @@ wl.warrior.prototype = {
         var maxenergy = 0;
         for(var k in this.skills){
             this.skills[k].battle_init();
+            cc.log(this.skills[k].isActiveSkill()+" "+this.skills[k].getNeedEnergy())
             if(this.skills[k].isActiveSkill() && this.skills[k].getNeedEnergy() > maxenergy){
                 maxenergy = this.skills[k].getNeedEnergy();
             }
         }
         this.setMaxEnergy(maxenergy);
         this.setEnergy(0);
+        cc.log("mmmmmmmmmmmmmmm:"+maxenergy)
+        wl.dispatcher.notify(this,"battle_init");
     },
 
     isEnemy : function(warrior){
@@ -212,7 +215,7 @@ wl.warrior.prototype = {
     incHP : function(v){
         this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
 
-        wl.dispatcher.notify(this,"inc_hp",v);
+        wl.dispatcher.notify(this,"incHP",v);
     },
     decHP : function(v){
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
@@ -222,110 +225,110 @@ wl.warrior.prototype = {
     incMaxHP : function(v){
         this.setMaxHP(this.getMaxHP()+v)
 
-        wl.dispatcher.notify(this,"inc_maxhp",v);
+        wl.dispatcher.notify(this,"incMaxHP",v);
     },
     decMaxHP : function(v){
         this.setMaxHP(wl.clamp(this.getMaxHP()-v,0,this.getMaxHP()))
 
-        wl.dispatcher.notify(this,"dec_maxhp",v);
+        wl.dispatcher.notify(this,"decMaxHP",v);
     },
 
     incEnergy : function(v){
         this.setEnergy(wl.clamp(this.getEnergy()+v,0,this.getMaxEnergy()))
 
-        wl.dispatcher.notify(this,"inc_eng",v);
+        wl.dispatcher.notify(this,"incEnergy",v);
     },
     decEnergy : function(v){
         this.setEnergy(wl.clamp(this.getEnergy()-v,0,this.getMaxEnergy()))
 
-        wl.dispatcher.notify(this,"dec_eng",v);
+        wl.dispatcher.notify(this,"decEnergy",v);
     },
     incMaxEnergy : function(v){
         this.setMaxEnergy(this.getMaxEnergy()+v)
 
-        wl.dispatcher.notify(this,"inc_maxeng",v);
+        wl.dispatcher.notify(this,"incMaxEnergy",v);
     },
     decMaxEnergy : function(v){
         this.setMaxEnergy(wl.clamp(this.getMaxEnergy()-v,0,this.getMaxEnergy()))
 
-        wl.dispatcher.notify(this,"dec_maxeng",v);
+        wl.dispatcher.notify(this,"decMaxEnergy",v);
     },
 
     incExtraAttack : function(v){
         this.setExtraAttack(this.getExtraAttack()+v)
 
-        wl.dispatcher.notify(this,"inc_extraattack",v);
+        wl.dispatcher.notify(this,"incExtraAttack",v);
     },
     decExtraAttack : function(v){
         this.setExtraAttack(this.getExtraAttack()-v)
 
-        wl.dispatcher.notify(this,"dec_extraattack",v);
+        wl.dispatcher.notify(this,"decExtraAttack",v);
     },
 
     incExtraDefense : function(v){
         this.setExtraDefense(this.getExtraDefense()+v)
 
-        wl.dispatcher.notify(this,"inc_extradefense",v);
+        wl.dispatcher.notify(this,"incExtraDefense",v);
     },
     decExtraDefense : function(v){
         this.setExtraDefense(this.getExtraDefense()-v)
 
-        wl.dispatcher.notify(this,"dec_extradefense",v);
+        wl.dispatcher.notify(this,"decExtraDefense",v);
     },
 
     incExtraMagic : function(v){
         this.setExtraMagic(this.getExtraMagic()+v)
 
-        wl.dispatcher.notify(this,"inc_extramagic",v);
+        wl.dispatcher.notify(this,"incExtraMagic",v);
     },
     decExtraMagic : function(v){
         this.setExtraMagic(this.getExtraMagic()-v)
 
-        wl.dispatcher.notify(this,"dec_extramagic",v);
+        wl.dispatcher.notify(this,"decExtraMagic",v);
     },
 
     incExtraMagicDefense : function(v){
         this.setExtraMagicDefense(this.getExtraMagicDefense()+v)
 
-        wl.dispatcher.notify(this,"inc_extramagicdefense",v);
+        wl.dispatcher.notify(this,"incExtraMagicDefense",v);
     },
     decExtraMagicDefense : function(v){
         this.setExtraMagicDefense(this.getExtraMagicDefense()-v)
 
-        wl.dispatcher.notify(this,"dec_extramagicdefense",v);
+        wl.dispatcher.notify(this,"decExtraMagicDefense",v);
     },
 
     incExtraSpeed : function(v){
         this.setExtraSpeed(this.getExtraSpeed()+v)
 
-        wl.dispatcher.notify(this,"inc_extraspeed",v);
+        wl.dispatcher.notify(this,"incExtraSpeed",v);
     },
     decExtraSpeed : function(v){
         this.setExtraSpeed(this.getExtraSpeed()-v)
 
-        wl.dispatcher.notify(this,"dec_extraspeed",v);
+        wl.dispatcher.notify(this,"decExtraSpeed",v);
     },
 
     incExtraDodge : function(v){
         this.setExtraDodge(this.getExtraDodge()+v)
 
-        wl.dispatcher.notify(this,"inc_extradodge",v);
+        wl.dispatcher.notify(this,"incExtraDodge",v);
     },
     decExtraDodge : function(v){
         this.setExtraDodge(this.getExtraDodge()-v)
 
-        wl.dispatcher.notify(this,"dec_extradodge",v);
+        wl.dispatcher.notify(this,"decExtraDodge",v);
     },
 
     incExtraCrit : function(v){
         this.setExtraCrit(this.getExtraCrit()+v)
 
-        wl.dispatcher.notify(this,"inc_extracrit",v);
+        wl.dispatcher.notify(this,"incExtraCrit",v);
     },
     decExtraCrit : function(v){
         this.setExtraCrit(this.getExtraCrit()-v)
 
-        wl.dispatcher.notify(this,"dec_extracrit",v);
+        wl.dispatcher.notify(this,"decExtraCrit",v);
     },
     /////////////////////////////////////////////////////////////////
 
@@ -408,8 +411,13 @@ wl.warrior.prototype = {
         var args = Array.prototype.slice.call(arguments, 0);
          for(var k in this.skills){
                 if(!this.skills[k].isActiveSkill()){
-                    //this.skills[k].on_event.apply(this.skills[k],args);
-                    this.battlefield.addTask(this.skills[k],this.skills[k].on_event,args);
+                    var arr = new Array();
+                    arr.push(this.skills[k]);
+                    arr.push(this.skills[k].on_event);
+                    for(var i in args){
+                        arr.push(args[i]);
+                    }
+                    this.battlefield.addTask.apply(this.battlefield,arr);
                 }
          }
     }

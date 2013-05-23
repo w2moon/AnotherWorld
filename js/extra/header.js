@@ -10,3 +10,4 @@ if(USE_VIRTUAL_HTTP){
 }
 require("extra/http.js")
 require("extra/msg.js")
+require("extra/functask.js")

@@ -1,7 +1,7 @@
 wl.functask = function(){
-var tasks = {}
+var tasks = []
 
-wl.functask.add = function(obj,func){
+this.add = function(obj,func){
      if(arguments.length === 2){
         tasks.push([obj,func])
      }
@@ -10,7 +10,7 @@ wl.functask.add = function(obj,func){
      }
 };
 
-wl.functask.remove = function(obj,func){
+this.remove = function(obj,func){
     for(var k in tasks){
         if(tasks[k][0] == obj
         || tasks[k][1] == func){
@@ -20,12 +20,17 @@ wl.functask.remove = function(obj,func){
     }
 };
 
-wl.functask.next = function(){
-    var task = tasks.pop();
-    if(task == null){
-        return false;
+this.next = function(){
+    var task = tasks.shift();
+    var dt = null;
+    while(task != null && dt == null){
+        dt = task[1].apply(task[0],task[2]);
+        if(dt == null){
+            task = tasks.shift();
+        }
     }
-    task[1].apply(task[0],task[2]);
+
+    return dt;
 };
 
 }

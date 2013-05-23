@@ -287,6 +287,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\extra\class.js" />
     <None Include="..\js\extra\csv.js" />
     <None Include="..\js\extra\dispatcher.js" />
+    <None Include="..\js\extra\functask.js" />
     <None Include="..\js\extra\gfunc.js" />
     <None Include="..\js\extra\hashlib.js" />
     <None Include="..\js\extra\header.js" />
@@ -318,6 +319,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\state\normal.js" />
     <None Include="..\js\state\start.js" />
     <None Include="..\js\ui\card.js" />
+    <None Include="..\js\ui\indicator.js" />
     <None Include="..\js\ui\loading.js" />
     <None Include="res\AnotherWorld.ico" />
   </ItemGroup>

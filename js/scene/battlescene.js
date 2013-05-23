@@ -33,7 +33,7 @@
          ]
 
          scene.addTask = function(){
-            this.functask.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+            this.functask.add.apply(this.functask,Array.prototype.slice.call(arguments, 0))
          }
 
          scene.init = function(roles){
@@ -261,7 +261,10 @@
           var sort_traveller = function(t1,t2){return t2.getSpeed()-t1.getSpeed();}
 
           scene.turn_process = function(){
-            if(this.functask.next()){
+            var dt = this.functask.next();
+            if(dt != null){
+                cc.log("delay dt:"+dt)
+                this.delayupdate(dt)
                 return;
             }
             this.delayupdate(this.state.apply(this))
