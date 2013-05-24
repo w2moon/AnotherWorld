@@ -17,6 +17,7 @@ wl.warrior = function(player,battlefield,traveller){
     this.extra_crit = 0;
 
     this.skills = [];
+    this.buffs = [];
 
     if(traveller.getSoul().getSkillBase() !== null){
         this.skills.push( new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase()) );
@@ -45,7 +46,6 @@ wl.warrior.prototype = {
         }
         this.setMaxEnergy(maxenergy);
         this.setEnergy(0);
-        cc.log("mmmmmmmmmmmmmmm:"+maxenergy)
         wl.dispatcher.notify(this,"battle_init");
     },
 
@@ -330,6 +330,53 @@ wl.warrior.prototype = {
 
         wl.dispatcher.notify(this,"decExtraCrit",v);
     },
+
+    addBuff : function(buffid,trigger){
+
+        var buffinfo = buffbase[buffid];
+        
+        if(buffinfo.multiple == 1)
+        {
+            var buff = null;
+            for(var k in this.buffs){
+                if(this.buffs[k].getId() == buffid
+                && this.buffs[k].hasLink(trigger)){
+                    buff = this.buffs[k];
+                }
+            }
+            if(buff == null){
+                buff = new wl.buff(this,this.battlefield,buffinfo);
+                buff.addLink(trigger);
+                this.buffs.push(buff);
+            }
+            else{
+                if(buffinfo.stack > buff.getStack()){
+                    buff.setStack( buff.getStack() + 1);
+                }
+            }
+            
+        }
+        else{
+            for(var k in this.buffs){
+                if(this.buffs[k].getId() == buffid){
+                   this.buffs[k].addLink(trigger);
+                }
+            }
+        }
+        
+    },
+
+    removeBuff : function(buffid,trigger){
+        for(var k in this.buffs){
+            if(this.buffs[k].getId() == buffid && this.buffs[k].hasLink(trigger)){
+                this.buffs[k].removeLink(trigger);
+                if(this.buffs[k].isCleared()){
+                    this.buffs.splice(k,1);
+                }
+                return;
+            }
+        }
+    },
     /////////////////////////////////////////////////////////////////
 
     isSkillUltimateActived : function(){
@@ -380,7 +427,21 @@ wl.warrior.prototype = {
 
     endturn : function(){
         for(var k in this.skills){
-              this.skills[k].stepCoolDown();
+              this.skills[k].update();
+        }
+        var todelete = []
+        for(var k in this.buffs){
+              if(this.buffs[k].update()){
+                    todelete.push(this.buffs[k]);
+              }
+        }
+        for(var k in todelete){
+            for(var i in this.buffs){
+                if(this.buffs[i] === todelete[k]){
+                    this.buffs.splice(i,1);
+                    break;
+                }
+            }
         }
     },
 
@@ -389,7 +450,7 @@ wl.warrior.prototype = {
 
         var targets = this.battlefield.select_target(this.getPlayer(),this,0,1,this.getTraveller().getNature(),true);
                               
-        this.energy++;
+        this.incEnergy(1);
 
         for(var k in targets){
             targets[k].defense(this);

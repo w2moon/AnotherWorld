@@ -7,14 +7,18 @@ wl.create_indicator = function(v,max){
 
     layer.lights = [];
 
-    cc.log("max:"+max)
+    layer.create_light = function(img){
+        var light = cc.Sprite.create(img);
+         if(this.unitheight == 0){
+            this.unitheight = light.getContentSize().height;
+        }
+        return light;
+     };
 
     layer.unitheight = 0
     for(var i=0;i<max;++i){
-        var light = cc.Sprite.create("ind_empty.png");
-        if(layer.unitheight == 0){
-            layer.unitheight = light.getContentSize().height;
-        }
+        var light = this.create_light("ind_empty.png");
+        
         layer.addChild(light);
 
         layer.lights.push(light);
@@ -27,10 +31,12 @@ wl.create_indicator = function(v,max){
      layer.bottom = cc.Sprite.create("ind_bempty.png");
      layer.addChild(layer.bottom);
 
+     
+
      layer.setMax = function(v){
         if(v>this.lights.length){
             for(var i=this.lights.length;i<v;++i){
-                var light = cc.Sprite.create("ind_empty.png");
+                var light = this.create_light("ind_empty.png");
                 this.addChild(light);
                 this.lights.push(light);
             }
@@ -46,10 +52,10 @@ wl.create_indicator = function(v,max){
 
     layer.setValue = function(v) {
         for(var i = 0;i<v;++i){
-            this.lights[i].initWithFile("ind_full.png");
+            this.lights[i].init("ind_full.png");
         }
          for(var i = v;i<this.lights.length;++i){
-            this.lights[i].initWithFile("ind_empty.png");
+            this.lights[i].init("ind_empty.png");
         }
         this.v = v;
 

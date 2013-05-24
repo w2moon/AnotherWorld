@@ -84,9 +84,20 @@
          }
 
           layer.on_incEnergy = function(){
+            cc.log("inc energey")
+            this.indicator.setValue(this.warrior.getEnergy());
           };
 
            layer.on_decEnergy = function(){
+            this.indicator.setValue(this.warrior.getEnergy());
+          };
+
+          layer.on_incMaxEnergy = function(){
+            this.indicator.setMax(this.warrior.getMaxEnergy());
+          };
+
+           layer.on_decMaxEnergy = function(){
+            this.indicator.setMax(this.warrior.getMaxEnergy());
           };
 
          layer.on_action = function(action){

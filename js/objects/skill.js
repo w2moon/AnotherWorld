@@ -53,7 +53,7 @@ wl.skill.prototype = {
     startCoolDown : function(){
         this.cooldown = this.getBase().cooldown;
     },
-    stepCoolDown : function(){
+    update : function(){
         this.cooldown--;
         if(this.cooldown<0){
             this.cooldown = 0;
@@ -80,7 +80,7 @@ wl.skill.prototype = {
         return targets.length != 0;
     },
     cast : function(trigger,event_targets){
-        this.warrior.setEnergy(this.warrior.getEnergy() - this.getBase().energy);
+        this.warrior.decEnergy(this.getBase().energy);
         this.startCoolDown();
 
         this.target_take_effect( this.getBase().target1type,

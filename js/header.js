@@ -3,6 +3,7 @@ var g = g || {}
 require("config.js")
 
 require("data/retcode.js")
+require("data/buffbase.js")
 require("data/skillbase.js")
 require("data/equipmentbase.js")
 require("data/soulbase.js")
@@ -13,6 +14,7 @@ require("extra/header.js")
 
 require("objects/itemfactory.js")
 require("objects/skill.js")
+require("objects/buff.js")
 require("objects/item.js")
 require("objects/equipment.js")
 require("objects/traveller.js")
@@ -23,8 +25,6 @@ require("objects/player.js")
 require("ui/loading.js")
 require("ui/indicator.js")
 require("ui/card.js")
-
-require("objects/item.js")
 
 require("state/normal.js")
 require("state/start.js")
