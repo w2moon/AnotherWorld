@@ -41,6 +41,8 @@
             wl.dispatcher.register(this.warrior,"incHP",this.on_incHP,this);
             wl.dispatcher.register(this.warrior,"decHP",this.on_decHP,this);
 
+            wl.dispatcher.register(this.warrior,"dead",this.on_dead,this);
+
 
             wl.dispatcher.register(this.warrior,"incEnergy",this.on_incEnergy,this);
             wl.dispatcher.register(this.warrior,"decEnergy",this.on_decEnergy,this);
@@ -77,10 +79,11 @@
 
           layer.on_decHP = function(v){
             this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
+         }
 
-            if(this.warrior.isDead()){
-                this.dead();
-            }
+         layer.on_dead = function(v){
+                
+            this.dead();            
          }
 
           layer.on_incEnergy = function(){

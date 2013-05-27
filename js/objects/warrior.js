@@ -221,6 +221,10 @@ wl.warrior.prototype = {
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
 
         wl.dispatcher.notify(this,"decHP",v);
+
+        if(this.isDead()){
+            this.dead();
+        }
     },
     incMaxHP : function(v){
         this.setMaxHP(this.getMaxHP()+v)
@@ -371,6 +375,7 @@ wl.warrior.prototype = {
             if(this.buffs[k].getId() == buffid && this.buffs[k].hasLink(trigger)){
                 this.buffs[k].removeLink(trigger);
                 if(this.buffs[k].isCleared()){
+                    this.buffs[k].destroy();
                     this.buffs.splice(k,1);
                 }
                 return;
@@ -397,6 +402,18 @@ wl.warrior.prototype = {
     
 
     isDead : function(){return this.getHP() <= 0;},
+
+    dead : function() {
+        this.clearBuffs();
+        wl.dispatcher.notify(this,"dead");
+    },
+
+    clearBuffs : function(){
+        for(var k in this.buffs){
+            this.buffs[k].destroy();
+        }
+        this.buffs = [];
+    },
 
     calc_damage : function(attacker,defenser){
         var damage = attacker.getAttack() - defenser.getDefense();

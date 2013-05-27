@@ -152,6 +152,21 @@
     <None Include="..\js\ui\indicator.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\objects\buff.js">
+      <Filter>js\objects</Filter>
+    </None>
+    <None Include="..\js\data\buffbase.js">
+      <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\skill\multiattack.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\guard.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\base.js">
+      <Filter>js\skill</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
@@ -177,6 +192,9 @@
     </Filter>
     <Filter Include="js\state">
       <UniqueIdentifier>{6f801eef-f6f1-4111-bfe1-0e87b16bdda5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\skill">
+      <UniqueIdentifier>{373d9660-7ef8-48d3-a471-bdec06d36f37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

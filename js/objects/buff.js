@@ -11,7 +11,8 @@ wl.buff = function(warrior,battlefield,buffbase){
     this.intervaltime = this.buffbase.interval;
 
 
-    this.on_start();
+   // this.on_start();
+    this.addTask(this.on_start);
 };
 
 wl.buff.prototype = {
@@ -44,6 +45,10 @@ wl.buff.prototype = {
         return this.triggers.length == 0;
     },
 
+    destroy : function(){
+        this.addTask(this.on_end);
+    },
+
     getStack : function(){
         return this.stack;
     },
@@ -62,13 +67,15 @@ wl.buff.prototype = {
             this.intervaltime--;
             if(this.intervaltime == 0){
                 this.intervaltime = this.buffbase.interval;
-                this.on_interval();
+                //this.on_interval();
+                this.addTask(this.on_interval);
             }
         }
         if(this.buffbase.duration != -1){
             this.resttime--;
             if(this.resttime == 0){
-                this.on_end();
+                //this.on_end();
+                this.addTask(this.on_end);
                 return true;//to delete
             }
         }
@@ -101,5 +108,13 @@ wl.buff.prototype = {
         this.do_action_and_particle(this.warrior,this.buffbase.endaction,this.buffbase.endparticle);
     },
 
-     do_action_and_particle : wl.skill.prototype.do_action_and_particle
+     do_action_and_particle : wl.skill.prototype.do_action_and_particle,
+
+     addTask : function(func){
+        var arr = new Array();
+        arr.push(this);
+        arr.push(func);
+        this.battlefield.addTask.apply(this.battlefield,arr);
+     }
+      
 };

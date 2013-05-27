@@ -16,3 +16,7 @@ wl.clamp = function(v,min,max){
     }
     return v;
 }
+
+wl.rand = function(){
+    return Math.random();
+}

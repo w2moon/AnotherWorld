@@ -467,6 +467,10 @@
             }
             return targets;
           }
+
+          scene.emit_particle = function(from,to,particle){
+          };
+
           var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.tmp_dbrole("role2"))]
           scene.init(roles)
           scene.start()

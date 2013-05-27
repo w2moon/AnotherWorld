@@ -22,6 +22,10 @@ require("objects/warrior.js")
 require("objects/role.js")
 require("objects/player.js")
 
+require("skill/base.js")
+require("skill/guard.js")
+require("skill/multiattack.js")
+
 require("ui/loading.js")
 require("ui/indicator.js")
 require("ui/card.js")

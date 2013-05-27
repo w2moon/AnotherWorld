@@ -60,6 +60,10 @@ wl.skill.prototype = {
         }
     },
     canBeCast : function(trigger,event_targets){
+        if(wl.rand() > this.getBase().rate)
+        {
+            return false;
+        }
         if(this.warrior.energy < this.getBase().energy){
             return false;
         }
@@ -83,6 +87,13 @@ wl.skill.prototype = {
         this.warrior.decEnergy(this.getBase().energy);
         this.startCoolDown();
 
+        if(this.getBase().casttype != "")
+        {
+            wl.skillactions[this.getBase().customaction](skill,trigger,event_targets);
+        }
+        else
+        {
+            this.do_action_and_particle(this.warrior,this.getBase().useraction,this.getBase().userparticle);
         this.target_take_effect( this.getBase().target1type,
                                            this.getBase().target1num,
                                            this.getBase().target1needalive,
@@ -98,8 +109,10 @@ wl.skill.prototype = {
                                           this.getBase().target2effecttype,
                                           this.getBase().target2effectvalue,trigger,event_targets);
 
-        this.do_action_and_particle(this.warrior,this.getBase().useraction,this.getBase().userparticle);
+        
         this.do_action_and_particle(this.battlefield,this.getBase().battlefieldaction,this.getBase().battlefieldparticle);
+    
+        }
                             
         return this.getBase().duration;
     },
@@ -111,7 +124,6 @@ wl.skill.prototype = {
         var targets = this.battlefield.select_target(this.warrior.getPlayer(),this.warrior,type,num,this.warrior.getTraveller().getNature(),needalive,trigger,event_targets);
 
         for(var k in targets){
-            cc.log(targets[k].getTraveller().getName()+" "+this.warrior.getTraveller().getName()+" effectvalue")
             targets[k][effecttype](effectvalue);
             this.do_action_and_particle(targets[k],action,particle);
         }
