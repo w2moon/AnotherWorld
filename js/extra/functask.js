@@ -2,13 +2,24 @@ wl.functask = function(){
 var tasks = []
 
 this.add = function(obj,func){
+    tasks.reverse();
      if(arguments.length === 2){
         tasks.push([obj,func])
      }
      else{
         tasks.push([obj,func,Array.prototype.slice.call(arguments, 2)])
      }
+     tasks.reverse();
 };
+
+this.addtail = function(obj,func){
+    if(arguments.length === 2){
+        tasks.push([obj,func])
+     }
+     else{
+        tasks.push([obj,func,Array.prototype.slice.call(arguments, 2)])
+     }
+}
 
 this.remove = function(obj,func){
     for(var k in tasks){

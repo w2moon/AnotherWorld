@@ -34,6 +34,10 @@
 
          scene.addTask = function(){
             this.functask.add.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+         
+         }
+          scene.addTaskTail = function(){
+            this.functask.addtail.apply(this.functask,Array.prototype.slice.call(arguments, 0))
          }
 
          scene.init = function(roles){

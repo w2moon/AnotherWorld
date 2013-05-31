@@ -87,9 +87,9 @@ wl.skill.prototype = {
         this.warrior.decEnergy(this.getBase().energy);
         this.startCoolDown();
 
-        if(this.getBase().casttype != "")
+        if(this.getBase().customaction != "")
         {
-            wl.skillactions[this.getBase().customaction](skill,trigger,event_targets);
+            wl.skillactions[this.getBase().customaction](this,trigger,event_targets);
         }
         else
         {

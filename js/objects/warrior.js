@@ -495,7 +495,7 @@ wl.warrior.prototype = {
                     for(var i in args){
                         arr.push(args[i]);
                     }
-                    this.battlefield.addTask.apply(this.battlefield,arr);
+                    this.battlefield.addTaskTail.apply(this.battlefield,arr);
                 }
          }
     }
