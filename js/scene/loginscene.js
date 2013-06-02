@@ -165,21 +165,37 @@
          
 
          return scene;
-    }
+    };
    
 
 var loginscene = function(){};
 
 loginscene.prototype.onDidLoadFromCCB = function()
 {
-    cc.log("loaded")
-   // this.rootNode.setString("loading");
+    cc.log("loaded");
+    this.lblRegion.setString("loading");
 };
 
 loginscene.prototype.onPressStart = function()
 {
-    cc.log("start")
-    this.req_region_list();
+    cc.log("start");
+    //this.req_region_list();
+    var aboutNode = cc.BuilderReader.load("battlescene");
+	this.rootNode.addChild(aboutNode);
+	
+	aboutNode.rootNode.ok.setString("fight");
+	
+	var chanode = cc.BuilderReader.load("charactor");
+	aboutNode.addChild(chanode);
+	var pos = aboutNode.myhero.getPosition();
+	var size = cc.Director.getInstance().getWinSize();
+	chanode.setPosition(cc.p(size.width/2,size.height/2));
+	
+
+	//chanode.setPosition(pos);
+	
+	
+	
 };
 
 ////////////////////////////////////////////////////////////////////////////
