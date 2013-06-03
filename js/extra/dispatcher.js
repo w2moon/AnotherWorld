@@ -217,6 +217,7 @@ wl.dispatcher.notify = function(obj,event){
                 for(var i=1;i<queue[k].args.length;++i){
                     newargs.push(queue[k].args[i])
                 }
+                if(args!=null)
                 for(var i=0;i<args.length;++i){
                     newargs.push(args[i])
                 }
@@ -254,6 +255,7 @@ wl.dispatcher.notify = function(obj,event){
                 for(var i=1;i<queue[k].args.length;++i){
                     newargs.push(queue[k].args[i])
                 }
+                if(args!=null)
                 for(var i=0;i<args.length;++i){
                     newargs.push(args[i])
                 }
@@ -290,6 +292,7 @@ wl.dispatcher.notify = function(obj,event){
                 for(var i=1;i<queue[k].args.length;++i){
                     newargs.push(processer[k].args[i])
                 }
+                if(args!=null)
                 for(var i=0;i<args.length;++i){
                     newargs.push(args[i])
                 }
@@ -299,6 +302,7 @@ wl.dispatcher.notify = function(obj,event){
                 var newargs = new Array()
                  newargs.push(obj);
                  newargs.push(event);
+                 if(args!=null)
                   for(var i=0;i<args.length;++i){
                     newargs.push(args[i])
                 }
@@ -309,6 +313,7 @@ wl.dispatcher.notify = function(obj,event){
                 var newargs = new Array()
                  newargs.push(obj);
                  newargs.push(event);
+                 if(args!=null)
                   for(var i=0;i<args.length;++i){
                     newargs.push(args[i])
                 }

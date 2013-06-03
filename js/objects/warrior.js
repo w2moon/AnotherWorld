@@ -3,6 +3,8 @@ wl.warrior = function(player,battlefield,traveller){
     this.battlefield = battlefield;
     this.traveller = traveller;
 
+    this.guarder = null;
+
     this.hp = 0;
     this.maxhp = 0;
     this.energy = 0;
@@ -333,6 +335,20 @@ wl.warrior.prototype = {
         this.setExtraCrit(this.getExtraCrit()-v)
 
         wl.dispatcher.notify(this,"decExtraCrit",v);
+    },
+
+    beDefender : function(attacker){
+        this.getPlayer().setDefender(this);
+        wl.dispatcher.notify(this,"beDefender",[attacker]);
+    },
+
+    setGuarder : function(warrior){
+        this.guarder = warrior;
+    },
+
+    beGuard : function(warrior){
+        warrior.setGuarder(this);
+        wl.dispatcher.notify(this,"beGuard",[warrior]);
     },
 
     addBuff : function(buffid,trigger){

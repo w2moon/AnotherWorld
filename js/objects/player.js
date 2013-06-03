@@ -4,6 +4,7 @@ wl.player = function(role,battlefield){
     this.role = role;
     this.battlefield = battlefield;
     
+
     this.warriors = [];
     var travellers = role.getSlotTravellers();
     for(var k in travellers){
@@ -27,5 +28,6 @@ wl.player.prototype = {
     },
     getWarriors : function(){
         return this.warriors;
-    },
+    }
+   
 };

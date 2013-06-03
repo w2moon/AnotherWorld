@@ -14,17 +14,17 @@ var skilltype = {
           }
 
  var targettype = {
-            none:-1,
-            'enemy':0,//first front then hero
-            'ally' : 1,//first front then hero
-            'all' : 2,
-            'self' : 3,
-            'onlyallyfront' : 4,
-            'onlyallyhero' : 5,
-            'onlyenemyfront' : 6,
-            'onlyenemyhero' : 7,
-            'eventtrigger' : 8,
-            'eventtarget' : 9
+            none:'none',
+            'enemy':'enemy',//first front then hero
+            'ally' : 'ally',//first front then hero
+            'all' : 'all',
+            'self' : 'self',
+            'onlyallyfront' : 'onlyallyfront',
+            'onlyallyhero' : 'onlyallyhero',
+            'onlyenemyfront' : 'onlyenemyfront',
+            'onlyenemyhero' : 'onlyenemyhero',
+            'eventtrigger' : 'eventtrigger',
+            'eventtarget' : 'eventtarget'
           };
 
 var triggertype = {
@@ -90,15 +90,27 @@ var roleaction = {
     defense:2
 };
 
+var parse_skill_params = function(str){
+    var parts = str.split(/;/);
+    var arr = [];
+    for(var i=0;i<parts.length;++i){
+        arr.push(parts[i].split(/,/))
+    }
+    return arr;
+};
+
+
 
 var skillbase= [
     {'id':1,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
-    'eventid':gameevent.active,'eventisenemy':0,eventisself:0,'rate':0.5,'cooldown':3,energy:1,customaction:"",
+    'eventid':gameevent.action,'eventisenemy':0,eventisself:0,'rate':1,'cooldown':0,energy:0,customaction:"",
+    condition:"self,alive,1;enemy,alive,1;",
+    actions:"self,select(enemy 1);self,moveto(selected);selected,beDefender;self,attack;selected,defense;self,moveback",
     'useraction':'magic','userparticle':'particles/taken-gem.plist',
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'decHP','target1effectvalue':5,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
-
+     /*
      {'id':2,'icon':'soul.png','name':'skill2','type':skilltype.heal,'expclass':1,'specialrate':1,customaction:'guard',
     'eventid':"defense",'eventisenemy':0,eventisself:0,'rate':1,'cooldown':1,energy:0,
     'useraction':'','userparticle':'particles/taken-gem.plist',
@@ -112,6 +124,6 @@ var skillbase= [
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'','target1particle':'','target1effecttype':'addBuff','target1effectvalue':1,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
-
+     */
 ];
 

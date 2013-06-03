@@ -176,24 +176,35 @@ loginscene.prototype.onDidLoadFromCCB = function()
     this.lblRegion.setString("loading");
 };
 
+var battlescene = function(){}
+battlescene.prototype.onDidLoadFromCCB = function()
+{
+    var pos = this.myhero.getPosition();
+    cc.log("hero")
+}
+
+var charactor = function(){}
+
 loginscene.prototype.onPressStart = function()
 {
     cc.log("start");
-    //this.req_region_list();
+    this.req_region_list();
+    if(false){
     var aboutNode = cc.BuilderReader.load("battlescene");
 	this.rootNode.addChild(aboutNode);
 	
-	aboutNode.rootNode.ok.setString("fight");
+ 
+   
 	
 	var chanode = cc.BuilderReader.load("charactor");
 	aboutNode.addChild(chanode);
-	var pos = aboutNode.myhero.getPosition();
+	//var pos = aboutNode.myhero.getPosition();
 	var size = cc.Director.getInstance().getWinSize();
 	chanode.setPosition(cc.p(size.width/2,size.height/2));
 	
 
 	//chanode.setPosition(pos);
-	
+	}
 	
 	
 };
