@@ -55,6 +55,9 @@
 
             wl.dispatcher.register(this.warrior,"action",this.on_action,this);
             wl.dispatcher.register(this.warrior,"particle",this.on_particle,this);
+
+
+            wl.dispatcher.register(this.warrior,"moveBack",this.moveBack,this);
          }
 
          layer.unregister_event = function(){
@@ -71,6 +74,8 @@
          layer.on_battle_init = function(){
             this.indicator.setMax(this.warrior.getMaxEnergy());
             this.indicator.setValue(this.warrior.getEnergy());
+
+            this.originpos = this.getPosition();
             
          };
          layer.on_incHP = function(){
@@ -80,6 +85,13 @@
           layer.on_decHP = function(v){
             this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
          }
+
+          layer.moveBack = function(){
+            this.moveTo(this.originpos);
+         };
+         layer.moveTo = function(pos){
+             this.runAction(cc.MoveTo.create(0.4,posdes))
+         };
 
          layer.on_dead = function(v){
                 

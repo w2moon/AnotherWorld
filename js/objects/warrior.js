@@ -5,6 +5,8 @@ wl.warrior = function(player,battlefield,traveller){
 
     this.guarder = null;
 
+    this.ui = null;
+
     this.hp = 0;
     this.maxhp = 0;
     this.energy = 0;
@@ -34,7 +36,8 @@ wl.warrior = function(player,battlefield,traveller){
 };
 
 wl.warrior.prototype = {
-    battle_init : function(){
+    battle_init : function(ui){
+        this.ui = ui;
         this.setMaxHP(this.traveller.getMaxHP());
         this.setHP(this.traveller.getMaxHP());
         
@@ -49,6 +52,15 @@ wl.warrior.prototype = {
         this.setMaxEnergy(maxenergy);
         this.setEnergy(0);
         wl.dispatcher.notify(this,"battle_init");
+    },
+
+  
+    getUI : function(){
+        return this.ui;
+    },
+
+     getBattleField : function(){
+        return this.battlefield;
     },
 
     isEnemy : function(warrior){
@@ -338,12 +350,15 @@ wl.warrior.prototype = {
     },
 
     beDefender : function(attacker){
-        this.getPlayer().setDefender(this);
         wl.dispatcher.notify(this,"beDefender",[attacker]);
     },
 
     setGuarder : function(warrior){
         this.guarder = warrior;
+    },
+
+    getGuarder : function(){
+        return this.guarder;
     },
 
     beGuard : function(warrior){
@@ -478,26 +493,34 @@ wl.warrior.prototype = {
         }
     },
 
-    attack : function(){
-     //  var targets = this.select_target(warrior.getTraveller().getOwner(),traveller,traveller.getTargetType(),traveller.getTargetNum(),traveller.getNature(),traveller.getTargetNeedAlive());
-
-        var targets = this.battlefield.select_target(this.getPlayer(),this,0,1,this.getTraveller().getNature(),true);
-                              
-        this.incEnergy(1);
-
-        for(var k in targets){
-            targets[k].defense(this);
-
-            var damage = this.calc_damage(this,targets[k]);
-            targets[k].decHP(damage);
-            
+    attack : function(target){
+        if(this.getGuarder() != null){
+            target = this.getGuarder();
+            this.getBattleField().addTask(target,moveBack);
+            this.setGuarder(null);
         }
-        wl.dispatcher.notify(this,"attack",targets);
+        target.defense(this);
+
+        var damage = this.calc_damage(this,target);
+        target.decHP(damage);
+            
+      
+        wl.dispatcher.notify(this,"attack",target);
+
+        
         return 1;
     },
 
     defense : function(attacker){
         wl.dispatcher.notify(this,"defense",[attacker]);
+    },
+
+    /////////////////////////////////////////////////////////
+    moveTo : function(des){
+        wl.dispatcher.notify(this,"moveTo",des);
+    },
+    moveBack : function(){
+        wl.dispatcher.notify(this,"moveBack");
     },
 
     ///////////////////////////////

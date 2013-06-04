@@ -24,7 +24,9 @@ var skilltype = {
             'onlyenemyfront' : 'onlyenemyfront',
             'onlyenemyhero' : 'onlyenemyhero',
             'eventtrigger' : 'eventtrigger',
-            'eventtarget' : 'eventtarget'
+            'eventtarget' : 'eventtarget',
+
+            selected : 'selected'
           };
 
 var triggertype = {
@@ -103,21 +105,21 @@ var parse_skill_params = function(str){
 
 var skillbase= [
     {'id':1,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
-    'eventid':gameevent.action,'eventisenemy':0,eventisself:0,'rate':1,'cooldown':0,energy:0,customaction:"",
+    'eventid':gameevent.active,'eventisenemy':0,eventisself:0,'rate':1,'cooldown':0,energy:0,customaction:"normalattack",
     condition:"self,alive,1;enemy,alive,1;",
-    actions:"self,select(enemy 1);self,moveto(selected);selected,beDefender;self,attack;selected,defense;self,moveback",
+    actions:"self,select(enemy alive 1);self,moveto(selected);selected,beDefender;self,attack;selected,defense;self,moveback",
     'useraction':'magic','userparticle':'particles/taken-gem.plist',
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'decHP','target1effectvalue':5,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
-     /*
+    
      {'id':2,'icon':'soul.png','name':'skill2','type':skilltype.heal,'expclass':1,'specialrate':1,customaction:'guard',
     'eventid':"defense",'eventisenemy':0,eventisself:0,'rate':1,'cooldown':1,energy:0,
     'useraction':'','userparticle':'particles/taken-gem.plist',
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.eventtarget,'target1num':1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'incHP','target1effectvalue':5,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
-
+      /*
       {'id':3,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
     'eventid':gameevent.active,'eventisenemy':0,eventisself:0,'rate':0.5,'cooldown':3,energy:1,customaction:"",
     'useraction':'magic','userparticle':'particles/taken-gem.plist',

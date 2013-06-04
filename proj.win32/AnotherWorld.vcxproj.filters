@@ -167,6 +167,12 @@
     <None Include="..\js\skill\base.js">
       <Filter>js\skill</Filter>
     </None>
+    <None Include="..\js\skill\normalattack.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\skillcontext.js">
+      <Filter>js\skill</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

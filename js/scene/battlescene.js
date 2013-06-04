@@ -35,9 +35,13 @@
          scene.addTask = function(){
             this.functask.add.apply(this.functask,Array.prototype.slice.call(arguments, 0))
          
-         }
+         };
           scene.addTaskTail = function(){
             this.functask.addtail.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+         };
+          scene.addTasks = function(){
+            this.functask.adds.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+         
          }
 
          scene.init = function(roles){
@@ -62,12 +66,16 @@
                   }
                   scene.addChild(card);
 
-                  warriors[k].battle_init();
+                  warriors[k].battle_init(card);
                   this.warriors.push(warriors[k]);
 
                   wl.dispatcher.registerobj(warriors[k],this.on_warrior_event,this);
             }
             
+         };
+
+         scene.getAttackPosition = function(warrior){
+            return warrior.getUI().getPosition();
          };
 
          scene.on_warrior_event = function(){
@@ -467,6 +475,9 @@
                         }
                     }
                 }
+                break;
+                default:
+                    cc.log("invalid targettype:"+target_type)
                 break;
             }
             return targets;

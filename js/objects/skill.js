@@ -40,6 +40,10 @@ wl.skill.prototype = {
         return this.skillbase
     },
 
+    getBattleField : function(){
+        return this.battlefield;
+    },
+
     getNeedEnergy : function(){
         return this.skillbase.energy;
     },
@@ -70,12 +74,21 @@ wl.skill.prototype = {
         if(this.cooldown !== 0){
             return false;
         }
-        if(!this.isTargetValid(this.getBase().target1type,this.getBase().target1num,this.getBase().target1needalive,trigger,event_targets) 
-        || !this.isTargetValid(this.getBase().target2type,this.getBase().target2num,this.getBase().target2needalive,trigger,event_targets)){
-            return false;
-        }
+        
 
         if(this.getBase().condition != ""){
+            var conditions = parse_skill_params(this.getBase().condition);
+            for(var k=0;k<conditions.length;++k){
+               if(conditions[k][0] != "" && !this.isTargetValid(conditions[k][0],parseInt(conditions[k][2]),conditions[k][1] == "alive",trigger,event_targets)){
+                    return false;
+               }
+            }
+        }
+        else{
+            if(!this.isTargetValid(this.getBase().target1type,this.getBase().target1num,this.getBase().target1needalive,trigger,event_targets) 
+            || !this.isTargetValid(this.getBase().target2type,this.getBase().target2num,this.getBase().target2needalive,trigger,event_targets)){
+                return false;
+            }
         }
         return true;
     },
@@ -90,21 +103,25 @@ wl.skill.prototype = {
         this.warrior.decEnergy(this.getBase().energy);
         this.startCoolDown();
 
-       // if(this.getBase().customaction != "")
+        if(this.getBase().customaction != "")
         {
-       //     wl.skillactions[this.getBase().customaction](this,trigger,event_targets);
+            wl.skillactions[this.getBase().customaction](this,trigger,event_targets);
         }
-      //  else
+        else 
+        if(this.getBase().actions != ""){
+            var actions = parse_skill_params(this.getBase().actions);
+        }
+        else
         {
             this.do_action_and_particle(this.warrior,this.getBase().useraction,this.getBase().userparticle);
-        this.target_take_effect( this.getBase().target1type,
+            this.target_take_effect( this.getBase().target1type,
                                            this.getBase().target1num,
                                            this.getBase().target1needalive,
                                            this.getBase().target1action,
                                            this.getBase().target1particle,
                                            this.getBase().target1effecttype,
                                            this.getBase().target1effectvalue,trigger,event_targets);
-        this.target_take_effect(this.getBase().target2type,
+            this.target_take_effect(this.getBase().target2type,
                                           this.getBase().target2num,
                                           this.getBase().target2needalive,
                                           this.getBase().target2action,
@@ -113,7 +130,7 @@ wl.skill.prototype = {
                                           this.getBase().target2effectvalue,trigger,event_targets);
 
         
-        this.do_action_and_particle(this.battlefield,this.getBase().battlefieldaction,this.getBase().battlefieldparticle);
+            this.do_action_and_particle(this.battlefield,this.getBase().battlefieldaction,this.getBase().battlefieldparticle);
     
         }
                             

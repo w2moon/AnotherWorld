@@ -12,6 +12,16 @@ this.add = function(obj,func){
      tasks.reverse();
 };
 
+this.adds = function(calls){
+    tasks.reverse();
+
+    for(var k=calls.length-1;k>=0;k--){
+        tasks.push(calls[k])
+    }
+
+    tasks.reverse();
+};
+
 this.addtail = function(obj,func){
     if(arguments.length === 2){
         tasks.push([obj,func])
