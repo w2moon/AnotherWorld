@@ -203,73 +203,74 @@ wl.dispatcher.unregister = function(obj,event,func){
 }
 
 wl.dispatcher.notify = function(obj,event){
-    if(typeof wl.dispatcher.registed[event] != "undefined"){
-    var queue = wl.dispatcher.registed[event]
 
-    var args = null
-    if(arguments.length > 2){
-        args = Array.prototype.slice.call(arguments, 2)
-    }
-    for(var k=0;k<queue.length;++k){
-        if(queue[k].args != null){
-            if(queue[k].args.length>1){
-                var newargs = new Array()
-                for(var i=1;i<queue[k].args.length;++i){
-                    newargs.push(queue[k].args[i])
+            
+            
+    if(typeof wl.dispatcher.registed[event] != "undefined"){
+        var queue = wl.dispatcher.registed[event]
+
+        var args = null
+        if(arguments.length > 2){
+            args = Array.prototype.slice.call(arguments, 2)
+        }
+        for(var k=0;k<queue.length;++k){
+            if(queue[k].args != null){
+                if(queue[k].args.length>1){
+                    var newargs = new Array()
+                    for(var i=1;i<queue[k].args.length;++i){
+                        newargs.push(queue[k].args[i])
+                    }
+                    if(args!=null)
+                    for(var i=0;i<args.length;++i){
+                        newargs.push(args[i])
+                    }
+                    queue[k].func.apply(queue[k].args[0],newargs)
                 }
-                if(args!=null)
-                for(var i=0;i<args.length;++i){
-                    newargs.push(args[i])
+                else{
+                    queue[k].func.apply(queue[k].args[0],args)
                 }
-                queue[k].func.apply(queue[k].args[0],newargs)
             }
             else{
-                queue[k].func.apply(queue[k].args[0],args)
+                queue[k].func.apply(null,args)
             }
-        }
-        else{
-            queue[k].func.apply(null,args)
-        }
         
+        }
     }
-    }
+     
     if(obj != null){
         var events = find_obj(obj);
-         if(events == null){
-            cc.log("not listen obj");
-           return;
-         }
-         if(typeof events[event] === "undefined"){
-            return;
-         }
+         if(events != null && typeof events[event] !== "undefined"){
+           
+         
     
-         var queue = events[event];
-    var args = null
-    if(arguments.length > 2){
-        args = Array.prototype.slice.call(arguments, 2)
-    }
-    for(var k=0;k<queue.length;++k){
-        if(queue[k].args != null){
-            if(queue[k].args.length>1){
-                var newargs = new Array()
-                for(var i=1;i<queue[k].args.length;++i){
-                    newargs.push(queue[k].args[i])
+        var queue = events[event];
+        var args = null
+        if(arguments.length > 2){
+            args = Array.prototype.slice.call(arguments, 2)
+        }
+        for(var k=0;k<queue.length;++k){
+            if(queue[k].args != null){
+                if(queue[k].args.length>1){
+                    var newargs = new Array()
+                    for(var i=1;i<queue[k].args.length;++i){
+                        newargs.push(queue[k].args[i])
+                    }
+                    if(args!=null)
+                    for(var i=0;i<args.length;++i){
+                        newargs.push(args[i])
+                    }
+                    queue[k].func.apply(queue[k].args[0],newargs)
                 }
-                if(args!=null)
-                for(var i=0;i<args.length;++i){
-                    newargs.push(args[i])
+                else{
+                    queue[k].func.apply(queue[k].args[0],args)
                 }
-                queue[k].func.apply(queue[k].args[0],newargs)
             }
             else{
-                queue[k].func.apply(queue[k].args[0],args)
+                queue[k].func.apply(null,args)
             }
-        }
-        else{
-            queue[k].func.apply(null,args)
-        }
         
-    }
+        }
+        }
     }
 
 
@@ -277,11 +278,10 @@ wl.dispatcher.notify = function(obj,event){
     if(processer != null){
         
         var args = null
-    if(arguments.length > 2){
-        args = Array.prototype.slice.call(arguments, 2)
-    }
-            
-            
+        if(arguments.length > 2){
+            args = Array.prototype.slice.call(arguments, 2)
+        }
+          
 
         for(var k in processer){
             if(processer[k].args != null){

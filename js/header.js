@@ -31,6 +31,8 @@ require("skill/multiattack.js");
 require("ui/loading.js");
 require("ui/indicator.js");
 require("ui/card.js");
+require("ui/token.js");
+
 
 require("state/normal.js");
 require("state/start.js");

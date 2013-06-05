@@ -6,7 +6,6 @@
   wl.skillactions.guard = function(skill,trigger,event_targets){
        var tasks = [];
         
-        
        var possrc = skill.getBattleField().getAttackPosition(skill.warrior);
        var posdes = skill.getBattleField().getAttackPosition(trigger);
 

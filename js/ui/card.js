@@ -87,10 +87,11 @@
          }
 
           layer.moveBack = function(){
+            cc.log("back"+this.originpos.x+" "+this.originpos.y)
             this.moveTo(this.originpos);
          };
          layer.moveTo = function(pos){
-             this.runAction(cc.MoveTo.create(0.4,posdes))
+             this.runAction(cc.MoveTo.create(0.4,pos))
          };
 
          layer.on_dead = function(v){

@@ -351,6 +351,7 @@ wl.warrior.prototype = {
 
     beDefender : function(attacker){
         wl.dispatcher.notify(this,"beDefender",[attacker]);
+        return 0.1;
     },
 
     setGuarder : function(warrior){
@@ -361,9 +362,10 @@ wl.warrior.prototype = {
         return this.guarder;
     },
 
-    beGuard : function(warrior){
+    beGuarder : function(warrior){
+        cc.log("set guard")
         warrior.setGuarder(this);
-        wl.dispatcher.notify(this,"beGuard",[warrior]);
+        wl.dispatcher.notify(this,"beGuarder",[warrior]);
     },
 
     addBuff : function(buffid,trigger){
@@ -494,18 +496,20 @@ wl.warrior.prototype = {
     },
 
     attack : function(target){
-        if(this.getGuarder() != null){
-            target = this.getGuarder();
-            this.getBattleField().addTask(target,moveBack);
-            this.setGuarder(null);
+        cc.log("attack")
+        var realtarget = target
+        if(target.getGuarder() != null){
+            realtarget = target.getGuarder();
+            this.getBattleField().addTask(realtarget,realtarget.moveBack);
+            target.setGuarder(null);
         }
-        target.defense(this);
+        realtarget.defense(this);
 
-        var damage = this.calc_damage(this,target);
-        target.decHP(damage);
+        var damage = this.calc_damage(this,realtarget);
+        realtarget.decHP(damage);
             
       
-        wl.dispatcher.notify(this,"attack",target);
+        wl.dispatcher.notify(this,"attack",realtarget);
 
         
         return 1;
@@ -526,17 +530,22 @@ wl.warrior.prototype = {
     ///////////////////////////////
     on_event : function(){
         var args = Array.prototype.slice.call(arguments, 0);
+        var tasks = [];
          for(var k in this.skills){
                 if(!this.skills[k].isActiveSkill()){
-                    var arr = new Array();
-                    arr.push(this.skills[k]);
-                    arr.push(this.skills[k].on_event);
-                    for(var i in args){
-                        arr.push(args[i]);
-                    }
-                    this.battlefield.addTaskTail.apply(this.battlefield,arr);
+                   // var arr = new Array();
+                  //  arr.push(this.skills[k]);
+                   // arr.push(this.skills[k].on_event);
+                   // for(var i in args){
+                  //      arr.push(args[i]);
+                  //  }
+                    //this.battlefield.addTaskTail.apply(this.battlefield,arr);
+                    tasks.push([this.skills[k],this.skills[k].on_event,args]);
+
+                    //this.skills[k].on_event.apply(this.skills[k],args);
                 }
          }
+         this.battlefield.addTasks(tasks);
     }
    
 };

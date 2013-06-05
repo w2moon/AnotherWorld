@@ -114,18 +114,21 @@ var skillbase= [
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
     
      {'id':2,'icon':'soul.png','name':'skill2','type':skilltype.heal,'expclass':1,'specialrate':1,customaction:'guard',
-    'eventid':"defense",'eventisenemy':0,eventisself:0,'rate':1,'cooldown':1,energy:0,
+    'eventid':"beDefender",'eventisenemy':0,eventisself:0,'rate':1,'cooldown':0,energy:0,
+    condition:"self,alive,1;",
     'useraction':'','userparticle':'particles/taken-gem.plist',
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.eventtarget,'target1num':1,target1needalive:true,'target1action':'defense','target1particle':'particles/taken-gem.plist','target1effecttype':'incHP','target1effectvalue':5,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
-      /*
+      
       {'id':3,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
-    'eventid':gameevent.active,'eventisenemy':0,eventisself:0,'rate':0.5,'cooldown':3,energy:1,customaction:"",
+    'eventid':gameevent.active,'eventisenemy':0,eventisself:0,'rate':0.5,'cooldown':3,energy:1,customaction:"missile",
+    condition:"self,alive,1;enemy,alive,1;",
+    param:"1,particles/taken-gem.plist,particles/taken-gem.plist,magic,0.5",
     'useraction':'magic','userparticle':'particles/taken-gem.plist',
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'','target1particle':'','target1effecttype':'addBuff','target1effectvalue':1,
      'target2type':targettype.none,'target2num':0,target2needalive:false,'target2action':'','target2particle':'','target2effecttype':'','target2effectvalue':0},
-     */
+     
 ];
 

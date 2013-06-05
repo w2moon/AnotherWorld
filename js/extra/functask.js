@@ -44,14 +44,19 @@ this.remove = function(obj,func){
 this.next = function(){
     var task = tasks.shift();
     var dt = null;
+    /*
+    
     while(task != null && dt == null){
         dt = task[1].apply(task[0],task[2]);
         if(dt == null){
             task = tasks.shift();
         }
     }
-
-    return dt;
+    */
+    if(task != null){
+        dt = task[1].apply(task[0],task[2]) || 0.01;
+    }
+    return  dt;
 };
 
 }

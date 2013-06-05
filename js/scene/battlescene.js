@@ -80,6 +80,7 @@
 
          scene.on_warrior_event = function(){
             var args = Array.prototype.slice.call(arguments, 0);
+            cc.log(args[0]+args[1]+args[2])
             for(var k in this.warriors){
                 this.warriors[k].on_event.apply(this.warriors[k],args);
             }
