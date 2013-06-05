@@ -124,7 +124,7 @@ var skillbase= [
       {'id':3,'icon':'soul.png','name':'skill1','type':skilltype.physicattack,'expclass':1,'specialrate':1,
     'eventid':gameevent.active,'eventisenemy':0,eventisself:0,'rate':0.5,'cooldown':3,energy:1,customaction:"missile",
     condition:"self,alive,1;enemy,alive,1;",
-    param:"1,particles/taken-gem.plist,particles/taken-gem.plist,magic,0.5",
+    param:"1,,particles/taken-gem.plist,particles/taken-gem.plist,magic,0.5",
     'useraction':'magic','userparticle':'particles/taken-gem.plist',
     battlefieldaction:"",battlefieldparticle:"",duration:1,
     'target1type':targettype.enemy,'target1num':-1,target1needalive:true,'target1action':'','target1particle':'','target1effecttype':'addBuff','target1effectvalue':1,

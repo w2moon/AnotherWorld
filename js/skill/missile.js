@@ -19,9 +19,18 @@
             
             var posdes = skill.getBattleField().getAttackPosition(targets[k]);
 
-            tasks.push([wl.actionbase,wl.actionbase.move_to, [skill.warrior,posdes]]);
+            var token = wl.create_uitoken();
+            token.addBodyImage(param[1]);
+            token.addBodyParticle(param[2]);
+            token.setExplodeParticle(param[3]);
+            skill.getBattleField().addChild(token);
+            token.hide();
 
-            tasks.push([targets[k],targets[k].beDefender,[skill.warrior]]);
+            tasks.push([token,token.show, []]);
+
+            tasks.push([token,token.moveTo,[posdes]]);
+
+            tasks.push([token,token.explode, []]);
           
        }
  
