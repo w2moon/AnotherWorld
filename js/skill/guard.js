@@ -10,6 +10,7 @@
        var posdes = skill.getBattleField().getAttackPosition(trigger);
 
        tasks.push([wl.actionbase,wl.actionbase.move_to, [skill.warrior,posdes]]);
+       tasks.push([skill,skill.delay,[0.4]]);
 
        tasks.push([skill.warrior,skill.warrior.beGuarder,[trigger]]);
         

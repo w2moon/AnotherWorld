@@ -205,6 +205,7 @@ loginscene.prototype.onPressStart = function()
 
 	//chanode.setPosition(pos);
 	}
+
 	
 	
 };
@@ -336,6 +337,8 @@ loginscene.prototype.onPressStart = function()
             }
             else{
                 cc.log("region entered");
+                wl.gvars.role = new wl.role(ret.player);
+
                 this.start_game();
             }
          }
@@ -357,12 +360,16 @@ loginscene.prototype.onPressStart = function()
             }
             else{
                 cc.log("role created");
+
+                wl.gvars.role = new wl.role(ret.player);
+
                 this.start_game();
             }
          }
 
          ///////////////////////////////////////////
          loginscene.prototype.start_game = function(){
-            var scene = wl.create_battlescene();
+           // var scene = wl.create_travellercreate();
+           var scene = wl.create_battlescene();
             cc.Director.getInstance().replaceScene(scene);
          }

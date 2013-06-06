@@ -23,7 +23,7 @@ wl.warrior = function(player,battlefield,traveller){
     this.skills = [];
     this.buffs = [];
 
-    if(traveller.getSoul().getSkillBase() !== null){
+    if(traveller.getSoul() != null && traveller.getSoul().getSkillBase() !== null){
         this.skills.push( new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase()) );
     }
    
@@ -351,7 +351,6 @@ wl.warrior.prototype = {
 
     beDefender : function(attacker){
         wl.dispatcher.notify(this,"beDefender",[attacker]);
-        return 0.1;
     },
 
     setGuarder : function(warrior){
@@ -363,7 +362,6 @@ wl.warrior.prototype = {
     },
 
     beGuarder : function(warrior){
-        cc.log("set guard")
         warrior.setGuarder(this);
         wl.dispatcher.notify(this,"beGuarder",[warrior]);
     },
@@ -512,7 +510,11 @@ wl.warrior.prototype = {
         wl.dispatcher.notify(this,"attack",realtarget);
 
         
-        return 1;
+    },
+
+    magicCastStart : function(){
+    },
+    magicCastFinish : function(){
     },
 
     defense : function(attacker){

@@ -8,7 +8,9 @@ wl.player = function(role,battlefield){
     this.warriors = [];
     var travellers = role.getSlotTravellers();
     for(var k in travellers){
-        this.warriors.push(new wl.warrior(this,battlefield,travellers[k]));
+        if(travellers[k] != null){
+            this.warriors.push(new wl.warrior(this,battlefield,travellers[k]));
+        }
     }
 };
 

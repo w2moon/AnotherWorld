@@ -100,7 +100,9 @@ wl.skill.prototype = {
         return targets.length != 0;
     },
     cast : function(trigger,event_targets){
-        this.warrior.decEnergy(this.getBase().energy);
+        if(this.getBase().energy != 0){
+            this.warrior.decEnergy(this.getBase().energy);
+        }
         this.startCoolDown();
 
         if(this.getBase().customaction != "")
@@ -160,7 +162,13 @@ wl.skill.prototype = {
 
     isActiveSkill : function(){
         return this.skillbase.eventid == gameevent.active;
+    },
+
+    delay : function(dt){
+        return dt;
     }
+
+
 
     
 

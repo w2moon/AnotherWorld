@@ -6,7 +6,21 @@
 
          layer.warrior = warrior
 
-         var header = cc.Sprite.create(warrior.getTraveller().getImg());
+
+         var header;
+         var img = warrior.getTraveller().getImg();
+         if(!wl.isNoneString(img)){
+               var dataimg = new cc.Image();
+               dataimg.initWithBase64(img,DEFAULT_HEAD_WIDTH,DEFAULT_HEAD_HEIGHT);
+
+               var t2d = cc.Texture2D.create()
+               t2d.initWithImage(dataimg)
+               header = cc.Sprite.createWithTexture(t2d)
+         }
+         else
+         {
+               header = cc.Sprite.create("header.png");
+         }
          layer.addChild(header);
 
          var btop = cc.Sprite.create("boarder.png");

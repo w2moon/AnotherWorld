@@ -315,6 +315,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\scene\storescene.js" />
     <None Include="..\js\skill\base.js" />
     <None Include="..\js\skill\guard.js" />
+    <None Include="..\js\skill\missile.js" />
     <None Include="..\js\skill\multiattack.js" />
     <None Include="..\js\skill\normalattack.js" />
     <None Include="..\js\skill\skillcontext.js" />
@@ -328,6 +329,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\ui\card.js" />
     <None Include="..\js\ui\indicator.js" />
     <None Include="..\js\ui\loading.js" />
+    <None Include="..\js\ui\token.js" />
     <None Include="res\AnotherWorld.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

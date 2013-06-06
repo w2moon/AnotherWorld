@@ -487,7 +487,7 @@
           scene.emit_particle = function(from,to,particle){
           };
 
-          var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.tmp_dbrole("role2"))]
+          var roles = [wl.gvars.role,new wl.role(wl.tmp_dbrole("role2"))]
           scene.init(roles)
           scene.start()
 

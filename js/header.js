@@ -23,10 +23,9 @@ require("objects/role.js");
 require("objects/player.js");
 
 require("skill/base.js");
-require("skill/skillcontext.js");
 require("skill/guard.js");
 require("skill/normalattack.js");
-require("skill/multiattack.js");
+require("skill/missile.js");
 
 require("ui/loading.js");
 require("ui/indicator.js");
@@ -43,3 +42,5 @@ require("state/finish.js");
 
 require("scene/loginscene.js");
 require("scene/battlescene.js");
+require("scene/travellercreate.js");
+require("scene/travellermodify.js");
