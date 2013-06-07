@@ -117,6 +117,7 @@
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\fork\scripting\javascript\spidermonkey-win32\lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\fork\external\opencv\lib\*.dll" "$(OutDir)"
 </Command>
     </PreLinkEvent>
     <Link>
@@ -313,12 +314,12 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\scene\pvpscene.js" />
     <None Include="..\js\scene\questscene.js" />
     <None Include="..\js\scene\storescene.js" />
+    <None Include="..\js\scene\travellercreate.js" />
+    <None Include="..\js\scene\travellermodify.js" />
     <None Include="..\js\skill\base.js" />
     <None Include="..\js\skill\guard.js" />
     <None Include="..\js\skill\missile.js" />
-    <None Include="..\js\skill\multiattack.js" />
     <None Include="..\js\skill\normalattack.js" />
-    <None Include="..\js\skill\skillcontext.js" />
     <None Include="..\js\state\action.js" />
     <None Include="..\js\state\anim.js" />
     <None Include="..\js\state\endturn.js" />

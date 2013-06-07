@@ -158,9 +158,6 @@
     <None Include="..\js\data\buffbase.js">
       <Filter>js\data</Filter>
     </None>
-    <None Include="..\js\skill\multiattack.js">
-      <Filter>js\skill</Filter>
-    </None>
     <None Include="..\js\skill\guard.js">
       <Filter>js\skill</Filter>
     </None>
@@ -170,14 +167,17 @@
     <None Include="..\js\skill\normalattack.js">
       <Filter>js\skill</Filter>
     </None>
-    <None Include="..\js\skill\skillcontext.js">
-      <Filter>js\skill</Filter>
-    </None>
     <None Include="..\js\skill\missile.js">
       <Filter>js\skill</Filter>
     </None>
     <None Include="..\js\ui\token.js">
       <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\scene\travellermodify.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\travellercreate.js">
+      <Filter>js\scene</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

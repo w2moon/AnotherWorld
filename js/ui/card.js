@@ -12,7 +12,8 @@
          if(!wl.isNoneString(img)){
                var dataimg = new cc.Image();
                dataimg.initWithBase64(img,DEFAULT_HEAD_WIDTH,DEFAULT_HEAD_HEIGHT);
-
+               cc.log("resize")
+               dataimg.resize(128,128);
                var t2d = cc.Texture2D.create()
                t2d.initWithImage(dataimg)
                header = cc.Sprite.createWithTexture(t2d)
