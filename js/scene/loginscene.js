@@ -188,8 +188,8 @@ var charactor = function(){}
 loginscene.prototype.onPressStart = function()
 {
     cc.log("start");
-    this.req_region_list();
-    if(false){
+   // this.req_region_list();
+    if(true){
     var aboutNode = cc.BuilderReader.load("battlescene");
 	this.rootNode.addChild(aboutNode);
 	
@@ -198,7 +198,7 @@ loginscene.prototype.onPressStart = function()
 	
 	var chanode = cc.BuilderReader.load("charactor");
 	aboutNode.addChild(chanode);
-	//var pos = aboutNode.myhero.getPosition();
+	var pos = aboutNode.rootNode.myhero.getPosition();
 	var size = cc.Director.getInstance().getWinSize();
 	chanode.setPosition(cc.p(size.width/2,size.height/2));
 	

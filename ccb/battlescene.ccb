@@ -106,7 +106,7 @@
 				<key>memberVarAssignmentName</key>
 				<string>myally1</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -176,7 +176,7 @@
 				<key>displayName</key>
 				<string>myally2</string>
 				<key>memberVarAssignmentName</key>
-				<string>myall2</string>
+				<string>myally2</string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
 				<key>properties</key>
@@ -237,6 +237,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -248,7 +250,7 @@
 				<key>displayName</key>
 				<string>myally3</string>
 				<key>memberVarAssignmentName</key>
-				<string>myall3</string>
+				<string>myally3</string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
 				<key>properties</key>
@@ -669,8 +671,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -865,6 +865,8 @@
 		<string></string>
 		<key>displayName</key>
 		<string>CCLayer</string>
+		<key>jsController</key>
+		<string>battlescene</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
