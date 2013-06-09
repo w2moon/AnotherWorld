@@ -174,6 +174,35 @@ loginscene.prototype.onDidLoadFromCCB = function()
 {
     cc.log("loaded");
     this.lblRegion.setString("loading");
+    var img = cc.Image.create();
+    img.initWithImageFile("h3.jpg",0);
+//img.initWithImageFile("header.png",1);
+    var arr = img.parse("haarcascades/haarcascade_frontalface_alt.xml",1);
+    if(arr.length == 0){
+        cc.log("not found heads");
+    }
+    else
+    {
+        cc.log("detected:"+arr.length)
+    }
+    var y = 50;
+    for(var k in arr){
+        var r = arr[k].getValue();
+        cc.log(r.x+" "+r.y+" "+r.width+" "+r.height);
+        var subimg = img.createSubImage(r);
+
+        var efimg = subimg.effect(4);
+        var t2d = cc.Texture2D.create()
+        t2d.initWithImage(efimg)
+        
+        var header = cc.Sprite.createWithTexture(t2d)
+        var size = cc.Director.getInstance().getWinSize();
+        header.setPosition(cc.p(size.width/2,y));
+        y=y+header.getContentSize().height;
+        this.rootNode.addChild(header);
+        
+    }
+
 };
 
 var battlescene = function(){}
