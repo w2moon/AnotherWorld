@@ -26,6 +26,7 @@
 		5816C653172260590081BB1D /* main.debug.js in Resources */ = {isa = PBXBuildFile; fileRef = 589136E41722525B00C2E700 /* main.debug.js */; };
 		5816C6551722E6BF0081BB1D /* js in Resources */ = {isa = PBXBuildFile; fileRef = 5816C6541722E6BF0081BB1D /* js */; };
 		5840E030173BEA5B00EF1C80 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 5840E02F173BEA5B00EF1C80 /* res */; };
+		5871FFB1176893D00056621B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5871FFB0176893D00056621B /* opencv2.framework */; };
 		5872B7BD1759F08D0076D71C /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = 5872B7BC1759F08D0076D71C /* Published-iOS */; };
 		589136B517223EC600C2E700 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589136B417223EC600C2E700 /* libcurl.a */; };
 		589136BB1722448B00C2E700 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589136B61722448B00C2E700 /* libchipmunk.a */; };
@@ -60,6 +61,7 @@
 		1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5816C6541722E6BF0081BB1D /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; name = js; path = ../js; sourceTree = "<group>"; };
 		5840E02F173BEA5B00EF1C80 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../res; sourceTree = "<group>"; };
+		5871FFB0176893D00056621B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../../cocos2d-x/external/opencv/lib/opencv2.framework"; sourceTree = "<group>"; };
 		5872B7BC1759F08D0076D71C /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "../AnotherWorld/Published-iOS"; sourceTree = "<group>"; };
 		589136B417223EC600C2E700 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = "<group>"; };
 		589136B61722448B00C2E700 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../../Library/Developer/Xcode/DerivedData/AnotherWorldAll-apwxbawoshyuuoeezbyptyagzppm/Build/Products/Debug-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5871FFB1176893D00056621B /* opencv2.framework in Frameworks */,
 				589136C3172248D000C2E700 /* libjsbindings.a in Frameworks */,
 				589136BB1722448B00C2E700 /* libchipmunk.a in Frameworks */,
 				589136BC1722448B00C2E700 /* libcocos2dx.a in Frameworks */,
@@ -200,6 +203,7 @@
 				1A82F5D0169AC71F00C4B13A /* libsqlite3.dylib */,
 				D454520B156E22BD00887EB5 /* libz.dylib */,
 				D4545209156E22B400887EB5 /* libxml2.dylib */,
+				5871FFB0176893D00056621B /* opencv2.framework */,
 				A92275411517C094001B78AA /* QuartzCore.framework */,
 				A92275431517C094001B78AA /* OpenGLES.framework */,
 				A92275451517C094001B78AA /* OpenAL.framework */,
@@ -365,7 +369,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../cocos2d-x/external/opencv/lib\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -379,7 +390,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx\"",
 					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/kazmath/include\"",
@@ -400,6 +411,7 @@
 					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/AnotherWorldAll-apwxbawoshyuuoeezbyptyagzppm/Build/Products/Debug-iphoneos\"",
 				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
@@ -416,7 +428,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../cocos2d-x/external/opencv/lib\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -427,7 +446,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_THUMB_SUPPORT = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx\"",
 					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/kazmath/include\"",
@@ -448,6 +467,7 @@
 					"\"$(SRCROOT)/../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../../Library/Developer/Xcode/DerivedData/AnotherWorldAll-apwxbawoshyuuoeezbyptyagzppm/Build/Products/Debug-iphoneos\"",
 				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
