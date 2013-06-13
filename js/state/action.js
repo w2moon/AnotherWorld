@@ -22,12 +22,14 @@ var func = function(){
                         }
                     }
                     else{
+               
                         for(var k in this.players){
                            if(this.players[k].isDead()){
                                this.state = state_finish
                                return 0
                            }
                         }
+                       
                         this.state = state_endturn
                     }
 

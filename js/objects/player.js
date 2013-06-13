@@ -21,12 +21,15 @@ wl.player.prototype = {
         }
     },
     isDead : function(){
+        return this.warriors[0].isDead();
+        /*
         for(var k in this.warriors){
             if(!this.warriors[k].isDead()){
                 return false;
             }
         }
         return true;
+        */
     },
     getWarriors : function(){
         return this.warriors;

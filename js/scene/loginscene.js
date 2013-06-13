@@ -174,6 +174,8 @@ loginscene.prototype.onDidLoadFromCCB = function()
 {
     cc.log("loaded");
     this.lblRegion.setString("loading");
+
+    /*
     var img = cc.Image.create();
     img.initWithImageFile("h3.jpg",0);
 //img.initWithImageFile("header.png",1);
@@ -202,14 +204,14 @@ loginscene.prototype.onDidLoadFromCCB = function()
         this.rootNode.addChild(header);
         
     }
-
+    */
 };
 
 var battlescene = function(){}
 battlescene.prototype.onDidLoadFromCCB = function()
 {
     var pos = this.myhero.getPosition();
-    cc.log("hero")
+    cc.log("hero"+pos.x)
 }
 
 var charactor = function(){}
@@ -217,8 +219,12 @@ var charactor = function(){}
 loginscene.prototype.onPressStart = function()
 {
     cc.log("start");
-   // this.req_region_list();
+   
     if(true){
+         this.req_region_list();
+    }
+    else
+    {
     var aboutNode = cc.BuilderReader.load("battlescene");
 	this.rootNode.addChild(aboutNode);
 	
@@ -226,13 +232,14 @@ loginscene.prototype.onPressStart = function()
    
 	
 	var chanode = cc.BuilderReader.load("charactor");
-	aboutNode.addChild(chanode);
-	var pos = aboutNode.rootNode.myhero.getPosition();
-	var size = cc.Director.getInstance().getWinSize();
-	chanode.setPosition(cc.p(size.width/2,size.height/2));
+    aboutNode.addChild(chanode);
+  
+	var pos = aboutNode.controller.myhero.getPosition();
+	//var size = cc.Director.getInstance().getWinSize();
+	//chanode.setPosition(cc.p(size.width/2,size.height/2));
 	
 
-	//chanode.setPosition(pos);
+	chanode.setPosition(pos);
 	}
 
 	

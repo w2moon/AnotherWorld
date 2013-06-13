@@ -33,7 +33,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
 	  
     CCSize designSize = CCSizeMake(320, 480);
-    CCSize resourceSize = CCSizeMake(320, 480);
+    CCSize resourceSize = CCSizeMake(640, 960);
     
     std::vector<std::string> searchPaths;
     std::vector<std::string> resDirOrders;

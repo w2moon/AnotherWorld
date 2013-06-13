@@ -432,7 +432,7 @@ wl.warrior.prototype = {
 
     
 
-    isDead : function(){return this.getHP() <= 0;},
+    isDead : function(){if(this.getHP() <= 0){cc.log("dead")} return this.getHP() <= 0;},
 
     dead : function() {
         this.clearBuffs();
