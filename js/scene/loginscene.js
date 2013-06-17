@@ -170,11 +170,23 @@
 
 var loginscene = function(){};
 
+
 loginscene.prototype.onDidLoadFromCCB = function()
 {
     cc.log("loaded");
     this.lblRegion.setString("loading");
 
+    var aboutNode = cc.BuilderReader.load("sk_human");
+	this.rootNode.addChild(aboutNode);
+    var size = cc.Director.getInstance().getWinSize();
+	aboutNode.setPosition(cc.p(size.width/2,size.height/2));
+    aboutNode.animationManager.runAnimationsForSequenceNamed("stand");
+    aboutNode.on_animation_finish = function()
+{
+	 this.animationManager.runAnimationsForSequenceNamed("stand");
+   
+}
+    aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
     /*
     var img = cc.Image.create();
     img.initWithImageFile("h3.jpg",0);
@@ -212,6 +224,8 @@ battlescene.prototype.onDidLoadFromCCB = function()
 {
     var pos = this.myhero.getPosition();
     cc.log("hero"+pos.x)
+    
+   
 }
 
 var charactor = function(){}
@@ -220,7 +234,7 @@ loginscene.prototype.onPressStart = function()
 {
     cc.log("start");
    
-    if(true){
+    if(false){
          this.req_region_list();
     }
     else
