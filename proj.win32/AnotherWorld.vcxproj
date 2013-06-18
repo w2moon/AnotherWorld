@@ -134,7 +134,8 @@ mkdir "$(OutDir)\AnotherWorldRes"
 xcopy "$(ProjectDir)..\..\fork\scripting\javascript\bindings\js\*.js" "$(OutDir)\AnotherWorldRes" /e /Y
 xcopy "$(ProjectDir)..\js" "$(OutDir)\AnotherWorldRes\" /e /Y
 xcopy "$(ProjectDir)..\res" "$(OutDir)\AnotherWorldRes\" /e /Y
-xcopy "$(ProjectDir)..\ccb" "$(OutDir)\AnotherWorldRes\" /e /Y</Command>
+xcopy "$(ProjectDir)..\ccb" "$(OutDir)\AnotherWorldRes\" /e /Y
+xcopy "$(ProjectDir)..\data" "$(OutDir)\AnotherWorldRes\" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>

@@ -175,6 +175,17 @@ loginscene.prototype.onDidLoadFromCCB = function()
     cc.log("loaded");
     this.lblRegion.setString("loading");
 
+    var str = cc.FileUtils.getInstance().getStringFromFile("roletemplate.csv");
+    var arr = wl.load_csv(str)
+    cc.log("start-------------------------")
+    for(var k in arr){
+        cc.log(k+">>>>>>>>>>>>>")
+        for(var i in arr[k]){
+            cc.log("    "+arr[k][i])
+        }
+    }
+    cc.log("end-----------------------------------")
+
     /*
     var img = cc.Image.create();
     img.initWithImageFile("h3.jpg",0);

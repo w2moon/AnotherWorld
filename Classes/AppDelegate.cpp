@@ -44,6 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching()
          
         searchPaths.push_back("js"); // Resources/Published-iOS
         searchPaths.push_back("res");
+		searchPaths.push_back("data");
         searchPaths.push_back("Published-iOS");
         
         CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
@@ -68,6 +69,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 			searchPaths.push_back("../../jslib");
 			searchPaths.push_back("../../res");
 			searchPaths.push_back("../../res/resources-auto");
+			searchPaths.push_back("../../data");
 		}
 		    searchPaths.push_back("AnotherWorldRes");
 		CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
