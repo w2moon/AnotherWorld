@@ -59,6 +59,32 @@ wl.ccpAdd = function(p1,p2){
 
 wl.gvars = {};
 
+wl.csv_lang = function(file){
+    var ret = {};
+     var str = cc.FileUtils.getInstance().getStringFromFile(file);
+    var arr = wl.load_csv(str)
+    for(var k=1;k<arr.length;++k){
+         ret[arr[k][0]] = arr[k][1];
+        
+    }
+    return ret;
+};
+
+wl.csv_object = function(file){
+    var ret = [];
+     var str = cc.FileUtils.getInstance().getStringFromFile(file);
+    var arr = wl.load_csv(str)
+    for(var k=1;k<arr.length;++k){
+         var obj = {}
+         for(var idx in arr[0]){
+              obj[arr[0][idx]] = arr[k][idx];
+         }
+         ret.push(obj);
+        
+    }
+    return ret;
+};
+
 wl.load_csv = function( strData, strDelimiter,rowstoread ){
         // Check to see if the delimiter is defined. If not,
         // then default to comma.

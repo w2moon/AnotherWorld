@@ -137,3 +137,4 @@ var skillbase= [
      
 ];
 
+skillbase = wl.csv_object("skill.csv");

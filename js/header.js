@@ -2,15 +2,18 @@ var g = g || {};
 
 require("config.js");
 
+require("extra/header.js");
+
 require("data/retcode.js");
 require("data/buffbase.js");
+require("data/lang.js");
 require("data/skillbase.js");
 require("data/equipmentbase.js");
 require("data/soulbase.js");
 require("data/equipmentset.js");
 require("data/soulset.js");
 
-require("extra/header.js");
+
 
 require("objects/itemfactory.js");
 require("objects/skill.js");
@@ -25,6 +28,7 @@ require("objects/player.js");
 require("skill/base.js");
 require("skill/guard.js");
 require("skill/normalattack.js");
+require("skill/assist_attack.js");
 require("skill/missile.js");
 
 require("ui/loading.js");

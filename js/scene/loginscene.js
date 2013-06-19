@@ -177,18 +177,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
     this.lblRegion.setString("loading");
 
 
-    var str = cc.FileUtils.getInstance().getStringFromFile("roletemplate.csv");
-    var arr = wl.load_csv(str)
-    cc.log("start-------------------------")
-    for(var k in arr){
-        cc.log(k+">>>>>>>>>>>>>")
-        for(var i in arr[k]){
-            cc.log("    "+arr[k][i])
-        }
-    }
-    cc.log("end-----------------------------------")
-
-
+   cc.log(lang["SKILL_NAME_1001"])
     var aboutNode = cc.BuilderReader.load("sk_human");
 	this.rootNode.addChild(aboutNode);
     var size = cc.Director.getInstance().getWinSize();

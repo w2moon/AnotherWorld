@@ -74,9 +74,6 @@
     <None Include="..\js\extra\virtualhttp.js">
       <Filter>js\extra</Filter>
     </None>
-    <None Include="..\js\extra\csv.js">
-      <Filter>js\extra</Filter>
-    </None>
     <None Include="..\js\extra\gfunc.js">
       <Filter>js\extra</Filter>
     </None>
@@ -178,6 +175,12 @@
     </None>
     <None Include="..\js\scene\travellercreate.js">
       <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\skill\assist_attack.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\data\lang.js">
+      <Filter>js\data</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
