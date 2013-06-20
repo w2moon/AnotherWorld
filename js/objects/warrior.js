@@ -20,8 +20,12 @@ wl.warrior = function(player,battlefield,traveller){
     this.extra_dodge = 0;
     this.extra_crit = 0;
 
+    this.base_property = {}
+    this.extra_property = {}
+
     this.skills = [];
     this.buffs = [];
+    this.fear = 0;
 
     if(traveller.getSoul() != null && traveller.getSoul().getSkillBase() !== null){
         this.skills.push( new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase()) );
@@ -107,6 +111,20 @@ wl.warrior.prototype = {
         return this.maxhp;
     },
 ///////////////////////////
+    getProperty : function(name){
+        var v = this.getBaseProperty() + this.getExtraProperty();
+        if( v < 0 ){
+            return 0;
+        }
+        return v;
+    },
+    getBaseProperty : function(name){
+        return this.base_property[name] || 0;
+    },
+    getExtraProperty : function(name){
+        return this.extra_property[name] || 0;
+    },
+
     getAttack : function(){
         var attack = this.getBaseAttack() + this.getExtraAttack();
         if(attack < 0){
@@ -226,6 +244,17 @@ wl.warrior.prototype = {
         this.extra_crit = v;
     },
 /////////////////////////////
+    incFear : function(v){
+        this.fear += v;
+    },
+    decFear : function(v){
+        this.fear -= v;
+    },
+    isFear : function(){
+    cc.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!fear")
+        return this.fear > 0;
+    },
+
     incHP : function(v){
         this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
 
@@ -367,7 +396,7 @@ wl.warrior.prototype = {
     },
 
     addBuff : function(buffid,trigger){
-
+    cc.log("buuff"+buffid)
         var buffinfo = buffbase[buffid];
         
         if(buffinfo.multiple == 1)
@@ -446,7 +475,7 @@ wl.warrior.prototype = {
         this.buffs = [];
     },
 
-    calc_damage : function(attacker,defenser){
+    calc_damage : function(attacker,defenser,protype,prorate){
         var damage = attacker.getAttack() - defenser.getDefense();
         if(damage <= 0)
         {
@@ -455,18 +484,27 @@ wl.warrior.prototype = {
         return damage;
     },
 
-    action : function(){
-        if(!this.isDead()){
+    canAction : function(){
+        if(this.isFear()){
+            return false;
+        }
 
+        if(this.isDead()){
+            return false;
+        }
+
+        return true;
+    },
+
+    action : function(){
+        
               for(var k in this.skills){
                 if(this.skills[k].isActiveSkill() && this.skills[k].canBeCast()){
                     return this.skills[k].cast();
                 }
               }
               
-              return this.attack();
-              
-         }
+           
          return 0;
     },
 
@@ -493,8 +531,7 @@ wl.warrior.prototype = {
         }
     },
 
-    attack : function(target){
-        cc.log("attack")
+    attack : function(target,protype,prorate){
         var realtarget = target
         if(target.getGuarder() != null){
             realtarget = target.getGuarder();
@@ -503,11 +540,11 @@ wl.warrior.prototype = {
         }
         realtarget.defense(this);
 
-        var damage = this.calc_damage(this,realtarget);
+        var damage = this.calc_damage(this,realtarget,protype,prorate);
         realtarget.decHP(damage);
             
       
-        wl.dispatcher.notify(this,"attack",realtarget);
+        wl.dispatcher.notify(this,"attack",[realtarget]);
 
         
     },

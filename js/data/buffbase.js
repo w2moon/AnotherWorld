@@ -8,3 +8,5 @@ var buffbase = [
     {id:2,name:"buff2",duration:-1,interval:2,type:bufftype.positive,icon:"soul.png",multiple:1,stack:5,startlogic:"",startvalue:0,startaction:"",startparticle:"",intervallogic:"incHP",intervalvalue:10,intervalaction:"",intervalparticle:"",endlogic:"",endvalue:0,endaction:"",endparticle:"",compose:"1,2"},
 
 ];
+
+buffbase = wl.csv_idmap("buffbase.csv");

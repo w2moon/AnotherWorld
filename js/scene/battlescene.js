@@ -115,80 +115,7 @@
          'elemtype':'fire','hp':10,'attack':5,'defense':1,'targettype':0,'targetnum':1,'targetneedalive':true,'nature':0,'specialattack':10,'speed':3,'dodge':0,'critical':0.2,
          'hp%':0.2,'attack%':0.1,'defense%':0.1,'specialattack%':0,'speed%':0,'dodge%':0,'crit%':0,'skillid':1}
 
-         var traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 1;
-         traveller.init(player1,cfg);
-         traveller.soul = wl.itemfactory.create("soul");
-         traveller.soul.skill = new wl.skill(1);
-         player1.travellers.push(traveller);
-         scene.travellers.push(traveller);
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 2;
-         traveller.init(player1,cfg);
-         traveller.soul = wl.itemfactory.create("soul");
-         player1.travellers.push(traveller);
-         scene.travellers.push(traveller);
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 3;
-         traveller.init(player1,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player1.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 4;
-         traveller.init(player1,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player1.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 10;
-         traveller.init(player1,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player1.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-
-         /////
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 9;
-         traveller.init(player2,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player2.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 8;
-         traveller.init(player2,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player2.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 7
-         ;
-         traveller.init(player2,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         cfg.speed = 6;
-         player2.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 5;
-         traveller.init(player2,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player2.travellers.push(traveller)
-         scene.travellers.push(traveller)
-
-         traveller = wl.itemfactory.create("traveller");
-         cfg.speed = 4;
-         traveller.init(player2,cfg)
-         traveller.soul = wl.itemfactory.create("soul");
-         player2.travellers.push(traveller)
-         scene.travellers.push(traveller)
+       
 
         // player.travellers = [traveller,traveller,traveller,traveller,traveller];
 
@@ -486,8 +413,8 @@
 
           scene.emit_particle = function(from,to,particle){
           };
-
-          var roles = [wl.gvars.role,new wl.role(wl.tmp_dbrole("role2"))]
+        //  wl.gvars.role
+          var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.tmp_dbrole("role2"))]
           scene.init(roles)
           scene.start()
 

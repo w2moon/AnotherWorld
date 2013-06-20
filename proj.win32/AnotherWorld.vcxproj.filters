@@ -161,9 +161,6 @@
     <None Include="..\js\skill\base.js">
       <Filter>js\skill</Filter>
     </None>
-    <None Include="..\js\skill\normalattack.js">
-      <Filter>js\skill</Filter>
-    </None>
     <None Include="..\js\skill\missile.js">
       <Filter>js\skill</Filter>
     </None>
@@ -181,6 +178,12 @@
     </None>
     <None Include="..\js\data\lang.js">
       <Filter>js\data</Filter>
+    </None>
+    <None Include="..\js\skill\normal_attack.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\add_buffer.js">
+      <Filter>js\skill</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

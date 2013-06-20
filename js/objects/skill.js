@@ -14,22 +14,46 @@ wl.skill.prototype = {
 
     },
 
-    on_event : function(warrior,event,event_targets){   
-        if(this.getBase().eventid != event){
+    on_event : function(warrior,event,event_targets){
+        if(event == "attack")
+        {
+        cc.log("attack")
+        }
+        if(this.getBase().event_id != event){
+            if(event == "attack")
+        {
+        cc.log(1)
+        }
             return;
         }
-        if(this.getBase().eventisenemy != this.warrior.isEnemy(warrior)){
+        if((this.getBase().event_trigger == "ally_except_me"|| this.getBase().event_trigger == "all_except_me")
+        && this.warrior == warrior){
+         if(event == "attack")
+        {
+        cc.log(2)
+        }
             return;
         }
-
-        if(this.getBase().eventisself == 1 && this.warrior != warrior){
+        else if( (this.getBase().event_trigger == "enemy" && !this.warrior.isEnemy(warrior))
+        || (this.getBase().event_trigger != "enemy" && this.warrior.isEnemy(warrior))){
+          if(event == "attack")
+        {
+        cc.log(3)
+        }
             return;
         }
 
         if(!this.canBeCast(warrior,event_targets)){
+          if(event == "attack")
+        {
+        cc.log(4)
+        }
             return;
         }
-        cc.log("event:"+event+" isself:"+this.getBase().eventisself)
+        if(event == "attack")
+        {
+        cc.log("pass")
+        }
 
         return this.cast(warrior,event_targets);
 
@@ -55,7 +79,7 @@ wl.skill.prototype = {
         this.cooldown = v;
     },
     startCoolDown : function(){
-        this.cooldown = this.getBase().cooldown;
+        this.cooldown = parseInt(this.getBase().cooldown);
     },
     update : function(){
         this.cooldown--;
@@ -64,7 +88,7 @@ wl.skill.prototype = {
         }
     },
     canBeCast : function(trigger,event_targets){
-        if(wl.rand() > this.getBase().rate)
+        if(wl.rand() > this.getBase().max_cast_rate)
         {
             return false;
         }
@@ -80,16 +104,18 @@ wl.skill.prototype = {
             var conditions = parse_skill_params(this.getBase().condition);
             for(var k=0;k<conditions.length;++k){
                if(conditions[k][0] != "" && !this.isTargetValid(conditions[k][0],parseInt(conditions[k][2]),conditions[k][1] == "alive",trigger,event_targets)){
+              
                     return false;
                }
             }
         }
-        else{
+       /* else{
             if(!this.isTargetValid(this.getBase().target1type,this.getBase().target1num,this.getBase().target1needalive,trigger,event_targets) 
             || !this.isTargetValid(this.getBase().target2type,this.getBase().target2num,this.getBase().target2needalive,trigger,event_targets)){
                 return false;
             }
         }
+        */
         return true;
     },
     isTargetValid : function(type,num,needalive,trigger,event_targets){
@@ -105,9 +131,9 @@ wl.skill.prototype = {
         }
         this.startCoolDown();
 
-        if(this.getBase().customaction != "")
+        if(this.getBase().action != "")
         {
-            wl.skillactions[this.getBase().customaction](this,trigger,event_targets);
+            wl.skillactions[this.getBase().action](this,trigger,event_targets);
         }
         else 
         if(this.getBase().actions != ""){
@@ -161,7 +187,7 @@ wl.skill.prototype = {
     },
 
     isActiveSkill : function(){
-        return this.skillbase.eventid == gameevent.active;
+        return this.skillbase.event_id == gameevent.action;
     },
 
     delay : function(dt){

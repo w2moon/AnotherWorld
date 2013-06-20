@@ -66,13 +66,13 @@ wl.traveller.prototype = {
         if(this.getSkill1Id() == 0){
             return null;
         } 
-        return skillbase[this.getSkill1Id()-1];
+        return skillbase[this.getSkill1Id()];
     },
     getSkill2Base : function(){
         if(this.getSkill2Id() == 0){
             return null;
         } 
-        return skillbase[this.getSkill2Id()-1];
+        return skillbase[this.getSkill2Id()];
     },
     /*
     getSkills : function(){

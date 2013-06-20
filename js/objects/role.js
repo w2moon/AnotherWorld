@@ -24,7 +24,7 @@ wl.tmp_dbrole = function(name){
         date_create:0,
 
         travellers:[
-            {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:2,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:1,nature:1,soulid:1,weaponid:1,clothid:2,trinketid:3},
+            {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:1600,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:1,nature:1,soulid:1,weaponid:1,clothid:2,trinketid:3},
             {id:2,name:"2",img:"",exp:0,level:1,view:1,skill1id:0,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
             {id:3,name:"3",img:"",exp:0,level:1,view:1,skill1id:0,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},
             {id:4,name:"4",img:"",exp:0,level:1,view:1,skill1id:0,skill1exp:0,skill1level:1,skill2id:0,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0},

@@ -317,11 +317,12 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\scene\storescene.js" />
     <None Include="..\js\scene\travellercreate.js" />
     <None Include="..\js\scene\travellermodify.js" />
+    <None Include="..\js\skill\add_buffer.js" />
     <None Include="..\js\skill\assist_attack.js" />
     <None Include="..\js\skill\base.js" />
     <None Include="..\js\skill\guard.js" />
     <None Include="..\js\skill\missile.js" />
-    <None Include="..\js\skill\normalattack.js" />
+    <None Include="..\js\skill\normal_attack.js" />
     <None Include="..\js\state\action.js" />
     <None Include="..\js\state\anim.js" />
     <None Include="..\js\state\endturn.js" />

@@ -20,6 +20,7 @@ require("objects/skill.js");
 require("objects/buff.js");
 require("objects/item.js");
 require("objects/equipment.js");
+require("objects/soul.js");
 require("objects/traveller.js");
 require("objects/warrior.js");
 require("objects/role.js");
@@ -27,9 +28,10 @@ require("objects/player.js");
 
 require("skill/base.js");
 require("skill/guard.js");
-require("skill/normalattack.js");
+require("skill/normal_attack.js");
 require("skill/assist_attack.js");
 require("skill/missile.js");
+require("skill/add_buffer.js");
 
 require("ui/loading.js");
 require("ui/indicator.js");

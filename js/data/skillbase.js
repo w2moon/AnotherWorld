@@ -77,7 +77,7 @@ critdec:29,
 //deader causer
 dead:30,
 
-action:31,
+action:"action",
 slash:32,
 magic:33,
 dodge:34,
@@ -137,4 +137,4 @@ var skillbase= [
      
 ];
 
-skillbase = wl.csv_object("skill.csv");
+skillbase = wl.csv_idmap("skillbase.csv");

@@ -27,6 +27,15 @@ wl.copyfunc = function(src,dst){
     }
 };
 
+wl.callstack = function() {  
+var i = 0;  
+var fun = arguments.callee;  
+do {  
+fun = fun.arguments.callee.caller;
+cc.log(++i + ': ' + fun);
+} while (fun);  
+};
+
 wl.isNoneString = function(str){
     return typeof(str) === "undefined" || str === null || str === "";
 };
@@ -65,6 +74,36 @@ wl.csv_lang = function(file){
     var arr = wl.load_csv(str)
     for(var k=1;k<arr.length;++k){
          ret[arr[k][0]] = arr[k][1];
+        
+    }
+    return ret;
+};
+
+wl.csv_map = function(file){
+    var ret = {};
+     var str = cc.FileUtils.getInstance().getStringFromFile(file);
+    var arr = wl.load_csv(str)
+    for(var k=1;k<arr.length;++k){
+         var obj = {}
+         for(var idx in arr[0]){
+             obj[arr[0][idx]] = isNaN(arr[k][idx])?arr[k][idx]:parseInt(arr[k][idx]);
+         }
+         ret[obj[arr[0][0]]] = obj;
+        
+    }
+    return ret;
+};
+
+wl.csv_idmap = function(file){
+    var ret = {};
+     var str = cc.FileUtils.getInstance().getStringFromFile(file);
+    var arr = wl.load_csv(str)
+    for(var k=1;k<arr.length;++k){
+         var obj = {}
+         for(var idx in arr[0]){
+              obj[arr[0][idx]] = isNaN(arr[k][idx])?arr[k][idx]:parseInt(arr[k][idx]);
+         }
+         ret[parseInt(obj[arr[0][0]])] = obj;
         
     }
     return ret;

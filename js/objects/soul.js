@@ -1,17 +1,3 @@
-var soul = function(){
-    this.init = function(baseid){
-        soul.prototype.init.apply(this,[baseid])
-    }
-    this.getName = function(){
-        cc.log("soul"+this.getBase())
-    }
-
-    this.getImg = function(){
-        return "soul.png"
-    }
-}
-wl.extend(soul,item)
-
 
 wl.soul = function(dbobj){
     this.dbobj = dbobj
@@ -45,6 +31,6 @@ wl.soul.prototype = {
         {
             return null;
          }; 
-         return skillbase[this.getBase().skillid-1];
+         return skillbase[this.getBase().skillid];
     }
 };

@@ -14,7 +14,10 @@ var func = function(){
                     var dt = 0;
                     if(this.idx_acting < this.warriors.length){
 
-                        dt = this.warriors[this.idx_acting].action();
+                        if(this.warriors[this.idx_acting].canAction)
+                        {
+                            dt = this.warriors[this.idx_acting].action();
+                        }
 
                         this.idx_acting++;
                         while(this.idx_acting < this.warriors.length && this.warriors[this.idx_acting].isDead()){
