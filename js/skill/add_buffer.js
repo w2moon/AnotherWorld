@@ -9,7 +9,6 @@
 
         var tasks = [];
         var possrc = skill.getBattleField().getAttackPosition(skill.warrior);
-        
         if(params[0] == targettype.eventtarget){
              for(var k in targets){
 

@@ -80,7 +80,6 @@
 
          scene.on_warrior_event = function(){
             var args = Array.prototype.slice.call(arguments, 0);
-            cc.log(args[0]+args[1]+args[2])
             for(var k in this.warriors){
                 this.warriors[k].on_event.apply(this.warriors[k],args);
             }
@@ -198,18 +197,18 @@
             cc.log("schedule")
           }
 
-          var sort_traveller = function(t1,t2){return t2.getSpeed()-t1.getSpeed();}
 
           scene.turn_process = function(){
             var dt = this.functask.next();
             if(dt != null){
-                cc.log("delay dt:"+dt)
                 this.delayupdate(dt)
                 return;
             }
             this.delayupdate(this.state.apply(this))
             
           }
+
+          var sort_hp = function(t1,t2){return t2.getHP()>t1.getHP();}
 
           var nature_select = function(objs,nature_type,num,out_array,selecthero,needalive){
           //num can be negative
@@ -275,14 +274,52 @@
                 while(arr.length >0 &&num>0){
                     
                     var k = Math.random()*arr.length
-                    out_array.push(arr[k])
-                    arr.splice(k,1)
+                    out_array.push(arr[k]);
+                    arr.splice(k,1);
                     num--;
                 }
             }
             break;
-            }
+            case naturetype.lowesthp:
+            {
+                if(num == -1){
+                    for(var k in objs){
+                        if(!objs[k].isDead()){
+                            out_array.push(objs[k]);
+                        }
+                    }
+                }
+                else{
+                for(var k in objs){
+                    if(objs[k].isDead()){
+                        continue;
+                    }
+                    if(out_array.length < num){
+                        out_array.push(objs[k])
+                    }
+                    else{
+                        out_array.sort(sort_hp);
+                        var idx = -1;
+                        for(var i in arr){
+                            if(objs[k].getHP() >= out_array[i].getHP()){
+                                idx = i -1;
+                                break;
+                            }
+                        }
+                        if(idx > -1){
+                            for(var i=0;i<idx;++i){
+                                out_array.shift()
+                            }
+                            out_array[0] = objs[k];
+                        }
+                    }
+                }
+                }
 
+               
+            }
+            break;
+            }
            
           }
 

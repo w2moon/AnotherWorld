@@ -15,45 +15,32 @@ wl.skill.prototype = {
     },
 
     on_event : function(warrior,event,event_targets){
-        if(event == "attack")
-        {
-        cc.log("attack")
-        }
         if(this.getBase().event_id != event){
-            if(event == "attack")
-        {
-        cc.log(1)
-        }
+           
             return;
         }
+       
         if((this.getBase().event_trigger == "ally_except_me"|| this.getBase().event_trigger == "all_except_me")
         && this.warrior == warrior){
-         if(event == "attack")
-        {
-        cc.log(2)
+         
+            return;
         }
+        else if(this.getBase().event_trigger == "self" && this.warrior != warrior){
             return;
         }
         else if( (this.getBase().event_trigger == "enemy" && !this.warrior.isEnemy(warrior))
         || (this.getBase().event_trigger != "enemy" && this.warrior.isEnemy(warrior))){
-          if(event == "attack")
-        {
-        cc.log(3)
-        }
+         
             return;
         }
 
+       
+
         if(!this.canBeCast(warrior,event_targets)){
-          if(event == "attack")
-        {
-        cc.log(4)
-        }
+         
             return;
         }
-        if(event == "attack")
-        {
-        cc.log("pass")
-        }
+       
 
         return this.cast(warrior,event_targets);
 
@@ -133,6 +120,9 @@ wl.skill.prototype = {
 
         if(this.getBase().action != "")
         {
+            if(typeof(wl.skillactions[this.getBase().action]) != "function"){
+                cc.log("not found function:"+this.getBase().action)
+            }
             wl.skillactions[this.getBase().action](this,trigger,event_targets);
         }
         else 

@@ -25,7 +25,9 @@ wl.warrior = function(player,battlefield,traveller){
 
     this.skills = [];
     this.buffs = [];
-    this.fear = 0;
+    this.disabled = 0;
+
+    this.modifier_damage_percent = 0;
 
     if(traveller.getSoul() != null && traveller.getSoul().getSkillBase() !== null){
         this.skills.push( new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase()) );
@@ -244,15 +246,27 @@ wl.warrior.prototype = {
         this.extra_crit = v;
     },
 /////////////////////////////
-    incFear : function(v){
-        this.fear += v;
+    incDisabled : function(v){
+        this.disabled += v;
     },
-    decFear : function(v){
-        this.fear -= v;
+    decDisabled : function(v){
+        this.disabled -= v;
     },
-    isFear : function(){
-    cc.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!fear")
-        return this.fear > 0;
+    isDisabled : function(){
+    if(this.disabled > 0){
+        return this.disabled > 0;
+        }
+    },
+
+    incModifierDamagePercent : function(v){
+        this.modifier_damage_percent += v;
+        cc.log("modifier_damage_percent "+this.modifier_damage_percent)
+    },
+    decModifierDamagePercent : function(v){
+        this.modifier_damage_percent -= v;
+    },
+    getModifierDamagePercent : function(){
+        return this.modifier_damage_percent;
     },
 
     incHP : function(v){
@@ -396,9 +410,7 @@ wl.warrior.prototype = {
     },
 
     addBuff : function(buffid,trigger){
-    cc.log("buuff"+buffid)
         var buffinfo = buffbase[buffid];
-        
         if(buffinfo.multiple == 1)
         {
             var buff = null;
@@ -417,14 +429,24 @@ wl.warrior.prototype = {
                 if(buffinfo.stack > buff.getStack()){
                     buff.setStack( buff.getStack() + 1);
                 }
+                buff.refreshDuration();
             }
             
         }
         else{
+            var isnew = true;
             for(var k in this.buffs){
                 if(this.buffs[k].getId() == buffid){
                    this.buffs[k].addLink(trigger);
+                   this.buffs[k].refreshDuration();
+                   isnew = false;
+                   break;
                 }
+            }
+            if(isnew){
+                var buff = new wl.buff(this,this.battlefield,buffinfo);
+                buff.addLink(trigger);
+                this.buffs.push(buff);
             }
         }
         
@@ -461,7 +483,7 @@ wl.warrior.prototype = {
 
     
 
-    isDead : function(){if(this.getHP() <= 0){cc.log("dead")} return this.getHP() <= 0;},
+    isDead : function(){return this.getHP() <= 0;},
 
     dead : function() {
         this.clearBuffs();
@@ -477,6 +499,7 @@ wl.warrior.prototype = {
 
     calc_damage : function(attacker,defenser,protype,prorate){
         var damage = attacker.getAttack() - defenser.getDefense();
+        damage = parseInt(damage*(1+defenser.getModifierDamagePercent()));
         if(damage <= 0)
         {
             damage = 1;
@@ -484,8 +507,17 @@ wl.warrior.prototype = {
         return damage;
     },
 
+    calc_heal : function(healer,reciever,protype,prorate){
+        var v = healer.getMagic();
+        if(v < 0)
+        {
+            v = 0;
+        }
+        return v;
+    },
+
     canAction : function(){
-        if(this.isFear()){
+        if(this.isDisabled()){
             return false;
         }
 
@@ -531,22 +563,43 @@ wl.warrior.prototype = {
         }
     },
 
-    attack : function(target,protype,prorate){
+    attack : function(target,protype,prorate,nottriggerevent){
         var realtarget = target
         if(target.getGuarder() != null){
             realtarget = target.getGuarder();
             this.getBattleField().addTask(realtarget,realtarget.moveBack);
             target.setGuarder(null);
         }
-        realtarget.defense(this);
+       
 
         var damage = this.calc_damage(this,realtarget,protype,prorate);
         realtarget.decHP(damage);
             
-      
+      if(nottriggerevent !== true){
         wl.dispatcher.notify(this,"attack",[realtarget]);
+    }
+        
 
         
+    },
+
+    defense : function(attacker){
+        if(this.getGuarder() != null){
+             wl.dispatcher.notify(this.getGuarder(),"defense",[attacker]);
+        }
+        else{
+             wl.dispatcher.notify(this,"defense",[attacker]);
+        }
+    },
+
+    heal : function(target,protype,prorate,nottriggerevent){
+        cc.log("heal")
+        var realtarget = target
+        var value = this.calc_heal(this,realtarget,protype,prorate)
+        realtarget.incHP(value);
+        if(nottriggerevent !== true){
+        wl.dispatcher.notify(this,"heal",[realtarget]);
+        }
     },
 
     magicCastStart : function(){
@@ -554,9 +607,7 @@ wl.warrior.prototype = {
     magicCastFinish : function(){
     },
 
-    defense : function(attacker){
-        wl.dispatcher.notify(this,"defense",[attacker]);
-    },
+   
 
     /////////////////////////////////////////////////////////
     moveTo : function(des){

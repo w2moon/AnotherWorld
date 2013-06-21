@@ -7,7 +7,7 @@ wl.buff = function(warrior,battlefield,buffbase){
 
     this.stack = 1;
 
-    this.resttime = this.buffbase.duration;
+    this.resttime = this.buffbase.duration+1;
     this.intervaltime = this.buffbase.interval;
 
 
@@ -83,8 +83,12 @@ wl.buff.prototype = {
         
     },
 
+    refreshDuration : function(){
+        this.resttime = this.buffbase.duration+1;
+    },
+
     on_start : function(){
-    cc.log("start buff")
+    cc.log("start buff"+this.buffbase.startaction+" "+this.buffbase.id)
         if(this.buffbase.startlogic == ""){
             return;
         }

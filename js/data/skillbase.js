@@ -10,7 +10,8 @@ var skilltype = {
  var naturetype = {
             'left':0,
             'right':1,
-            'random':2
+            'random':2,
+            'lowesthp':3
           }
 
  var targettype = {

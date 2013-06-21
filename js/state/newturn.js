@@ -1,7 +1,7 @@
 
 
 state_newturn=function(){
-var sort_traveller = function(t1,t2){return t2.getSpeed()-t1.getSpeed();}
+var sort_traveller = function(t1,t2){return t2.getSpeed()>t1.getSpeed();}
 var func = function(){
                     cc.log("turn:"+this.turn)
                     if(this.turn > MAX_BATTLE_TURN){

@@ -185,6 +185,15 @@
     <None Include="..\js\skill\add_buffer.js">
       <Filter>js\skill</Filter>
     </None>
+    <None Include="..\js\skill\normal_heal.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\assist_heal.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\instant_kill.js">
+      <Filter>js\skill</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

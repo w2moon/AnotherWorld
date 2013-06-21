@@ -79,6 +79,24 @@ wl.csv_lang = function(file){
     return ret;
 };
 
+wl.tonumber = function(v){
+    if(typeof(v) != "string" || v == ""){
+        return v;
+    }
+    if(isNaN(v)){
+        return v;
+    }
+    else
+    {
+        if(v.search(/\./) == 0){
+            return parseInt(v);
+        }
+        else{
+            return parseFloat(v);
+        }
+    }
+}
+
 wl.csv_map = function(file){
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
@@ -86,7 +104,7 @@ wl.csv_map = function(file){
     for(var k=1;k<arr.length;++k){
          var obj = {}
          for(var idx in arr[0]){
-             obj[arr[0][idx]] = isNaN(arr[k][idx])?arr[k][idx]:parseInt(arr[k][idx]);
+             obj[arr[0][idx]] = wl.tonumber(arr[k][idx]);
          }
          ret[obj[arr[0][0]]] = obj;
         
@@ -101,7 +119,7 @@ wl.csv_idmap = function(file){
     for(var k=1;k<arr.length;++k){
          var obj = {}
          for(var idx in arr[0]){
-              obj[arr[0][idx]] = isNaN(arr[k][idx])?arr[k][idx]:parseInt(arr[k][idx]);
+              obj[arr[0][idx]] = wl.tonumber(arr[k][idx]);
          }
          ret[parseInt(obj[arr[0][0]])] = obj;
         

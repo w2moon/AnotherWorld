@@ -115,7 +115,6 @@
          }
 
           layer.on_incEnergy = function(){
-            cc.log("inc energey")
             this.indicator.setValue(this.warrior.getEnergy());
           };
 
@@ -132,6 +131,9 @@
           };
 
          layer.on_action = function(action){
+            if(typeof(this[action]) != "function"){
+                cc.log("||||||||"+action)
+            }
             this[action]();
          };
 
