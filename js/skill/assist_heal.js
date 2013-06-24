@@ -10,12 +10,15 @@
 
         var tasks = [];
         
-        
+        tasks.push([skill.warrior,skill.warrior.particle,[params[4]]]);
+        tasks.push([skill,skill.delay,[0.4]]);
         for(var k in targets){
 
 
             
             tasks.push([skill.warrior,skill.warrior.heal, [targets[k],params[2],parseInt(params[3]),true]]);
+
+            tasks.push([skill.warrior,skill.warrior.particle,[params[5]]]);
             
            
         }

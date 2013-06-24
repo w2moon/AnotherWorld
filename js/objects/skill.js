@@ -40,9 +40,16 @@ wl.skill.prototype = {
          
             return;
         }
+        var fargs = Array.prototype.slice.call(arguments, 3);
+        var args = [];
+        args.push(warrior);
+        args.push(event_targets);
+        for(var k in fargs){
+            args.push(fargs[k])
+        }
        
-
-        return this.cast(warrior,event_targets);
+       return this.cast.apply(this,args);
+        //return this.cast(warrior,event_targets);
 
         
     },
@@ -77,6 +84,10 @@ wl.skill.prototype = {
     canBeCast : function(trigger,event_targets){
         if(wl.rand() > this.getBase().max_cast_rate)
         {
+            return false;
+        }
+        if(!this.isActiveSkill() && this.warrior.isSkillDisabled()){
+            cc.log("banned")
             return false;
         }
         if(this.warrior.energy < this.getBase().energy){
@@ -117,13 +128,21 @@ wl.skill.prototype = {
             this.warrior.decEnergy(this.getBase().energy);
         }
         this.startCoolDown();
-
+        var fargs = Array.prototype.slice.call(arguments, 2);
+        var args = [];
+        args.push(this);
+        args.push(trigger);
+        args.push(event_targets);
+        for(var k in fargs){
+            args.push(fargs[k])
+        }
         if(this.getBase().action != "")
         {
             if(typeof(wl.skillactions[this.getBase().action]) != "function"){
                 cc.log("not found function:"+this.getBase().action)
             }
-            wl.skillactions[this.getBase().action](this,trigger,event_targets);
+            //wl.skillactions[this.getBase().action](this,trigger,event_targets);
+             wl.skillactions[this.getBase().action].apply(wl.skillactions,args);
         }
         else 
         if(this.getBase().actions != ""){

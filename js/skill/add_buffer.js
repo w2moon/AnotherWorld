@@ -8,7 +8,10 @@
         
 
         var tasks = [];
-        var possrc = skill.getBattleField().getAttackPosition(skill.warrior);
+
+        tasks.push([skill.warrior,skill.warrior.particle,[params[2]]]);
+        tasks.push([skill,skill.delay,[0.4]]);
+
         if(params[0] == targettype.eventtarget){
              for(var k in targets){
 
@@ -21,6 +24,7 @@
             tasks.push([skill,skill.delay,[0.01]]);
         }
 
+         
         
         skill.getBattleField().addTasks(tasks);
   };

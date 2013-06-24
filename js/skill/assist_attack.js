@@ -10,7 +10,9 @@
         
         var possrc = skill.getBattleField().getAttackPosition(skill.warrior);
         
-        
+        tasks.push([skill.warrior,skill.warrior.particle,[params[2]]]);
+        tasks.push([skill,skill.delay,[0.4]]);
+
         for(var k in targets){
             var posdes = skill.getBattleField().getAttackPosition(targets[k]);
 

@@ -195,6 +195,8 @@
             //this.schedule(this.turn_process,1);
             this.delayupdate(ACTION_INTERVAL);
             cc.log("schedule")
+
+            wl.dispatcher.notify(this,"battle_start");
           }
 
 

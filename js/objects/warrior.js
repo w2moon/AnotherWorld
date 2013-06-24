@@ -26,6 +26,7 @@ wl.warrior = function(player,battlefield,traveller){
     this.skills = [];
     this.buffs = [];
     this.disabled = 0;
+    this.skilldisabled = 0;
 
     this.modifier_damage_percent = 0;
 
@@ -253,9 +254,18 @@ wl.warrior.prototype = {
         this.disabled -= v;
     },
     isDisabled : function(){
-    if(this.disabled > 0){
         return this.disabled > 0;
-        }
+    },
+
+
+    incSkillDisabled : function(v){
+        this.skilldisabled += v;
+    },
+    decSkillDisabled : function(v){
+        this.skilldisabled -= v;
+    },
+    isSkillDisabled : function(){
+        return this.skilldisabled > 0;
     },
 
     incModifierDamagePercent : function(v){
@@ -598,13 +608,17 @@ wl.warrior.prototype = {
         var value = this.calc_heal(this,realtarget,protype,prorate)
         realtarget.incHP(value);
         if(nottriggerevent !== true){
-        wl.dispatcher.notify(this,"heal",[realtarget]);
+            wl.dispatcher.notify(this,"heal",[realtarget],value);
         }
     },
 
     magicCastStart : function(){
     },
     magicCastFinish : function(){
+    },
+
+    particle : function(particle){
+         wl.dispatcher.notify(this,"particle",particle);
     },
 
    

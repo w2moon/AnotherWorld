@@ -16,8 +16,11 @@
 
             
             tasks.push([skill.warrior,skill.warrior.heal, [targets[k],params[2],parseInt(params[3])]]);
+            tasks.push([targets[k],targets[k].particle,[params[4]]]);
             
             tasks.push([skill,skill.delay,[0.4]]);
+
+             
         }
         tasks.push([skill.warrior,skill.warrior.incEnergy, [1]]);
         

@@ -34,6 +34,8 @@ require("skill/missile.js");
 require("skill/add_buffer.js");
 require("skill/normal_heal.js");
 require("skill/assist_heal.js");
+require("skill/valuebase_heal.js");
+require("skill/instant_kill.js");
 
 require("ui/loading.js");
 require("ui/indicator.js");
