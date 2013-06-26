@@ -20,6 +20,12 @@ wl.warrior = function(player,battlefield,traveller){
     this.extra_dodge = 0;
     this.extra_crit = 0;
 
+   /* this.extra_constitution = 0;
+    this.extra_strength = 0;
+    this.extra_intelligence = 0;
+    this.extra_dexterity = 0;
+    this.extra_charisma = 0;
+    */
     this.base_property = {}
     this.extra_property = {}
 
@@ -126,6 +132,24 @@ wl.warrior.prototype = {
     },
     getExtraProperty : function(name){
         return this.extra_property[name] || 0;
+    },
+
+    incExtraProperty : function(name,v){
+        if(this.extra_property[name] == null){
+            this.extra_property[name] = 0;
+        }
+        this.extra_property[name] += v;
+
+        wl.dispatcher.notify(this,"incExtra"+name,v);
+    },
+
+    decExtraProperty : function(name,v){
+        if(this.extra_property[name] == null){
+            this.extra_property[name] = 0;
+        }
+        this.extra_property[name] -= v;
+
+        wl.dispatcher.notify(this,"decExtra"+name,v);
     },
 
     getAttack : function(){
@@ -268,6 +292,37 @@ wl.warrior.prototype = {
         return this.skilldisabled > 0;
     },
 
+    incExtraConstitution : function(v){
+        this.incExtraProperty("Constitution",v);
+    },
+    decExtraConstitution : function(v){
+       this.decExtraProperty("Constitution",v);
+    },
+    incExtraStrength : function(v){
+        this.incExtraProperty("Strength",v);
+    },
+    decExtraStrength : function(v){
+        this.decExtraProperty("Strength",v);
+    },
+    incExtraIntelligence : function(v){
+        this.incExtraProperty("Intelligence",v);
+    },
+    decExtraIntelligence : function(v){
+        this.decExtraProperty("Intelligence",v);
+    },
+    incExtraDexterity : function(v){
+        this.incExtraProperty("Dexterity",v);
+    },
+    decExtraDexterity : function(v){
+        this.decExtraProperty("Dexterity",v);
+    },
+    incExtraCharisma : function(v){
+        this.incExtraProperty("Charisma",v);
+    },
+    decExtraCharisma : function(v){
+        this.decExtraProperty("Charisma",v);
+    },
+
     incModifierDamagePercent : function(v){
         this.modifier_damage_percent += v;
         cc.log("modifier_damage_percent "+this.modifier_damage_percent)
@@ -280,14 +335,26 @@ wl.warrior.prototype = {
     },
 
     incHP : function(v){
+        var isCrit = wl.rand() < this.getCrit();
+        if(isCrit){
+            v *=2;
+        }
         this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
 
-        wl.dispatcher.notify(this,"incHP",v);
+        wl.dispatcher.notify(this,"incHP",v,isCrit);
     },
     decHP : function(v){
+        if(wl.rand() < this.getDodge()){
+            wl.dispatcher.notify(this,"dodge",v);
+            return;
+        }
+        var isCrit = wl.rand() < this.getCrit();
+        if(isCrit){
+            v *=2;
+        }
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
 
-        wl.dispatcher.notify(this,"decHP",v);
+        wl.dispatcher.notify(this,"decHP",v,isCrit);
 
         if(this.isDead()){
             this.dead();

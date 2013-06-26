@@ -197,6 +197,9 @@
     <None Include="..\js\skill\valuebase_heal.js">
       <Filter>js\skill</Filter>
     </None>
+    <None Include="..\js\skill\counter_attack.js">
+      <Filter>js\skill</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

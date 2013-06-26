@@ -67,6 +67,7 @@
 
             wl.dispatcher.register(this.warrior,"attack",this.attack,this);
             wl.dispatcher.register(this.warrior,"defense",this.defense,this);
+            wl.dispatcher.register(this.warrior,"dodge",this.dodge,this);
 
             wl.dispatcher.register(this.warrior,"action",this.on_action,this);
             wl.dispatcher.register(this.warrior,"particle",this.on_particle,this);
@@ -150,6 +151,13 @@
              this.runAction(cc.RepeatForever.create(s))
 
          }
+         layer.dodge = function(){
+
+             var inst = cc.ParticleSystem.create("particles/taken-gem.plist");
+            inst.setPosition(-size.width/2,-size.height/2);
+			inst.setAutoRemoveOnFinish(true);
+            this.addChild(inst);
+         };
          layer.stand = function(){
             this.stopAllActions()
          }

@@ -87,7 +87,7 @@ wl.skill.prototype = {
             return false;
         }
         if(!this.isActiveSkill() && this.warrior.isSkillDisabled()){
-            cc.log("banned")
+            
             return false;
         }
         if(this.warrior.energy < this.getBase().energy){

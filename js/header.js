@@ -30,6 +30,7 @@ require("skill/base.js");
 require("skill/guard.js");
 require("skill/normal_attack.js");
 require("skill/assist_attack.js");
+require("skill/counter_attack.js");
 require("skill/missile.js");
 require("skill/add_buffer.js");
 require("skill/normal_heal.js");

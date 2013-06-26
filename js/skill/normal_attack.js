@@ -10,6 +10,12 @@
 
         var tasks = [];
         var possrc = skill.getBattleField().getAttackPosition(skill.warrior);
+
+        if(params[4] != null){
+              tasks.push([skill.warrior,skill.warrior.particle,[params[4]]]);
+     
+                tasks.push([skill,skill.delay,[0.4]]);
+        }
         
         
         for(var k in targets){
