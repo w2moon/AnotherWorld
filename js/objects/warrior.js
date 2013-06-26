@@ -20,7 +20,8 @@ wl.warrior = function(player,battlefield,traveller){
     this.extra_dodge = 0;
     this.extra_crit = 0;
 
-   /* this.extra_constitution = 0;
+   /* 
+    this.extra_constitution = 0;
     this.extra_strength = 0;
     this.extra_intelligence = 0;
     this.extra_dexterity = 0;
