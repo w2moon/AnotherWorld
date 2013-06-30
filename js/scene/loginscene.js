@@ -63,6 +63,10 @@ battlescene.prototype.onDidLoadFromCCB = function()
     var pos = this.myhero.getPosition();
     cc.log("hero"+pos.x)
     
+    var chanode = cc.BuilderReader.load("sk_human");
+    this.rootNode.addChild(chanode);
+    
+    
    
 }
 
@@ -72,26 +76,26 @@ loginscene.prototype.onPressStart = function()
 {
     cc.log("start");
    
-    if(true){
+    if(false){
          this.req_region_list();
     }
     else
     {
-    var aboutNode = cc.BuilderReader.load("battlescene");
-	this.rootNode.addChild(aboutNode);
+    //var aboutNode = cc.BuilderReader.load("battlescene");
+	//this.rootNode.addChild(aboutNode);
 	
  
    
 	
-	var chanode = cc.BuilderReader.load("charactor");
-    aboutNode.addChild(chanode);
+	var chanode = cc.BuilderReader.load("sk_human");
+    this.rootNode.addChild(chanode);
   
-	var pos = aboutNode.controller.myhero.getPosition();
+	//var pos = aboutNode.controller.myhero.getPosition();
 	//var size = cc.Director.getInstance().getWinSize();
 	//chanode.setPosition(cc.p(size.width/2,size.height/2));
 	
 
-	chanode.setPosition(pos);
+	//chanode.setPosition(pos);
 	}
 
 	

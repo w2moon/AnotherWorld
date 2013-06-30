@@ -28,6 +28,7 @@
 		5840E030173BEA5B00EF1C80 /* res in Resources */ = {isa = PBXBuildFile; fileRef = 5840E02F173BEA5B00EF1C80 /* res */; };
 		5871FFB1176893D00056621B /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5871FFB0176893D00056621B /* opencv2.framework */; };
 		5872B7BD1759F08D0076D71C /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = 5872B7BC1759F08D0076D71C /* Published-iOS */; };
+		5888788C177F1A2E008FE052 /* data in Resources */ = {isa = PBXBuildFile; fileRef = 5888788B177F1A2E008FE052 /* data */; };
 		589136B517223EC600C2E700 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589136B417223EC600C2E700 /* libcurl.a */; };
 		589136BB1722448B00C2E700 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589136B61722448B00C2E700 /* libchipmunk.a */; };
 		589136BC1722448B00C2E700 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 589136B71722448B00C2E700 /* libcocos2dx.a */; };
@@ -63,6 +64,7 @@
 		5840E02F173BEA5B00EF1C80 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../res; sourceTree = "<group>"; };
 		5871FFB0176893D00056621B /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = "../../cocos2d-x/external/opencv/lib/opencv2.framework"; sourceTree = "<group>"; };
 		5872B7BC1759F08D0076D71C /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "../AnotherWorld/Published-iOS"; sourceTree = "<group>"; };
+		5888788B177F1A2E008FE052 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../data; sourceTree = "<group>"; };
 		589136B417223EC600C2E700 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = "<group>"; };
 		589136B61722448B00C2E700 /* libchipmunk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libchipmunk.a; path = "../../../../../Library/Developer/Xcode/DerivedData/AnotherWorldAll-apwxbawoshyuuoeezbyptyagzppm/Build/Products/Debug-iphoneos/libchipmunk.a"; sourceTree = "<group>"; };
 		589136B71722448B00C2E700 /* libcocos2dx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcocos2dx.a; path = "../../../../../Library/Developer/Xcode/DerivedData/AnotherWorldAll-apwxbawoshyuuoeezbyptyagzppm/Build/Products/Debug-iphoneos/libcocos2dx.a"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 		A92275321517C094001B78AA = {
 			isa = PBXGroup;
 			children = (
+				5888788B177F1A2E008FE052 /* data */,
 				5872B7BC1759F08D0076D71C /* Published-iOS */,
 				5840E02F173BEA5B00EF1C80 /* res */,
 				5816C6541722E6BF0081BB1D /* js */,
@@ -312,6 +315,7 @@
 				5816C6551722E6BF0081BB1D /* js in Resources */,
 				5840E030173BEA5B00EF1C80 /* res in Resources */,
 				5872B7BD1759F08D0076D71C /* Published-iOS in Resources */,
+				5888788C177F1A2E008FE052 /* data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
