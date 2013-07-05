@@ -12,23 +12,11 @@ wl.warrior = function(player,battlefield,traveller){
     this.energy = 0;
     this.maxenergy = 0;
 
-    this.extra_attack = 0;
-    this.extra_defense = 0;
-    this.extra_magic = 0;
-    this.extra_magicdefense = 0;
-    this.extra_speed = 0;
-    this.extra_dodge = 0;
-    this.extra_crit = 0;
 
-   /* 
-    this.extra_constitution = 0;
-    this.extra_strength = 0;
-    this.extra_intelligence = 0;
-    this.extra_dexterity = 0;
-    this.extra_charisma = 0;
-    */
+ 
     this.base_property = {}
     this.extra_property = {}
+    this.rate_property = {}
 
     this.skills = [];
     this.buffs = [];
@@ -37,16 +25,11 @@ wl.warrior = function(player,battlefield,traveller){
 
     this.modifier_damage_percent = 0;
 
-    if(traveller.getSoul() != null && traveller.getSoul().getSkillBase() !== null){
-        this.skills.push( new wl.skill(this,battlefield,traveller.getSoul().getSkillLevel(),traveller.getSoul().getSkillBase()) );
+    var skills = traveller.getSkills();
+    for(var k in skills){
+        this.skills.push(new wl.skill(skills[k][0],skills[k][1]))
     }
-   
-    if(traveller.getSkill1Base() != null){
-        this.skills.push(  new wl.skill(this,battlefield,traveller.getSkill1Level(),traveller.getSkill1Base()));
-    }
-    if(traveller.getSkill2Base() != null){
-        this.skills.push( new wl.skill(this,battlefield,traveller.getSkill2Level(),traveller.getSkill2Base()));
-    }
+
 };
 
 wl.warrior.prototype = {
@@ -58,7 +41,6 @@ wl.warrior.prototype = {
         var maxenergy = 0;
         for(var k in this.skills){
             this.skills[k].battle_init();
-            cc.log(this.skills[k].isActiveSkill()+" "+this.skills[k].getNeedEnergy())
             if(this.skills[k].isActiveSkill() && this.skills[k].getNeedEnergy() > maxenergy){
                 maxenergy = this.skills[k].getNeedEnergy();
             }
@@ -67,6 +49,85 @@ wl.warrior.prototype = {
         this.setEnergy(0);
         wl.dispatcher.notify(this,"battle_init");
     },
+
+    getProperty : function(name){
+        var v = (this.getBaseProperty() + this.getExtraProperty())*(1+this.getRateProperty());
+        if( v < 0 ){
+            return 0;
+        }
+        return v;
+    },
+
+    getBaseProperty : function(name){
+        return this.base_property[name] || 0;
+    },
+    incBaseProperty : function(name,v){
+        if(this.base_property[name] == null){
+            this.base_property[name] = 0;
+        }
+        this.base_property[name] += v;
+
+        wl.dispatcher.notify(this,"inc"+name,v);
+    },
+
+    decBaseProperty : function(name,v){
+        if(this.base_property[name] == null){
+            this.base_property[name] = 0;
+        }
+        this.base_property[name] -= v;
+
+        wl.dispatcher.notify(this,"dec"+name,v);
+    },
+
+    getExtraProperty : function(name){
+        return this.extra_property[name] || 0;
+    },
+
+    incExtraProperty : function(name,v){
+        if(this.extra_property[name] == null){
+            this.extra_property[name] = 0;
+        }
+        this.extra_property[name] += v;
+
+        wl.dispatcher.notify(this,"incExtra"+name,v);
+    },
+
+    decExtraProperty : function(name,v){
+        if(this.extra_property[name] == null){
+            this.extra_property[name] = 0;
+        }
+        this.extra_property[name] -= v;
+
+        wl.dispatcher.notify(this,"decExtra"+name,v);
+    },
+
+    getRateProperty : function(name){
+        return this.rate_property[name] || 0;
+    },
+
+    incRateProperty : function(name,v){
+        if(this.rate_property[name] == null){
+            this.rate_property[name] = 0;
+        }
+        this.rate_property[name] += v;
+
+        wl.dispatcher.notify(this,"incRate"+name,v);
+    },
+
+    decRateProperty : function(name,v){
+        if(this.rate_property[name] == null){
+            this.rate_property[name] = 0;
+        }
+        this.rate_property[name] -= v;
+
+        wl.dispatcher.notify(this,"decRate"+name,v);
+    },
+
+ 
+
+  
+
+
 
   
     getUI : function(){
@@ -120,157 +181,8 @@ wl.warrior.prototype = {
     getMaxHP : function(){
         return this.maxhp;
     },
-///////////////////////////
-    getProperty : function(name){
-        var v = this.getBaseProperty() + this.getExtraProperty();
-        if( v < 0 ){
-            return 0;
-        }
-        return v;
-    },
-    getBaseProperty : function(name){
-        return this.base_property[name] || 0;
-    },
-    getExtraProperty : function(name){
-        return this.extra_property[name] || 0;
-    },
-
-    incExtraProperty : function(name,v){
-        if(this.extra_property[name] == null){
-            this.extra_property[name] = 0;
-        }
-        this.extra_property[name] += v;
-
-        wl.dispatcher.notify(this,"incExtra"+name,v);
-    },
-
-    decExtraProperty : function(name,v){
-        if(this.extra_property[name] == null){
-            this.extra_property[name] = 0;
-        }
-        this.extra_property[name] -= v;
-
-        wl.dispatcher.notify(this,"decExtra"+name,v);
-    },
-
-    getAttack : function(){
-        var attack = this.getBaseAttack() + this.getExtraAttack();
-        if(attack < 0){
-            return 0;
-        }
-        return attack;
-    },
-    getBaseAttack : function(){
-        return this.traveller.getAttack();
-    },
-    getExtraAttack : function(){
-        return this.extra_attack;
-    },
-    setExtraAttack : function(v){
-        this.extra_attack = v;
-    },
-
-    getDefense : function(){
-        var defense = this.getBaseDefense() + this.getExtraDefense();
-        if(defense < 0){
-            return 0;
-        }
-        return defense;
-    },
-    getBaseDefense : function(){
-        return this.traveller.getDefense();
-    },
-    getExtraDefense : function(){
-        return this.extra_defense;
-    },
-    setExtraDefense : function(v){
-        this.extra_defense = v;
-    },
-
-    getMagic : function(){
-        var magic = this.getBaseMagic() + this.getExtraMagic();
-        if(magic < 0){
-            return 0;
-        }
-        return magic;
-    },
-    getBaseMagic : function(){
-        return this.traveller.getMagic();
-    },
-    getExtraMagic : function(){
-        return this.extra_magic;
-    },
-    setExtraMagic : function(v){
-        this.extra_magic = v;
-    },
-
-    getMagicDefense : function(){
-        var magicdefense = this.getBaseMagicDefense() + this.getExtraMagicDefense();
-        if(magicdefense < 0){
-            return 0;
-        }
-        return magicdefense;
-    },
-    getBaseMagicDefense : function(){
-        return this.traveller.getMagicDefense();
-    },
-    getExtraMagicDefense : function(){
-        return this.extra_magicdefense;
-    },
-    setExtraMagicDefense : function(v){
-        this.extra_magicdefense = v;
-    },
-
-    getSpeed : function(){
-        var speed = this.getBaseSpeed() + this.getExtraSpeed();
-        if(speed < 0){
-            return 0;
-        }
-        return speed;
-    },
-    getBaseSpeed : function(){
-        return this.traveller.getSpeed();
-    },
-    getExtraSpeed : function(){
-        return this.extra_speed;
-    },
-    setExtraSpeed : function(v){
-        this.extra_speed = v;
-    },
-
-    getDodge : function(){
-        var dodge = this.getBaseDodge() + this.getExtraDodge();
-        if(dodge < 0){
-            return 0;
-        }
-        return dodge;
-    },
-    getBaseDodge : function(){
-        return this.traveller.getDodge();
-    },
-    getExtraDodge : function(){
-        return this.extra_dodge;
-    },
-    setExtraDodge : function(v){
-        this.extra_dodge = v;
-    },
-
-    getCrit : function(){
-        var crit = this.getBaseCrit() + this.getExtraCrit();
-        if(crit < 0){
-            return 0;
-        }
-        return crit;
-    },
-    getBaseCrit : function(){
-        return this.traveller.getCrit();
-    },
-    getExtraCrit : function(){
-        return this.extra_crit;
-    },
-    setExtraCrit : function(v){
-        this.extra_crit = v;
-    },
+  
+    
 /////////////////////////////
     incDisabled : function(v){
         this.disabled += v;
@@ -293,36 +205,7 @@ wl.warrior.prototype = {
         return this.skilldisabled > 0;
     },
 
-    incExtraConstitution : function(v){
-        this.incExtraProperty("Constitution",v);
-    },
-    decExtraConstitution : function(v){
-       this.decExtraProperty("Constitution",v);
-    },
-    incExtraStrength : function(v){
-        this.incExtraProperty("Strength",v);
-    },
-    decExtraStrength : function(v){
-        this.decExtraProperty("Strength",v);
-    },
-    incExtraIntelligence : function(v){
-        this.incExtraProperty("Intelligence",v);
-    },
-    decExtraIntelligence : function(v){
-        this.decExtraProperty("Intelligence",v);
-    },
-    incExtraDexterity : function(v){
-        this.incExtraProperty("Dexterity",v);
-    },
-    decExtraDexterity : function(v){
-        this.decExtraProperty("Dexterity",v);
-    },
-    incExtraCharisma : function(v){
-        this.incExtraProperty("Charisma",v);
-    },
-    decExtraCharisma : function(v){
-        this.decExtraProperty("Charisma",v);
-    },
+   
 
     incModifierDamagePercent : function(v){
         this.modifier_damage_percent += v;
@@ -393,82 +276,6 @@ wl.warrior.prototype = {
         wl.dispatcher.notify(this,"decMaxEnergy",v);
     },
 
-    incExtraAttack : function(v){
-        this.setExtraAttack(this.getExtraAttack()+v)
-
-        wl.dispatcher.notify(this,"incExtraAttack",v);
-    },
-    decExtraAttack : function(v){
-        this.setExtraAttack(this.getExtraAttack()-v)
-
-        wl.dispatcher.notify(this,"decExtraAttack",v);
-    },
-
-    incExtraDefense : function(v){
-        this.setExtraDefense(this.getExtraDefense()+v)
-
-        wl.dispatcher.notify(this,"incExtraDefense",v);
-    },
-    decExtraDefense : function(v){
-        this.setExtraDefense(this.getExtraDefense()-v)
-
-        wl.dispatcher.notify(this,"decExtraDefense",v);
-    },
-
-    incExtraMagic : function(v){
-        this.setExtraMagic(this.getExtraMagic()+v)
-
-        wl.dispatcher.notify(this,"incExtraMagic",v);
-    },
-    decExtraMagic : function(v){
-        this.setExtraMagic(this.getExtraMagic()-v)
-
-        wl.dispatcher.notify(this,"decExtraMagic",v);
-    },
-
-    incExtraMagicDefense : function(v){
-        this.setExtraMagicDefense(this.getExtraMagicDefense()+v)
-
-        wl.dispatcher.notify(this,"incExtraMagicDefense",v);
-    },
-    decExtraMagicDefense : function(v){
-        this.setExtraMagicDefense(this.getExtraMagicDefense()-v)
-
-        wl.dispatcher.notify(this,"decExtraMagicDefense",v);
-    },
-
-    incExtraSpeed : function(v){
-        this.setExtraSpeed(this.getExtraSpeed()+v)
-
-        wl.dispatcher.notify(this,"incExtraSpeed",v);
-    },
-    decExtraSpeed : function(v){
-        this.setExtraSpeed(this.getExtraSpeed()-v)
-
-        wl.dispatcher.notify(this,"decExtraSpeed",v);
-    },
-
-    incExtraDodge : function(v){
-        this.setExtraDodge(this.getExtraDodge()+v)
-
-        wl.dispatcher.notify(this,"incExtraDodge",v);
-    },
-    decExtraDodge : function(v){
-        this.setExtraDodge(this.getExtraDodge()-v)
-
-        wl.dispatcher.notify(this,"decExtraDodge",v);
-    },
-
-    incExtraCrit : function(v){
-        this.setExtraCrit(this.getExtraCrit()+v)
-
-        wl.dispatcher.notify(this,"incExtraCrit",v);
-    },
-    decExtraCrit : function(v){
-        this.setExtraCrit(this.getExtraCrit()-v)
-
-        wl.dispatcher.notify(this,"decExtraCrit",v);
-    },
 
     beDefender : function(attacker){
         wl.dispatcher.notify(this,"beDefender",[attacker]);
@@ -542,22 +349,14 @@ wl.warrior.prototype = {
             }
         }
     },
+
+    clearBuffs : function(){
+        for(var k in this.buffs){
+            this.buffs[k].destroy();
+        }
+        this.buffs = [];
+    },
     /////////////////////////////////////////////////////////////////
-
-    isSkillUltimateActived : function(){
-        return this.getEnergy() >= this.getMaxEnergy();
-    },
-
-    
-    getSkillSoul : function(){
-        return this.skillsoul;
-    },
-    getSkillUltimate : function(){
-        return this.skillultimate;
-    },
-    getSkillPassive : function(){
-        return this.skillpassive;
-    },
 
     
 
@@ -568,12 +367,7 @@ wl.warrior.prototype = {
         wl.dispatcher.notify(this,"dead");
     },
 
-    clearBuffs : function(){
-        for(var k in this.buffs){
-            this.buffs[k].destroy();
-        }
-        this.buffs = [];
-    },
+    
 
     calc_damage : function(attacker,defenser,protype,prorate){
         var damage = attacker.getAttack() - defenser.getDefense();
@@ -671,18 +465,12 @@ wl.warrior.prototype = {
     },
 
     heal : function(target,protype,prorate,nottriggerevent){
-        cc.log("heal")
         var realtarget = target
         var value = this.calc_heal(this,realtarget,protype,prorate)
         realtarget.incHP(value);
         if(nottriggerevent !== true){
             wl.dispatcher.notify(this,"heal",[realtarget],value);
         }
-    },
-
-    magicCastStart : function(){
-    },
-    magicCastFinish : function(){
     },
 
     particle : function(particle){

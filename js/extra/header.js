@@ -1,5 +1,6 @@
 var wl = wl || {};
 
+require("extra/seedrandom.js")
 require("extra/gfunc.js")
 require("extra/hashlib.js")
 require("extra/json.js")

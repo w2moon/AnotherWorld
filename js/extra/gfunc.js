@@ -17,6 +17,10 @@ wl.clamp = function(v,min,max){
     return v;
 };
 
+wl.seed = function(seed){
+    Math.seedrandom(seed);
+};
+
 wl.rand = function(){
     return Math.random();
 };

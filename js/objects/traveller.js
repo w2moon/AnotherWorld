@@ -22,6 +22,36 @@ wl.traveller.prototype = {
     getView : function(){return this.dbobj.view;},
     setView : function(view){ this.dbobj.view = view;},
 
+    getNature : function(){return this.dbobj.nature;},
+    setNature : function(v){ this.dbobj.nature = v;},
+
+    getSoulId : function(){return this.dbobj.soulid;},
+    setSoulId : function(v){ this.dbobj.soulid = v;},
+    getSoul : function(){return this.owner.getSoul(this.getSoulId());},
+
+    getImg : function(){return this.dbobj.img;},
+    setImg : function(v){ this.dbobj.img = v;},
+
+    getOwner : function(){return this.owner;},
+
+    getSkills : function(){
+        var skills = [];
+        for(var i=0;i<EQUIP_NUM;++i)
+        {
+            var equip = this.getEquip(i);
+            if(equip != null && equip.hasSkill()){
+              
+                skills.push([this.getEquip(i).getSkillId(),this.getEquip(i).getSkillLevel()]);
+            }
+        }
+        if(this.getSoul() && this.getSoul().hasSkill()){
+            skills.push([this.getSoul().getSkillId(),this.getSoul().getSkillLevel()]);
+        }
+        return skills;
+    },
+
+    ///////////////////////////////////////////////////////////
+
     getSkill1Id : function(){return this.dbobj.skill1id;},
     setSkill1Id : function(v){ this.dbobj.skill1id = v;},
 
@@ -40,11 +70,7 @@ wl.traveller.prototype = {
     getSkill2Level : function(){return this.dbobj.skill2level;},
     setSkill2Level : function(v){ this.dbobj.skill2level = v;},
 
-    getNature : function(){return this.dbobj.nature;},
-    setNature : function(v){ this.dbobj.nature = v;},
-
-    getSoulId : function(){return this.dbobj.soulid;},
-    setSoulId : function(v){ this.dbobj.soulid = v;},
+    
 
     getWeaponId : function(){return this.dbobj.weaponid;},
     setWeaponId : function(v){ this.dbobj.weaponid = v;},
@@ -55,12 +81,11 @@ wl.traveller.prototype = {
     getTrinketId : function(){return this.dbobj.trinketid;},
     setTrinketId : function(v){ this.dbobj.trinketid = v;},
 
-    getImg : function(){return this.dbobj.img;},
-    setImg : function(v){ this.dbobj.img = v;},
+   
 
     //////////////////////////////////////////
     
-    getOwner:function(){return this.owner;},
+    
  
     getSkill1Base : function(){
         if(this.getSkill1Id() == 0){
@@ -94,30 +119,13 @@ wl.traveller.prototype = {
     */
 
 
-    getSoul : function(){return this.owner.getSoul(this.getSoulId());},
+    
 
     getWeapon : function(){return this.owner.getEquipment(this.getWeaponId());},
     getCloth : function(){return this.owner.getEquipment(this.getClothId());},
     getTrinket : function(){return this.owner.getEquipment(this.getTrinketId());},
 
-    ////////////////////////////////////////////////////////////
-
-    getProperty : function(name){
-        var v = 0;
-        if(this.getWeapon()){
-            v += this.getWeapon().getBase()[name];
-        }
-        if(this.getCloth()){
-            v += this.getCloth().getBase()[name];
-        }
-        if(this.getTrinket()){
-            v += this.getTrinket().getBase()[name];
-        }
-        if(this.getSoul()){
-            v += this.getSoul().getBase()[name];
-        }
-        return v;
-    },
+   
 
     getMaxHP : function(){ return this.getProperty("maxhp");},
     getAttack : function(){ return this.getProperty("attack");},
@@ -126,9 +134,36 @@ wl.traveller.prototype = {
     getMagicDefense : function(){ return this.getProperty("magicdefense");},
     getSpeed : function(){ return this.getProperty("speed");},
     getDodge : function(){ return this.getProperty("dodge");},
-    getCrit : function(){ return this.getProperty("crit");}
+    getCrit : function(){ return this.getProperty("crit");},
 
     //////////////////////////////////
+
+    ////////////////////////////////////////////////////////////
+    //new
+    getEquip : function(pos){
+        return this.owner.getEquipment(this.dbobj.slot[pos]);
+    },
+
+    setEquip : function(pos,equipid){
+        this.dbobj.slot[pos] = equipid;
+    },
+
+    getProperty : function(name){
+        var v = 0;
+        for(var i=0;i<EQUIP_NUM;++i)
+        {
+            v += this.getEquip(i).getBase()[name];
+        }
+        if(this.getSoul()){
+            v += this.getSoul().getBase()[name];
+        }
+        v += this.dbobj.property[name] || 0;
+        return v;
+    },
+
+    setProperty : function(name,value){
+        this.dbobj.property[name] = value;
+    }
 
    
 };

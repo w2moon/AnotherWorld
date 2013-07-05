@@ -26,11 +26,8 @@ wl.soul.prototype = {
     /////////////////
 
     getBase : function() {return soulbase[this.dbobj.id-1];},
-    getSkillBase : function() { 
-        if(this.getBase().skillid == 0)
-        {
-            return null;
-         }; 
-         return skillbase[this.getBase().skillid];
-    }
+
+    getSkillId : function(){return this.getBase().skillid;},
+    hasSkill : function(){ return this.getBase().skillid != 0;}
+   
 };
