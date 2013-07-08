@@ -25,10 +25,12 @@ loginscene.prototype.onDidLoadFromCCB = function()
 }
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
     */
-    /*
+    
     var img = cc.Image.create();
     img.initWithImageFile("h3.jpg",0);
-//img.initWithImageFile("header.png",1);
+
+    var mask = cc.Image.create();
+    mask.initWithImageFile("human_head.png",1);
     var arr = img.parse("haarcascades/haarcascade_frontalface_alt.xml",1);
     if(arr.length == 0){
         cc.log("not found heads");
@@ -44,8 +46,9 @@ loginscene.prototype.onDidLoadFromCCB = function()
         var subimg = img.createSubImage(r);
 
         var efimg = subimg.effect(4);
+        var masked = subimg.mask(mask);
         var t2d = cc.Texture2D.create()
-        t2d.initWithImage(efimg)
+        t2d.initWithImage(masked);
         
         var header = cc.Sprite.createWithTexture(t2d)
         var size = cc.Director.getInstance().getWinSize();
@@ -54,7 +57,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
         this.rootNode.addChild(header);
         
     }
-    */
+    
 };
 
 var battlescene = function(){}
