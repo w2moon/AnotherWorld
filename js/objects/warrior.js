@@ -35,23 +35,25 @@ wl.warrior = function(player,battlefield,traveller){
 wl.warrior.prototype = {
     battle_init : function(ui){
         this.ui = ui;
-        this.setMaxHP(this.traveller.getMaxHP());
-        this.setHP(this.traveller.getMaxHP());
+        this.setMaxHP(this.traveller.getProperty("MaxHP"));
+        this.setHP(this.traveller.getProperty("MaxHP"));
         
-        var maxenergy = 0;
+        var maxenergy = 3;
+        /*
         for(var k in this.skills){
             this.skills[k].battle_init();
             if(this.skills[k].isActiveSkill() && this.skills[k].getNeedEnergy() > maxenergy){
                 maxenergy = this.skills[k].getNeedEnergy();
             }
         }
+        */
         this.setMaxEnergy(maxenergy);
         this.setEnergy(0);
         wl.dispatcher.notify(this,"battle_init");
     },
 
     getProperty : function(name){
-        var v = (this.getBaseProperty() + this.getExtraProperty())*(1+this.getRateProperty());
+        var v = (this.getBaseProperty(name) + this.getExtraProperty(name))*(1+this.getRateProperty(name));
         if( v < 0 ){
             return 0;
         }
@@ -59,7 +61,7 @@ wl.warrior.prototype = {
     },
 
     getBaseProperty : function(name){
-        return this.base_property[name] || 0;
+        return (this.base_property[name] || 0)+this.traveller.getProperty(name);
     },
     incBaseProperty : function(name,v){
         if(this.base_property[name] == null){

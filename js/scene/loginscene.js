@@ -63,8 +63,8 @@ battlescene.prototype.onDidLoadFromCCB = function()
     var pos = this.myhero.getPosition();
     cc.log("hero"+pos.x)
     
-    var chanode = cc.BuilderReader.load("sk_human");
-    this.rootNode.addChild(chanode);
+ //   var chanode = cc.BuilderReader.load("sk_human");
+ //   this.rootNode.addChild(chanode);
     
     
    
@@ -81,14 +81,14 @@ loginscene.prototype.onPressStart = function()
     }
     else
     {
-    //var aboutNode = cc.BuilderReader.load("battlescene");
-	//this.rootNode.addChild(aboutNode);
+    var aboutNode = cc.BuilderReader.load("battlescene");
+	this.rootNode.addChild(aboutNode);
 	
  
    
 	
-	var chanode = cc.BuilderReader.load("sk_human");
-    this.rootNode.addChild(chanode);
+	//var chanode = cc.BuilderReader.load("sk_human");
+//this.rootNode.addChild(chanode);
   
 	//var pos = aboutNode.controller.myhero.getPosition();
 	//var size = cc.Director.getInstance().getWinSize();

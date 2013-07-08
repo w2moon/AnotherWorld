@@ -53,11 +53,21 @@ wl.buff.prototype = {
         return this.stack;
     },
 
+    doLogic : function(logic,param,value){
+        if(logic == ""){
+            return;
+        }
+        if(param == ""){
+            this.warrior[logic](value);
+        }
+        else{
+            this.warrior[logic](param,value);
+        }
+    },
+
     setStack : function(s){
         if(s!=this.stack){
-            if(this.buffbase.startlogic != ""){
-                this.warrior[this.buffbase.startlogic](this.buffbase.startvalue*(s-this.stack));
-            }
+            this.doLogic(this.buffbase.startlogic,this.buffbase.startparam,this.buffbase.startvalue*(s-this.stack));
         }
         this.stack = s;
     },
@@ -89,26 +99,18 @@ wl.buff.prototype = {
 
     on_start : function(){
     cc.log("start buff"+this.buffbase.startaction+" "+this.buffbase.id)
-        if(this.buffbase.startlogic == ""){
-            return;
-        }
-        this.warrior[this.buffbase.startlogic](this.buffbase.startvalue*this.stack);
+        this.doLogic(this.buffbase.startlogic,this.buffbase.startparam,this.buffbase.startvalue*this.stack);
+       
         this.do_action_and_particle(this.warrior,this.buffbase.startaction,this.buffbase.startparticle);
     },
     on_interval : function(){
     cc.log("interval buff")
-        if(this.buffbase.intervallogic == ""){
-            return;
-        }
-        this.warrior[this.buffbase.intervallogic](this.buffbase.intervalvalue*this.stack);
+        this.doLogic(this.buffbase.intervallogic,this.buffbase.intervalparam,this.buffbase.intervalvalue*this.stack);
         this.do_action_and_particle(this.warrior,this.buffbase.intervalaction,this.buffbase.intervalparticle);
     },
     on_end : function(){
     cc.log("end buff")
-        if(this.buffbase.endlogic == ""){
-            return;
-        }
-        this.warrior[this.buffbase.endlogic](this.buffbase.endvalue*this.stack);
+        this.doLogic(this.buffbase.endlogic,this.buffbase.endparam,this.buffbase.endvalue*this.stack);
         this.do_action_and_particle(this.warrior,this.buffbase.endaction,this.buffbase.endparticle);
     },
 

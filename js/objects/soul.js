@@ -23,6 +23,9 @@ wl.soul.prototype = {
     getSkillLevel : function(){return this.dbobj.skilllevel;},
     setSkillLevel : function(v){ this.dbobj.skilllevel = v;},
 
+    getStar : function(){ return this.dbobj.star;},
+    setStar : function(v){this.dbobj.star = v;},
+
     /////////////////
 
     getBase : function() {return soulbase[this.dbobj.id-1];},

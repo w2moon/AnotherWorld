@@ -282,6 +282,7 @@
                 }
             }
             break;
+           
             case naturetype.lowesthp:
             {
                 if(num == -1){
@@ -332,12 +333,43 @@
             switch(target_type){
                 case targettype.enemy:
                 {
-                    
-                    for(var k in this.players){
-                        if(this.players[k] != player){
-                            nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
-                            if(target_num != -1 && targets.length >= target_num){
-                                break;
+                    if(nature_type == naturetype.opposite){
+                        var target = null;
+                        var warriors = player.getWarriors();
+                        var enemywarriors = null;
+                        for(var k in this.players){
+                            if(this.players[k] != player){
+                                enemywarriors = this.players[k].getWarriors();
+                            }
+                        }
+                        for(var k in warriors){
+                            if(warriors[k] == actor){
+                                 if((needalive && !enemywarriors[k].isDead())
+                                 || (!needalive && enemywarriors[k].isDead())){
+                                      target = enemywarriors[k];
+                                 }
+                                 break;
+                            }
+                        }
+                        if(target == null){
+                            for(var k in enemywarriors){
+                                    if((needalive && !enemywarriors[k].isDead())
+                                    || (!needalive && enemywarriors[k].isDead())){
+                                        target = enemywarriors[k];
+                                    }
+                                    break;
+                                
+                            }
+                        }
+                        targets.push(target);
+                    }
+                    else{
+                        for(var k in this.players){
+                            if(this.players[k] != player){
+                                nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
+                                if(target_num != -1 && targets.length >= target_num){
+                                    break;
+                                }
                             }
                         }
                     }
