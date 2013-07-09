@@ -80,7 +80,15 @@ wl.csv_lang = function(file){
          ret[arr[k][0]] = arr[k][1];
         
     }
-    return ret;
+    var lang = function(name){
+        if(ret[name] != null){
+            return ret[name];
+        }
+        else{
+            return name;
+        }
+    };
+    return lang;
 };
 
 wl.tonumber = function(v){

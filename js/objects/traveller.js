@@ -157,12 +157,12 @@ wl.traveller.prototype = {
         if(this.getSoul()){
             v += this.getSoul().getBase()[name];
         }
-        v += this.dbobj.property[name] || 0;
+        v += this.dbobj[name] || 0;
         return v;
     },
 
     setProperty : function(name,value){
-        this.dbobj.property[name] = value;
+        this.dbobj[name] = value;
     }
 
    
