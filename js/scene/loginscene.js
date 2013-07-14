@@ -8,23 +8,26 @@ var loginscene = function(){};
 loginscene.prototype.onDidLoadFromCCB = function()
 {
     cc.log("loaded");
-    this.lblRegion.setString("loading");
+   // this.lblRegion.setString("loading");
  
-    /*
+    cc.log("winscale:"+wl.winscale)
 
-   cc.log(lang["SKILL_NAME_1001"])
+   //cc.log(lang("SKILL_NAME_1001"))
+    for(var i=1;i<10;++i){
     var aboutNode = cc.BuilderReader.load("sk_human");
 	this.rootNode.addChild(aboutNode);
     var size = cc.Director.getInstance().getWinSize();
-	aboutNode.setPosition(cc.p(size.width/2,size.height/2));
+	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50*i,size.height/2+wl.winscale*50*i));
     aboutNode.animationManager.runAnimationsForSequenceNamed("stand");
     aboutNode.on_animation_finish = function()
 {
 	 this.animationManager.runAnimationsForSequenceNamed("stand");
    
 }
+       
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
-    */
+    }
+    /*
     
     var img = cc.Image.create();
     img.initWithImageFile("h3.jpg",0);
@@ -57,6 +60,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
         this.rootNode.addChild(header);
         
     }
+     */
     
 };
 
@@ -268,3 +272,4 @@ loginscene.prototype.onPressStart = function()
            var scene = wl.create_battlescene();
             cc.Director.getInstance().replaceScene(scene);
          }
+

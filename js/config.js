@@ -9,9 +9,9 @@ USE_VIRTUAL_HTTP = false;
 
 VERSION = 1;
 
-NOTUSE_CCB = false;
+USE_CCB = true;
 if(typeof( cc.Util) != "undefined"){
-	NOTUSE_CCB = true;
+	USE_CCB = false;
 }
 
 var MAX_BATTLE_TURN = 30;

@@ -1,4 +1,13 @@
 
+(function(){
+ 
+ if(USE_CCB){
+     wl.winscale = cc.Director.getInstance().contentScaleFactor();
+ }
+ else{
+     wl.winscale = cc.Director.getInstance().getContentScaleFactor()
+ }
+
 wl.get = function(name){
    return cc.UserDefault.getInstance().getStringForKey(name)
 };
@@ -73,6 +82,10 @@ wl.ccpAdd = function(p1,p2){
 wl.gvars = {};
 
 wl.csv_lang = function(file){
+    if(USE_CCB)
+    {
+        return function(){return "ccb not load text"};
+    }
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
@@ -110,6 +123,9 @@ wl.tonumber = function(v){
 }
 
 wl.csv_map = function(file){
+    if(USE_CCB){
+        return {};
+    }
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
@@ -125,6 +141,9 @@ wl.csv_map = function(file){
 };
 
 wl.csv_idmap = function(file){
+    if(USE_CCB){
+        return {};
+    }
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
@@ -140,6 +159,9 @@ wl.csv_idmap = function(file){
 };
 
 wl.csv_object = function(file){
+    if(USE_CCB){
+        return [];
+    }
     var ret = [];
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
@@ -153,6 +175,8 @@ wl.csv_object = function(file){
     }
     return ret;
 };
+
+
 
 wl.load_csv = function( strData, strDelimiter,rowstoread ){
         // Check to see if the delimiter is defined. If not,
@@ -240,3 +264,5 @@ wl.load_csv = function( strData, strDelimiter,rowstoread ){
         // Return the parsed data.
         return( arrData );
 };
+
+ }());

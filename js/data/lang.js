@@ -1,6 +1,8 @@
 
 (function(){
-
+ if(USE_CCB){
+ return;
+ }
 var code = cc.Application.getInstance().getCurrentLanguage();
 var name = "en";
 switch(code)

@@ -43,9 +43,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
          
         searchPaths.push_back("js"); // Resources/Published-iOS
+        searchPaths.push_back("Published-iOS");
         searchPaths.push_back("res");
 		searchPaths.push_back("data");
-        searchPaths.push_back("Published-iOS");
+        
         
         CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 

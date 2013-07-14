@@ -5,4 +5,4 @@ var equipmentbase = [
   {id:3,icon:"soul.png",type:"trinket",name:"trinket",setid:0,rarityclass:1,MaxHP:10,Attack:1,Heal:1,Defense:1,Speed:2,Dodge:0,Crit:0,skill:1},
 ]
 
-equipmentbase = wl.csv_idmap("equipment.csv");
+equipmentbase = wl.csv_idmap("equipmentbase.csv");

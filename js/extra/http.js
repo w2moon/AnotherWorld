@@ -2,7 +2,7 @@
 if (typeof wl.http !== 'object') {
     wl.http = {}
 }
-if(NOTUSE_CCB){
+if(!USE_CCB){
 (function(){
 var TIMEOUT_TIME = 20
 
