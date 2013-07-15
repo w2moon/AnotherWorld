@@ -27,7 +27,7 @@ wl.clamp = function(v,min,max){
 };
 
 wl.seed = function(seed){
-    Math.seedrandom(seed);
+    return Math.seedrandom(seed);
 };
 
 wl.rand = function(){
@@ -152,7 +152,7 @@ wl.csv_idmap = function(file){
          for(var idx in arr[0]){
               obj[arr[0][idx]] = wl.tonumber(arr[k][idx]);
          }
-         ret[parseInt(obj[arr[0][0]])] = obj;
+         ret[wl.tonumber(obj[arr[0][0]])] = obj;
         
     }
     return ret;

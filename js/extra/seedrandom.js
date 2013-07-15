@@ -151,6 +151,7 @@ math['seedrandom'] = function(seed, use_entropy) {
     use_entropy ? [seed, tostring(pool)] :
     0 in arguments ? seed : autoseed(), 3), key);
 
+    
   // Use the seed to initialize an ARC4 generator.
   var arc4 = new ARC4(key);
 

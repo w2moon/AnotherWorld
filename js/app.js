@@ -35,6 +35,7 @@ function run()
     var scene = cc.BuilderReader.loadAsScene("loginscene");
 
 
+    cc.log(cc.Util.macAddress())
 
     //var info = {"code":"login","userid":"1","ip":"192.168.0.1","pwd":"222","time":"1"}
     //wl.http.send(info)
@@ -69,6 +70,6 @@ function run()
   
 }
 
-if(!USE_CCB){
+if(NOTUSE_CCB){
 	run();
 }
