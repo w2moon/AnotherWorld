@@ -20,7 +20,6 @@ require("header.js")
 function run()
 {
 
-
     /*onLogin = function(userid,name){
         cc.log("login")
         cc.log(userid+name)
@@ -70,6 +69,6 @@ function run()
   
 }
 
-if(NOTUSE_CCB){
+if(!USE_CCB){
 	run();
 }
