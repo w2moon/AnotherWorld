@@ -16,6 +16,15 @@ wl.set = function(name,value){
     cc.UserDefault.getInstance().setStringForKey(name,value)
 };
 
+wl.run_scene=function(s){
+ var director = cc.Director.getInstance();
+ var scene = cc.BuilderReader.loadAsScene(s);
+ var runningScene = director.getRunningScene();
+ if (runningScene === null) director.runWithScene(scene);
+ else director.replaceScene(scene);
+
+};
+
 wl.clamp = function(v,min,max){
     if(v<min){
         v = min;

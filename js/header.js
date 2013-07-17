@@ -53,5 +53,7 @@ require("state/finish.js");
 
 require("scene/loginscene.js");
 require("scene/battlescene.js");
+require("scene/mainscene.js");
 require("scene/travellercreate.js");
 require("scene/travellermodify.js");
+require("scene/travellername.js");

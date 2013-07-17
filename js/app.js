@@ -70,6 +70,6 @@ function run()
   
 }
 
-if(NOTUSE_CCB){
+if(!USE_CCB){
 	run();
 }

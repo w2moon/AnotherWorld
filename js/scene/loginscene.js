@@ -79,6 +79,17 @@ battlescene.prototype.onDidLoadFromCCB = function()
 
 var charactor = function(){}
 
+loginscene.prototype.onPressLoginDirect = function()
+{
+    cc.log("create")
+	wl.run_scene("travellercreate");
+}
+
+loginscene.prototype.onPressLoginAccount = function()
+{
+	wl.run_scene("createtraveller");
+}
+
 loginscene.prototype.onPressStart = function()
 {
     cc.log("start");
