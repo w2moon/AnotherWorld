@@ -139,13 +139,15 @@ var startdenom = math.pow(width, chunks),
     overflow = significance * 2,
     mask = width - 1;
 
+
+
 //
 // seedrandom()
 // This is the seedrandom function described above.
 //
 math['seedrandom'] = function(seed, use_entropy) {
   var key = [];
-
+  cc.log("seedrandom")
   // Flatten the seed string or build one from local entropy if needed.
   var shortseed = mixkey(flatten(
     use_entropy ? [seed, tostring(pool)] :
@@ -178,6 +180,19 @@ math['seedrandom'] = function(seed, use_entropy) {
       x >>>= 1;                         //   we have exactly the desired bits.
     }
     return (n + x) / d;                 // Form the number within [0, 1).
+  };
+
+  math['set_randstate'] = function(o){
+    arc4.i = o[0];
+    arc4.j = o[1];
+    arc4.S = o[2];
+
+    mask = o[3];
+    width = o[4];
+    chunks = o[5];
+    significance = o[6];
+    overflow = o[7];
+    startdenom = o[8];
   };
 
   // Return the seed that was used

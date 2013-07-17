@@ -129,7 +129,20 @@ wl.tonumber = function(v){
             return parseFloat(v);
         }
     }
-}
+};
+
+wl.csv_cfg = function(file){
+    if(USE_CCB){
+        return {};
+    }
+    var ret = {};
+    var str = cc.FileUtils.getInstance().getStringFromFile(file);
+    var arr = wl.load_csv(str)
+    for(var k=1;k<arr.length;++k){
+         ret[arr[k][0]] = wl.tonumber(arr[k][1]);   
+    }
+    return ret;
+};
 
 wl.csv_map = function(file){
     if(USE_CCB){
