@@ -64,18 +64,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
     
 };
 
-var battlescene = function(){}
-battlescene.prototype.onDidLoadFromCCB = function()
-{
-    var pos = this.myhero.getPosition();
-    cc.log("hero"+pos.x)
-    
- //   var chanode = cc.BuilderReader.load("sk_human");
- //   this.rootNode.addChild(chanode);
-    
-    
-   
-}
+
 
 var charactor = function(){}
 

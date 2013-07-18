@@ -50,6 +50,7 @@ wl.role = function(dbobj){
     this.dbobj = dbobj;
 
     this.travellers = [];
+
     for(var k in dbobj.travellers){
         this.travellers.push(new wl.traveller(dbobj.travellers[k],this));
     }
@@ -66,6 +67,92 @@ wl.role = function(dbobj){
         this.equipments.push(new wl.equipment(dbobj.equipments[k]));
     }
     dbobj.equipments = null;
+};
+
+wl.role_from_enemy = function(sinfo,enemies){
+    var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),travellers:[],souls:[],equipments:[]};
+    for(var k in enemies){
+        var einfo = enemy[wl.tonumber(enemies[k][0])];
+        var traveller = {
+                            id:wl.local_id(),
+                            name:lang(einfo.name),
+                            img:"",
+                            exp:0,
+                            level:wl.tonumber(enemies[k][1]),
+                            skill1id:einfo.skill1id,
+                            skill1level:einfo.skill1level,
+                            skill1exp:0,
+                            skill2id:einfo.skill1id,
+                            skill2level:einfo.skill1level,
+                            skill2exp:0,
+                            nature:4
+                         };
+        if(einfo.soulid != 0){
+            var soul = {
+                            id:wl.local_id(),
+                            baseid:einfo.soulid,
+                            exp:0,
+                            level:einfo.soullevel,
+                            skillexp:0,
+                            skilllevel:einfo.soulskilllevel
+                        };
+            tmp.souls.push(soul);
+
+            traveller.soulid=soul.id;
+        }
+        else{
+            traveller.soulid = 0;
+        }
+
+        if(einfo.weaponid != 0){
+            var weapon = {
+                            id:wl.local_id(),
+                            baseid:einfo.weaponid,
+                            exp:0,
+                            level:einfo.weaponlevel
+                        };
+            tmp.equipments.push(weapon);
+
+            traveller.weaponid=weapon.id;
+        }
+        else{
+            traveller.weaponid = 0;
+        }
+
+        if(einfo.clothid != 0){
+            var cloth = {
+                            id:wl.local_id(),
+                            baseid:einfo.clothid,
+                            exp:0,
+                            level:einfo.clothlevel
+                        };
+            tmp.equipments.push(cloth);
+
+            traveller.clothid=cloth.id;
+        }
+        else{
+            traveller.clothid = 0;
+        }
+
+        if(einfo.trinketid != 0){
+            var trinket = {
+                            id:wl.local_id(),
+                            baseid:einfo.trinketid,
+                            exp:0,
+                            level:einfo.trinketlevel
+                        };
+            tmp.equipments.push(trinket);
+
+            traveller.trinketid=trinket.id;
+        }
+        else{
+            traveller.trinketid = 0;
+        }
+
+
+        tmp.travellers.push(traveller)
+    }
+    return tmp;
 };
 
 wl.role.prototype = {
@@ -102,12 +189,12 @@ wl.role.prototype = {
     setLastSeed : function(lastseed){ this.dbobj.lastseed = lastseed;},
 
     getSlot1 : function(){return this.dbobj.slot1;},
-    setSlot1 : function(slot1){ this.dbobj.slot1 = slot1;},
-
-    getSlot2 : function(){return this.dbobj.slot2;},
     setSlot2 : function(slot2){ this.dbobj.slot2 = slot2;},
 
     getSlot3 : function(){return this.dbobj.slot3;},
+    setSlot1 : function(slot1){ this.dbobj.slot1 = slot1;},
+
+    getSlot2 : function(){return this.dbobj.slot2;},
     setSlot3 : function(slot3){ this.dbobj.slot3 = slot3;},
 
     getSlot4 : function(){return this.dbobj.slot4;},

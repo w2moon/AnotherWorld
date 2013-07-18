@@ -22,7 +22,23 @@ wl.run_scene=function(s){
  var runningScene = director.getRunningScene();
  if (runningScene === null) director.runWithScene(scene);
  else director.replaceScene(scene);
+  if(arguments.length > 1 && scene.init){
+       
+             var args = Array.prototype.slice.call(arguments, 1);
+            scene.init.apply(scene,args);
+        
+    }
+};
 
+wl.load_scene=function(s){
+    var scene = cc.BuilderReader.load(s);
+     if(arguments.length > 1 && scene.init){
+       
+             var args = Array.prototype.slice.call(arguments, 1);
+            scene.init.apply(scene,args);
+        
+    }
+    return scene;
 };
 
 wl.clamp = function(v,min,max){
@@ -34,6 +50,12 @@ wl.clamp = function(v,min,max){
     }
     return v;
 };
+
+var v_local_id = 0;
+wl.local_id = function(){
+    v_local_id++;
+    return v_local_id;
+}
 
 wl.seed = function(seed){
     return Math.seedrandom(seed);

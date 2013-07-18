@@ -1,3 +1,409 @@
+var parse_enemy = function(str){
+    var parts = str.split(/;/);
+    var arr = [];
+    for(var i=0;i<parts.length;++i){
+        arr.push(parts[i].split(/,/))
+    }
+    return arr;
+};  
+  
+var battlescene = function(){}
+battlescene.prototype.onDidLoadFromCCB = function()
+{
+   // var pos = this.myhero.getPosition();
+  //  cc.log("hero"+pos.x)
+    
+ //   var chanode = cc.BuilderReader.load("sk_human");
+ //   this.rootNode.addChild(chanode);
+
+ 
+    
+};
+
+battlescene.prototype.init = function(info)
+{
+    this.info = info
+
+    var enemies = parse_enemy(this.info.enemy)
+    var bfname = "battlefield1"
+    if(enemies.length >=1){
+    }
+    this.battlefield = wl.load_scene(bfname)
+
+    this.rootNode.addChild(this.battlefield)
+
+
+    this.functask = new wl.functask();
+    this.speeded = false;
+    
+    var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role_from_enemy(this.info,enemies)];
+    this.initBattle(roles);
+    this.start();
+
+};
+
+battlescene.prototype.toggle_speed = function()
+{
+    var scheduler = cc.Director.getInstance().getScheduler()
+    if(this.speeded){
+        scheduler.setTimeScale(1);
+    }
+    else{
+        scheduler.setTimeScale(4);
+    }
+    this.speeded = !this.speeded;
+};
+
+battlescene.prototype.addTask = function(){
+     this.functask.add.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+};
+battlescene.prototype.addTaskTail = function(){
+     this.functask.addtail.apply(this.functask,Array.prototype.slice.call(arguments, 0))
+};
+battlescene.prototype.addTasks = function(){
+     this.functask.adds.apply(this.functask,Array.prototype.slice.call(arguments, 0))       
+};
+
+battlescene.prototype.initBattle = function(roles)
+{
+    this.players = [];
+    this.warriors = [];
+    for(var k in roles){
+       var player = new wl.player(roles[k],this);
+       this.players.push(player);
+       this.init_role(player,k);
+    }
+};
+
+ battlescene.prototype.init_role = function(player,idx){
+            var warriors = player.getWarriors();
+            var positions = group_position[idx][warriors.length-1]
+            for(var k in warriors){
+                  var card = wl.load_scene(warriors[k].getTraveller().getSoul().getSkeleton(),warriors[k]); //wl.create_uicard(warriors[k]);
+                  var pos = this.battlefield.controller['card'+idx+"_"+k].getPosition();
+	              card.sedPosition(pos)
+                 // card.setPosition(cc.p(positions[k][0],positions[k][1]));
+                  if(k==0){
+                        card.setScale(1.5);
+                  }
+                  this.battlefield.addChild(card);
+
+                  warriors[k].battle_init(card);
+                  this.warriors.push(warriors[k]);
+
+                  wl.dispatcher.registerobj(warriors[k],this.on_warrior_event,this);
+            }
+            
+         };
+
+battlescene.prototype.getAttackPosition = function(warrior){
+            return warrior.getUI().getPosition();
+};
+
+battlescene.prototype.on_warrior_event = function(){
+            var args = Array.prototype.slice.call(arguments, 0);
+            for(var k in this.warriors){
+                this.warriors[k].on_event.apply(this.warriors[k],args);
+            }
+};
+
+battlescene.prototype.delayupdate = function(t){
+            this.runAction(cc.Sequence.create(cc.DelayTime.create(t),cc.CallFunc.create(scene.turn_process,this)));
+};
+
+          
+battlescene.prototype.start = function(){
+            this.turn = 1;
+            this.state = state_normal;
+            //this.schedule(this.turn_process,1);
+            this.delayupdate(ACTION_INTERVAL);
+            cc.log("schedule")
+
+            wl.dispatcher.notify(this,"battle_start");
+};
+
+
+battlescene.prototype.turn_process = function(){
+            var dt = this.functask.next();
+            if(dt != null){
+                this.delayupdate(dt)
+                return;
+            }
+            this.delayupdate(this.state.apply(this))
+            
+};
+ 
+ var sort_hp = function(t1,t2){return t2.getHP()>t1.getHP();}
+
+ var nature_select = function(objs,nature_type,num,out_array,selecthero,needalive){
+          //num can be negative
+            switch(nature_type)
+            {
+            case naturetype.left:
+            {
+                for(var k in objs){
+                    if(k==0){
+                        continue;
+                    }
+                    if(num==0){
+                        
+                        break;
+                    }
+                    if((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead())){
+                            out_array.push(objs[k]);
+                            num--;
+                        }
+                    
+                }
+                if(selecthero && (out_array.length===0 || num < 0)){
+                    out_array.push(objs[0])
+                }
+            }
+            break;
+            case naturetype.right:
+            {
+                for(var k=objs.length-1;k>=0;k--){
+                    if(k==0){
+                        continue;
+                    }
+                    if(num==0){
+                        break;
+                    }
+                    if((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead())){
+                            out_array.push(objs[k]);
+                            num--;
+                        }
+                }
+                if(selecthero && (out_array.length==0  || num < 0)){
+                    out_array.push(objs[0])
+                }
+            }
+            break;
+            case naturetype.random:
+            {
+                var arr = []
+                for(var i in objs){
+                    if((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead())){
+                        if(i == 0 && !selecthero)
+                        {
+                        }
+                        else
+                        {
+                            arr.push(objs[i]);
+                        }
+                    }
+                }
+                while(arr.length >0 &&num>0){
+                    
+                    var k = Math.random()*arr.length
+                    out_array.push(arr[k]);
+                    arr.splice(k,1);
+                    num--;
+                }
+            }
+            break;
+           
+            case naturetype.lowesthp:
+            {
+                if(num == -1){
+                    for(var k in objs){
+                        if(!objs[k].isDead()){
+                            out_array.push(objs[k]);
+                        }
+                    }
+                }
+                else{
+                for(var k in objs){
+                    if(objs[k].isDead()){
+                        continue;
+                    }
+                    if(out_array.length < num){
+                        out_array.push(objs[k])
+                    }
+                    else{
+                        out_array.sort(sort_hp);
+                        var idx = -1;
+                        for(var i in arr){
+                            if(objs[k].getHP() >= out_array[i].getHP()){
+                                idx = i -1;
+                                break;
+                            }
+                        }
+                        if(idx > -1){
+                            for(var i=0;i<idx;++i){
+                                out_array.shift()
+                            }
+                            out_array[0] = objs[k];
+                        }
+                    }
+                }
+                }
+
+               
+            }
+            break;
+            }
+           
+};
+
+
+battlescene.prototype.select_target = function(player,actor,target_type,target_num,nature_type,needalive,trigger,event_targets){
+            var targets = [];
+            switch(target_type){
+                case targettype.enemy:
+                {
+                    if(nature_type == naturetype.opposite){
+                        var target = null;
+                        var warriors = player.getWarriors();
+                        var enemywarriors = null;
+                        for(var k in this.players){
+                            if(this.players[k] != player){
+                                enemywarriors = this.players[k].getWarriors();
+                            }
+                        }
+                        for(var k in warriors){
+                            if(warriors[k] == actor){
+                                 if((needalive && !enemywarriors[k].isDead())
+                                 || (!needalive && enemywarriors[k].isDead())){
+                                      target = enemywarriors[k];
+                                 }
+                                 break;
+                            }
+                        }
+                        if(target == null){
+                            for(var k in enemywarriors){
+                                    if((needalive && !enemywarriors[k].isDead())
+                                    || (!needalive && enemywarriors[k].isDead())){
+                                        target = enemywarriors[k];
+                                    }
+                                    break;
+                                
+                            }
+                        }
+                        targets.push(target);
+                    }
+                    else{
+                        for(var k in this.players){
+                            if(this.players[k] != player){
+                                nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
+                                if(target_num != -1 && targets.length >= target_num){
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                }
+                break;
+                case targettype.ally:
+                {
+                    
+                    for(var k in this.players){
+                        if(this.players[k] == player){
+                            nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,true,needalive);
+                            if(target_num != -1 && targets.length >= target_num){
+                                break;
+                            }
+                        }
+                    }
+
+                }
+                break;
+                case targettype.all:
+                {
+                    for(var k in this.warriors){
+                       if((needalive && !this.warriors[k].isDead())
+                        || (!needalive && this.warriors[k].isDead())){
+                            targets.push(this.warriors[k])
+                        }
+                    }
+                }
+                break;
+                case targettype.self:
+                {
+                     if((needalive && !actor.isDead())
+                     || (!needalive && actor.isDead())){
+                            targets.push(actor)
+                    }
+                }
+                break;
+                 case targettype.onlyallyfront:
+                {
+                    for(var k in this.players){
+                        if(this.players[k] == player){
+                            nature_select(this.players[k].getWarriors(),nature_type,target_num,targets,false,needalive);
+                            if(target_num != -1 && targets.length >= target_num){
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+                 case targettype.onlyallyhero:
+                {
+                    for(var k in this.players){
+                        if(this.players[k] == player){
+                            var warriors = this.players[k].getWarriors();
+                            if(!needalive || !warriors[0].isDead()){
+                                targets.push(warriors[0])
+                            }
+                        }
+                    }
+                }
+                break;
+                 case targettype.onlyenemyfront:
+                {
+                     for(var k in this.players){
+                        if(this.players[k] != player){
+                            var travellers = this.players[k].getSlotTravellers();
+                            nature_select(travellers,nature_type,target_num,targets,false,needalive);
+                            if(target_num != -1 && targets.length >= target_num){
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+                 case targettype.onlyenemyhero:
+                {
+                    for(var k in this.players){
+                        if(this.players[k] != player){
+                            var warriors = this.players[k].getWarriors();
+                            if(!needalive || !warriors[0].isDead()){
+                                targets.push(warriors[0])
+                            }
+                        }
+                    }
+                }
+                break;
+                case targettype.eventtrigger:
+                {
+                     if((needalive && !trigger.isDead())
+                     || (!needalive && trigger.isDead())){
+                        targets.push(trigger);
+                     }
+                }
+                break;
+                case targettype.eventtarget:
+                {
+                    for(var k in event_targets){
+                        if((needalive && !event_targets[k].isDead())
+                     || (!needalive && event_targets[k].isDead())){
+                            targets.push(event_targets[k])
+                        }
+                    }
+                }
+                break;
+                default:
+                    cc.log("invalid targettype:"+target_type)
+                break;
+            }
+            return targets;
+};
+
   wl.create_battlescene = function(){
          var scene = cc.Scene.create();
 
@@ -210,122 +616,7 @@
             
           }
 
-          var sort_hp = function(t1,t2){return t2.getHP()>t1.getHP();}
-
-          var nature_select = function(objs,nature_type,num,out_array,selecthero,needalive){
-          //num can be negative
-            switch(nature_type)
-            {
-            case naturetype.left:
-            {
-                for(var k in objs){
-                    if(k==0){
-                        continue;
-                    }
-                    if(num==0){
-                        
-                        break;
-                    }
-                    if((needalive && !objs[k].isDead())
-                    || (!needalive && objs[k].isDead())){
-                            out_array.push(objs[k]);
-                            num--;
-                        }
-                    
-                }
-                if(selecthero && (out_array.length===0 || num < 0)){
-                    out_array.push(objs[0])
-                }
-            }
-            break;
-            case naturetype.right:
-            {
-                for(var k=objs.length-1;k>=0;k--){
-                    if(k==0){
-                        continue;
-                    }
-                    if(num==0){
-                        break;
-                    }
-                    if((needalive && !objs[k].isDead())
-                    || (!needalive && objs[k].isDead())){
-                            out_array.push(objs[k]);
-                            num--;
-                        }
-                }
-                if(selecthero && (out_array.length==0  || num < 0)){
-                    out_array.push(objs[0])
-                }
-            }
-            break;
-            case naturetype.random:
-            {
-                var arr = []
-                for(var i in objs){
-                    if((needalive && !objs[k].isDead())
-                    || (!needalive && objs[k].isDead())){
-                        if(i == 0 && !selecthero)
-                        {
-                        }
-                        else
-                        {
-                            arr.push(objs[i]);
-                        }
-                    }
-                }
-                while(arr.length >0 &&num>0){
-                    
-                    var k = Math.random()*arr.length
-                    out_array.push(arr[k]);
-                    arr.splice(k,1);
-                    num--;
-                }
-            }
-            break;
-           
-            case naturetype.lowesthp:
-            {
-                if(num == -1){
-                    for(var k in objs){
-                        if(!objs[k].isDead()){
-                            out_array.push(objs[k]);
-                        }
-                    }
-                }
-                else{
-                for(var k in objs){
-                    if(objs[k].isDead()){
-                        continue;
-                    }
-                    if(out_array.length < num){
-                        out_array.push(objs[k])
-                    }
-                    else{
-                        out_array.sort(sort_hp);
-                        var idx = -1;
-                        for(var i in arr){
-                            if(objs[k].getHP() >= out_array[i].getHP()){
-                                idx = i -1;
-                                break;
-                            }
-                        }
-                        if(idx > -1){
-                            for(var i=0;i<idx;++i){
-                                out_array.shift()
-                            }
-                            out_array[0] = objs[k];
-                        }
-                    }
-                }
-                }
-
-               
-            }
-            break;
-            }
-           
-          }
-
+         
           
 
           scene.select_target = function(player,actor,target_type,target_num,nature_type,needalive,trigger,event_targets){

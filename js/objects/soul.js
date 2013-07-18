@@ -30,6 +30,16 @@ wl.soul.prototype = {
 
     getBase : function() {return soulbase[this.dbobj.id-1];},
 
+    getSkeleton : function(){
+        return parse_action_params(this.getBase().avatar)[0]
+    },
+
+     getAvatar : function(){
+        var arr = parse_action_params(this.getBase().avatar);
+        arr.shift();
+        return arr;
+    },
+
     getSkillId : function(){return this.getBase().skillid;},
     hasSkill : function(){ return this.getBase().skillid != 0;}
    

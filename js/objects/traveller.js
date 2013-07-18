@@ -32,6 +32,7 @@ wl.traveller.prototype = {
     getImg : function(){return this.dbobj.img;},
     setImg : function(v){ this.dbobj.img = v;},
 
+
     getOwner : function(){return this.owner;},
 
     getSkills : function(){

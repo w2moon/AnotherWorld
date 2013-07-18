@@ -310,14 +310,17 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\objects\soul.js" />
     <None Include="..\js\objects\traveller.js" />
     <None Include="..\js\objects\warrior.js" />
+    <None Include="..\js\scene\battlefield.js" />
     <None Include="..\js\scene\battlescene.js" />
     <None Include="..\js\scene\loginscene.js" />
     <None Include="..\js\scene\mainscene.js" />
     <None Include="..\js\scene\pvpscene.js" />
     <None Include="..\js\scene\questscene.js" />
     <None Include="..\js\scene\storescene.js" />
+    <None Include="..\js\scene\submapscene.js" />
     <None Include="..\js\scene\travellercreate.js" />
     <None Include="..\js\scene\travellermodify.js" />
+    <None Include="..\js\scene\travellername.js" />
     <None Include="..\js\skill\add_buffer.js" />
     <None Include="..\js\skill\assist_attack.js" />
     <None Include="..\js\skill\base.js" />
@@ -339,6 +342,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\ui\card.js" />
     <None Include="..\js\ui\indicator.js" />
     <None Include="..\js\ui\loading.js" />
+    <None Include="..\js\ui\stageinfo.js" />
     <None Include="..\js\ui\token.js" />
     <None Include="res\AnotherWorld.ico" />
   </ItemGroup>

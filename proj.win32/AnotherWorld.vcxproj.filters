@@ -203,6 +203,18 @@
     <None Include="..\js\extra\seedrandom.js">
       <Filter>js\extra</Filter>
     </None>
+    <None Include="..\js\scene\travellername.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\submapscene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\stageinfo.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\scene\battlefield.js">
+      <Filter>js\scene</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
