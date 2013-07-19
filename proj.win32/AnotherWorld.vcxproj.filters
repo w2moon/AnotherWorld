@@ -215,6 +215,18 @@
     <None Include="..\js\scene\battlefield.js">
       <Filter>js\scene</Filter>
     </None>
+    <None Include="..\js\scene\battleresult.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\uisoul.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\uiitem.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\create_ui.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
