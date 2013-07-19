@@ -3,6 +3,8 @@ wl.equipment = function(dbobj){
 };
 
 wl.equipment.prototype = {
+    getClass : function(){return "equipment";},
+
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 

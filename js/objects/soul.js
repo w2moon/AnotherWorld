@@ -4,6 +4,8 @@ wl.soul = function(dbobj){
 };
 
 wl.soul.prototype = {
+    getClass : function(){return "soul";},
+
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 

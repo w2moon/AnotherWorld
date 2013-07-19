@@ -14,6 +14,7 @@ wl.skill.prototype = {
 
     },
 
+    getClass : function(){return "skill";},
     on_event : function(warrior,event,event_targets){
         if(this.getBase().event_id != event){
            

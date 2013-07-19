@@ -16,7 +16,7 @@ wl.buff = function(warrior,battlefield,buffbase){
 };
 
 wl.buff.prototype = {
-
+    getClass : function(){return "buff";},
     getId : function(){
         return this.buffbase.id;
     },

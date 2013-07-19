@@ -43,6 +43,7 @@ require("ui/indicator.js");
 require("ui/card.js");
 require("ui/token.js");
 require("ui/stageinfo.js");
+require("ui/create_ui.js");
 
 
 require("state/normal.js");

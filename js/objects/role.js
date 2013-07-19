@@ -157,6 +157,7 @@ wl.role_from_enemy = function(sinfo,enemies){
 
 wl.role.prototype = {
 
+    getClass : function(){return "role";},
 
     getUserid : function(){return this.dbobj.userid;},
     setUserid : function(userid){ this.dbobj.userid = userid;},

@@ -1,6 +1,4 @@
-
-(function(){
- 
+(function(){ 
  if(USE_CCB){
      wl.winscale = cc.Director.getInstance().contentScaleFactor();
  }
@@ -14,6 +12,42 @@ wl.get = function(name){
 
 wl.set = function(name,value){
     cc.UserDefault.getInstance().setStringForKey(name,value)
+};
+
+wl.filter_rate = function(arr){
+    var r = 0;
+    var todelete = []
+    for(var k in arr){
+        r = wl.rand();
+        if(r<arr[k][0]){
+            todelete.push(arr[k]);
+        }
+    }
+
+    for(var k in todelete){
+        for(var k in arr){
+            if(todelete[k] == arr[k]){
+                arr.splice(k,1);
+                break;
+            }
+        }
+    }
+};
+
+wl.parse_reward = function(str){
+    var parts = str.split(/;/);
+    var arr = [];
+    var spled,tmp
+    for(var i=0;i<parts.length;++i){
+        spled = parts[i].split(/,/);
+        var tmp = spled[1].match(/\(([\w,.]+)\)/)[1].split(/,/);
+        for(var k in tmp){
+            tmp[k] = wl.tonumber(tmp[k])
+        }
+        arr.push([wl.tonumber(spled[0]),spled[1].match(/\w+/)[0],tmp])
+    }
+    return arr;
+  
 };
 
 wl.run_scene=function(s){
@@ -110,7 +144,9 @@ wl.ccpAdd = function(p1,p2){
     return cc.p(p1.x+p2.x,p1.y+p2.y);
 };
 
-wl.gvars = {};
+wl.gvars = {
+    role:null
+};
 
 wl.csv_lang = function(file){
     if(USE_CCB)

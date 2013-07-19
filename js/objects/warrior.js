@@ -33,6 +33,7 @@ wl.warrior = function(player,battlefield,traveller){
 };
 
 wl.warrior.prototype = {
+    getClass : function(){return "warrior";},
     battle_init : function(ui){
         this.ui = ui;
         this.setMaxHP(this.traveller.getProperty("MaxHP"));

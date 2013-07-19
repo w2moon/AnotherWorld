@@ -15,6 +15,7 @@ wl.player = function(role,battlefield){
 };
 
 wl.player.prototype = {
+    getClass : function(){return "player";},
     battle_init : function(){
         for(var k in this.warriors){
             this.warriors[k].battle_init();

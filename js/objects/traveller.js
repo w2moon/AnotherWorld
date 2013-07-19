@@ -7,6 +7,8 @@ wl.traveller = function(dbobj,owner){
 }
 
 wl.traveller.prototype = {
+    getClass : function(){return "traveller";},
+
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 

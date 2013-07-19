@@ -27,7 +27,7 @@ travellercreate.prototype.onPressPhoto = function(){
 travellercreate.prototype.onPressNext = function(){
     if(USE_CCB || this.captured)
     {
-        wl.run_scene("travellername")
+        wl.run_scene("travellername") 
     }
 };
 
