@@ -1,4 +1,7 @@
 wl.create_ui = function(obj){
+
+    var img = "";
+
     switch(obj.getClass()){
 
         case "player":{
@@ -7,23 +10,20 @@ wl.create_ui = function(obj){
         case "role":{
         }
         break;
-        case "equipment":{
-        }
-        break;
+        case "skill":
+        case "buff":
+        case "equipment":
         case "soul":{
+            img = obj.getBase().icon;
         }
         break;
         case "traveller":{
+            img = obj.getImg();
         }
         break;
         case "warrior":{
         }
         break;
-        case "skill":{
-        }
-        break;
-        case "buff":{
-        }
-        break;
+        
     }
 };

@@ -20,6 +20,9 @@ wl.buff.prototype = {
     getId : function(){
         return this.buffbase.id;
     },
+    getBase : function(){
+        return this.buffbase;
+    },
 
     addLink : function(trigger){
         this.triggers.push(trigger);
