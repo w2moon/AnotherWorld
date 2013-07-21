@@ -148,6 +148,12 @@ wl.gvars = {
     role:null
 };
 
+ wl.csv_pool = function(file){
+ if(USE_CCB){
+ return {};
+ }
+ };
+ 
 wl.csv_lang = function(file){
     if(USE_CCB)
     {
