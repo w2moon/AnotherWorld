@@ -102,24 +102,7 @@ wl.traveller.prototype = {
         } 
         return skillbase[this.getSkill2Id()];
     },
-    /*
-    getSkills : function(){
-        var skills = []
-        var soul = this.getSoul();
-        var skill = soul.getSkillBase();
-        if(skill != null){
-            skills.push(new wl.skill(soul.getSkillLevel(),skill));
-        }
-        skill = this.getSkill1Base();
-        if(skill != null){
-            skills.push(new wl.skill(soul.getSkill1Level(),skill));
-        }
-        skill = this.getSkill2Base();
-        if(skill != null){
-            skills.push(new wl.skill(soul.getSkill2Level(),skill));
-        }
-    },
-    */
+  
 
 
     
@@ -153,12 +136,19 @@ wl.traveller.prototype = {
 
     getProperty : function(name){
         var v = 0;
+        var equip
         for(var i=0;i<EQUIP_NUM;++i)
         {
-            v += this.getEquip(i).getBase()[name];
+            equip = this.getEquip(i);
+            if(equip != null){
+                v += equip.getBase()[name];
+            }
         }
         if(this.getSoul()){
-            v += this.getSoul().getBase()[name];
+            var soul = this.getSoul()
+            if(soul!=null){
+                v += soul.getBase()[name];
+            }
         }
         v += this.dbobj[name] || 0;
         return v;

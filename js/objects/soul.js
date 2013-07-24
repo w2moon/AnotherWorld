@@ -30,7 +30,7 @@ wl.soul.prototype = {
 
     /////////////////
 
-    getBase : function() {return soulbase[this.dbobj.id-1];},
+    getBase : function() {return soulbase[this.getBaseId()];},
 
     getSkeleton : function(){
         return parse_action_params(this.getBase().avatar)[0]
