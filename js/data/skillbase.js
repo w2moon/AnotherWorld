@@ -98,7 +98,11 @@ var parse_skill_params = function(str){
     var parts = str.split(/;/);
     var arr = [];
     for(var i=0;i<parts.length;++i){
-        arr.push(parts[i].split(/,/))
+        var t = parts[i].split(/,/)
+        for(var k=0;k<t.length;++k){
+            t[k] = wl.tonumber(t[k]);
+        }
+        arr.push(t)
     }
     return arr;
 };
@@ -106,7 +110,11 @@ var parse_skill_params = function(str){
 
 
 var parse_action_params = function(str){
-    return str.split(/,/);
+    var t = str.split(/,/);
+    for(var k=0;k<t.length;++k){
+        t[k] = wl.tonumber(t[k]);
+    }
+    return t;
    
 };
 

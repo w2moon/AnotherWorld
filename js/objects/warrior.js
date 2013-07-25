@@ -260,7 +260,7 @@ wl.warrior.prototype = {
 
     incEnergy : function(v){
         this.setEnergy(wl.clamp(this.getEnergy()+v,0,this.getMaxEnergy()))
-
+ 
         wl.dispatcher.notify(this,"incEnergy",v);
     },
     decEnergy : function(v){
@@ -306,6 +306,7 @@ wl.warrior.prototype = {
                 if(this.buffs[k].getId() == buffid
                 && this.buffs[k].hasLink(trigger)){
                     buff = this.buffs[k];
+                    break;
                 }
             }
             if(buff == null){
@@ -373,7 +374,7 @@ wl.warrior.prototype = {
     
 
     calc_damage : function(attacker,defenser,protype,prorate){
-        var damage = attacker.getAttack() - defenser.getDefense();
+        var damage = attacker.getProperty('Attack') - defenser.getProperty('Defense');
         damage = parseInt(damage*(1+defenser.getModifierDamagePercent()));
         if(damage <= 0)
         {
@@ -383,7 +384,7 @@ wl.warrior.prototype = {
     },
 
     calc_heal : function(healer,reciever,protype,prorate){
-        var v = healer.getMagic();
+        var v = healer.getProperty('Heal');
         if(v < 0)
         {
             v = 0;

@@ -60,12 +60,19 @@ wl.buff.prototype = {
         if(logic == ""){
             return;
         }
+        var tmp = parse_skill_params(logic)
+        for(var i=1;i<tmp.length;++i){
+            this.warrior[tmp[i][0]].apply(this.warrior,tmp[i].slice(1))
+        }
+
+        /*
         if(param == ""){
             this.warrior[logic](value);
         }
         else{
             this.warrior[logic](param,value);
         }
+        */
     },
 
     setStack : function(s){
