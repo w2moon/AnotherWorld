@@ -8,11 +8,12 @@ var skilltype = {
 };
 
  var naturetype = {
-            'left':0,
-            'right':1,
-            'random':2,
-            'lowesthp':3,
-            opposite:4
+           
+            'random':0,
+            'lowesthp':1,
+            opposite:2,
+             'left':3,
+            'right':4
           }
 
  var targettype = {

@@ -24,11 +24,11 @@ wl.tmp_dbrole = function(name){
         date_create:0,
 
         travellers:[
-            {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1000,skill1exp:0,skill1level:1,nature:1,soulid:2,weaponid:1,clothid:2,trinketid:3,slot:[1,2,3],pro:[]},
-            {id:2,name:"2",img:"",exp:0,level:1,view:1,skill1id:2400,skill1exp:0,skill1level:1,skill2id:1001,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
-            {id:3,name:"3",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1400,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
-            {id:4,name:"4",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1600,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
-            {id:5,name:"5",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1002,skill1exp:0,skill1level:0,nature:1,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]}
+            {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1000,skill1exp:0,skill1level:1,nature:2,soulid:2,weaponid:1,clothid:2,trinketid:3,slot:[1,2,3],pro:[]},
+            {id:2,name:"2",img:"",exp:0,level:1,view:1,skill1id:2400,skill1exp:0,skill1level:1,skill2id:1001,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
+            {id:3,name:"3",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1400,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
+            {id:4,name:"4",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1600,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
+            {id:5,name:"5",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1002,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]}
         ],
         souls:[
             {id:1,baseid:1,exp:0,level:1,skillexp:0,skilllevel:1},
@@ -109,7 +109,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             id:wl.local_id(),
                             baseid:einfo.weaponid,
                             exp:0,
-                            level:einfo.weaponlevel
+                            level:einfo.weaponlevel,
+                            skillexp:0,
+                            skilllevel:einfo.weaponskilllevel
                         };
             tmp.equipments.push(weapon);
 
@@ -124,7 +126,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             id:wl.local_id(),
                             baseid:einfo.clothid,
                             exp:0,
-                            level:einfo.clothlevel
+                            level:einfo.clothlevel,
+                            skillexp:0,
+                            skilllevel:einfo.clothskilllevel
                         };
             tmp.equipments.push(cloth);
 
@@ -139,7 +143,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             id:wl.local_id(),
                             baseid:einfo.trinketid,
                             exp:0,
-                            level:einfo.trinketlevel
+                            level:einfo.trinketlevel,
+                            skillexp:0,
+                            skilllevel:einfo.trinketskilllevel
                         };
             tmp.equipments.push(trinket);
 

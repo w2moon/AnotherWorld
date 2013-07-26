@@ -36,7 +36,7 @@ battlescene.prototype.init = function(info)
     this.functask = new wl.functask();
     this.speeded = false;
     
-    var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role_from_enemy(this.info,enemies)];
+    var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.role_from_enemy(this.info,enemies))];
     this.initBattle(roles);
     this.start();
 
@@ -225,19 +225,13 @@ battlescene.prototype.turn_process = function(){
                     }
                     else{
                         out_array.sort(sort_hp);
-                        var idx = -1;
-                        for(var i in arr){
-                            if(objs[k].getHP() >= out_array[i].getHP()){
-                                idx = i -1;
+                        for(var i in out_array){
+                            if(objs[k].getHP() < out_array[i].getHP()){
+                                out_array[0] = objs[k]
                                 break;
                             }
                         }
-                        if(idx > -1){
-                            for(var i=0;i<idx;++i){
-                                out_array.shift()
-                            }
-                            out_array[0] = objs[k];
-                        }
+                        
                     }
                 }
                 }
@@ -262,6 +256,7 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                         for(var k in this.players){
                             if(this.players[k] != player){
                                 enemywarriors = this.players[k].getWarriors();
+                                break;
                             }
                         }
                         for(var k in warriors){
