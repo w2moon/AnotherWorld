@@ -11,7 +11,7 @@ var func = function(){
                     }
                     
                     
-                   this.travellers.sort(sort_traveller)
+                   //this.travellers.sort(sort_traveller)
                    this.idx_acting = 0;
                    this.state = state_action;
 
