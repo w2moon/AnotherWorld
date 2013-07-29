@@ -149,15 +149,13 @@ wl.gvars = {
 };
 
  wl.csv_pool = function(file){
- if(USE_CCB){
- return {};
- }
+ 
  };
  
 wl.csv_lang = function(file){
     if(USE_CCB)
     {
-        return function(){return "ccb not load text"};
+       // return function(){return "ccb not load text"};
     }
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
@@ -197,7 +195,7 @@ wl.tonumber = function(v){
 
 wl.csv_cfg = function(file){
     if(USE_CCB){
-        return {};
+       // return {};
     }
     var ret = {};
     var str = cc.FileUtils.getInstance().getStringFromFile(file);
@@ -210,7 +208,7 @@ wl.csv_cfg = function(file){
 
 wl.csv_map = function(file){
     if(USE_CCB){
-        return {};
+        //return {};
     }
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
@@ -228,7 +226,7 @@ wl.csv_map = function(file){
 
 wl.csv_idmap = function(file){
     if(USE_CCB){
-        return {};
+       // return {};
     }
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
@@ -246,7 +244,7 @@ wl.csv_idmap = function(file){
 
 wl.csv_object = function(file){
     if(USE_CCB){
-        return [];
+       // return [];
     }
     var ret = [];
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
