@@ -9,7 +9,7 @@
        var params = parse_action_params(skill.getBase().param);
        tasks.push([skill.warrior,skill.warrior.particle,[params[2]]]);
         tasks.push([skill,skill.delay,[0.4]]);
-        
+      targets =  event_targets
           for(var k in targets){
             var posdes = skill.getBattleField().getAttackPosition(targets[k]);
 
