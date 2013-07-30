@@ -20,7 +20,7 @@ var func = function(){
                         }
 
                         this.idx_acting++;
-                        while(this.idx_acting < this.warriors.length && this.warriors[this.idx_acting].isDead()){
+                        while(this.idx_acting < this.warriors.length && (this.warriors[this.idx_acting] == null || this.warriors[this.idx_acting].isDead())){
                               this.idx_acting++
                         }
                     }
