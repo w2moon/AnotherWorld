@@ -27,7 +27,7 @@ wl.warrior = function(player,battlefield,traveller){
 
     var skills = traveller.getSkills();
     for(var k in skills){
-        this.skills.push(new wl.skill(skills[k][0],skills[k][1]))
+        this.skills.push(new wl.skill(this,this.battlefield,skills[k][1],skillbase[skills[k][0]]))
     }
 
 };
