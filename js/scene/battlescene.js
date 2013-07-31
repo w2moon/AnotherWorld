@@ -20,7 +20,7 @@ battlescene.prototype.onDidLoadFromCCB = function()
     
 };
 
-battlescene.prototype.init = function(info)
+battlescene.prototype.onCreate = function(info)
 {
     this.info = info
 

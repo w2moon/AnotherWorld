@@ -4,7 +4,7 @@ battleresult.prototype.onDidLoadFromCCB = function()
 };
 
 
-battleresult.prototype.init = function(result,info)
+battleresult.prototype.onCreate = function(result,info)
 {
     if(!result){
     //fail

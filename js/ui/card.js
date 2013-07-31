@@ -243,7 +243,7 @@ var uicard = function(){};
 uicard.prototype.onDidLoadFromCCB = function(){
 };
 
-uicard.prototype.init = function(warrior){
+uicard.prototype.onCreate = function(warrior){
     this.warrior = warrior
 
 
