@@ -127,6 +127,9 @@ wl.traveller.prototype = {
     ////////////////////////////////////////////////////////////
     //new
     getEquip : function(pos){
+        if(this.dbobj.slot[pos] == 0){
+            return null;
+        }
         return this.owner.getEquipment(this.dbobj.slot[pos]);
     },
 

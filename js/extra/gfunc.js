@@ -56,16 +56,23 @@ wl.run_scene=function(s){
  var runningScene = director.getRunningScene();
  if (runningScene === null) director.runWithScene(scene);
  else director.replaceScene(scene);
-  if(arguments.length > 1 && scene.controller!=null && scene.controller.onCreate){
+ 
+ if(s=="battlescene"){
+ cc.log(scene.getChildren()[0].controller)
+ 
+ }
+  if(arguments.length > 1 && scene.getChildren()[0].controller!=null && scene.getChildren()[0].controller.onCreate){
        
              var args = Array.prototype.slice.call(arguments, 1);
-            scene.controller.onCreate.apply(scene.controller,args);
-        
+            scene.getChildren()[0].controller.onCreate.apply(scene.getChildren()[0].controller,args);
+ 
     }
 };
 
 wl.load_scene=function(s){
     var scene = cc.BuilderReader.load(s);
+
+
      if(arguments.length > 1 && scene.controller!=null && scene.controller.onCreate){
        
              var args = Array.prototype.slice.call(arguments, 1);

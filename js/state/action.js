@@ -14,7 +14,7 @@ var func = function(){
                     var dt = 0;
                     if(this.idx_acting < this.warriors.length){
 
-                        if(this.warriors[this.idx_acting].canAction())
+                        if(this.warriors[this.idx_acting] != null && this.warriors[this.idx_acting].canAction())
                         {
                             dt = this.warriors[this.idx_acting].action();
                         }

@@ -57,6 +57,7 @@ require("scene/loginscene.js");
 require("scene/battlescene.js");
 require("scene/mainscene.js");
 require("scene/submapscene.js");
+require("scene/mainmap.js");
 require("scene/pvpscene.js");
 require("scene/travellercreate.js");
 require("scene/travellermodify.js");

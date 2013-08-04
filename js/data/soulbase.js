@@ -23,4 +23,5 @@ soulbase = wl.csv_idmap("soulbase.csv");
 lotterypool = wl.csv_pool("lotterypool.csv");
 submaps = wl.csv_idmap("submaps.csv");
 enemy = wl.csv_idmap("enemy.csv");
+
 stage = wl.csv_idmap("stage.csv");
