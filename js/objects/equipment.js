@@ -18,7 +18,7 @@ wl.equipment.prototype = {
     setLevel : function(level){ this.dbobj.level = level;},
 
     //////////////////////////
-    getBase : function() { return equipmentbase[this.dbobj.id];},
+    getBase : function() { return equipmentbase[this.dbobj.baseid];},
     getSkillId : function(){return this.getBase().skillid;},
     hasSkill : function(){ return this.getBase().skillid != 0;},
 

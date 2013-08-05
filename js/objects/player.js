@@ -11,6 +11,9 @@ wl.player = function(role,battlefield){
         if(travellers[k] != null){
             this.warriors.push(new wl.warrior(this,battlefield,travellers[k]));
         }
+        else{
+            this.warriors.push(null)
+        }
     }
 };
 
@@ -18,19 +21,23 @@ wl.player.prototype = {
     getClass : function(){return "player";},
     battle_init : function(){
         for(var k in this.warriors){
-            this.warriors[k].battle_init();
+            if(this.warriors[k] != null){
+                this.warriors[k].battle_init();
+            }
         }
     },
     isDead : function(){
-        return this.warriors[0].isDead();
-        /*
+        if(this.warriors[HERO_IDX] != null){
+            return this.warriors[HERO_IDX].isDead();
+        }
+        
         for(var k in this.warriors){
-            if(!this.warriors[k].isDead()){
+            if(this.warriors[k] != null && !this.warriors[k].isDead()){
                 return false;
             }
         }
         return true;
-        */
+        
     },
     getWarriors : function(){
         return this.warriors;

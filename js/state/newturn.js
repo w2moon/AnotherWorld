@@ -16,6 +16,7 @@ var func = function(){
                    this.state = state_action;
 
                    for(var k in this.warriors){
+                       if(this.warriors[k]!=null)
                         this.warriors[k].newturn();
                    }
 

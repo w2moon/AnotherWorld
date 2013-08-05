@@ -3,7 +3,7 @@ wl.tmp_dbrole = function(name){
     return {
         userid:"1",
         name:name,
-        id:1,
+        id:wl.local_id(),
         exp:0,
         level:0,
         hp:10,
@@ -24,7 +24,7 @@ wl.tmp_dbrole = function(name){
         date_create:0,
 
         travellers:[
-            {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1000,skill1exp:0,skill1level:1,nature:2,soulid:2,weaponid:1,clothid:2,trinketid:3,slot:[1,2,3],pro:[]},
+            {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1000,skill1exp:0,skill1level:1,nature:2,soulid:2,weaponid:1,clothid:2,trinketid:3,slot:[1,0,2,3],pro:[]},
             {id:2,name:"2",img:"",exp:0,level:1,view:1,skill1id:2400,skill1exp:0,skill1level:1,skill2id:1001,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
             {id:3,name:"3",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1400,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
             {id:4,name:"4",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1600,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]},
@@ -71,7 +71,16 @@ wl.role = function(dbobj){
 
 wl.role_from_enemy = function(sinfo,enemies){
     var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),travellers:[],souls:[],equipments:[]};
+    
+    
+    
     for(var k in enemies){
+        var num = wl.tonumber(k)+1;
+        if(wl.tonumber(enemies[k][0]) == 0){
+            
+            tmp['slot'+num] = 0;
+            continue;
+        }
         var einfo = enemy[wl.tonumber(enemies[k][0])];
         var traveller = {
                             id:wl.local_id(),
@@ -85,13 +94,19 @@ wl.role_from_enemy = function(sinfo,enemies){
                             skill2id:einfo.skill1id,
                             skill2level:einfo.skill1level,
                             skill2exp:0,
-                            nature:4
+                            nature:4,
+                            slot:[]
                          };
+        for(var i=0;i<EQUIP_NUM;++i){
+            traveller.slot[i] = 0;
+        }
+        tmp['slot'+num] = traveller.id;
         if(einfo.soulid != 0){
             var soul = {
                             id:wl.local_id(),
                             baseid:einfo.soulid,
                             exp:0,
+                            star:einfo.soulstar,
                             level:einfo.soullevel,
                             skillexp:0,
                             skilllevel:einfo.soulskilllevel
@@ -104,21 +119,38 @@ wl.role_from_enemy = function(sinfo,enemies){
             traveller.soulid = 0;
         }
 
-        if(einfo.weaponid != 0){
-            var weapon = {
+        if(einfo.weaponrid != 0){
+            var weaponr = {
                             id:wl.local_id(),
-                            baseid:einfo.weaponid,
+                            baseid:einfo.weaponrid,
                             exp:0,
-                            level:einfo.weaponlevel,
+                            level:einfo.weaponrlevel,
                             skillexp:0,
-                            skilllevel:einfo.weaponskilllevel
+                            skilllevel:einfo.weaponrskilllevel
                         };
-            tmp.equipments.push(weapon);
+            tmp.equipments.push(weaponr);
 
-            traveller.weaponid=weapon.id;
+            traveller.slot[EQUIP_WEAPONR]=weaponr.id;
         }
         else{
-            traveller.weaponid = 0;
+            traveller.slot[EQUIP_WEAPONR] = 0;
+        }
+        
+        if(einfo.weaponlid != 0){
+            var weaponl = {
+            id:wl.local_id(),
+            baseid:einfo.weaponlid,
+            exp:0,
+            level:einfo.weaponllevel,
+            skillexp:0,
+            skilllevel:einfo.weaponlskilllevel
+            };
+            tmp.equipments.push(weaponl);
+            
+            traveller.slot[EQUIP_WEAPONL]=weaponl.id;
+        }
+        else{
+            traveller.slot[EQUIP_WEAPONL] = 0;
         }
 
         if(einfo.clothid != 0){
@@ -132,10 +164,10 @@ wl.role_from_enemy = function(sinfo,enemies){
                         };
             tmp.equipments.push(cloth);
 
-            traveller.clothid=cloth.id;
+            traveller.slot[EQUIP_CLOTH]=cloth.id;
         }
         else{
-            traveller.clothid = 0;
+            traveller.slot[EQUIP_CLOTH] = 0;
         }
 
         if(einfo.trinketid != 0){
@@ -149,10 +181,10 @@ wl.role_from_enemy = function(sinfo,enemies){
                         };
             tmp.equipments.push(trinket);
 
-            traveller.trinketid=trinket.id;
+            traveller.slot[EQUIP_TRINKET]=trinket.id;
         }
         else{
-            traveller.trinketid = 0;
+            traveller.slot[EQUIP_TRINKET] = 0;
         }
 
 

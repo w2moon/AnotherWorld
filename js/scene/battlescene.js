@@ -1,8 +1,16 @@
 var parse_enemy = function(str){
     var parts = str.split(/;/);
     var arr = [];
+    if(str.charAt(str.length-1) == ";"){
+        parts.pop()
+    }
+    var tmp 
     for(var i=0;i<parts.length;++i){
-        arr.push(parts[i].split(/,/))
+        tmp = parts[i].split(/,/)
+        if(parts[i].charAt(parts[i].length-1) == ","){
+            tmp.pop()
+        }
+        arr.push(tmp)
     }
     return arr;
 };  
@@ -15,22 +23,24 @@ battlescene.prototype.onDidLoadFromCCB = function()
     
  //   var chanode = cc.BuilderReader.load("sk_human");
  //   this.rootNode.addChild(chanode);
-
- 
-    
+   
+ cc.log("good")
 };
 
 battlescene.prototype.onCreate = function(info)
 {
+    cc.log("battlecreate")
     this.info = info
 
     var enemies = parse_enemy(this.info.enemy)
+    
     var bfname = "battlefield1"
     if(enemies.length >=1){
     }
     this.battlefield = wl.load_scene(bfname)
 
     this.rootNode.addChild(this.battlefield)
+    
 
 
     this.functask = new wl.functask();
@@ -77,20 +87,38 @@ battlescene.prototype.initBattle = function(roles)
 
  battlescene.prototype.init_role = function(player,idx){
             var warriors = player.getWarriors();
-            var positions = group_position[idx][warriors.length-1]
+           // var positions = group_position[idx][warriors.length-1]
+     var tail = "";
+     if (idx != 0){
+         tail = "_flip";
+     }
             for(var k in warriors){
-                  var card = wl.load_scene(warriors[k].getTraveller().getSoul().getSkeleton(),warriors[k]); //wl.create_uicard(warriors[k]);
+                
+                this.battlefield.removeChild(this.battlefield.controller['card'+idx+"_"+k])
+                if(warriors[k] == null){
+                    continue;
+                }
+                
+                  var card = wl.load_scene(warriors[k].getTraveller().getSoul().getSkeleton()+tail,warriors[k]); //wl.create_uicard(warriors[k]);
+               
                   var pos = this.battlefield.controller['card'+idx+"_"+k].getPosition();
-	              card.sedPosition(pos)
-                 // card.setPosition(cc.p(positions[k][0],positions[k][1]));
-                  if(k==0){
-                        card.setScale(1.5);
-                  }
+                
+	              card.setPosition(pos)
+                 
                   this.battlefield.addChild(card);
 
                   warriors[k].battle_init(card);
                   this.warriors.push(warriors[k]);
-
+card.animationManager.runAnimationsForSequenceNamed("stand");
+                
+                card.on_animation_finish = function()
+                {
+                    this.animationManager.runAnimationsForSequenceNamed("stand");
+                    
+                }
+                
+                card.animationManager.setCompletedAnimationCallback(card,card.on_animation_finish);
+                
                   wl.dispatcher.registerobj(warriors[k],this.on_warrior_event,this);
             }
             
@@ -103,12 +131,13 @@ battlescene.prototype.getAttackPosition = function(warrior){
 battlescene.prototype.on_warrior_event = function(){
             var args = Array.prototype.slice.call(arguments, 0);
             for(var k in this.warriors){
+                if(this.warriors[k]!=null)
                 this.warriors[k].on_event.apply(this.warriors[k],args);
             }
 };
 
 battlescene.prototype.delayupdate = function(t){
-            this.runAction(cc.Sequence.create(cc.DelayTime.create(t),cc.CallFunc.create(scene.turn_process,this)));
+            this.rootNode.runAction(cc.Sequence.create(cc.DelayTime.create(t),cc.CallFunc.create(this.turn_process,this)));
 };
 
           
@@ -142,7 +171,7 @@ battlescene.prototype.turn_process = function(){
             case naturetype.left:
             {
                 for(var k in objs){
-                    if(k==0){
+                    if(k==HERO_IDX || objs[k] == null){
                         continue;
                     }
                     if(num==0){
@@ -156,15 +185,15 @@ battlescene.prototype.turn_process = function(){
                         }
                     
                 }
-                if(selecthero && (out_array.length===0 || num < 0)){
-                    out_array.push(objs[0])
+                if(selecthero && (out_array.length===0 || num < 0) && objs[HERO_IDX] != null){
+                    out_array.push(objs[HERO_IDX])
                 }
             }
             break;
             case naturetype.right:
             {
                 for(var k=objs.length-1;k>=0;k--){
-                    if(k==0){
+                    if(k==HERO_IDX || objs[k] == null){
                         continue;
                     }
                     if(num==0){
@@ -176,8 +205,8 @@ battlescene.prototype.turn_process = function(){
                             num--;
                         }
                 }
-                if(selecthero && (out_array.length==0  || num < 0)){
-                    out_array.push(objs[0])
+                if(selecthero && (out_array.length==0  || num < 0) && objs[HERO_IDX] != null){
+                    out_array.push(objs[HERO_IDX])
                 }
             }
             break;
@@ -185,9 +214,10 @@ battlescene.prototype.turn_process = function(){
             {
                 var arr = []
                 for(var i in objs){
-                    if((needalive && !objs[k].isDead())
-                    || (!needalive && objs[k].isDead())){
-                        if(i == 0 && !selecthero)
+                    if(objs[k] != null
+                       &&((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead()))){
+                        if(i == HERO_IDX && !selecthero)
                         {
                         }
                         else
@@ -210,14 +240,21 @@ battlescene.prototype.turn_process = function(){
             {
                 if(num == -1){
                     for(var k in objs){
-                        if(!objs[k].isDead()){
+                        if(objs[k]!=null && !objs[k].isDead()){
+                            if(k == HERO_IDX  && !selecthero)
+                            {
+                                
+                            }
+                            else
+                            {
                             out_array.push(objs[k]);
+                            }
                         }
                     }
                 }
                 else{
                 for(var k in objs){
-                    if(objs[k].isDead()){
+                    if(objs[k] == null || objs[k].isDead()){
                         continue;
                     }
                     if(out_array.length < num){
@@ -261,8 +298,12 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                         }
                         for(var k in warriors){
                             if(warriors[k] == actor){
-                                 if((needalive && !enemywarriors[k].isDead())
-                                 || (!needalive && enemywarriors[k].isDead())){
+                                 if(
+                                    k != HERO_IDX
+                                 && enemywarriors[k] != null
+                                 && ((needalive && !enemywarriors[k].isDead())
+                                 || (!needalive && enemywarriors[k].isDead()))
+                                    ){
                                       target = enemywarriors[k];
                                  }
                                  break;
@@ -270,8 +311,9 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                         }
                         if(target == null){
                             for(var k in enemywarriors){
-                                    if((needalive && !enemywarriors[k].isDead())
-                                    || (!needalive && enemywarriors[k].isDead())){
+                                    if(enemywarriors[k] != null
+                                     &&  ((needalive && !enemywarriors[k].isDead())
+                                    || (!needalive && enemywarriors[k].isDead()))){
                                         target = enemywarriors[k];
                                     }
                                     break;
@@ -310,8 +352,10 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                 case targettype.all:
                 {
                     for(var k in this.warriors){
-                       if((needalive && !this.warriors[k].isDead())
-                        || (!needalive && this.warriors[k].isDead())){
+                       if(
+                          this.warriors[k] != null
+                        && ((needalive && !this.warriors[k].isDead())
+                        || (!needalive && this.warriors[k].isDead()))){
                             targets.push(this.warriors[k])
                         }
                     }
@@ -342,8 +386,11 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                     for(var k in this.players){
                         if(this.players[k] == player){
                             var warriors = this.players[k].getWarriors();
-                            if(!needalive || !warriors[0].isDead()){
-                                targets.push(warriors[0])
+                            if(
+                            warriors[HERO_IDX] != null
+                            && (needalive && !warriors[HERO_IDX].isDead())
+                            || (!needalive && warriors[HERO_IDX].isDead())){
+                                targets.push(warriors[HERO_IDX])
                             }
                         }
                     }
@@ -367,8 +414,11 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                     for(var k in this.players){
                         if(this.players[k] != player){
                             var warriors = this.players[k].getWarriors();
-                            if(!needalive || !warriors[0].isDead()){
-                                targets.push(warriors[0])
+                            if(
+                            warriors[HERO_IDX] != null
+                            && (needalive && !warriors[HERO_IDX].isDead())
+                            || (!needalive && warriors[HERO_IDX].isDead())){
+                                targets.push(warriors[HERO_IDX])
                             }
                         }
                     }

@@ -13,6 +13,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
     cc.log("winscale:"+wl.winscale)
 
    //cc.log(lang("SKILL_NAME_1001"))
+    /*
     for(var i=1;i<10;++i){
     var aboutNode = cc.BuilderReader.load("sk_human");
 	this.rootNode.addChild(aboutNode);
@@ -27,6 +28,14 @@ loginscene.prototype.onDidLoadFromCCB = function()
        
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
     }
+     */
+    
+    var aboutNode = cc.BuilderReader.load("sk_human");
+	this.rootNode.addChild(aboutNode);
+    var size = cc.Director.getInstance().getWinSize();
+	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50,size.height/2+wl.winscale*50));
+     aboutNode.animationManager.runAnimationsForSequenceNamed("stand");
+    
     /*
     
     var img = cc.Image.create();

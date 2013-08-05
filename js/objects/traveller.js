@@ -50,6 +50,12 @@ wl.traveller.prototype = {
         if(this.getSoul() && this.getSoul().hasSkill()){
             skills.push([this.getSoul().getSkillId(),this.getSoul().getSkillLevel()]);
         }
+        if(this.getSkill1Id() != 0){
+            skills.push([this.getSkill1Id(),this.getSkill1Level()]);
+        }
+        if(this.getSkill2Id() != 0){
+            skills.push([this.getSkill2Id(),this.getSkill2Level()]);
+        }
         return skills;
     },
 
@@ -127,6 +133,9 @@ wl.traveller.prototype = {
     ////////////////////////////////////////////////////////////
     //new
     getEquip : function(pos){
+        if(this.dbobj.slot[pos] == 0){
+            return null;
+        }
         return this.owner.getEquipment(this.dbobj.slot[pos]);
     },
 
