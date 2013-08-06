@@ -414,6 +414,7 @@ battlescene.prototype.select_target = function(player,actor,target_type,target_n
                     for(var k in this.players){
                         if(this.players[k] != player){
                             var warriors = this.players[k].getWarriors();
+                                targets.push(warriors[0])
                             if(
                             warriors[HERO_IDX] != null
                             && (needalive && !warriors[HERO_IDX].isDead())
