@@ -27,7 +27,7 @@ battlescene.prototype.onDidLoadFromCCB = function()
  cc.log("good")
 };
 
-battlescene.prototype.onCreate = function(info)
+battlescene.prototype.onCreate = function(info,level)
 {
     cc.log("battlecreate")
     this.info = info
@@ -38,7 +38,7 @@ battlescene.prototype.onCreate = function(info)
     if(enemies.length >=1){
     }
     this.battlefield = wl.load_scene(bfname)
-
+    this.level = level
     this.rootNode.addChild(this.battlefield)
     
 
@@ -46,7 +46,7 @@ battlescene.prototype.onCreate = function(info)
     this.functask = new wl.functask();
     this.speeded = false;
     
-    var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.role_from_enemy(this.info,enemies))];
+    var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.role_from_enemy(this.info,enemies,level))];
     this.initBattle(roles);
     this.start();
 

@@ -31,11 +31,11 @@ wl.tmp_dbrole = function(name){
             {id:5,name:"5",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1002,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]}
         ],
         souls:[
-            {id:1,baseid:1,exp:0,level:1,skillexp:0,skilllevel:1},
-            {id:2,baseid:2,exp:0,level:2,skillexp:0,skilllevel:1},
-            {id:3,baseid:1,exp:0,level:1,skillexp:0,skilllevel:1},
-            {id:4,baseid:1,exp:0,level:1,skillexp:0,skilllevel:1},
-            {id:5,baseid:1,exp:0,level:1,skillexp:0,skilllevel:1}
+            {id:1,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1},
+            {id:2,baseid:2,star:0,exp:0,level:2,skillexp:0,skilllevel:1},
+            {id:3,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1},
+            {id:4,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1},
+            {id:5,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1}
         ],
         equipments:[
             {id:1,baseid:1,exp:0,level:1},
@@ -69,11 +69,11 @@ wl.role = function(dbobj){
     dbobj.equipments = null;
 };
 
-wl.role_from_enemy = function(sinfo,enemies){
+wl.role_from_enemy = function(sinfo,enemies,level){
     var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),travellers:[],souls:[],equipments:[]};
     
     
-    
+    var factor = level
     for(var k in enemies){
         var num = wl.tonumber(k)+1;
         if(wl.tonumber(enemies[k][0]) == 0){
@@ -89,11 +89,15 @@ wl.role_from_enemy = function(sinfo,enemies){
                             exp:0,
                             level:wl.tonumber(enemies[k][1]),
                             skill1id:einfo.skill1id,
-                            skill1level:einfo.skill1level,
+                            skill1level:einfo.skill1level*factor,
                             skill1exp:0,
                             skill2id:einfo.skill1id,
-                            skill2level:einfo.skill1level,
+                            skill2level:einfo.skill1level*factor,
                             skill2exp:0,
+                            MaxHP:einfo.MaxHP*factor,
+                            Attack:einfo.Attack*factor,
+                            Defense:einfo.Defense*factor,
+                            Heal:einfo.Heal*factor,
                             nature:4,
                             slot:[]
                          };
@@ -107,9 +111,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             baseid:einfo.soulid,
                             exp:0,
                             star:einfo.soulstar,
-                            level:einfo.soullevel,
+                            level:einfo.soullevel*factor,
                             skillexp:0,
-                            skilllevel:einfo.soulskilllevel
+                            skilllevel:einfo.soulskilllevel*factor
                         };
             tmp.souls.push(soul);
 
@@ -124,9 +128,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             id:wl.local_id(),
                             baseid:einfo.weaponrid,
                             exp:0,
-                            level:einfo.weaponrlevel,
+                            level:einfo.weaponrlevel*factor,
                             skillexp:0,
-                            skilllevel:einfo.weaponrskilllevel
+                            skilllevel:einfo.weaponrskilllevel*factor
                         };
             tmp.equipments.push(weaponr);
 
@@ -141,9 +145,9 @@ wl.role_from_enemy = function(sinfo,enemies){
             id:wl.local_id(),
             baseid:einfo.weaponlid,
             exp:0,
-            level:einfo.weaponllevel,
+            level:einfo.weaponllevel*factor,
             skillexp:0,
-            skilllevel:einfo.weaponlskilllevel
+            skilllevel:einfo.weaponlskilllevel*factor
             };
             tmp.equipments.push(weaponl);
             
@@ -158,9 +162,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             id:wl.local_id(),
                             baseid:einfo.clothid,
                             exp:0,
-                            level:einfo.clothlevel,
+                            level:einfo.clothlevel*factor,
                             skillexp:0,
-                            skilllevel:einfo.clothskilllevel
+                            skilllevel:einfo.clothskilllevel*factor
                         };
             tmp.equipments.push(cloth);
 
@@ -175,9 +179,9 @@ wl.role_from_enemy = function(sinfo,enemies){
                             id:wl.local_id(),
                             baseid:einfo.trinketid,
                             exp:0,
-                            level:einfo.trinketlevel,
+                            level:einfo.trinketlevel*factor,
                             skillexp:0,
-                            skilllevel:einfo.trinketskilllevel
+                            skilllevel:einfo.trinketskilllevel*factor
                         };
             tmp.equipments.push(trinket);
 

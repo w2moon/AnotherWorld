@@ -8,7 +8,7 @@ stageinfo.prototype.onCreate = function(stageid){
 };
 
 stageinfo.prototype.onPressStart = function(){
-    wl.run_scene(this.info.res,this.info);
+    wl.run_scene(this.info.res,this.info,1);
 };
 
 stageinfo.prototype.onPressCancel = function(){

@@ -156,7 +156,7 @@ wl.traveller.prototype = {
         if(this.getSoul()){
             var soul = this.getSoul()
             if(soul!=null){
-                v += soul.getBase()[name];
+                v += soul.getBase()[name]*(1+soul.star*0.1);
             }
         }
         v += this.dbobj[name] || 0;
