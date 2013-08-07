@@ -44,8 +44,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
+							<real>9</real>
 							<real>-7</real>
-							<real>-19</real>
 							<integer>5</integer>
 						</array>
 					</dict>
@@ -56,8 +56,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>1</real>
+							<real>1</real>
 						</array>
 					</dict>
 					<dict>
@@ -72,6 +72,14 @@
 							<false/>
 							<integer>0</integer>
 						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>rotation</string>
+						<key>type</key>
+						<string>Degrees</string>
+						<key>value</key>
+						<real>-45</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -116,8 +124,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>13</real>
-							<real>-20</real>
+							<real>-1</real>
+							<real>-7</real>
 							<integer>5</integer>
 						</array>
 					</dict>
@@ -128,8 +136,8 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>0.5</real>
-							<real>0.5</real>
+							<real>1</real>
+							<real>1</real>
 						</array>
 					</dict>
 					<dict>
@@ -144,14 +152,6 @@
 							<false/>
 							<integer>0</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>-45</real>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -271,7 +271,7 @@
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
-											<real>-90</real>
+											<real>0.0</real>
 										</dict>
 										<dict>
 											<key>easing</key>
@@ -286,7 +286,7 @@
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
-											<real>-110</real>
+											<real>20</real>
 										</dict>
 										<dict>
 											<key>easing</key>
@@ -301,7 +301,7 @@
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
-											<real>-90</real>
+											<real>0.0</real>
 										</dict>
 									</array>
 									<key>name</key>
@@ -368,14 +368,6 @@
 									</dict>
 									<dict>
 										<key>name</key>
-										<string>rotation</string>
-										<key>type</key>
-										<string>Degrees</string>
-										<key>value</key>
-										<real>90</real>
-									</dict>
-									<dict>
-										<key>name</key>
 										<string>ignoreAnchorPointForPosition</string>
 										<key>type</key>
 										<string>Check</string>
@@ -391,6 +383,17 @@
 										<array>
 											<string></string>
 											<string>charactor/hand.png</string>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>flip</string>
+										<key>type</key>
+										<string>Flip</string>
+										<key>value</key>
+										<array>
+											<true/>
+											<false/>
 										</array>
 									</dict>
 								</array>
@@ -413,8 +416,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>9</real>
-									<real>11</real>
+									<real>-5</real>
+									<real>10</real>
 									<integer>5</integer>
 								</array>
 							</dict>
@@ -450,7 +453,7 @@
 								<key>type</key>
 								<string>Degrees</string>
 								<key>value</key>
-								<real>-90</real>
+								<real>0.0</real>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -583,7 +586,7 @@
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
-											<real>0.0</real>
+											<real>-90</real>
 										</dict>
 										<dict>
 											<key>easing</key>
@@ -598,7 +601,7 @@
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
-											<real>20</real>
+											<real>-110</real>
 										</dict>
 										<dict>
 											<key>easing</key>
@@ -613,7 +616,7 @@
 											<key>type</key>
 											<integer>2</integer>
 											<key>value</key>
-											<real>0.0</real>
+											<real>-90</real>
 										</dict>
 									</array>
 									<key>name</key>
@@ -680,6 +683,14 @@
 									</dict>
 									<dict>
 										<key>name</key>
+										<string>rotation</string>
+										<key>type</key>
+										<string>Degrees</string>
+										<key>value</key>
+										<real>90</real>
+									</dict>
+									<dict>
+										<key>name</key>
 										<string>ignoreAnchorPointForPosition</string>
 										<key>type</key>
 										<string>Check</string>
@@ -695,6 +706,17 @@
 										<array>
 											<string></string>
 											<string>charactor/hand.png</string>
+										</array>
+									</dict>
+									<dict>
+										<key>name</key>
+										<string>flip</string>
+										<key>type</key>
+										<string>Flip</string>
+										<key>value</key>
+										<array>
+											<true/>
+											<false/>
 										</array>
 									</dict>
 								</array>
@@ -717,7 +739,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-4</real>
+									<real>13</real>
 									<real>10</real>
 									<integer>5</integer>
 								</array>
@@ -754,7 +776,7 @@
 								<key>type</key>
 								<string>Degrees</string>
 								<key>value</key>
-								<real>0.0</real>
+								<real>-90</real>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -800,8 +822,8 @@
 											<integer>3</integer>
 											<key>value</key>
 											<array>
-												<real>7</real>
-												<real>28</real>
+												<real>4</real>
+												<real>27</real>
 											</array>
 										</dict>
 										<dict>
@@ -818,7 +840,7 @@
 											<integer>3</integer>
 											<key>value</key>
 											<array>
-												<real>8</real>
+												<real>0.0</real>
 												<real>25</real>
 											</array>
 										</dict>
@@ -874,7 +896,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>38</real>
+											<real>39</real>
 											<real>42</real>
 											<integer>5</integer>
 										</array>
@@ -958,8 +980,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>7</real>
-									<real>28</real>
+									<real>4</real>
+									<real>27</real>
 									<integer>5</integer>
 								</array>
 							</dict>
