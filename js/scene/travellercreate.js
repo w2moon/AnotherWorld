@@ -38,16 +38,16 @@ travellercreate.prototype.on_capture_image = function(pickdata){
 
         var base64data = pickdata.toBase64();
 
-        cc.log("data:"+base64data.length)
-        cc.log("datazip:"+base64data)
-
+      
         
 
         var img = new cc.Image()
         img.initWithBase64(base64data,pickdata.getWidth(),pickdata.getHeight())
 
+        var mask = new cc.Image()
+        mask.initWithImageFile(HEAD_MASK,1)
         var t2d = cc.Texture2D.create()
-        t2d.initWithImage(img)
+        t2d.initWithImage(img.mask(mask))
     
         this.photo_box.initWithTexture(t2d)
         //var spr = cc.Sprite.createWithTexture(t2d)
@@ -73,4 +73,5 @@ travellercreate.prototype.on_traveller_create = function(ret){
         return;
     }
     cc.log("on_traveller_create ok");
+    wl.gvars.role.addTraveller()
 };

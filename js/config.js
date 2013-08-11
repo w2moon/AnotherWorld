@@ -9,10 +9,17 @@ USE_VIRTUAL_HTTP = false;
 
 VERSION = 1;
 
-USE_CCB = true;
+
 if(typeof( cc.Util) != "undefined"){
 	USE_CCB = false;
+    
 }
+else{
+    USE_CCB = true;
+    USE_VIRTUAL_HTTP = true;
+}
+
+var HEAD_MASK = "human_head.png"
 
 var MAX_BATTLE_TURN = 30;
 

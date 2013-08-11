@@ -80,7 +80,10 @@ var charactor = function(){}
 loginscene.prototype.onPressLoginDirect = function()
 {
     cc.log("create")
-	wl.run_scene("travellercreate");
+    if(USE_CCB){
+        wl.gvars.role = new wl.role(wl.tmp_role("role1"))
+        wl.run_scene("travellercreate");
+    }
 }
 
 loginscene.prototype.onPressLoginAccount = function()

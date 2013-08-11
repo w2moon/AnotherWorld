@@ -1,3 +1,31 @@
+wl.empty_role = function(name){
+    return {
+    userid:"1",
+    name:name,
+    id:wl.local_id(),
+    exp:0,
+    level:0,
+    hp:10,
+    copper:0,
+    gold:0,
+    charged:0,
+    lastseed:0,
+    slot1:0,
+    slot2:0,
+    slot3:0,
+    slot4:0,
+    slot5:0,
+    extrasoulnum:0,
+    extraequipmentnum:0,
+    extratravellernum:0,
+    date_lastupdate:0,
+    date_lastenter:0,
+    date_create:0,
+    travellers:[],
+    souls:[],
+    equipments:[],
+    };
+};
 
 wl.tmp_dbrole = function(name){
     return {

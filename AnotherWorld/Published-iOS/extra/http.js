@@ -1,8 +1,13 @@
 
-if (typeof wl.http !== 'object') {
-    wl.http = {}
+cc.log(typeof wl.http)
+
+
+if(USE_VIRTUAL_HTTP){
+    wl.http = wl.virtualhttp_create()
 }
-if(!USE_CCB){
+else
+{
+    wl.http = {}
 (function(){
 var TIMEOUT_TIME = 20
 
@@ -11,12 +16,10 @@ var RECONNECT_TIMES = 3
 var SERVER = ""
 
 var httpclient = httpclient || null
-if(USE_VIRTUAL_HTTP){
-    httpclient = wl.virtualhttp_create()
-}
-else{
-    httpclient = cc.HttpClient.getInstance()
-}
+ cc.log(USE_VIRTUAL_HTTP)
+
+httpclient = cc.HttpClient.getInstance()
+
 httpclient.setTimeoutForConnect(TIMEOUT_TIME)
 
 wl.http.on_error = function(res){
@@ -103,6 +106,6 @@ wl.http.send = function(obj,func,funcobj)
     httpclient.send(req)
 }
 }());
- 
 }
+
 
