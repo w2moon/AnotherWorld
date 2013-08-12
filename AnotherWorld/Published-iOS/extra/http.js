@@ -3,7 +3,7 @@ cc.log(typeof wl.http)
 
 
 if(USE_VIRTUAL_HTTP){
-    wl.http = wl.virtualhttp_create()
+    wl.http = new wl.virtualhttp()
 }
 else
 {

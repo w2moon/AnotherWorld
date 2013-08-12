@@ -34,7 +34,16 @@ loginscene.prototype.onDidLoadFromCCB = function()
 	this.rootNode.addChild(aboutNode);
     var size = cc.Director.getInstance().getWinSize();
 	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50,size.height/2+wl.winscale*50));
-     aboutNode.animationManager.runAnimationsForSequenceNamed("stand");
+     aboutNode.animationManager.runAnimationsForSequenceNamed("attack");
+    aboutNode.on_animation_finish = function()
+    {
+        this.animationManager.runAnimationsForSequenceNamed("attack");
+        
+    }
+    
+    aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
+
+
     
     /*
     
