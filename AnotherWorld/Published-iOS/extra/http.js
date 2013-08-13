@@ -1,5 +1,5 @@
 
-cc.log(typeof wl.http)
+
 
 
 if(USE_VIRTUAL_HTTP){
@@ -7,21 +7,22 @@ if(USE_VIRTUAL_HTTP){
 }
 else
 {
-    wl.http = {}
+    
+    
 (function(){
-var TIMEOUT_TIME = 20
+var TIMEOUT_TIME = 10
 
 var RECONNECT_TIMES = 3
 
 var SERVER = ""
 
 var httpclient = httpclient || null
- cc.log(USE_VIRTUAL_HTTP)
+ 
 
 httpclient = cc.HttpClient.getInstance()
 
 httpclient.setTimeoutForConnect(TIMEOUT_TIME)
-
+wl.http = {}
 wl.http.on_error = function(res){
     var req = res.getHttpRequest()
       if(typeof wl.http.func_error != "undefined"){

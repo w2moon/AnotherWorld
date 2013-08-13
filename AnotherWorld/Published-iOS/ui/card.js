@@ -245,10 +245,7 @@ uicard.prototype.onDidLoadFromCCB = function(){
 
 uicard.prototype.onCreate = function(ske,warrior){
     this.warrior = warrior
-    
-    for(var k in this.rootNode){
-        cc.log(k)
-    }
+  
 
     this.skeleton = wl.load_scene(ske)
     this.rootNode.addChild(this.skeleton)
