@@ -68,8 +68,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 		{
 			searchPaths.push_back("../../js");
 			searchPaths.push_back("../../jslib");
+			searchPaths.push_back("../../AnotherWorld/Published-iOS");
 			searchPaths.push_back("../../res");
-			searchPaths.push_back("../../res/resources-auto");
 			searchPaths.push_back("../../data");
 		}
 		    searchPaths.push_back("AnotherWorldRes");
@@ -99,7 +99,9 @@ bool AppDelegate::applicationDidFinishLaunching()
         {
             resourceSize = CCSizeMake(320, 568);
             resDirOrders.push_back("resources-small");
+			
         }
+		resDirOrders.push_back("resources-iphone");
          
         CCFileUtils::sharedFileUtils()->setSearchResolutionsOrder(resDirOrders);
     }
