@@ -1,9 +1,10 @@
 
-
+if(wl.http == null){
 
 
 if(USE_VIRTUAL_HTTP){
     wl.http = new wl.virtualhttp("virtual")
+    
 }
 else
 {
@@ -82,6 +83,7 @@ wl.http.set_server = function(s){
 
 wl.http.send = function(obj,func,funcobj)
 {
+ cc.log("real send")
     if(SERVER == ""){
         cc.log("not set server")
         return
@@ -109,4 +111,4 @@ wl.http.send = function(obj,func,funcobj)
 }());
 }
 
-
+}

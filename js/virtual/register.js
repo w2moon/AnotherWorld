@@ -4,8 +4,8 @@ virtual_register = function(info){
     ret.userid = info.userid;
     ret.pwd = info.pwd;
 
-    wl.set("user_"+info.userid,info.pwd)
-    wl.set("user_id_"+info.userid,)
+    wl.set("user_pwd_"+info.userid,info.pwd)
+    wl.set("user_id_"+info.userid,""+wl.sysrand())
     return ret;
 
 };

@@ -5,7 +5,7 @@ LOGIN_SERVER = 'http://192.168.0.78:8080/anotherworld/account/';
 //LOGIN_SERVER = 'http://192.168.1.105:8080/anotherworld/account/';
 //LOGIN_SERVER = 'http://www.loviyou.com:8080/anotherworld/account/';
 
-USE_VIRTUAL_HTTP = false;
+USE_VIRTUAL_HTTP = true;
 
 VERSION = 1;
 

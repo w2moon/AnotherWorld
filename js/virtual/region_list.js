@@ -9,5 +9,5 @@ virtual_region_list = function(info){
         recommend:1
     }
 
-    ret;
+    return ret;
 };

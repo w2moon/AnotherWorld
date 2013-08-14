@@ -15,6 +15,7 @@ require("data/retcode.js");
 require("data/skillbase.js");
 require("data/soulbase.js");
 require("data/soulset.js");
+require("extra/ccbpatch.js");
 require("extra/class.js");
 require("extra/dispatcher.js");
 require("extra/functask.js");
@@ -77,6 +78,23 @@ require("ui/stageinfo.js");
 require("ui/token.js");
 require("ui/uiitem.js");
 require("ui/uisoul.js");
+require("virtual/battle_ranking.js");
+require("virtual/battle_stage.js");
+require("virtual/equip_enhence.js");
+require("virtual/equip_make.js");
+require("virtual/login.js");
+require("virtual/mail_read.js");
+require("virtual/mail_receive.js");
+require("virtual/mail_send.js");
+require("virtual/region_enter.js");
+require("virtual/region_list.js");
+require("virtual/register.js");
+require("virtual/role_create.js");
+require("virtual/role_slot.js");
+require("virtual/soul_combine.js");
+require("virtual/soul_starup.js");
+require("virtual/traveller_create.js");
+require("virtual/traveller_modify.js");
 
 
 function main()

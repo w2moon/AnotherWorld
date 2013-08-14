@@ -1,5 +1,6 @@
 var wl = wl || {};
 
+require("extra/ccbpatch")
 require("extra/seedrandom.js")
 require("extra/gfunc.js")
 require("extra/hashlib.js")

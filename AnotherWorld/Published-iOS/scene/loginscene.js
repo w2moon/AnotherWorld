@@ -88,16 +88,19 @@ var charactor = function(){}
 
 loginscene.prototype.onPressLoginDirect = function()
 {
-    cc.log("create")
-    if(USE_CCB){
-        wl.gvars.role = new wl.role(wl.empty_role("role1"))
-        wl.run_scene("travellercreate");
-    }
+    cc.log("create req")
+    //if(USE_CCB){
+    //    wl.gvars.role = new wl.role(wl.empty_role("role1"))
+    //    wl.run_scene("travellercreate");
+   // }
+   // else{
+        this.req_region_list();
+   // }
 }
 
 loginscene.prototype.onPressLoginAccount = function()
 {
-	wl.run_scene("createtraveller");
+	//wl.run_scene("createtraveller");
 }
 
 loginscene.prototype.onPressStart = function()
@@ -203,12 +206,17 @@ loginscene.prototype.onPressStart = function()
 
          ////////////////////////////////////////////////////////////////
          loginscene.prototype.req_region_list = function(){
+             cc.log("req region")
              this.start_loading();
 
              wl.http.set_server(LOGIN_SERVER);
 
             var msg = wl.msg.create("region_list");
+             cc.log(wl.http.send)
             wl.http.send(msg,this.on_region_list,this);
+             
+             cc.log("req end")
+             wl.http.step()
          }
          loginscene.prototype.on_region_list = function(ret){
             this.stop_loading();
