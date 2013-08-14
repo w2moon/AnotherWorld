@@ -106,6 +106,9 @@ wl.rand = function(){
     return Math.random();
 };
 
+wl.sysrand = function(){
+    return Math.sysrandom();
+};
 wl.copyfunc = function(src,dst){
     for(var k in src){
         dst[k] = src[k];

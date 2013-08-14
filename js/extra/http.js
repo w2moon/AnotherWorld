@@ -3,7 +3,7 @@
 
 
 if(USE_VIRTUAL_HTTP){
-    wl.http = new wl.virtualhttp()
+    wl.http = new wl.virtualhttp("virtual")
 }
 else
 {

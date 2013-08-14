@@ -348,6 +348,23 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\ui\token.js" />
     <None Include="..\js\ui\uiitem.js" />
     <None Include="..\js\ui\uisoul.js" />
+    <None Include="..\js\virtual\battle_ranking.js" />
+    <None Include="..\js\virtual\battle_stage.js" />
+    <None Include="..\js\virtual\equip_enhence.js" />
+    <None Include="..\js\virtual\equip_make.js" />
+    <None Include="..\js\virtual\login.js" />
+    <None Include="..\js\virtual\mail_read.js" />
+    <None Include="..\js\virtual\mail_receive.js" />
+    <None Include="..\js\virtual\mail_send.js" />
+    <None Include="..\js\virtual\region_enter.js" />
+    <None Include="..\js\virtual\region_list.js" />
+    <None Include="..\js\virtual\register.js" />
+    <None Include="..\js\virtual\role_create.js" />
+    <None Include="..\js\virtual\role_slot.js" />
+    <None Include="..\js\virtual\soul_combine.js" />
+    <None Include="..\js\virtual\soul_starup.js" />
+    <None Include="..\js\virtual\traveller_create.js" />
+    <None Include="..\js\virtual\traveller_modify.js" />
     <None Include="res\AnotherWorld.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

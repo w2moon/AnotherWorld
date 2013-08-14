@@ -227,6 +227,57 @@
     <None Include="..\js\ui\create_ui.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\virtual\traveller_modify.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\battle_ranking.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\battle_stage.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\equip_enhence.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\equip_make.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\login.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\mail_read.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\mail_receive.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\mail_send.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\region_enter.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\region_list.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\register.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\role_create.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\role_slot.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\soul_combine.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\soul_starup.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\traveller_create.js">
+      <Filter>js\virtual</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
@@ -255,6 +306,9 @@
     </Filter>
     <Filter Include="js\skill">
       <UniqueIdentifier>{373d9660-7ef8-48d3-a471-bdec06d36f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="js\virtual">
+      <UniqueIdentifier>{ae266604-03e1-4b89-a152-e69398e020cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

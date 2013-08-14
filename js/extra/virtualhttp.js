@@ -1,17 +1,30 @@
 
 if (typeof wl.virtualhttp_create !== 'object') {
-    wl.virtualhttp = function(){
+    wl.virtualhttp = function(folder){
         this.msgs = []
+        this.folder = folder
+
+        this.loaded = {}
+
+        this.node = cc.Node.create();
+        this.node.onEnter()
+        this.node.schedule(this.step);
+        //this.node.retain()
     };
     
     wl.virtualhttp.prototype = {
         setTimeoutForConnect : function(dt){},
         
         send : function(obj,func,funcobj){
-            this.msgs.push([obj,func,funcobj])
+            if(this.can_process(obj)){
+                return false;    
+            }
+            this.msgs.push([obj,func,funcobj]);
+            return true;
         },
         
-        step:function(){
+        step:function(dt){
+        cc.log("step")
             while(this.msgs.length > 0){
                 msg = this.msgs.shift()
                 ret = this.process(obj)
@@ -24,15 +37,29 @@ if (typeof wl.virtualhttp_create !== 'object') {
             }
         },
         
-        process : function(obj){
-            
+        can_process:function(info){
+            if(this.loaded[info.code] == null){
+                try{
+                    require(this.folder+"/"+info.code+".js");
+                    this.loaded[info.code] == 1;
+                }
+                catch(e){
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        process : function(info){
+            func = eval("virtual_"+info.code);
+            return func(info)
         },
         
         set_error_func : function(func,obj){
         },
         
         set_server : function(s){
-        },
+        }
 
 
     };

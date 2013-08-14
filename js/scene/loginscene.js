@@ -93,11 +93,14 @@ loginscene.prototype.onPressLoginDirect = function()
         wl.gvars.role = new wl.role(wl.empty_role("role1"))
         wl.run_scene("travellercreate");
     }
+    else{
+        this.req_region_list();
+    }
 }
 
 loginscene.prototype.onPressLoginAccount = function()
 {
-	wl.run_scene("createtraveller");
+	//wl.run_scene("createtraveller");
 }
 
 loginscene.prototype.onPressStart = function()
