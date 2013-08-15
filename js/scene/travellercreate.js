@@ -12,7 +12,9 @@ wl.create_travellercreate = function(){
 var travellercreate = function(){};
 
 travellercreate.prototype.onDidLoadFromCCB = function(){
-    this.captured = false
+    this.captured = false;
+    this.ishuman = 0;
+    this.img = "";
 };
 
 travellercreate.prototype.onPressPhoto = function(){
@@ -24,10 +26,20 @@ travellercreate.prototype.onPressPhoto = function(){
     imagepicker.useCamera(this,this.on_capture_image,DEFAULT_HEAD_WIDTH,DEFAULT_HEAD_HEIGHT,true);
 };
 
+travellercreate.prototype.onPressLib = function(){
+    if(USE_CCB){
+        return;
+    }
+    var imagepicker = cc.ImagePicker.getInstance();
+    
+    imagepicker.usePhotoLibrary(this,this.on_capture_image,DEFAULT_HEAD_WIDTH,DEFAULT_HEAD_HEIGHT,true);
+};
+
 travellercreate.prototype.onPressNext = function(){
     if(USE_CCB || this.captured)
     {
-        wl.run_scene("travellername") 
+       // wl.run_scene("travellername") 
+       this.traveller_create();
     }
 };
 
@@ -55,14 +67,23 @@ travellercreate.prototype.on_capture_image = function(pickdata){
        // this.addChild(spr);
       //  spr.setPosition(cc.p(160,240));
 
-   
-        this.traveller_create(base64data);
+      var arr = img.parse("haarcascades/haarcascade_frontalface_alt.xml",1);
+       if(arr.length != 0){
+            this.ishuman = 1;
+      }
+
+   this.img = base64data;
+        //this.traveller_create(base64data);
     
 };
 
-travellercreate.prototype.traveller_create = function(img){
+travellercreate.prototype.traveller_create = function(){
      var msg = wl.msg.create("traveller_create");
-     msg.img = img;
+     msg.name = "name";//to do
+     msg.img = this.img;
+     msg.gender = 0;
+     msg.age = 0;
+     msg.ishuman = this.ishuman;
      wl.http.send(msg,this.on_traveller_create,this);
 
 };

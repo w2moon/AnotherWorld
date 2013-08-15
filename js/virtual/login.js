@@ -5,8 +5,8 @@ virtual_login = function(info){
         return ret;
     }
     ret.rc = retcode.OK;
-    ret.region = "";
-    ret.session = wl.sysrand();//may error
+    ret.region = "region1";
+    ret.session = wl.sysrand();
 
      
     ret.id = wl.get("user_id_"+info.userid,""+wl.sysrand())

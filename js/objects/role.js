@@ -23,7 +23,7 @@ wl.empty_role = function(name){
     date_create:0,
     travellers:[],
     souls:[],
-    equipments:[],
+    equipments:[]
     };
 };
 
