@@ -1,5 +1,5 @@
 virtual_login = function(info){
-    ret = {};
+    var ret = {};
     if(wl.get("user_pwd_"+info.userid) != info.pwd){
         ret.rc = retcode.PWD_ERROR;
         return ret;

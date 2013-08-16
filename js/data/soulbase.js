@@ -20,6 +20,11 @@ var soulbase = [
 
 soulbase = wl.csv_idmap("soulbase.csv");
 
+rolecfg = wl.csv_idmap("rolecfg.csv");
+
+travellerbase = wl.csv_idmap("travellerbase.csv");
+travellerskill = wl.csv_idmap("travellerskill.csv");
+
 lotterypool = wl.csv_pool("lotterypool.csv");
 submaps = wl.csv_idmap("submaps.csv");
 enemy = wl.csv_idmap("enemy.csv");

@@ -78,6 +78,8 @@ travellercreate.prototype.on_capture_image = function(pickdata){
 };
 
 travellercreate.prototype.traveller_create = function(){
+    cc.log("ishuman:"+this.ishuman);
+
      var msg = wl.msg.create("traveller_create");
      msg.name = "name";//to do
      msg.img = this.img;
@@ -90,9 +92,17 @@ travellercreate.prototype.traveller_create = function(){
 
 travellercreate.prototype.on_traveller_create = function(ret){
     if(ret.rc != retcode.OK ){
-        cc.log("on_traveller_create failed");
+        cc.log("on_traveller_create failed:"+ret.rc);
         return;
     }
     cc.log("on_traveller_create ok");
-    wl.gvars.role.addTraveller()
+    wl.gvars.role.addTraveller(ret.traveller);
+    if(ret.soul != null){
+        wl.gvars.role.addSoul(ret.soul);
+    }
+    for(var k in ret.equips){
+        wl.gvars.role.addEquip(equips[k])
+    }
+
+    wl.run_scene("travellername");
 };

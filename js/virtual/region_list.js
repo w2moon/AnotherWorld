@@ -1,5 +1,5 @@
 virtual_region_list = function(info){
-    ret = {};
+    var ret = {};
 
     ret.rc = retcode.OK;
     ret.regions = {};

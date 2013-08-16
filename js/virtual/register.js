@@ -1,11 +1,11 @@
 virtual_register = function(info){
-    ret = {};
+    var ret = {};
     ret.rc = retcode.OK;
     ret.userid = info.userid;
     ret.pwd = info.pwd;
 
-    wl.set("user_pwd_"+info.userid,info.pwd)
-    wl.set("user_id_"+info.userid,""+wl.sysrand())
+    wl.set("user_pwd_"+info.userid,info.pwd);
+    wl.set("user_id_"+info.userid,""+wl.sysrand());
     return ret;
 
 };

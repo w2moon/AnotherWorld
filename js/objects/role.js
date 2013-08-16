@@ -1,13 +1,13 @@
-wl.empty_role = function(name){
+wl.empty_role = function(name,userid){
     return {
-    userid:"1",
+    userid:userid || "1",
     name:name,
     id:wl.local_id(),
     exp:0,
     level:0,
-    hp:10,
-    copper:0,
-    gold:0,
+    hp:rolecfg.initMaxHP,
+    copper:rolecfg.initCopper,
+    gold:rolecfg.initGold,
     charged:0,
     lastseed:0,
     slot1:0,
@@ -293,6 +293,44 @@ wl.role.prototype = {
     setDateCreate : function(date_create){ this.dbobj.date_create = date_create;},
 
     ////////////////////////////
+
+    addTraveller : function(dbobj){
+        var traveller = this.getTraveller(dbobj.id);
+        if(traveller == null){
+            if(this.slot5 == 0){
+                this.slot5 = dbobj.id;
+                this.name = dbobj.name;
+                if(this.level == 0){
+                    this.level = 1;
+                }
+            }
+            this.travellers.push(new wl.traveller(dbobj,this));
+        }
+        else{
+            traveller.setdbobj(dbobj);
+        }
+    },
+
+    addEquip : function(dbobj){
+       var equip = this.getEquipment(dbobj.id);
+        if(equip == null){
+            this.equipments.push(new wl.equipment(dbobj));
+        }
+        else{
+            equip.setdbobj(dbobj)
+        }
+    },
+
+    addSoul : function(dbobj){
+        var soul = this.getSoul(dbobj.id);
+        if(soul == null){
+            this.souls.push(new wl.soul(dbobj));
+        }
+        else{
+            soul.setdbobj(dbobj)
+        }
+        
+    },
     
     getTraveller : function(id){
         if(id == 0){

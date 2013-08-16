@@ -9,6 +9,8 @@ wl.traveller = function(dbobj,owner){
 wl.traveller.prototype = {
     getClass : function(){return "traveller";},
 
+    setdbobj : function(dbobj){this.dbobj = dbobj;},
+
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 

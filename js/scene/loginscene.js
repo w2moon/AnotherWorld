@@ -299,14 +299,12 @@ loginscene.prototype.onPressStart = function()
                 wl.run_scene("travellercreate");
             }
             else{
-            self.start_game();
+                this.start_game();
             }
          };
 
          ///////////////////////////////////////////
          loginscene.prototype.start_game = function(){
-           // var scene = wl.create_travellercreate();
-           var scene = wl.create_battlescene();
-            cc.Director.getInstance().replaceScene(scene);
+            wl.run_scene("mainscene");
          }
 
