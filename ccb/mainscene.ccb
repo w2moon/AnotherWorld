@@ -251,11 +251,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>energy_line</string>
+						<string>energy_bar</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>energy_bar</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -265,7 +265,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>69.205635070800781</real>
+									<real>4.2056350708007812</real>
 									<real>16.598121643066406</real>
 									<integer>0</integer>
 								</array>
@@ -277,7 +277,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -395,11 +395,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>energy_percent</string>
+						<string>energy_value</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>lbl_energy_value</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -513,9 +513,9 @@
 						<key>displayName</key>
 						<string>energy_time</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>lbl_energy_time</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -846,9 +846,9 @@
 						<key>displayName</key>
 						<string>diamond_num</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>lbl_gold</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -962,9 +962,9 @@
 						<key>displayName</key>
 						<string>makalong_num</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>lbl_copper</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1149,11 +1149,11 @@
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>exp_line</string>
+						<string>exp_bar</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>exp_bar</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1163,7 +1163,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>95.833335876464844</real>
+									<real>4.8333358764648438</real>
 									<real>18.333332061767578</real>
 									<integer>0</integer>
 								</array>
@@ -1175,7 +1175,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>0.5</real>
+									<real>0.0</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -1228,9 +1228,9 @@
 								<key>displayName</key>
 								<string>level</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>lbl_level</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>1</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -1424,9 +1424,9 @@
 						<key>displayName</key>
 						<string>name</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>lbl_name</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1859,8 +1859,8 @@
 										<string>Block</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<integer>0</integer>
+											<string>onShowTraveller</string>
+											<integer>1</integer>
 										</array>
 									</dict>
 									<dict>

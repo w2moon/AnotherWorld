@@ -31,7 +31,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
      */
     
     var aboutNode = cc.BuilderReader.load("sk_human");
-	this.rootNode.addChild(aboutNode);
+	//this.rootNode.addChild(aboutNode);
     var size = cc.Director.getInstance().getWinSize();
 	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50,size.height/2+wl.winscale*50));
      aboutNode.animationManager.runAnimationsForSequenceNamed("attack");
@@ -193,8 +193,8 @@ loginscene.prototype.onPressStart = function()
 
              wl.msg.init(ret);
 
-             g.id = ret.id;
-             g.region = ret.region;
+             wl.gvars.id = ret.id;
+             wl.gvars.region = ret.region;
 
              
 
@@ -212,11 +212,9 @@ loginscene.prototype.onPressStart = function()
              wl.http.set_server(LOGIN_SERVER);
 
             var msg = wl.msg.create("region_list");
-             cc.log(wl.http.send)
             wl.http.send(msg,this.on_region_list,this);
              
-             cc.log("req end")
-             wl.http.step()
+          //   wl.http.step()
          }
          loginscene.prototype.on_region_list = function(ret){
             this.stop_loading();
@@ -225,7 +223,7 @@ loginscene.prototype.onPressStart = function()
                 cc.log(k+" "+ret.regions[k].url);
             }
 
-            g.regions = ret.regions;
+            wl.gvars.regions = ret.regions;
 
             var id = cc.Util.macAddress();
             var pwd = id;
@@ -251,7 +249,9 @@ loginscene.prototype.onPressStart = function()
          //////////////////////////////////////////////////////////
          loginscene.prototype.req_region_enter = function(){
              this.start_loading();
-             wl.http.set_server(g.regions[g.region].url);
+             cc.log(wl.gvars.regions)
+             cc.log(wl.gvars.region)
+             wl.http.set_server(wl.gvars.regions[wl.gvars.region].url);
 
              var msg = wl.msg.create("region_enter");
 
@@ -265,9 +265,7 @@ loginscene.prototype.onPressStart = function()
             }
             else{
                 cc.log("region entered");
-                wl.gvars.role = new wl.role(ret.player);
-
-                this.start_game();
+               this.role_entered(ret.player);
             }
          }
 
@@ -288,17 +286,25 @@ loginscene.prototype.onPressStart = function()
             }
             else{
                 cc.log("role created");
+                this.role_entered(ret.player);
+                
 
-                wl.gvars.role = new wl.role(ret.player);
+                //this.start_game();
+            }
+         };
 
+         loginscene.prototype.role_entered = function(player){
+            wl.gvars.role = new wl.role(player);
+            if( wl.gvars.role.travellers.length == 0){
+                wl.run_scene("travellercreate");
+            }
+            else{
                 this.start_game();
             }
-         }
+         };
 
          ///////////////////////////////////////////
          loginscene.prototype.start_game = function(){
-           // var scene = wl.create_travellercreate();
-           var scene = wl.create_battlescene();
-            cc.Director.getInstance().replaceScene(scene);
+            wl.run_scene("mainscene");
          }
 

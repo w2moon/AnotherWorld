@@ -29,16 +29,16 @@ virtual_traveller_create = function(info){
 
     switch(parseInt(wl.rand()*4)){
         case 0:
-            traveller.MaxHP = 10 + wl.rand()*2;
+            traveller.MaxHP = 10 + parseInt(wl.rand()*2);
             break;
         case 1:
-            traveller.Attack = 1 + wl.rand()*2;
+            traveller.Attack = 1 + parseInt(wl.rand()*2);
             break;
         case 2:
-            traveller.Defense = 1 + wl.rand()*2;
+            traveller.Defense = 1 + parseInt(wl.rand()*2);
             break;
         case 3:
-            traveller.Heal = 1 + wl.rand()*2;
+            traveller.Heal = 1 + parseInt(wl.rand()*2);
             break;
     }
 

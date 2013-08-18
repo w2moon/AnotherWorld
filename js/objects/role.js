@@ -1,11 +1,12 @@
 wl.empty_role = function(name,userid){
+    
     return {
     userid:userid || "1",
     name:name,
     id:wl.local_id(),
     exp:0,
     level:0,
-    hp:rolecfg.initMaxHP,
+    hp:rolelevel[1].maxhp,
     copper:rolecfg.initCopper,
     gold:rolecfg.initGold,
     charged:0,
@@ -246,6 +247,14 @@ wl.role.prototype = {
 
     getHP : function(){return this.dbobj.hp;},
     setHP : function(hp){ this.dbobj.hp = hp;},
+    
+    getLevelInfo : function(){return rolelevel[this.getLevel()];},
+    getMaxHP : function(){ return this.getLevelInfo().maxhp;},
+    getMaxExp : function(){ return this.getLevelInfo().maxexp;},
+    
+    getMaxSoulNum : function(){return this.getExtraSoulNum() + this.getLevelInfo().maxsoulnum;},
+    getMaxEquipNum : function(){return this.getExtraEquipmentNum() + this.getLevelInfo().maxequipnum;},
+    getMaxTravellerNum : function(){return this.getExtraTravellerNum() + this.getLevelInfo().maxtravellernum;},
 
     getCopper : function(){return this.dbobj.copper;},
     setCopper : function(copper){ this.dbobj.copper = copper;},
@@ -297,11 +306,11 @@ wl.role.prototype = {
     addTraveller : function(dbobj){
         var traveller = this.getTraveller(dbobj.id);
         if(traveller == null){
-            if(this.slot5 == 0){
-                this.slot5 = dbobj.id;
-                this.name = dbobj.name;
-                if(this.level == 0){
-                    this.level = 1;
+            if(this.getSlot5() == 0){
+                this.setSlot5(dbobj.id);
+                this.dbobj.name = dbobj.name;
+                if(this.dbobj.level == 0){
+                    this.dbobj.level = 1;
                 }
             }
             this.travellers.push(new wl.traveller(dbobj,this));

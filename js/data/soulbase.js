@@ -20,7 +20,10 @@ var soulbase = [
 
 soulbase = wl.csv_idmap("soulbase.csv");
 
-rolecfg = wl.csv_idmap("rolecfg.csv");
+rolecfg = wl.csv_cfg("rolecfg.csv");
+rolelevel = wl.csv_idmap("rolelevel.csv");
+
+rarityclass = wl.csv_idmap("rarityclass.csv");
 
 travellerbase = wl.csv_idmap("travellerbase.csv");
 travellerskill = wl.csv_idmap("travellerskill.csv");

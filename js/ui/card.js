@@ -243,22 +243,33 @@ var uicard = function(){};
 uicard.prototype.onDidLoadFromCCB = function(){
 };
 
+uicard.prototype.playAnim = function(anim,repeat){
+    this.anim = anim;
+    this.repeat = repeat
+    this.skeleton.animationManager.runAnimationsForSequenceNamed(anim);
+};
+
+uicard.prototype.on_animation_finish = function(){
+    if(this.repeat){
+        this.skeleton.animationManager.runAnimationsForSequenceNamed(this.anim);
+    }
+    else{
+        this.skeleton.animationManager.runAnimationsForSequenceNamed(this.normalanim);
+    }
+}
+
 uicard.prototype.onCreate = function(ske,warrior){
     this.warrior = warrior
   
 
     this.skeleton = wl.load_scene(ske)
     this.rootNode.addChild(this.skeleton)
-    this.skeleton.animationManager.runAnimationsForSequenceNamed("stand");
     
-    this.skeleton.on_animation_finish = function()
-    {
-        this.animationManager.runAnimationsForSequenceNamed("stand");
-        
-    }
+    this.normalanim = "stand";
     
-    this.skeleton.animationManager.setCompletedAnimationCallback(this.skeleton,this.skeleton.on_animation_finish);
+    this.skeleton.animationManager.setCompletedAnimationCallback(this,this.on_animation_finish);
 
+    this.playAnim(this.normalanim,true)
     
          var img = warrior.getTraveller().getImg();
          if(!wl.isNoneString(img)){

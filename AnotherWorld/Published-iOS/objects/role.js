@@ -1,13 +1,14 @@
-wl.empty_role = function(name){
+wl.empty_role = function(name,userid){
+    
     return {
-    userid:"1",
+    userid:userid || "1",
     name:name,
     id:wl.local_id(),
     exp:0,
     level:0,
-    hp:10,
-    copper:0,
-    gold:0,
+    hp:rolelevel[1].maxhp,
+    copper:rolecfg.initCopper,
+    gold:rolecfg.initGold,
     charged:0,
     lastseed:0,
     slot1:0,
@@ -23,7 +24,7 @@ wl.empty_role = function(name){
     date_create:0,
     travellers:[],
     souls:[],
-    equipments:[],
+    equipments:[]
     };
 };
 
@@ -246,6 +247,14 @@ wl.role.prototype = {
 
     getHP : function(){return this.dbobj.hp;},
     setHP : function(hp){ this.dbobj.hp = hp;},
+    
+    getLevelInfo : function(){return rolelevel[this.getLevel()];},
+    getMaxHP : function(){ return this.getLevelInfo().maxhp;},
+    getMaxExp : function(){ return this.getLevelInfo().maxexp;},
+    
+    getMaxSoulNum : function(){return this.getExtraSoulNum() + this.getLevelInfo().maxsoulnum;},
+    getMaxEquipNum : function(){return this.getExtraEquipmentNum() + this.getLevelInfo().maxequipnum;},
+    getMaxTravellerNum : function(){return this.getExtraTravellerNum() + this.getLevelInfo().maxtravellernum;},
 
     getCopper : function(){return this.dbobj.copper;},
     setCopper : function(copper){ this.dbobj.copper = copper;},
@@ -293,6 +302,44 @@ wl.role.prototype = {
     setDateCreate : function(date_create){ this.dbobj.date_create = date_create;},
 
     ////////////////////////////
+
+    addTraveller : function(dbobj){
+        var traveller = this.getTraveller(dbobj.id);
+        if(traveller == null){
+            if(this.getSlot5() == 0){
+                this.setSlot5(dbobj.id);
+                this.dbobj.name = dbobj.name;
+                if(this.dbobj.level == 0){
+                    this.dbobj.level = 1;
+                }
+            }
+            this.travellers.push(new wl.traveller(dbobj,this));
+        }
+        else{
+            traveller.setdbobj(dbobj);
+        }
+    },
+
+    addEquip : function(dbobj){
+       var equip = this.getEquipment(dbobj.id);
+        if(equip == null){
+            this.equipments.push(new wl.equipment(dbobj));
+        }
+        else{
+            equip.setdbobj(dbobj)
+        }
+    },
+
+    addSoul : function(dbobj){
+        var soul = this.getSoul(dbobj.id);
+        if(soul == null){
+            this.souls.push(new wl.soul(dbobj));
+        }
+        else{
+            soul.setdbobj(dbobj)
+        }
+        
+    },
     
     getTraveller : function(id){
         if(id == 0){

@@ -152,16 +152,16 @@ wl.traveller.prototype = {
         {
             equip = this.getEquip(i);
             if(equip != null){
-                v += equip.getBase()[name];
+                v += parseInt(equip.getBase()[name] * (equip.getLevel()/equip.getMaxLevel()));
             }
         }
         if(this.getSoul()){
             var soul = this.getSoul()
             if(soul!=null){
-                v += soul.getBase()[name]*(1+soul.star*0.1);
+                v += parseInt(soul.getBase()[name]*(1+soul.getStar()*0.1)*(soul.getLevel()/soul.getMaxLevel()));
             }
         }
-        v += this.dbobj[name] || 0;
+        v += this.dbobj[name]*this.getLevel() || 0;
         return v;
     },
 

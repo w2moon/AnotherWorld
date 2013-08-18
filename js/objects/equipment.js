@@ -16,6 +16,10 @@ wl.equipment.prototype = {
 
     getLevel : function(){return this.dbobj.level;},
     setLevel : function(level){ this.dbobj.level = level;},
+    
+    getMaxLevel : function(){
+        return rarityclass[this.getBase().rarityclass].maxlevel;
+    },
 
     //////////////////////////
     getBase : function() { return equipmentbase[this.dbobj.baseid];},

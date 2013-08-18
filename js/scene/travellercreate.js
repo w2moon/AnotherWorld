@@ -100,8 +100,11 @@ travellercreate.prototype.on_traveller_create = function(ret){
     if(ret.soul != null){
         wl.gvars.role.addSoul(ret.soul);
     }
+    
+    if(ret.equips != null){
     for(var k in ret.equips){
-        wl.gvars.role.addEquip(equips[k])
+        wl.gvars.role.addEquip(ret.equips[k])
+    }
     }
 
     wl.run_scene("travellername");

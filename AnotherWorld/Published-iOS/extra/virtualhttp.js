@@ -1,14 +1,16 @@
 
 if (wl.virtualhttp == null) {
     wl.virtualhttp = function(folder){
-        this.msgs = []
-        this.folder = folder
+        this.msgs = [];
+        this.folder = folder;
 
-        this.loaded = {}
+        this.loaded = {};
         this.node = cc.Node.create();
-        this.node.onEnter()
-        this.node.schedule(this.step);
-        //this.node.retain()
+        this.node.run();
+
+        var virtual = this;
+        this.node.schedule(function(dt){ virtual.step(dt);});
+        
     };
     
     wl.virtualhttp.prototype = {
@@ -23,7 +25,6 @@ if (wl.virtualhttp == null) {
         },
         
         step:function(dt){
-        cc.log("step"+this.msgs.length)
             while(this.msgs.length > 0){
                 msg = this.msgs.shift()
                 ret = this.process(msg[0])

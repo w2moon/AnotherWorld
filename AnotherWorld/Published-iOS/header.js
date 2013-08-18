@@ -44,7 +44,7 @@ require("ui/card.js");
 require("ui/token.js");
 require("ui/stageinfo.js");
 require("ui/create_ui.js");
-
+require("ui/skillbar.js");
 
 require("state/normal.js");
 require("state/start.js");
@@ -62,3 +62,4 @@ require("scene/pvpscene.js");
 require("scene/travellercreate.js");
 require("scene/travellermodify.js");
 require("scene/travellername.js");
+require("scene/travellerinfo.js");

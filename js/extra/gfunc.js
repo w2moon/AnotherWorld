@@ -204,9 +204,7 @@ wl.tonumber = function(v){
 };
 
 wl.csv_cfg = function(file){
-    if(USE_CCB){
-       // return {};
-    }
+    
     var ret = {};
     var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
