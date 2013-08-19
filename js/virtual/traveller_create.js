@@ -27,7 +27,8 @@ virtual_traveller_create = function(info){
                          };
 
 
-    switch(parseInt(wl.rand()*4)){
+    var idx = parseInt(wl.rand()*4);
+    switch(idx){
         case 0:
             traveller.MaxHP = 10 + parseInt(wl.rand()*2);
             break;
