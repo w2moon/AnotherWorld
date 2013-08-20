@@ -278,6 +278,15 @@
     <None Include="..\js\virtual\traveller_create.js">
       <Filter>js\virtual</Filter>
     </None>
+    <None Include="..\js\scene\travellerinfo.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\skillbar.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\scene\equipchoose.js">
+      <Filter>js\scene</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

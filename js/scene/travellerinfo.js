@@ -7,10 +7,76 @@ travellerinfo.prototype.onDidLoadFromCCB = function(){
     
 };
 
-travellerinfo.prototype.onCreate = function(traveller){
-    cc.log(traveller.getProperty("MaxHP"))
-    this.lblhp.setString(traveller.getProperty("MaxHP"));
-    this.lblattack.setString(traveller.getProperty("Attack"));
-    this.lbldefense.setString(traveller.getProperty("Defense"));
-    this.lblheal.setString(traveller.getProperty("Heal"));
+travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
+    this.oldtraveller = traveller;
+    if(copyed_traveller == null)
+    {
+        this.traveller = traveller.copy();
+    }
+    else{
+        this.traveller = copyed_traveller;
+    }
+
+    this.rootNode.registerScriptTouchHandler(2);
+    this.rootNode.onTouchEnded = function(){}
+
+    this.lblhp.setString(this.traveller.getProperty("MaxHP"));
+    this.lblattack.setString(this.traveller.getProperty("Attack"));
+    this.lbldefense.setString(this.traveller.getProperty("Defense"));
+    this.lblheal.setString(this.traveller.getProperty("Heal"));
+
+    var skills = this.traveller.getSkills();
+    var h = 0;
+    var y = 0;
+    for(var k in skills){
+        var bar = wl.load_scene("skillbar",skills[k]);
+        bar.setPosition(cc.p(this.dataheader.getContentSize().width/2,y));
+        this.dataheader.addChild(bar);
+        h = h + 93/2;//bar.controller.bg.getContentSize().height;
+        y = y + 93/2;
+    }
+    
+    this.dataheader.setPosition(cc.p(this.dataheader.getPosition().x,this.dataheader.getPosition().y+h));
+};
+
+travellerinfo.prototype.onPressEquip = function(n){
+    var obj = this.traveller.getObject(n.getTag());
+    if(obj == null){
+        return;
+    }
+    wl.run_scene("equipchoose",this.oldtraveller,this.traveller);
+};
+
+
+travellerinfo.prototype.onApply = function(traveller){
+     var msg = wl.msg.create("traveller_modify");
+     if(this.traveller.getName() != this.oldtraveller.getName()){
+        msg.name = this.traveller.getName();
+     }
+     if(this.traveller.getSoulId() != this.oldtraveller.getSoulId()){
+        msg.soul = this.traveller.getSoulId();
+     }
+     if(this.traveller.getWeaponrId() != this.oldtraveller.getWeaponrId()){
+        msg.weaponr = this.traveller.getWeaponrId();
+     }
+     if(this.traveller.getWeaponlId() != this.oldtraveller.getWeaponlId()){
+        msg.weaponl = this.traveller.getWeaponlId();
+     }
+     if(this.traveller.getClothId() != this.oldtraveller.getClothId()){
+        msg.cloth = this.traveller.getClothId();
+     }
+     if(this.traveller.getTrinketId() != this.oldtraveller.getTrinketId()){
+        msg.trinket = this.traveller.getTrinketId();
+     }
+    
+     wl.http.send(msg,this.on_traveller_modify,this);
+};
+
+
+travellerinfo.prototype.on_traveller_modify = function(ret){
+    if(ret.rc == retcode.OK){
+        wl.gvars.role.addTraveller(ret.traveller);
+    }
+    else{
+    }
 };

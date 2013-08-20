@@ -11,6 +11,10 @@ wl.traveller.prototype = {
 
     setdbobj : function(dbobj){this.dbobj = dbobj;},
 
+    copy : function(){
+        return new wl.traveller(wl.copy(this.dbobj),this.owner);
+    },
+
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 
@@ -46,17 +50,17 @@ wl.traveller.prototype = {
             var equip = this.getEquip(i);
             if(equip != null && equip.hasSkill()){
               
-                skills.push([this.getEquip(i).getSkillId(),this.getEquip(i).getSkillLevel()]);
+                skills.push([this.getEquip(i).getSkillId(),this.getEquip(i).getSkillLevel(),i]);
             }
         }
         if(this.getSoul() && this.getSoul().hasSkill()){
-            skills.push([this.getSoul().getSkillId(),this.getSoul().getSkillLevel()]);
+            skills.push([this.getSoul().getSkillId(),this.getSoul().getSkillLevel(),EQUIP_SOUL]);
         }
         if(this.getSkill1Id() != 0){
-            skills.push([this.getSkill1Id(),this.getSkill1Level()]);
+            skills.push([this.getSkill1Id(),this.getSkill1Level(),EQUIP_SKILL1]);
         }
         if(this.getSkill2Id() != 0){
-            skills.push([this.getSkill2Id(),this.getSkill2Level()]);
+            skills.push([this.getSkill2Id(),this.getSkill2Level(),EQUIP_SKILL2]);
         }
         return skills;
     },
@@ -83,8 +87,11 @@ wl.traveller.prototype = {
 
     
 
-    getWeaponId : function(){return this.dbobj.weaponid;},
-    setWeaponId : function(v){ this.dbobj.weaponid = v;},
+    getWeaponrId : function(){return this.dbobj.weaponrid;},
+    setWeaponrId : function(v){ this.dbobj.weaponrid = v;},
+
+    getWeaponlId : function(){return this.dbobj.weaponlid;},
+    setWeaponlId : function(v){ this.dbobj.weaponlid = v;},
 
     getClothId : function(){return this.dbobj.clothid;},
     setClothId : function(v){ this.dbobj.clothid = v;},
@@ -139,6 +146,13 @@ wl.traveller.prototype = {
             return null;
         }
         return this.owner.getEquipment(this.dbobj.slot[pos]);
+    },
+
+    getObject : function(pos){
+        if(pos == EQUIP_SOUL){
+            return this.getSoul();
+        }
+        return this.getEquip(pos);
     },
 
     setEquip : function(pos,equipid){

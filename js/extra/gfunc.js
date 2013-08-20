@@ -115,6 +115,20 @@ wl.copyfunc = function(src,dst){
     }
 };
 
+wl.copy = function(obj){
+    var newobj = {}
+    for(var k in obj){
+        if(typeof(obj[k]) == "object"){
+            newobj[k] = wl.copy(obj[k]);
+        }
+        else{
+            newobj[k] = obj[k];
+        }
+    }
+
+    return newobj;
+};
+
 wl.callstack = function() {  
 var i = 0;  
 var fun = arguments.callee;  

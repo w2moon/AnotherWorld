@@ -37,6 +37,10 @@ else{
  EQUIP_TRINKET = 3;
  EQUIP_NUM = 4;
 
+ EQUIP_SOUL = 4;
+ EQUIP_SKILL1 = 5;
+ EQUIP_SKILL2 = 6;
+
  SLOT_NUM = 5;
 
  HERO_IDX = 4;
