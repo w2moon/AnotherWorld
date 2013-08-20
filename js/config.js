@@ -44,4 +44,9 @@ else{
  SLOT_NUM = 5;
 
  HERO_IDX = 4;
+
+
+ ORDER_DEFAULT = 0;
+ ORDER_RARITY = 1;
+ ORDER_NAME = 2;
 }

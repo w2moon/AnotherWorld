@@ -114,6 +114,11 @@ wl.copyfunc = function(src,dst){
         dst[k] = src[k];
     }
 };
+wl.copyarr = function(src,dst){
+    for(var k in src){
+        dst.push(src[k]);
+    }
+};
 
 wl.copy = function(obj){
     var newobj = {}

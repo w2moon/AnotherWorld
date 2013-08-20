@@ -23,7 +23,11 @@ virtual_traveller_create = function(info){
                             Defense:4,
                             Heal:4,
                             nature:4,
-                            slot:[]
+                            soulid:0,
+                            weaponrid:0,
+                            weaponlid:0,
+                            clothid:0,
+                            trinketid:0
                          };
 
 
@@ -129,7 +133,8 @@ virtual_traveller_create = function(info){
         ret.equips.push(equip);
         role.equipments.push(equip);
     }
-    
+
+    traveller.slot = [traveller.weaponrid,traveller.weaponlid,traveller.clothid,traveller.trinketid];    
 
     role.travellers.push(traveller);
     if(role.slot5 == 0){
@@ -137,6 +142,7 @@ virtual_traveller_create = function(info){
         role.name = traveller.name;
         role.level = 1;
     }
+
 
     wl.set("role_"+info.userid,wl.toJSONString(role));
 

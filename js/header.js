@@ -63,3 +63,4 @@ require("scene/travellercreate.js");
 require("scene/travellermodify.js");
 require("scene/travellername.js");
 require("scene/travellerinfo.js");
+require("scene/equipchoose.js");

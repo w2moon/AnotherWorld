@@ -30,21 +30,18 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
     var y = 0;
     for(var k in skills){
         var bar = wl.load_scene("skillbar",skills[k]);
-        bar.setPosition(cc.p(this.dataheader.getContentSize().width/2,y));
-        this.dataheader.addChild(bar);
-        h = h + 93/2;//bar.controller.bg.getContentSize().height;
-        y = y + 93/2;
+        bar.setPosition(cc.p(this.datapanel.getContentSize().width/2,y));
+        this.datapanel.addChild(bar);
+        h = h + this.dataheader.getContentSize().height;
+        y = y + this.dataheader.getContentSize().height;
     }
     
-    this.dataheader.setPosition(cc.p(this.dataheader.getPosition().x,this.dataheader.getPosition().y+h));
+    this.datapanel.setPosition(cc.p(0,this.datapanel.getPosition().y+h));
 };
 
 travellerinfo.prototype.onPressEquip = function(n){
-    var obj = this.traveller.getObject(n.getTag());
-    if(obj == null){
-        return;
-    }
-    wl.run_scene("equipchoose",this.oldtraveller,this.traveller);
+   cc.log("equipchoose");
+    wl.run_scene("equipchoose",n.getTag(),this.oldtraveller,this.traveller);
 };
 
 

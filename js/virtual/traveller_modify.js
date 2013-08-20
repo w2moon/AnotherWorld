@@ -118,8 +118,9 @@ virtual_traveller_modify = function(info){
             }
         }
     }
-
+    traveller.slot = [traveller.weaponrid,traveller.weaponlid,traveller.clothid,traveller.trinketid];
     wl.set("role_"+info.userid,wl.toJSONString(role));
 
+    ret.traveller = traveller;
     return ret;
 };

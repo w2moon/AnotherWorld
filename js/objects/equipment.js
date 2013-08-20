@@ -21,6 +21,10 @@ wl.equipment.prototype = {
         return rarityclass[this.getBase().rarityclass].maxlevel;
     },
 
+    getType : function(){
+        return this.getBase().type;
+    },
+
     //////////////////////////
     getBase : function() { return equipmentbase[this.dbobj.baseid];},
     getSkillId : function(){return this.getBase().skillid;},

@@ -9,6 +9,8 @@ wl.soul.prototype = {
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 
+    getIdx : function(){return EQUIP_SOUL;},
+
     getBaseId : function(){return this.dbobj.baseid;},
     setBaseId : function(baseid){ this.dbobj.baseid = baseid;},
 

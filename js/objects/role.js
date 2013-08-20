@@ -316,6 +316,30 @@ wl.role.prototype = {
             this.travellers.push(new wl.traveller(dbobj,this));
         }
         else{
+            if(this.dbobj.soulid != dbobj.soulid){
+                var oldsoul = this.getSoul(this.dbobj.soulid);
+                //error:add same soul at the same time
+                if(oldsoul != null){
+                    oldsoul.dbobj.travellerid = 0;
+                }
+                var newsoul = this.getSoul(dbobj.soulid);
+                if(newsoul != null){
+                    newsoul.dbobj.travellerid = dbobj.id;
+                }
+            }
+            for(var k in dbobj.slot){
+                if(dbobj.slot[k] != this.dbobj.slot[k]){
+                    var oldequip = this.getEquipment(this.dbobj.slot[k]);
+                    if(oldequip != null){
+                        oldequip.dbobj.travellerid = 0;
+                    }
+                    var newequip = this.getEquipment(dbobj.slot[k]);
+                    if(newequip != null){
+                        newequip.dbobj.travellerid = dbobj.id;
+                    }
+                }
+            }
+            
             traveller.setdbobj(dbobj);
         }
     },
@@ -367,6 +391,25 @@ wl.role.prototype = {
            }
         }
         return slots;
+    },
+
+    orderObjects : function(order){
+    },
+
+    getObjects : function(type){
+        var arr = []
+         if(type == EQUIP_SOUL){
+                wl.copyarr(this.souls,arr);
+         }
+         else{
+            for(var k in this.equipments){
+                if(this.equipments[k].getType() == type){
+                    arr.push(this.equipments[k]);
+                }
+            }
+         }
+
+        return arr;
     },
 
     getSoul : function(id){
