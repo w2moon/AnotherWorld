@@ -6,6 +6,7 @@ if (wl.virtualhttp == null) {
 
         this.loaded = {};
         this.node = cc.Node.create();
+        this.node.retain();
         this.node.run();
 
         var virtual = this;

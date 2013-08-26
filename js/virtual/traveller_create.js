@@ -1,6 +1,6 @@
 virtual_traveller_create = function(info){
     var ret = {};
-
+cc.log(2)
     var role = wl.parseJSON(wl.get("role_"+info.userid));
 
     var base = wl.get_rand(travellerbase);
@@ -30,7 +30,7 @@ virtual_traveller_create = function(info){
                             trinketid:0
                          };
 
-
+cc.log(1)
     var idx = parseInt(wl.rand()*4);
     switch(idx){
         case 0:
