@@ -344,8 +344,10 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\state\start.js" />
     <None Include="..\js\ui\card.js" />
     <None Include="..\js\ui\create_ui.js" />
+    <None Include="..\js\ui\equipbar.js" />
     <None Include="..\js\ui\indicator.js" />
     <None Include="..\js\ui\loading.js" />
+    <None Include="..\js\ui\rewardslot.js" />
     <None Include="..\js\ui\skillbar.js" />
     <None Include="..\js\ui\stageinfo.js" />
     <None Include="..\js\ui\token.js" />

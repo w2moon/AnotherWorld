@@ -7,8 +7,9 @@ if (wl.virtualhttp == null) {
         this.loaded = {};
         this.node = cc.Node.create();
         this.node.retain();
-        this.node.run();
 
+        this.scene = null;
+        
         var virtual = this;
         this.node.schedule(function(dt){ virtual.step(dt);});
         
@@ -26,6 +27,7 @@ if (wl.virtualhttp == null) {
         },
         
         step:function(dt){
+            cc.log("step")
             while(this.msgs.length > 0){
                 msg = this.msgs.shift()
                 ret = this.process(msg[0])
@@ -55,6 +57,18 @@ if (wl.virtualhttp == null) {
             func = eval("virtual_"+info.code);
             return func(info)
         },
+
+        attach : function(scene){
+            if(this.scene != null){
+                this.node.removeFromParent(false);
+            }
+            this.scene = scene;
+            scene.addChild(this.node);
+            cc.log("attach")
+            
+           
+        },
+        
         
         set_error_func : function(func,obj){
         },

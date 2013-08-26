@@ -45,6 +45,8 @@ require("ui/token.js");
 require("ui/stageinfo.js");
 require("ui/create_ui.js");
 require("ui/skillbar.js");
+require("ui/equipbar.js");
+require("ui/rewardslot.js");
 
 require("state/normal.js");
 require("state/start.js");
@@ -55,6 +57,8 @@ require("state/finish.js");
 
 require("scene/loginscene.js");
 require("scene/battlescene.js");
+require("scene/battlefield.js");
+require("scene/battleresult.js");
 require("scene/mainscene.js");
 require("scene/submapscene.js");
 require("scene/mainmap.js");

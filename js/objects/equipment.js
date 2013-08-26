@@ -30,6 +30,8 @@ wl.equipment.prototype = {
     getSkillId : function(){return this.getBase().skillid;},
     hasSkill : function(){ return this.getBase().skillid != 0;},
 
+    isNew : function(){ return this.dbobj.isnew == 1;},
+    notNew : function(){ this.dbobj.isnew = 0;},
     getSkillLevel : function(){return this.dbobj.skilllevel}
 };
 

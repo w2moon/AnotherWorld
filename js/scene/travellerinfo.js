@@ -17,8 +17,10 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
         this.traveller = copyed_traveller;
     }
 
-   // this.rootNode.registerScriptTouchHandler(2);
-    this.rootNode.onTouchEnded = function(){cc.log("touched");}
+
+    this.rootNode.registerScriptTouchHandler(2);
+    this.rootNode.onTouchEnded = function(){cc.log("touch")}
+
 
     this.lblhp.setString(this.traveller.getProperty("MaxHP"));
     this.lblattack.setString(this.traveller.getProperty("Attack"));
@@ -26,17 +28,17 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
     this.lblheal.setString(this.traveller.getProperty("Heal"));
 
     var skills = this.traveller.getSkills();
-    var h = 0;
-    var y = 0;
+    var h = 5;
+    var y = this.dataheader.getPosition().y - this.dataheader.getContentSize().height/2;
+    
     for(var k in skills){
         var bar = wl.load_scene("skillbar",skills[k]);
         bar.setPosition(cc.p(this.datapanel.getContentSize().width/2,y));
-        this.datapanel.addChild(bar);
-        h = h + this.dataheader.getContentSize().height;
-        y = y + this.dataheader.getContentSize().height;
+        this.datapanel.addChild(bar,-1);
+        h = h + bar.controller.bg.getContentSize().height;
+        y = y + bar.controller.bg.getContentSize().height;
     }
-    
-    this.datapanel.setPosition(cc.p(0,this.datapanel.getPosition().y+h));
+    this.datapanel.setPosition(cc.p(0,h-this.datapanel.getContentSize().height/2));
 };
 
 travellerinfo.prototype.onPressEquip = function(n){

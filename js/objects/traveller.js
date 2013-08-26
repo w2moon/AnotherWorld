@@ -142,6 +142,14 @@ wl.traveller.prototype = {
     ////////////////////////////////////////////////////////////
     //new
     getEquip : function(pos){
+        if(this.dbobj==null){
+            var i = 0;
+            var fun = arguments.callee;
+            do {
+                fun = fun.arguments.callee.caller;
+                cc.log(++i + ': ' + fun);
+            } while (fun);
+        }
         if(this.dbobj.slot[pos] == 0){
             return null;
         }
