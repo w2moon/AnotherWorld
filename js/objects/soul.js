@@ -24,6 +24,8 @@ wl.soul.prototype = {
         return rarityclass[this.getBase().rarityclass].maxlevel;
     },
 
+    isNew : function(){ return this.dbobj.isnew == 1;},
+    notNew : function(){ this.dbobj.isnew = 0;},
 
     getSkillExp : function(){return this.dbobj.skillexp;},
     setSkillExp : function(v){ this.dbobj.skillexp = v;},

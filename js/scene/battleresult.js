@@ -19,8 +19,14 @@ battleresult.prototype.onCreate = function(result,info)
     for(var k in filtered){
         obj = wl.gvars.role[filtered[k][1]].apply(wl.gvars.role,filtered[k].slice(2));
         if(obj != null){
-            ui = wl.create_ui(obj);
-            this.rootNode.addChild(ui);
+              var x = 0;
+              var y = 0;
+              var reward = wl.load_scene("rewardslot",filtered[k][1],filtered[k][2]);
+              reward.setPosition(cc.p(x,y));
+              this.lootpanel.addChild(reward);
+
+              x = x + reward.controller.bg.getContentSize().width;
+              
         }
     }
 };

@@ -54,9 +54,14 @@ wl.run_scene=function(s){
  var director = cc.Director.getInstance();
  var scene = cc.BuilderReader.loadAsScene(s);
  var runningScene = director.getRunningScene();
+  if(USE_VIRTUAL_HTTP){
+    wl.http.attach(scene);
+ }
  if (runningScene === null) director.runWithScene(scene);
  else director.replaceScene(scene);
  
+
+
  if(s=="battlescene"){
  cc.log(scene.getChildren()[0].controller)
  

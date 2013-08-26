@@ -6,10 +6,11 @@ if (wl.virtualhttp == null) {
 
         this.loaded = {};
         this.node = cc.Node.create();
-        this.node.run();
-
+        this.node.retain();
+        this.scene = null;
+        
         var virtual = this;
-        this.node.schedule(function(dt){ virtual.step(dt);});
+            this.node.schedule(function(dt){ virtual.step(dt);});
         
     };
     
@@ -54,6 +55,17 @@ if (wl.virtualhttp == null) {
             func = eval("virtual_"+info.code);
             return func(info)
         },
+
+        attach : function(scene){
+            if(this.scene != null){
+                this.node.removeFromParent(false);
+                //this.node.unschedule();
+            }
+            this.scene = scene;
+            scene.addChild(this.node);
+            
+        },
+        
         
         set_error_func : function(func,obj){
         },

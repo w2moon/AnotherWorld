@@ -270,6 +270,10 @@ uicard.prototype.onCreate = function(ske,warrior){
     this.skeleton.animationManager.setCompletedAnimationCallback(this,this.on_animation_finish);
 
     this.playAnim(this.normalanim,true)
+
+    if(warrior == null){
+        return;
+    }
     
          var img = warrior.getTraveller().getImg();
          if(!wl.isNoneString(img)){
