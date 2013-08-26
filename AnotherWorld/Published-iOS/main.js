@@ -41,6 +41,7 @@ require("objects/warrior.js");
 require("scene/battlefield.js");
 require("scene/battleresult.js");
 require("scene/battlescene.js");
+require("scene/equipchoose.js");
 require("scene/loginscene.js");
 require("scene/mainmap.js");
 require("scene/mainscene.js");

@@ -32,9 +32,9 @@
 				<key>displayName</key>
 				<string>body</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>body</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -957,7 +957,7 @@
 								<key>type</key>
 								<string>Integer</string>
 								<key>value</key>
-								<integer>3</integer>
+								<integer>2</integer>
 							</dict>
 							<dict>
 								<key>name</key>
