@@ -24,7 +24,10 @@ wl.empty_role = function(name,userid){
     date_create:0,
     travellers:[],
     souls:[],
-    equipments:[]
+    equipments:[],
+    stages:{},
+    blueprint:[],
+    materials:{}
     };
 };
 
@@ -98,25 +101,14 @@ wl.role = function(dbobj){
     dbobj.equipments = null;
 };
 
-wl.role_from_enemy = function(sinfo,enemies,level){
-    var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),travellers:[],souls:[],equipments:[]};
-    
-    
-    var factor = level
-    for(var k in enemies){
-        var num = wl.tonumber(k)+1;
-        if(wl.tonumber(enemies[k][0]) == 0){
-            
-            tmp['slot'+num] = 0;
-            continue;
-        }
-        var einfo = enemy[wl.tonumber(enemies[k][0])];
+wl.create_enemy = function(tmp,num,factor,enemyid,enemylevel){
+    var einfo = enemy[wl.tonumber(enemyid)];
         var traveller = {
                             id:wl.local_id(),
                             name:lang(einfo.name),
                             img:"",
                             exp:0,
-                            level:wl.tonumber(enemies[k][1]),
+                            level:wl.tonumber(enemylevel),
                             skill1id:einfo.skill1id,
                             skill1level:einfo.skill1level*factor,
                             skill1exp:0,
@@ -222,9 +214,35 @@ wl.role_from_enemy = function(sinfo,enemies,level){
 
 
         tmp.travellers.push(traveller)
+};
+
+wl.role_from_enemy = function(sinfo,enemies,level){
+    var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),travellers:[],souls:[],equipments:[]};
+    
+    
+    var factor = level
+    for(var k in enemies){
+        var num = wl.tonumber(k)+1;
+        if(wl.tonumber(enemies[k][0]) == 0){
+            
+            tmp['slot'+num] = 0;
+            continue;
+        }
+        wl.create_enemy(tmp,num,factor,wl.tonumber(enemies[k][0]),wl.tonumber(enemies[k][1]));
+        
+    }
+    var heros = parse_enemy(sinfo.hero)
+    for(var k in heros){
+        if(wl.tonumber(heros[k][0]) == 0){
+            continue;
+        }
+         wl.create_enemy(tmp,HERO_IDX+1,factor,wl.tonumber(heros[k][0]),wl.tonumber(heros[k][1]));
     }
     return tmp;
 };
+
+var sort_rarity = function(t1,t2){return t2.getBase().rarityclass<t1.getBase().rarityclass;};
+var sort_name = function(t1,t2){return lang(t2.getBase().name)<lang(t1.getBase().name);};
 
 wl.role.prototype = {
 
@@ -303,6 +321,15 @@ wl.role.prototype = {
 
     ////////////////////////////
 
+    isEquiped : function(equipid){
+        for(var k in this.slot){
+            if(equipid == this.slot[k]){
+                return true;
+            }
+        }
+        return false;
+    },
+
     addTraveller : function(dbobj){
         var traveller = this.getTraveller(dbobj.id);
         if(traveller == null){
@@ -316,6 +343,30 @@ wl.role.prototype = {
             this.travellers.push(new wl.traveller(dbobj,this));
         }
         else{
+            if(this.dbobj.soulid != dbobj.soulid){
+                var oldsoul = this.getSoul(this.dbobj.soulid);
+                //error:add same soul at the same time
+                if(oldsoul != null){
+                    oldsoul.dbobj.travellerid = 0;
+                }
+                var newsoul = this.getSoul(dbobj.soulid);
+                if(newsoul != null){
+                    newsoul.dbobj.travellerid = dbobj.id;
+                }
+            }
+            for(var k in dbobj.slot){
+                if(dbobj.slot[k] != this.dbobj.slot[k]){
+                    var oldequip = this.getEquipment(this.dbobj.slot[k]);
+                    if(oldequip != null){
+                        oldequip.dbobj.travellerid = 0;
+                    }
+                    var newequip = this.getEquipment(dbobj.slot[k]);
+                    if(newequip != null){
+                        newequip.dbobj.travellerid = dbobj.id;
+                    }
+                }
+            }
+            
             traveller.setdbobj(dbobj);
         }
     },
@@ -323,6 +374,7 @@ wl.role.prototype = {
     addEquip : function(dbobj){
        var equip = this.getEquipment(dbobj.id);
         if(equip == null){
+            dbobj.isnew = 1;
             this.equipments.push(new wl.equipment(dbobj));
         }
         else{
@@ -333,6 +385,7 @@ wl.role.prototype = {
     addSoul : function(dbobj){
         var soul = this.getSoul(dbobj.id);
         if(soul == null){
+            dbobj.isnew = 1;
             this.souls.push(new wl.soul(dbobj));
         }
         else{
@@ -367,6 +420,38 @@ wl.role.prototype = {
            }
         }
         return slots;
+    },
+
+    
+     
+    orderObjects : function(order,objs){
+        switch(order)
+        {
+        case ORDER_DEFAULT:
+        break;
+        case ORDER_RARITY:
+            objs.sort(sort_rarity);
+        break;
+        case ORDER_NAME:
+            objs.sort(sort_name);
+        break;
+        }
+    },
+
+    getObjects : function(type){
+        var arr = []
+         if(type == EQUIP_SOUL){
+                wl.copyarr(this.souls,arr);
+         }
+         else{
+            for(var k in this.equipments){
+                if(this.equipments[k].getType() == type){
+                    arr.push(this.equipments[k]);
+                }
+            }
+         }
+
+        return arr;
     },
 
     getSoul : function(id){

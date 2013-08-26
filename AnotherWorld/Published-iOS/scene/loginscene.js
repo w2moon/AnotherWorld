@@ -7,6 +7,9 @@ var loginscene = function(){};
 
 loginscene.prototype.onDidLoadFromCCB = function()
 {
+    if(USE_VIRTUAL_HTTP){
+        wl.http.attach(this.rootNode);
+    }
     cc.log("loaded");
    // this.lblRegion.setString("loading");
  

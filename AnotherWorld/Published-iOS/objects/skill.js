@@ -1,10 +1,11 @@
 
-wl.skill = function(warrior,battlefield,level,skillbase){
+wl.skill = function(warrior,battlefield,level,skillbase,from){
     this.level = level;
     this.skillbase = skillbase;
     this.warrior = warrior;
     this.battlefield = battlefield;
     this.cooldown = 0;
+    this.from = from;
     
 };
 
@@ -54,6 +55,8 @@ wl.skill.prototype = {
 
         
     },
+
+    
 
     getBase : function(){
         return this.skillbase

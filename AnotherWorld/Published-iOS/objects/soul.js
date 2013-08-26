@@ -9,6 +9,8 @@ wl.soul.prototype = {
     getId : function(){return this.dbobj.id;},
     setId : function(id){ this.dbobj.id = id;},
 
+    getIdx : function(){return EQUIP_SOUL;},
+
     getBaseId : function(){return this.dbobj.baseid;},
     setBaseId : function(baseid){ this.dbobj.baseid = baseid;},
 
@@ -22,6 +24,8 @@ wl.soul.prototype = {
         return rarityclass[this.getBase().rarityclass].maxlevel;
     },
 
+    isNew : function(){ return this.dbobj.isnew == 1;},
+    notNew : function(){ this.dbobj.isnew = 0;},
 
     getSkillExp : function(){return this.dbobj.skillexp;},
     setSkillExp : function(v){ this.dbobj.skillexp = v;},

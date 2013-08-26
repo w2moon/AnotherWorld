@@ -54,9 +54,14 @@ wl.run_scene=function(s){
  var director = cc.Director.getInstance();
  var scene = cc.BuilderReader.loadAsScene(s);
  var runningScene = director.getRunningScene();
+  if(USE_VIRTUAL_HTTP){
+    wl.http.attach(scene);
+ }
  if (runningScene === null) director.runWithScene(scene);
  else director.replaceScene(scene);
  
+
+
  if(s=="battlescene"){
  cc.log(scene.getChildren()[0].controller)
  
@@ -113,6 +118,25 @@ wl.copyfunc = function(src,dst){
     for(var k in src){
         dst[k] = src[k];
     }
+};
+wl.copyarr = function(src,dst){
+    for(var k in src){
+        dst.push(src[k]);
+    }
+};
+
+wl.copy = function(obj){
+    var newobj = {}
+    for(var k in obj){
+        if(typeof(obj[k]) == "object"){
+            newobj[k] = wl.copy(obj[k]);
+        }
+        else{
+            newobj[k] = obj[k];
+        }
+    }
+
+    return newobj;
 };
 
 wl.callstack = function() {  

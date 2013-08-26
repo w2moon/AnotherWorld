@@ -21,11 +21,17 @@ wl.equipment.prototype = {
         return rarityclass[this.getBase().rarityclass].maxlevel;
     },
 
+    getType : function(){
+        return this.getBase().type;
+    },
+
     //////////////////////////
     getBase : function() { return equipmentbase[this.dbobj.baseid];},
     getSkillId : function(){return this.getBase().skillid;},
     hasSkill : function(){ return this.getBase().skillid != 0;},
 
+    isNew : function(){ return this.dbobj.isnew == 1;},
+    notNew : function(){ this.dbobj.isnew = 0;},
     getSkillLevel : function(){return this.dbobj.skilllevel}
 };
 

@@ -18,8 +18,8 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
     }
 
 
-    this.rootNode.registerScriptTouchHandler(2);
-    this.rootNode.onTouchEnded = function(){cc.log("touch")}
+    //this.rootNode.registerScriptTouchHandler(2);
+    //this.rootNode.onTouchEnded = function(){cc.log("touch")}
 
 
     this.lblhp.setString(this.traveller.getProperty("MaxHP"));

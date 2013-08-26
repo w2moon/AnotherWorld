@@ -48,7 +48,7 @@ battlescene.prototype.onCreate = function(info,level)
     this.functask = new wl.functask();
     this.speeded = false;
     
-    var roles = [new wl.role(wl.tmp_dbrole("role1")),new wl.role(wl.role_from_enemy(this.info,enemies,level))];
+    var roles = [wl.gvars.role,new wl.role(wl.role_from_enemy(this.info,enemies,level))];
     this.initBattle(roles);
     this.start();
 

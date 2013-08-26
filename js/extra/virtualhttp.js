@@ -27,7 +27,6 @@ if (wl.virtualhttp == null) {
         },
         
         step:function(dt){
-            cc.log("step")
             while(this.msgs.length > 0){
                 msg = this.msgs.shift()
                 ret = this.process(msg[0])
@@ -59,13 +58,19 @@ if (wl.virtualhttp == null) {
         },
 
         attach : function(scene){
+            /*
             if(this.scene != null){
                 this.node.removeFromParent(false);
             }
             this.scene = scene;
             scene.addChild(this.node);
             cc.log("attach")
-            
+            */
+            var virtual = this;
+            scene.onUpdate = function(dt) {
+                virtual.step();
+            };
+           scene.schedule(scene.onUpdate);
            
         },
         

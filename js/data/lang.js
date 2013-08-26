@@ -7,7 +7,7 @@
     return;
  }
 var code = cc.Application.getInstance().getCurrentLanguage();
-var name = "en";
+var name = "cn";
 switch(code)
 {
 case cc.LANGUAGE_ENGLISH:
