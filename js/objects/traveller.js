@@ -40,6 +40,21 @@ wl.traveller.prototype = {
     getImg : function(){return this.dbobj.img;},
     setImg : function(v){ this.dbobj.img = v;},
 
+    isEquiped : function(eid){
+         for(var i=0;i<EQUIP_NUM;++i)
+        {
+            if(eid == this.dbobj.slot[i]){
+                return true;
+            }
+            
+        }
+        return false;
+    },
+
+    isSouled : function(sid){
+        return sid == this.dbobj.soulid;
+    },
+
 
     getOwner : function(){return this.owner;},
 
@@ -142,14 +157,7 @@ wl.traveller.prototype = {
     ////////////////////////////////////////////////////////////
     //new
     getEquip : function(pos){
-        if(this.dbobj==null){
-            var i = 0;
-            var fun = arguments.callee;
-            do {
-                fun = fun.arguments.callee.caller;
-                cc.log(++i + ': ' + fun);
-            } while (fun);
-        }
+        
         if(this.dbobj.slot[pos] == 0){
             return null;
         }

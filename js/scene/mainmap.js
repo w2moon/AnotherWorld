@@ -1,7 +1,11 @@
 var mainmap = function(){};
 
 mainmap.prototype.onDidLoadFromCCB = function(){
-    this.submapid = 1
+    for(var k in submaps){
+        if(!wl.gvars.role.canEnterSubMap(k)){
+            this["submap"+submaps[k].id].setVisible(false);
+        }
+    }
 };
 
 mainmap.prototype.onPressSubmap = function(n){

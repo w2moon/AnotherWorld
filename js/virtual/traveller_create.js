@@ -30,7 +30,7 @@ cc.log(2)
                             trinketid:0
                          };
 
-cc.log(1)
+
     var idx = parseInt(wl.rand()*4);
     switch(idx){
         case 0:

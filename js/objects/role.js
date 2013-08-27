@@ -231,6 +231,9 @@ wl.role_from_enemy = function(sinfo,enemies,level){
         wl.create_enemy(tmp,num,factor,wl.tonumber(enemies[k][0]),wl.tonumber(enemies[k][1]));
         
     }
+    for(var k in sinfo){
+        cc.log(k)
+    }
     var heros = parse_enemy(sinfo.hero)
     for(var k in heros){
         if(wl.tonumber(heros[k][0]) == 0){
@@ -321,14 +324,7 @@ wl.role.prototype = {
 
     ////////////////////////////
 
-    isEquiped : function(equipid){
-        for(var k in this.slot){
-            if(equipid == this.slot[k]){
-                return true;
-            }
-        }
-        return false;
-    },
+   
 
     addTraveller : function(dbobj){
         var traveller = this.getTraveller(dbobj.id);
@@ -343,8 +339,8 @@ wl.role.prototype = {
             this.travellers.push(new wl.traveller(dbobj,this));
         }
         else{
-            if(this.dbobj.soulid != dbobj.soulid){
-                var oldsoul = this.getSoul(this.dbobj.soulid);
+            if(traveller.dbobj.soulid != dbobj.soulid){
+                var oldsoul = this.getSoul(traveller.dbobj.soulid);
                 //error:add same soul at the same time
                 if(oldsoul != null){
                     oldsoul.dbobj.travellerid = 0;
@@ -355,8 +351,8 @@ wl.role.prototype = {
                 }
             }
             for(var k in dbobj.slot){
-                if(dbobj.slot[k] != this.dbobj.slot[k]){
-                    var oldequip = this.getEquipment(this.dbobj.slot[k]);
+                if(dbobj.slot[k] != traveller.dbobj.slot[k]){
+                    var oldequip = this.getEquipment(traveller.dbobj.slot[k]);
                     if(oldequip != null){
                         oldequip.dbobj.travellerid = 0;
                     }
@@ -369,6 +365,26 @@ wl.role.prototype = {
             
             traveller.setdbobj(dbobj);
         }
+    },
+
+    canEnterSubMap : function(submapid){
+        var needmap = submaps[submapid].needmap;
+        if(needmap != 0){
+            var stages = parse_action_params(submaps[needmap].stages);
+            for(var k in stages){
+                if(!this.canEnterStage(needmap,stages[k])){
+                    return false;
+                }
+            }
+        }
+        return true;
+    },
+
+    canEnterStage : function(submapid,stageid){
+        if(stage[stageid].stageneed != 0){
+            return this.dbobj.stages[stage[stageid].stageneed] != null;
+        }
+        return true;
     },
 
     addEquip : function(dbobj){
@@ -445,9 +461,33 @@ wl.role.prototype = {
          }
          else{
             for(var k in this.equipments){
-                if(this.equipments[k].getType() == type){
-                    arr.push(this.equipments[k]);
+                switch(type)
+                {
+                case EQUIP_WEAPONR:
+                    if(this.equipments[k].getType() == ETYPE_MAINHAND
+                    || this.equipments[k].getType() == ETYPE_ONEHAND
+                    || this.equipments[k].getType() == ETYPE_TWOHAND){
+                        arr.push(this.equipments[k]);
+                    }
+                break;
+                case EQUIP_WEAPONL:
+                    if(this.equipments[k].getType() == ETYPE_OFFHAND
+                    || this.equipments[k].getType() == ETYPE_ONEHAND){
+                        arr.push(this.equipments[k]);
+                    }
+                break;
+                case EQUIP_CLOTH:
+                    if(this.equipments[k].getType() == ETYPE_CLOTH){
+                        arr.push(this.equipments[k]);
+                    }
+                break;
+                case EQUIP_TRINKET:
+                    if(this.equipments[k].getType() == ETYPE_TRINKET){
+                        arr.push(this.equipments[k]);
+                    }
+                break;
                 }
+                
             }
          }
 

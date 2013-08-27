@@ -1,4 +1,5 @@
 var parse_enemy = function(str){
+    
     var parts = str.split(/;/);
     var arr = [];
     if(str.charAt(str.length-1) == ";"){
@@ -101,12 +102,11 @@ battlescene.prototype.initBattle = function(roles)
                     continue;
                 }
                 
-                  var card = wl.load_scene("uicard",warriors[k].getTraveller().getSoul().getSkeleton()+tail,warriors[k]); //wl.create_uicard(warriors[k]);
+                  var card = wl.load_scene("uicard",warriors[k].getTraveller().getSoul().getSkeleton()+tail,warriors[k].getTraveller().getSoul().getAvatar(),warriors[k].getTraveller().getImg(),warriors[k]); //wl.create_uicard(warriors[k]);
                
                   var pos = this.battlefield.controller['card'+idx+"_"+k].getPosition();
                 
 	              card.setPosition(pos)
-                cc.log("init"+pos.x+" "+pos.y)
                  
                   this.battlefield.addChild(card);
 

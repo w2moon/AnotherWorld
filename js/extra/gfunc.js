@@ -14,6 +14,10 @@ wl.set = function(name,value){
     cc.UserDefault.getInstance().setStringForKey(name,value)
 };
 
+wl.popmsg = function(msg){
+    cc.log(msg);
+};
+
 wl.filter_rate = function(arr){
     var r = 0;
     var todelete = []
@@ -176,6 +180,14 @@ wl.ccpSub = function(p1,p2){
 
 wl.ccpAdd = function(p1,p2){
     return cc.p(p1.x+p2.x,p1.y+p2.y);
+};
+
+wl.set_texture = function(spr,file){
+    var image = new cc.Image();
+    image.initWithImageFile(file,1);
+    var tex = cc.Texture2D.create();
+    tex.initWithImage(image);
+    spr.setTexture(tex);
 };
 
 wl.gvars = {

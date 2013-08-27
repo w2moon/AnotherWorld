@@ -315,6 +315,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\scene\battlescene.js" />
     <None Include="..\js\scene\equipchoose.js" />
     <None Include="..\js\scene\loginscene.js" />
+    <None Include="..\js\scene\mainmap.js" />
     <None Include="..\js\scene\mainscene.js" />
     <None Include="..\js\scene\pvpscene.js" />
     <None Include="..\js\scene\questscene.js" />

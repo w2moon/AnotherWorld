@@ -236,7 +236,11 @@
          layer.register_event();
          return layer;
     };
-   
+  
+  var skeleton = function(){};
+
+skeleton.prototype.onDidLoadFromCCB = function(){
+};
 
 var uicard = function(){};
 
@@ -258,9 +262,10 @@ uicard.prototype.on_animation_finish = function(){
     }
 }
 
-uicard.prototype.onCreate = function(ske,warrior){
+uicard.prototype.onCreate = function(ske,avatar,img,warrior){
     this.warrior = warrior
   
+    this.register_event();
 
     this.skeleton = wl.load_scene(ske)
     this.rootNode.addChild(this.skeleton)
@@ -271,19 +276,115 @@ uicard.prototype.onCreate = function(ske,warrior){
 
     this.playAnim(this.normalanim,true)
 
-    if(warrior == null){
-        return;
-    }
-    
-         var img = warrior.getTraveller().getImg();
+   
+    img = "";
          if(!wl.isNoneString(img)){
                var dataimg = new cc.Image();
                dataimg.initWithBase64(img,DEFAULT_HEAD_WIDTH,DEFAULT_HEAD_HEIGHT);
               
                dataimg.resize(128,128);
+
+               var mask = new cc.Image()
+               mask.initWithImageFile(HEAD_MASK,1)
                var t2d = cc.Texture2D.create()
-               t2d.initWithImage(dataimg)
-               header = cc.Sprite.createWithTexture(t2d)
+               t2d.initWithImage(dataimg.mask(mask))
+
+               this.skeleton.controller.part0.setTexture(t2d);
          }
-        var avatar = warrior.getTraveller().getSoul().getAvatar();
+         else{
+            wl.set_texture(this.skeleton.controller.part0,avatar[0]);
+         }
+
+         for(var i = 1;i<avatar.length;++i){
+            if(avatar[i] == ""){
+                continue;
+            }
+            wl.set_texture(this.skeleton.controller["part"+i],avatar[i]);
+         }
+
+    if(warrior == null){
+        return;
+    }
 };
+
+uicard.prototype.register_event = function(){
+
+            
+            wl.dispatcher.register(this.warrior,"battle_init",this.on_battle_init,this);
+            /*
+            wl.dispatcher.register(this.warrior,"incHP",this.on_incHP,this);
+            wl.dispatcher.register(this.warrior,"decHP",this.on_decHP,this);
+
+            wl.dispatcher.register(this.warrior,"dead",this.on_dead,this);
+
+
+            wl.dispatcher.register(this.warrior,"incEnergy",this.on_incEnergy,this);
+            wl.dispatcher.register(this.warrior,"decEnergy",this.on_decEnergy,this);
+
+            wl.dispatcher.register(this.warrior,"incMaxEnergy",this.on_incMaxEnergy,this);
+            wl.dispatcher.register(this.warrior,"decMaxEnergy",this.on_decMaxEnergy,this);
+            */
+            wl.dispatcher.register(this.warrior,"attack",this.on_attack,this);
+            wl.dispatcher.register(this.warrior,"defense",this.on_defense,this);
+            wl.dispatcher.register(this.warrior,"moveTo",this.on_move,this);
+            wl.dispatcher.register(this.warrior,"dodge",this.on_dodge,this);
+
+           // wl.dispatcher.register(this.warrior,"action",this.on_action,this);
+           // wl.dispatcher.register(this.warrior,"particle",this.on_particle,this);
+
+
+         }
+          uicard.prototype.on_attack = function(){
+            this.playAnim("attack");
+            
+         };
+          uicard.prototype.on_defense = function(){
+            this.playAnim("defense");
+         };
+          uicard.prototype.on_move = function(){
+            cc.log("moave")
+            this.playAnim("move",true);
+         };
+          uicard.prototype.on_dodge = function(){
+           this.playAnim("dodge");
+            
+         };
+
+         uicard.prototype.on_battle_init = function(){
+           // this.indicator.setMax(this.warrior.getMaxEnergy());
+            //this.indicator.setValue(this.warrior.getEnergy());
+
+           // this.originpos = this.getPosition();
+            
+         };
+         uicard.prototype.on_incHP = function(){
+            //this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
+         }
+
+          uicard.prototype.on_decHP = function(v){
+            //this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
+         }
+
+         
+        
+
+         uicard.prototype.on_dead = function(v){
+                
+            //this.dead();            
+         }
+
+          uicard.prototype.on_incEnergy = function(){
+            //this.indicator.setValue(this.warrior.getEnergy());
+          };
+
+           uicard.prototype.on_decEnergy = function(){
+            //this.indicator.setValue(this.warrior.getEnergy());
+          };
+
+          uicard.prototype.on_incMaxEnergy = function(){
+            //this.indicator.setMax(this.warrior.getMaxEnergy());
+          };
+
+           uicard.prototype.on_decMaxEnergy = function(){
+            //this.indicator.setMax(this.warrior.getMaxEnergy());
+          };

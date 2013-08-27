@@ -293,6 +293,9 @@
     <None Include="..\js\ui\rewardslot.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\scene\mainmap.js">
+      <Filter>js\scene</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
