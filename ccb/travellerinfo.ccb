@@ -558,7 +558,7 @@
 				<key>displayName</key>
 				<string>trinket_mask</string>
 				<key>memberVarAssignmentName</key>
-				<string>head_mask</string>
+				<string>trinket_mask</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -619,6 +619,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -951,7 +953,7 @@
 								<key>value</key>
 								<array>
 									<string>onPressEquip</string>
-									<integer>0</integer>
+									<integer>1</integer>
 								</array>
 							</dict>
 							<dict>
@@ -2000,8 +2002,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 				</array>
 				<key>customClass</key>
