@@ -11,7 +11,6 @@ mainscene.prototype.onDidLoadFromCCB = function(){
     this.exp_bar.setScaleX(wl.gvars.role.getExp()/wl.gvars.role.getMaxExp());
     
     //this.energy_bar.setScaleX();
-    
     this.showmap("mainmap");
     
     
@@ -22,12 +21,16 @@ mainscene.prototype.showmap = function(name){
     if(this.curmap != null){
         this.rootNode.removeChild(this.curmap);
     }
-    this.curmap = wl.load_scene(name);
+    if(name == "mainmap"){
+        this.submapid = null;
+    }
+    this.curmap = wl.load_scene(name,this.submapid);
     this.rootNode.addChild(this.curmap);
 };
 
-mainscene.prototype.onPressSubmap = function(n){
-    this.showmap(submaps[n].res);
+mainscene.prototype.onPressSubmap = function(submapid){
+    this.submapid = submapid;
+    this.showmap(submaps[submapid].res);
 };
 
 mainscene.prototype.onShowTraveller = function(n){

@@ -7,9 +7,9 @@ stageinfo.prototype.onCreate = function(stageid,submapid){
     this.info = stage[stageid];
     this.submapid = submapid;
 
-    /*
+    
     //show name
-    this.lblname.setString(lang(this.info.name));
+    this.lblstagename.setString(lang(this.info.name));
 
     //show enemy
     this.einfo = null;
@@ -36,8 +36,12 @@ stageinfo.prototype.onCreate = function(stageid,submapid){
     
     var avatar = parse_action_params(enemysoul.avatar);
     var ske = avatar.shift();
-    var card = wl.load_scene("uicard",ske,avatar); 
+    var card = wl.load_scene("uicard",ske,avatar);
+    card.setPosition(this.travellercard.getPosition());
     this.rootNode.addChild(card);
+    this.travellercard.removeFromParent();
+    
+    this.lblenemyname.setString(lang(enemysoul.name));
 
     //show reward
     var rewards = wl.parse_skill_params(this.info.reward);
@@ -50,7 +54,7 @@ stageinfo.prototype.onCreate = function(stageid,submapid){
 
         x = x + reward.controller.bg.getContentSize().width;
     }
-    */
+    
 };
 
 stageinfo.prototype.onPressStart = function(){

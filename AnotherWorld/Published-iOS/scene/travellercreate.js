@@ -39,8 +39,7 @@ travellercreate.prototype.onPressNext = function(){
     
      cc.log("traveller create");
     if(USE_CCB || this.captured)
-    {
-       // wl.run_scene("travellername") 
+    { 
        this.traveller_create();
     }
 };

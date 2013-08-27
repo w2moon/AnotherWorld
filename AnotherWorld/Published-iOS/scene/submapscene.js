@@ -1,7 +1,17 @@
 var submapscene = function(){};
 
 submapscene.prototype.onDidLoadFromCCB = function(){
-    this.stageid = 1;
+     
+};
+
+submapscene.prototype.onCreate = function(submapid){
+    this.submapid = submapid;
+    var stages = parse_action_params(submaps[submapid].stages);
+    for(var i in stages){
+        if(!wl.gvars.role.canEnterStage(stages[i])){
+            this["stage"+stages[i]].setVisible(false);
+        }
+    }
 };
 
 submapscene.prototype.onPressStage = function(n){
@@ -9,6 +19,6 @@ submapscene.prototype.onPressStage = function(n){
 };
 
 submapscene.prototype.showStageInfo = function(stageid){
-    var infopage = wl.load_scene("stageinfo",stageid);
+    var infopage = wl.load_scene("stageinfo",stageid,this.submapid);
     this.rootNode.addChild(infopage);
 };

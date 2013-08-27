@@ -3,12 +3,13 @@ var stageinfo = function(){};
 stageinfo.prototype.onDidLoadFromCCB = function(){
 };
 
-stageinfo.prototype.onCreate = function(stageid){
-    this.info = stage[stageid]
+stageinfo.prototype.onCreate = function(stageid,submapid){
+    this.info = stage[stageid];
+    this.submapid = submapid;
 
-    /*
+    
     //show name
-    this.lblname.setString(lang(this.info.name));
+    this.lblstagename.setString(lang(this.info.name));
 
     //show enemy
     this.einfo = null;
@@ -33,8 +34,14 @@ stageinfo.prototype.onCreate = function(stageid){
 
     var enemysoul = soulbase[this.einfo.soulid];
     
-    var card = wl.load_scene("uicard",parse_action_params(enemysoul.avatar)[0]); 
+    var avatar = parse_action_params(enemysoul.avatar);
+    var ske = avatar.shift();
+    var card = wl.load_scene("uicard",ske,avatar);
+    card.setPosition(this.travellercard.getPosition());
     this.rootNode.addChild(card);
+    this.travellercard.removeFromParent();
+    
+    this.lblenemyname.setString(lang(enemysoul.name));
 
     //show reward
     var rewards = wl.parse_skill_params(this.info.reward);
@@ -47,11 +54,25 @@ stageinfo.prototype.onCreate = function(stageid){
 
         x = x + reward.controller.bg.getContentSize().width;
     }
-    */
+    
 };
 
 stageinfo.prototype.onPressStart = function(){
+
+     var msg = wl.msg.create("battle_stage");
+     msg.stage_id = this.info.id;
+     msg.level = 1;
+     msg.submap = this.submapid;
+     wl.http.send(msg,this.on_battle_stage,this);
+
     wl.run_scene(this.info.res,this.info,1);
+};
+
+stageinfo.prototype.on_battle_stage = function(ret){
+    if(ret.rc != retcode.OK ){
+        cc.log("on_traveller_create failed:"+ret.rc);
+        return;
+    }
 };
 
 stageinfo.prototype.onPressCancel = function(){

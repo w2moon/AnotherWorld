@@ -24,6 +24,11 @@ wl.soul.prototype = {
         return rarityclass[this.getBase().rarityclass].maxlevel;
     },
 
+    isEquiped : function(){
+        return this.dbobj.travellerid != 0;
+        
+    },
+
     isNew : function(){ return this.dbobj.isnew == 1;},
     notNew : function(){ this.dbobj.isnew = 0;},
 

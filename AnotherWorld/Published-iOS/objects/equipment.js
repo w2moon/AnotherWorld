@@ -25,6 +25,11 @@ wl.equipment.prototype = {
         return this.getBase().type;
     },
 
+     isEquiped : function(){
+        return this.dbobj.travellerid != 0;
+        
+    },
+
     //////////////////////////
     getBase : function() { return equipmentbase[this.dbobj.baseid];},
     getSkillId : function(){return this.getBase().skillid;},
