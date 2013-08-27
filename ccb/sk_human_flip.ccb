@@ -403,8 +403,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 				<key>seqExpanded</key>
 				<true/>
 			</dict>
@@ -3173,6 +3171,8 @@
 		<string></string>
 		<key>displayName</key>
 		<string>role</string>
+		<key>jsController</key>
+		<string>skeleton</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
