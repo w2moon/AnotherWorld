@@ -327,9 +327,9 @@
 				<key>displayName</key>
 				<string>lleg</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>part8</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -711,9 +711,9 @@
 				<key>displayName</key>
 				<string>rleg</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>part7</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -1500,9 +1500,9 @@
 								<key>displayName</key>
 								<string>rhand</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>part4</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>1</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -1580,9 +1580,9 @@
 						<key>displayName</key>
 						<string>rarm</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>part3</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1742,9 +1742,9 @@
 						<key>displayName</key>
 						<string>body</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>part2</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -2184,9 +2184,9 @@
 								<key>displayName</key>
 								<string>head</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>part1</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>1</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -2252,9 +2252,9 @@
 						<key>displayName</key>
 						<string>face</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>part0</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -2875,9 +2875,9 @@
 								<key>displayName</key>
 								<string>lhand</string>
 								<key>memberVarAssignmentName</key>
-								<string></string>
+								<string>part6</string>
 								<key>memberVarAssignmentType</key>
-								<integer>0</integer>
+								<integer>1</integer>
 								<key>properties</key>
 								<array>
 									<dict>
@@ -2960,9 +2960,9 @@
 						<key>displayName</key>
 						<string>larm</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>part5</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
