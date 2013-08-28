@@ -1,7 +1,7 @@
 var submapscene = function(){};
 
 submapscene.prototype.onDidLoadFromCCB = function(){
-     
+    // this.rootNode.scheduleOnce(function(){this.controller.menu.setHandlerPriority(PRIORITY_MAP);});
 };
 
 submapscene.prototype.onCreate = function(submapid){
@@ -9,6 +9,7 @@ submapscene.prototype.onCreate = function(submapid){
     var stages = parse_action_params(submaps[submapid].stages);
     for(var i in stages){
         if(!wl.gvars.role.canEnterStage(stages[i])){
+            cc.log(stages[i])
             this["stage"+stages[i]].setVisible(false);
         }
     }

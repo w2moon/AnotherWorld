@@ -1,3 +1,3 @@
-id,res,difficulty,stages,trinket
-1,maptrain,1,"1001,1002,1003,1004",1000
-2,mapforest,2,"2001,2002",1001
+id,res,difficulty,needmap,stages,trinket
+1,maptrain,1,0,"1001,1002,1003,1004",1000
+2,mapforest,2,1,"2001,2002",1001

@@ -73,12 +73,12 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
         bar.setPosition(cc.p(this.datapanel.getContentSize().width/2,y));
         this.datapanel.addChild(bar,-1);
         h = h + bar.controller.bg.getContentSize().height;
-        y = y + bar.controller.bg.getContentSize().height;
+        y = y - bar.controller.bg.getContentSize().height;
     }
     this.datapanel.setPosition(cc.p(0,h-this.datapanel.getContentSize().height/2));
 
     
-    this.rootNode.registerWithTouchDispatcher();
+   // this.rootNode.registerWithTouchDispatcher();
      this.rootNode.onTouchesBegan = function( touches, event) {
         this.controller.onTouchesBegan(touches, event);
         return true;

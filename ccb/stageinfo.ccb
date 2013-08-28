@@ -549,7 +549,7 @@
 						<key>type</key>
 						<string>FontTTF</string>
 						<key>value</key>
-						<string>Arial-BoldMT</string>
+						<string>Helvetica</string>
 					</dict>
 					<dict>
 						<key>name</key>

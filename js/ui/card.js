@@ -249,7 +249,7 @@ uicard.prototype.onDidLoadFromCCB = function(){
 
 uicard.prototype.playAnim = function(anim,repeat){
     this.anim = anim;
-    this.repeat = repeat
+    this.repeat = repeat;
     this.skeleton.animationManager.runAnimationsForSequenceNamed(anim);
 };
 
@@ -342,7 +342,6 @@ uicard.prototype.register_event = function(){
             this.playAnim("defense");
          };
           uicard.prototype.on_move = function(){
-            cc.log("moave")
             this.playAnim("move",true);
          };
           uicard.prototype.on_dodge = function(){

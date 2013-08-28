@@ -183,11 +183,13 @@ wl.ccpAdd = function(p1,p2){
 };
 
 wl.set_texture = function(spr,file){
+ if(!USE_CCB){
     var image = new cc.Image();
     image.initWithImageFile(file,1);
     var tex = cc.Texture2D.create();
     tex.initWithImage(image);
     spr.setTexture(tex);
+ }
 };
 
 wl.gvars = {

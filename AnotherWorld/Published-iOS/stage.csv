@@ -1,7 +1,7 @@
-id,name,desc,rolename,rewardfirst,reward,hpcost,levelneed,stageneed,res,temperature,enemy
-1001,STAGE_NAME_1001,STAGE_DESC_1001,ROLE_NAME_1001,"1,addEquip,2;","1,addCopper,10;0.5,addEquip,2;1,lotteryPool,1;",1,0,0,battlescene,fine,"1,1;"
-1002,STAGE_NAME_1002,STAGE_DESC_1002,ROLE_NAME_1002,"1,addEquip,2;","1,addCopper,20;1,lotteryPool,1;",1,0,1001,battlescene,fine,"1,1;2,1;"
-1003,STAGE_NAME_1003,STAGE_DESC_1003,ROLE_NAME_1003,"1,addEquip,2;","1,addCopper,30;1,lotteryPool,1;",1,0,1002,battlescene,fine,"1,1;2,1;1,1;"
-1004,STAGE_NAME_1004,STAGE_DESC_1004,ROLE_NAME_1004,"1,addEquip,2;","1,addCopper,100;0.5,addEquip,2;1,lotteryPool,2;",1,0,1003,battlescene,rain,"1,1;2,1;1,1;1,1;"
-2001,STAGE_NAME_2001,STAGE_DESC_2001,ROLE_NAME_1005,"1,addEquip,2;","1,addCopper,10;1,lotteryPool,2;",1,0,1004,battlescene,fine,"1,1;2,1;1,1;1,1;1,1;"
-2002,STAGE_NAME_2002,STAGE_DESC_2002,ROLE_NAME_1006,"1,addEquip,2;","1,addCopper,100;0.5,addEquip,2;1,lotteryPool,2;",1,0,2001,battlescene,fine,"1,1;2,1;"
+id,name,desc,rolename,rewardfirst,reward,hpcost,levelneed,stageneed,res,temperature,hero,enemy
+1001,STAGE_NAME_1001,STAGE_DESC_1001,ROLE_NAME_1001,"1,addEquip,2;","1,addCopper,10;0.5,addEquip,2;1,lotteryPool,1;",1,0,0,battlescene,fine,"0,0;","1,1;"
+1002,STAGE_NAME_1002,STAGE_DESC_1002,ROLE_NAME_1002,"1,addEquip,2;","1,addCopper,20;1,lotteryPool,1;",1,0,1001,battlescene,fine,"1,1;","1,1;2,1;"
+1003,STAGE_NAME_1003,STAGE_DESC_1003,ROLE_NAME_1003,"1,addEquip,2;","1,addCopper,30;1,lotteryPool,1;",1,0,1002,battlescene,fine,"1,1;","1,1;2,1;1,1;"
+1004,STAGE_NAME_1004,STAGE_DESC_1004,ROLE_NAME_1004,"1,addEquip,2;","1,addCopper,100;0.5,addEquip,2;1,lotteryPool,2;",1,0,1003,battlescene,rain,"1,1;","1,1;2,1;1,1;1,1;"
+2001,STAGE_NAME_2001,STAGE_DESC_2001,ROLE_NAME_1005,"1,addEquip,2;","1,addCopper,10;1,lotteryPool,2;",1,0,1004,battlescene,fine,"1,1;","1,1;2,1;1,1;1,1;1,1;"
+2002,STAGE_NAME_2002,STAGE_DESC_2002,ROLE_NAME_1006,"1,addEquip,2;","1,addCopper,100;0.5,addEquip,2;1,lotteryPool,2;",1,0,2001,battlescene,fine,"1,1;","1,1;2,1;"

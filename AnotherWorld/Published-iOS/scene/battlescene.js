@@ -28,12 +28,15 @@ battlescene.prototype.onDidLoadFromCCB = function()
  cc.log("good")
 };
 
-battlescene.prototype.onCreate = function(info,level)
+battlescene.prototype.onCreate = function(info,result)
 {
     cc.log("battlecreate")
-    this.order_traveller = 1
-    this.order_activate = 2
-    this.info = info
+    this.order_traveller = 1;
+    this.order_activate = 2;
+    this.info = info;
+
+    this.result = result;
+    
 
     var enemies = parse_enemy(this.info.enemy)
     
@@ -41,7 +44,7 @@ battlescene.prototype.onCreate = function(info,level)
     if(enemies.length >=1){
     }
     this.battlefield = wl.load_scene(bfname)
-    this.level = level
+    this.level = result.level;
     this.rootNode.addChild(this.battlefield)
     
 
@@ -49,7 +52,7 @@ battlescene.prototype.onCreate = function(info,level)
     this.functask = new wl.functask();
     this.speeded = false;
     
-    var roles = [wl.gvars.role,new wl.role(wl.role_from_enemy(this.info,enemies,level))];
+    var roles = [wl.gvars.role,new wl.role(wl.role_from_enemy(this.info,enemies,this.level))];
     this.initBattle(roles);
     this.start();
 
