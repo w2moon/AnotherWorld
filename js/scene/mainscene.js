@@ -11,10 +11,19 @@ mainscene.prototype.onDidLoadFromCCB = function(){
     this.exp_bar.setScaleX(wl.gvars.role.getExp()/wl.gvars.role.getMaxExp());
     
     //this.energy_bar.setScaleX();
+    
     this.showmap("mainmap");
     
     
-    
+};
+
+mainscene.prototype.onCreate = function(submapid){
+    if(submapid == null){
+        this.showmap("mainmap");
+    }
+    else{
+        this.onPressSubmap(submapid);
+    }
 };
 
 mainscene.prototype.showmap = function(name){
@@ -25,7 +34,7 @@ mainscene.prototype.showmap = function(name){
         this.submapid = null;
     }
     this.curmap = wl.load_scene(name,this.submapid);
-    this.rootNode.addChild(this.curmap);
+    this.rootNode.addChild(this.curmap,-1);
 };
 
 mainscene.prototype.onPressSubmap = function(submapid){

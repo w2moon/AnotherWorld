@@ -251,13 +251,12 @@ wl.csv_cfg = function(file){
 };
 
 wl.csv_map = function(file){
-    if(USE_CCB){
-        //return {};
-    }
+    
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
     for(var k=1;k<arr.length;++k){
+        
          var obj = {}
          for(var idx in arr[0]){
              obj[arr[0][idx]] = wl.tonumber(arr[k][idx]);
@@ -269,13 +268,14 @@ wl.csv_map = function(file){
 };
 
 wl.csv_idmap = function(file){
-    if(USE_CCB){
-       // return {};
-    }
+    
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
     for(var k=1;k<arr.length;++k){
+        if(arr[k].length == 1 && arr[k][0] == ""){
+            break;
+        }
          var obj = {}
          for(var idx in arr[0]){
               obj[arr[0][idx]] = wl.tonumber(arr[k][idx]);
@@ -287,9 +287,7 @@ wl.csv_idmap = function(file){
 };
 
 wl.csv_object = function(file){
-    if(USE_CCB){
-       // return [];
-    }
+    
     var ret = [];
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)
@@ -399,7 +397,6 @@ wl.load_csv = function( strData, strDelimiter,rowstoread ){
                 
                 
         }
-
         // Return the parsed data.
         return( arrData );
 };

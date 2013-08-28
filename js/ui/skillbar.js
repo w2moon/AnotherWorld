@@ -45,8 +45,8 @@ skillbar.prototype.onCreate = function(skill){
     this.equip.setPosition(this.equip_icon.getPosition());
     this.rootNode.addChild(this.equip)
 
-    this.lblname.setString(this.skill.name);
+    this.lblname.setString(lang(this.skill.name));
    
-    this.desc.setString(this.skill.description);
+    this.desc.setString(lang(this.skill.description));
     this.level.setString("LV"+this.skilllevel);
 };

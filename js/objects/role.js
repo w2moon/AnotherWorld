@@ -31,6 +31,106 @@ wl.empty_role = function(name,userid){
     };
 };
 
+wl.create_equip = function(baseid){
+    return {
+    id:wl.local_id(),
+    baseid : baseid,
+    travellerid : 0,
+    star : 0,
+    exp : 0,
+    level : 1,
+    skillexp : 0,
+    skilllevel : 1
+    };
+};
+
+wl.create_soul = function(baseid){
+    return {
+    id:wl.local_id(),
+    baseid : baseid,
+    travellerid : 0,
+    exp : 0,
+    level : 1,
+    skillexp : 0,
+    skilllevel : 1
+    };
+};
+
+wl.merge_reward = function(ret,lr){
+    ret.equipments.concat(lr.equipments);
+            ret.souls.concat(lr.souls);
+            ret.addexp += lr.addexp;
+            ret.addhp += lr.addhp;
+            ret.addcopper += lr.addcopper;
+            ret.addgold += lr.addgold;
+            ret.addlevel += lr.addlevel;
+            ret.addextrasoulnum += lr.addextrasoulnum;
+            ret.addextraequipmentnum += lr.addextraequipmentnum;
+            ret.addextratravellernum += lr.addextratravellernum;
+};
+
+wl.addReward = function(reward,level){
+    var ret = {
+        addexp:0,
+        addhp:0,
+        addcopper:0,
+        addgold:0,
+        addlevel:0,
+        addextrasoulnum:0,
+        addextraequipmentnum:0,
+        addextratravellernum:0,
+        equipments:[],
+        souls:[]
+    };
+    for(var k in reward){
+        if(wl.rand() >= reward[k][0]){
+            continue;
+        }
+        switch(reward[k][1])
+        {
+        case "addEquip":
+            ret.equipments.push(wl.create_equip(reward[k][2]));
+        break;
+        case "addSoul":
+            ret.souls.push(wl.create_soul(reward[k][2]));
+        break;
+        case "addExp":
+            ret.addexp = ret.addexp + reward[k][2]*level;
+        break;
+         case "addHP":
+            ret.addhp = ret.addhp + reward[k][2];
+        break;
+        case "addCopper":
+            ret.addcopper = ret.addcopper + reward[k][2]*level;
+        break;
+        case "addGold":
+            ret.addgold = ret.addgold + reward[k][2];
+        break;
+        case "addLevel":
+            ret.addlevel = ret.addlevel + reward[k][2];
+        break;
+        case "addExtraSoulNum":
+            ret.addextrasoulnum = ret.addextrasoulnum + reward[k][2];
+        break;
+        case "addExtraEquipmentNum":
+            ret.addextraequipmentnum = ret.addextraequipmentnum + reward[k][2];
+        break;
+        case "addExtraTravellerNum":
+            ret.addextratravellernum = ret.addextratravellernum + reward[k][2];
+        break;
+        case "lotteryPool":
+            var lr = wl.lotteryPool(reward[k][2]);
+            wl.merge_reward(ret,lr);        
+        break;
+        }
+    }
+    return ret;
+};
+
+wl.lotteryPool = function(pid){
+    return wl.addReward(parse_skill_params(lotterypool[pid].pool),1);
+};
+
 wl.tmp_dbrole = function(name){
     return {
         userid:"1",
@@ -268,6 +368,30 @@ wl.role.prototype = {
 
     getHP : function(){return this.dbobj.hp;},
     setHP : function(hp){ this.dbobj.hp = hp;},
+
+    subHP : function(hp) { this.dbobj.hp -= hp;if(this.dbobj.hp < 0){this.dbobj.hp=0;cc.log("subhp < 0:"+hp);}},
+    addHP : function(hp){ this.dboj.hp += hp; if(this.dboj.hp > this.getMaxHP()){this.dbobj.hp = this.getMaxHP()}},
+    addCopper : function(v){ this.dboj.copper += v;},
+    addGold : function(v){ this.dboj.gold += v;},
+    addExp : function(v){
+        this.dbobj.exp += v;
+        while(this.dbobj.exp >= this.getMaxExp()){
+            this.dbobj.exp -= this.getMaxExp();
+            this.dbobj.level += 1;
+        }
+    },
+    addLevel : function(v){
+        this.dbobj.level += v;
+    },
+    addExtraSoulNum : function(v){
+        this.dbobj.extrasoulnum += v;
+    },
+    addExtraEquipmentNum : function(v){
+        this.dbobj.extraequipmentnum += v;
+    },
+    addExtraTravellerNum : function(v){
+        this.dbobj.extratravellernum += v;
+    },
     
     getLevelInfo : function(){return rolelevel[this.getLevel()];},
     getMaxHP : function(){ return this.getLevelInfo().maxhp;},
@@ -367,9 +491,31 @@ wl.role.prototype = {
         }
     },
 
+    isCompleteStage : function(stageid,level){
+        return this.dbobj.stages[stageid] != level;
+    },
+
+    completeStage : function(stageid,stagelevel){
+        var state = COMPLETE_OK;
+        if(this.dbobj.stages[stageid] == null)
+        {
+            state = COMPLETE_FIRST;
+        }
+        else if(this.dbobj.stages[stageid] < stagelevel){
+            state = COMPLETE_LEVEL;
+        }
+        this.dbobj.stages[stageid] = stagelevel;
+
+        return state;
+    },
+
     canEnterSubMap : function(submapid){
         var needmap = submaps[submapid].needmap;
         if(needmap != 0){
+            if(submaps[needmap] == null){
+                cc.log("submap:"+submapid+" not found:"+needmap);
+                return false;
+            }
             var stages = parse_action_params(submaps[needmap].stages);
             for(var k in stages){
                 if(!this.canEnterStage(needmap,stages[k])){
@@ -380,9 +526,12 @@ wl.role.prototype = {
         return true;
     },
 
-    canEnterStage : function(submapid,stageid){
+    canEnterStage : function(stageid){
+        if(stage[stageid] == null){
+            return false;
+        }
         if(stage[stageid].stageneed != 0){
-            return this.dbobj.stages[stage[stageid].stageneed] != null;
+            return this.isCompleteStage(stage[stageid].stageneed);
         }
         return true;
     },
@@ -512,6 +661,14 @@ wl.role.prototype = {
         }
         for(var k in this.equipments){
             if(this.equipments[k].getId() == id){
+                return this.equipments[k];
+            }
+        }
+        return null;
+    },
+    findEquip : function(baseid){
+        for(var k in this.equipments){
+            if(this.equipments[k].getBaseId() == baseid){
                 return this.equipments[k];
             }
         }

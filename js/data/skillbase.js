@@ -99,6 +99,9 @@ var parse_skill_params = function(str){
     var parts = str.split(/;/);
     var arr = [];
     for(var i=0;i<parts.length;++i){
+        if(parts[i]==""){
+            continue;
+        }
         var t = parts[i].split(/,/)
         for(var k=0;k<t.length;++k){
             t[k] = wl.tonumber(t[k]);
