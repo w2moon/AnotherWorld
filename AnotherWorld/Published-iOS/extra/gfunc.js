@@ -54,6 +54,10 @@ wl.parse_reward = function(str){
   
 };
 
+wl.get_scene=function(){
+    return cc.Director.getInstance().getRunningScene().getChildren()[0];
+}
+
 wl.run_scene=function(s){
  var director = cc.Director.getInstance();
  var scene = cc.BuilderReader.loadAsScene(s);
@@ -66,10 +70,7 @@ wl.run_scene=function(s){
  
 
 
- if(s=="battlescene"){
- cc.log(scene.getChildren()[0].controller)
  
- }
   if(arguments.length > 1 && scene.getChildren()[0].controller!=null && scene.getChildren()[0].controller.onCreate){
        
              var args = Array.prototype.slice.call(arguments, 1);

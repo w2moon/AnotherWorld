@@ -251,6 +251,7 @@ uicard.prototype.playAnim = function(anim,repeat){
     this.anim = anim;
     this.repeat = repeat;
     this.skeleton.animationManager.runAnimationsForSequenceNamed(anim);
+    
 };
 
 uicard.prototype.on_animation_finish = function(){
@@ -265,7 +266,7 @@ uicard.prototype.on_animation_finish = function(){
 uicard.prototype.onCreate = function(ske,avatar,img,warrior){
     this.warrior = warrior
   
-    this.register_event();
+    
 
     this.skeleton = wl.load_scene(ske)
     this.rootNode.addChild(this.skeleton)
@@ -276,7 +277,6 @@ uicard.prototype.onCreate = function(ske,avatar,img,warrior){
 
     this.playAnim(this.normalanim,true)
 
-   
     img = "";
          if(!wl.isNoneString(img)){
                var dataimg = new cc.Image();
@@ -305,6 +305,8 @@ uicard.prototype.onCreate = function(ske,avatar,img,warrior){
     if(warrior == null){
         return;
     }
+
+    this.register_event();
 };
 
 uicard.prototype.register_event = function(){
@@ -343,6 +345,7 @@ uicard.prototype.register_event = function(){
          };
           uicard.prototype.on_move = function(){
             this.playAnim("move",true);
+            cc.log("move anim")
          };
           uicard.prototype.on_dodge = function(){
            this.playAnim("dodge");

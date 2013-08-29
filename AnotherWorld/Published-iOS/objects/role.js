@@ -370,14 +370,29 @@ wl.role.prototype = {
     setHP : function(hp){ this.dbobj.hp = hp;},
 
     subHP : function(hp) { this.dbobj.hp -= hp;if(this.dbobj.hp < 0){this.dbobj.hp=0;cc.log("subhp < 0:"+hp);}},
-    addHP : function(hp){ this.dboj.hp += hp; if(this.dboj.hp > this.getMaxHP()){this.dbobj.hp = this.getMaxHP()}},
-    addCopper : function(v){ this.dboj.copper += v;},
-    addGold : function(v){ this.dboj.gold += v;},
+    addHP : function(hp){ this.dbobj.hp += hp; if(this.dbobj.hp > this.getMaxHP()){this.dbobj.hp = this.getMaxHP()}},
+    addCopper : function(v){ this.dbobj.copper += v;},
+    addGold : function(v){ this.dbobj.gold += v;},
     addExp : function(v){
         this.dbobj.exp += v;
-        while(this.dbobj.exp >= this.getMaxExp()){
+        while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL){
             this.dbobj.exp -= this.getMaxExp();
             this.dbobj.level += 1;
+        }
+
+        if(this.dbobj.level >= MAX_ROLE_LEVEL){
+            this.dbobj.exp = 0;
+        }
+
+        for(var i=1;i<SLOT_NUM;++i){
+            var id = this["getSlot"+i]();
+            if(id == 0){
+                continue;
+            }
+            var traveller = this.getTraveller(id);
+            traveller.addExp(v);
+
+            traveller.getSoul().addExp(v);
         }
     },
     addLevel : function(v){
@@ -414,12 +429,12 @@ wl.role.prototype = {
     setLastSeed : function(lastseed){ this.dbobj.lastseed = lastseed;},
 
     getSlot1 : function(){return this.dbobj.slot1;},
+    setSlot1 : function(slot1){ this.dbobj.slot1 = slot1;},
+  
+    getSlot2 : function(){return this.dbobj.slot2;},
     setSlot2 : function(slot2){ this.dbobj.slot2 = slot2;},
 
     getSlot3 : function(){return this.dbobj.slot3;},
-    setSlot1 : function(slot1){ this.dbobj.slot1 = slot1;},
-
-    getSlot2 : function(){return this.dbobj.slot2;},
     setSlot3 : function(slot3){ this.dbobj.slot3 = slot3;},
 
     getSlot4 : function(){return this.dbobj.slot4;},
@@ -448,7 +463,14 @@ wl.role.prototype = {
 
     ////////////////////////////
 
-   
+   getTravellerSlot : function(travellerid){
+        for(var i=1;i<=SLOT_NUM;++i){
+            if(travellerid == this["getSlot"+i]()){
+                return i;
+            }
+        }
+        return null;
+   },
 
     addTraveller : function(dbobj){
         var traveller = this.getTraveller(dbobj.id);

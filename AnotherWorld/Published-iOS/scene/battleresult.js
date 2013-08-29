@@ -8,16 +8,22 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
 {
     this.result = result;
 
-    if(result.virtualhttp && result.rc != clientresult){
-        cc.log("result not same with server");
-        return;
+    if(result.virtualhttp == null ){
+        if(result.rc != clientresult){
+            cc.log("result not same with server");
+            return;
+        }
     }
-    
+    else{
+        result.rc = retcode.BATTLE_RESULT_FAIL;
+    }
+    result.rc = retcode.BATTLE_RESULT_WIN;
     if(result.rc == retcode.BATTLE_RESULT_FAIL){
     //fail
       //  return;
     }
 
+    wl.gvars.role.subHP(info.hpcost);
     var completestate = wl.gvars.role.completeStage(result.stage_id,result.level);
 
     if(result.virtualhttp){
@@ -102,6 +108,7 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
                 continue;
             }
             if(result.virtualhttp){
+                cc.log("copper:"+wl.gvars.role.dbobj)
                 wl.gvars.role.addCopper(result.reward[k]);
             }
             rewards.push([1,"addCopper",result.reward[k]]);
@@ -159,7 +166,9 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         rewards.push([1,"addEquip",result.trinket.baseid]);
     }
 
+    this.rewards = rewards;
      
+     /*
      var x = null;
     var y = 167;
     for(var r in rewards){
@@ -172,6 +181,19 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
 
         x = x + 5+reward.controller.bg.getContentSize().width;
     }
+    */
+
+    if(!USE_CCB){
+        this.rootNode.registerWithTouchDispatcher();
+     }
+     this.rootNode.onTouchesBegan = function( touches, event) {
+        this.controller.onTouchesBegan(touches, event);
+        return true;
+    };
+    this.rootNode.onMouseDown = function( event) {
+        this.controller.onMouseDown(event);
+        return true;
+    };
     
 };
 
@@ -179,5 +201,22 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
 
 battleresult.prototype.onPressOK = function()
 {
-    wl.run_scene("mainscene",this.result.submap);
+    wl.run_scene("mapcontainer",this.result.submap);
+};
+
+battleresult.prototype.onTouchesBegan = function(touches,event)
+{
+	var loc = touches[0].getLocation();
+	this.showNext();
+};
+
+battleresult.prototype.onMouseDown = function(event)
+{
+	var loc = event.getLocation();
+	this.showNext();
+};
+
+battleresult.prototype.showNext = function()
+{
+    wl.run_scene("mapcontainer",this.result.submap);
 };

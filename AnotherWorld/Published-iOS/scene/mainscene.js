@@ -1,5 +1,9 @@
 var mainscene = function(){};
 
+var NORMAL_LAYER = 1;
+var MASK_LAYER = 2;
+var INFO_LAYER = 3;
+
 mainscene.prototype.onDidLoadFromCCB = function(){
        
     this.lbl_name.setString(wl.gvars.role.getName());
@@ -12,40 +16,102 @@ mainscene.prototype.onDidLoadFromCCB = function(){
     
     //this.energy_bar.setScaleX();
     
-    this.showmap("mainmap");
+    for(var i=1;i<=SLOT_NUM;++i){
+        var travellerid = wl.gvars.role["getSlot"+i]();
+        if(travellerid == 0){
+            this["slot"+i].setVisible(false);
+            continue;
+        }
+        this["slot"+i].setVisible(true);
+
+        var traveller = wl.gvars.role.getTraveller(travellerid);
+        this["card"+i] = wl.load_scene("uicard",traveller.getSoul().getSkeleton(),traveller.getSoul().getAvatar(),traveller.getImg());
+        this["card"+i].setPosition(this.menu.convertToWorldSpace(this["slot"+i].getPosition()));
+        this.rootNode.addChild(this["card"+i]);
+
+    }
+    
+    this.maskbg.setZOrder(MASK_LAYER);
+
     
     
 };
 
-mainscene.prototype.onCreate = function(submapid){
-    if(submapid == null){
-        this.showmap("mainmap");
-    }
-    else{
-        this.onPressSubmap(submapid);
+mainscene.prototype.onCreate = function(newtraveller){
+    
+    if(newtraveller != null){
+        var slot = wl.gvars.role.getTravellerSlot(newtraveller.getId());
+        cc.log(slot)
+        cc.log(newtraveller.getId())
+        if(slot != null){
+            this.showSlotInfo(slot,newtraveller);
+        }
     }
 };
 
-mainscene.prototype.showmap = function(name){
-    if(this.curmap != null){
-        this.rootNode.removeChild(this.curmap);
-    }
-    if(name == "mainmap"){
-        this.submapid = null;
-    }
-    this.curmap = wl.load_scene(name,this.submapid);
-    this.rootNode.addChild(this.curmap,-1);
+
+mainscene.prototype.onPressSlot = function(n){
+    this.showSlotInfo(n.getTag());
 };
 
-mainscene.prototype.onPressSubmap = function(submapid){
-    this.submapid = submapid;
-    this.showmap(submaps[submapid].res);
-};
+mainscene.prototype.showSlotInfo = function(slot,newtraveller){
+    this.menu.setEnabled(false);
+    this.maskbg.setVisible(true);
+    
+     var traveller = wl.gvars.role.getTraveller(wl.gvars.role["getSlot"+slot]());
+    var info = wl.load_scene("travellerinfo",traveller,newtraveller);
+    var p1 = this["card"+slot].getPosition();
+    var p2 = info.getContentSize();
+    info.setPosition(cc.p(-p2.width/2,-p2.height/2));
+    this["card"+slot].addChild(info);
+    
+    this["card"+slot].setZOrder(INFO_LAYER);
+    
+    var size = this.rootNode.getContentSize();
+    this["card"+slot].runAction(cc.MoveTo.create(0.2,cc.p(size.width/2,size.height/2)));
+    
+   
+    if(newtraveller){
+        traveller = newtraveller;
+    }
+    this.datapanel = wl.load_scene("datapanel",traveller);
+    this.datapanel.setZOrder(INFO_LAYER);
+    this.rootNode.addChild(this.datapanel);
 
-mainscene.prototype.onShowTraveller = function(n){
-    wl.run_scene("travellerinfo",wl.gvars.role.travellers[0])
+    this.datapanel.setPosition(cc.p(0,-(this.datapanel.controller.dataheader.getContentSize().height/2+size.height/2)));
+    this.datapanel.runAction(cc.MoveTo.create(0.2,cc.p(0,this.datapanel.controller.h-size.height/2)));
 };
 
 mainscene.prototype.onShowMainMap = function(){
-    this.showmap("mainmap");
+    this.rootNode.animationManager.runAnimationsForSequenceNamed("fadeout");
+    this.rootNode.animationManager.setCompletedAnimationCallback(this,this.on_fadeout_finish);
+    
+    for(var i=1;i<=SLOT_NUM;++i){
+        if(this["card"+i] == null){
+            continue;
+        }
+        this["card"+i].controller.playAnim("move",true);
+        var curp = this["card"+i].getPosition();
+        this["card"+i].runAction(cc.MoveTo.create(0.2,cc.p(curp.x+30,curp.y-330)));
+    }
+    
 };
+
+mainscene.prototype.on_fadeout_finish = function(){
+    wl.run_scene("mapcontainer",0);
+};
+
+mainscene.prototype.onTravellerBack = function(slot){
+    this["card"+slot].runAction(cc.MoveTo.create(0.2,this.menu.convertToWorldSpace(this["slot"+slot].getPosition())));
+    this.datapanel.runAction(cc.MoveTo.create(0.2,cc.p(0,-(this.datapanel.controller.dataheader.getContentSize().height/2+this.rootNode.getContentSize().height/2))));
+};
+
+mainscene.prototype.onTravellerModified = function(slot){
+    this["card"+slot].setZOrder(NORMAL_LAYER);
+    
+    this.datapanel.removeFromParent();
+    
+    this.menu.setEnabled(true);
+    this.maskbg.setVisible(false);
+};
+

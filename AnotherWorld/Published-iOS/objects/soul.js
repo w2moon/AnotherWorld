@@ -23,10 +23,25 @@ wl.soul.prototype = {
     getMaxLevel : function(){
         return rarityclass[this.getBase().rarityclass].maxlevel;
     },
+    getMaxExp : function(){
+        return wl.getLevelupExp(this.dbobj.level,this.getBase().rarityclass);
+    },
 
     isEquiped : function(){
         return this.dbobj.travellerid != 0;
         
+    },
+
+    addExp : function(v){
+        this.dbobj.exp += v;
+        while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < this.getMaxLevel()){
+            this.dbobj.exp -= this.getMaxExp();
+            this.dbobj.level += 1;
+        }
+
+        if(this.dbobj.level >= this.getMaxLevel()){
+            this.dbobj.exp = 0;
+        }
     },
 
     isNew : function(){ return this.dbobj.isnew == 1;},

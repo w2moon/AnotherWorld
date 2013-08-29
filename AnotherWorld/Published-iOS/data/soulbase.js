@@ -22,14 +22,22 @@ soulbase = wl.csv_idmap("soulbase.csv");
 
 rolecfg = wl.csv_cfg("rolecfg.csv");
 rolelevel = wl.csv_idmap("rolelevel.csv");
+MAX_ROLE_LEVEL = 0;
+for(var k in rolelevel){
+    MAX_ROLE_LEVEL+=1;
+}
 
 rarityclass = wl.csv_idmap("rarityclass.csv");
 
 travellerbase = wl.csv_idmap("travellerbase.csv");
 travellerskill = wl.csv_idmap("travellerskill.csv");
 
-lotterypool = wl.csv_pool("lotterypool.csv");
+lotterypool = wl.csv_idmap("lotterypool.csv");
 submaps = wl.csv_idmap("submaps.csv");
 enemy = wl.csv_idmap("enemy.csv");
 
 stage = wl.csv_idmap("stage.csv");
+
+wl.getLevelupExp = function(curlevel,rarity){
+    return curlevel + curlevel*curlevel*rarity;
+};

@@ -116,7 +116,7 @@ equipbar.prototype.onPressTakeOff = function(){
         break;
         }
 
-    wl.run_scene("travellerinfo",this.oldtraveller,this.traveller);
+    wl.run_scene("mainscene",this.traveller);
 };
 
 equipbar.prototype.onPressPutOn = function(){
@@ -143,5 +143,5 @@ equipbar.prototype.onPressPutOn = function(){
         break;
         }
 
-    wl.run_scene("travellerinfo",this.oldtraveller,this.traveller);
+    wl.run_scene("mainscene",this.traveller);
 };
