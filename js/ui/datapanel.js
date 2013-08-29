@@ -17,8 +17,8 @@ datapanel.prototype.onCreate = function(traveller){
     this.lblheal.setString(this.traveller.getProperty("Heal"));
 
     var skills = this.traveller.getSkills();
-    this.h = 5;
-    var y = this.dataheader.getPosition().y - this.dataheader.getContentSize().height/2;
+    this.h = 10;
+    var y = this.dataheader.getPosition().y - this.dataheader.getContentSize().height/2-5;
     
     for(var k in skills){
         var bar = wl.load_scene("skillbar",skills[k]);
@@ -27,5 +27,4 @@ datapanel.prototype.onCreate = function(traveller){
         this.h += bar.controller.bg.getContentSize().height;
         y = y - bar.controller.bg.getContentSize().height;
     }
-   // this.datapanel.setPosition(cc.p(0,h-this.datapanel.getContentSize().height/2));
 };

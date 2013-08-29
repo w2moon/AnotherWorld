@@ -63,8 +63,7 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
     }
 
     
-    this.datapanel = wl.load_scene("datapanel",this.traveller);
-    this.rootNode.addChild(this.datapanel);
+    
 
     
 
@@ -163,6 +162,14 @@ travellerinfo.prototype.on_traveller_modify = function(ret){
 };
 
 travellerinfo.prototype.close = function(){
-    wl.get_scene().controller.onTravellerModified();
+    
+    this.rootNode.animationManager.runAnimationsForSequenceNamed("popin");
+    this.rootNode.animationManager.setCompletedAnimationCallback(this,this.on_fadeout_finish);
+   
+    wl.get_scene().controller.onTravellerBack(wl.gvars.role.getTravellerSlot(this.traveller.getId()));
+};
+
+travellerinfo.prototype.on_fadeout_finish = function(){
+    wl.get_scene().controller.onTravellerModified(wl.gvars.role.getTravellerSlot(this.traveller.getId()));
     this.rootNode.removeFromParent();
 };

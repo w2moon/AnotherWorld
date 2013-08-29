@@ -8,8 +8,8 @@
  wl.actionbase.move_to = function(from,posdes){
 
     from.moveTo(posdes);
-    from.getUI().runAction(cc.MoveTo.create(MOVE_INTERVAL,posdes))
-    
+  from.getUI().runAction(cc.MoveTo.create(MOVE_INTERVAL,posdes));
+  
     return MOVE_INTERVAL;
  };
 
