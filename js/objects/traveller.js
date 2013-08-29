@@ -40,6 +40,21 @@ wl.traveller.prototype = {
     getImg : function(){return this.dbobj.img;},
     setImg : function(v){ this.dbobj.img = v;},
 
+    addExp : function(v){
+        this.dbobj.exp += v;
+        while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL){
+            this.dbobj.exp -= this.getMaxExp();
+            this.dbobj.level += 1;
+        }
+
+        if(this.dbobj.level >= MAX_ROLE_LEVEL){
+            this.dbobj.exp = 0;
+        }
+    },
+
+    getLevelInfo : function(){return rolelevel[this.getLevel()];},
+    getMaxExp : function(){ return this.getLevelInfo().maxexp;},
+
     isEquiped : function(eid){
          for(var i=0;i<EQUIP_NUM;++i)
         {

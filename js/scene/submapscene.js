@@ -8,15 +8,16 @@ submapscene.prototype.onCreate = function(submapid){
     this.submapid = submapid;
     var stages = parse_action_params(submaps[submapid].stages);
     for(var i in stages){
-        if(!wl.gvars.role.canEnterStage(stages[i])){
-            cc.log(stages[i])
-            this["stage"+stages[i]].setVisible(false);
+        if(wl.gvars.role.canEnterStage(stages[i])){
+            this["stage"+stages[i]].setVisible(true);
         }
     }
 };
 
 submapscene.prototype.onPressStage = function(n){
-    this.showStageInfo(n.getTag())
+    this.rootNode.getParent().controller.menu.setEnabled(false);
+    this.menu.setEnabled(false);
+    this.showStageInfo(n.getTag());
 };
 
 submapscene.prototype.showStageInfo = function(stageid){

@@ -47,6 +47,7 @@ require("ui/create_ui.js");
 require("ui/skillbar.js");
 require("ui/equipbar.js");
 require("ui/rewardslot.js");
+require("ui/datapanel.js");
 
 require("state/normal.js");
 require("state/start.js");
@@ -54,6 +55,7 @@ require("state/newturn.js");
 require("state/action.js");
 require("state/endturn.js");
 require("state/finish.js");
+require("state/anim.js");
 
 require("scene/loginscene.js");
 require("scene/battlescene.js");
@@ -68,3 +70,4 @@ require("scene/travellermodify.js");
 require("scene/travellername.js");
 require("scene/travellerinfo.js");
 require("scene/equipchoose.js");
+require("scene/mapcontainer.js");

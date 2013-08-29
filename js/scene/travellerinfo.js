@@ -21,19 +21,17 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
   
 
 
-    this.lblhp.setString(this.traveller.getProperty("MaxHP"));
-    this.lblattack.setString(this.traveller.getProperty("Attack"));
-    this.lbldefense.setString(this.traveller.getProperty("Defense"));
-    this.lblheal.setString(this.traveller.getProperty("Heal"));
+    
 
- 
+ /*
     var card = wl.load_scene("uicard",this.traveller.getSoul().getSkeleton(),this.traveller.getSoul().getAvatar(),this.traveller.getImg()); 
     card.setPosition(this.travellercard.getPosition());
     this.rootNode.addChild(card);
-
+    
 
     this.travellercard.removeFromParent();
-    
+    */
+
     if(this.traveller.getSoulId() != 0){
         var soul = cc.Sprite.create(this.traveller.getSoul().getBase().icon);
         soul.setPosition(cc.p(this.soul_mask.getContentSize().width/2,this.soul_mask.getContentSize().height/2));
@@ -64,21 +62,15 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
         this.trinket_mask.addChild(equip);
     }
 
-    var skills = this.traveller.getSkills();
-    var h = 5;
-    var y = this.dataheader.getPosition().y - this.dataheader.getContentSize().height/2;
     
-    for(var k in skills){
-        var bar = wl.load_scene("skillbar",skills[k]);
-        bar.setPosition(cc.p(this.datapanel.getContentSize().width/2,y));
-        this.datapanel.addChild(bar,-1);
-        h = h + bar.controller.bg.getContentSize().height;
-        y = y - bar.controller.bg.getContentSize().height;
-    }
-    this.datapanel.setPosition(cc.p(0,h-this.datapanel.getContentSize().height/2));
+    this.datapanel = wl.load_scene("datapanel",this.traveller);
+    this.rootNode.addChild(this.datapanel);
 
     
-   // this.rootNode.registerWithTouchDispatcher();
+
+    if(!USE_CCB){
+     this.rootNode.registerWithTouchDispatcher();
+     }
      this.rootNode.onTouchesBegan = function( touches, event) {
         this.controller.onTouchesBegan(touches, event);
         return true;
@@ -152,7 +144,7 @@ travellerinfo.prototype.onApply = function(){
         wl.http.send(msg,this.on_traveller_modify,this);
      }
      else{
-        wl.run_scene("mainscene");
+        this.close();
      }
 };
 
@@ -160,10 +152,17 @@ travellerinfo.prototype.onApply = function(){
 travellerinfo.prototype.on_traveller_modify = function(ret){
     if(ret.rc == retcode.OK){
         wl.gvars.role.addTraveller(ret.traveller);
-        wl.run_scene("mainscene");
+        
+
+        this.close();
     }
     else{
         cc.log("traveller modify fail:"+ret.rc)
     }
     
+};
+
+travellerinfo.prototype.close = function(){
+    wl.get_scene().controller.onTravellerModified();
+    this.rootNode.removeFromParent();
 };

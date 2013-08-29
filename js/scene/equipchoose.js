@@ -15,7 +15,7 @@ equipchoose.prototype.onCreate = function(slot,oldtraveller,traveller){
 };
 
 equipchoose.prototype.onPressBack = function(){
-    wl.run_scene("travellerinfo",this.oldtraveller,this.traveller);
+    wl.run_scene("mainscene",this.traveller);
 };
 
 equipchoose.prototype.onPressOrder = function(){

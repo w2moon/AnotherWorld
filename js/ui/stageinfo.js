@@ -96,5 +96,7 @@ stageinfo.prototype.on_battle_stage = function(ret){
 };
 
 stageinfo.prototype.onPressCancel = function(){
+    this.rootNode.getParent().controller.menu.setEnabled(true);
+    this.rootNode.getParent().getParent().controller.menu.setEnabled(true);
     this.rootNode.removeFromParent()
 };
