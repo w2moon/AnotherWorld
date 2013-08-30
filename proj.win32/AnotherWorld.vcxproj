@@ -317,6 +317,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\scene\loginscene.js" />
     <None Include="..\js\scene\mainmap.js" />
     <None Include="..\js\scene\mainscene.js" />
+    <None Include="..\js\scene\mapcontainer.js" />
     <None Include="..\js\scene\pvpscene.js" />
     <None Include="..\js\scene\questscene.js" />
     <None Include="..\js\scene\storescene.js" />
@@ -345,9 +346,12 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\state\start.js" />
     <None Include="..\js\ui\card.js" />
     <None Include="..\js\ui\create_ui.js" />
+    <None Include="..\js\ui\datapanel.js" />
     <None Include="..\js\ui\equipbar.js" />
     <None Include="..\js\ui\indicator.js" />
     <None Include="..\js\ui\loading.js" />
+    <None Include="..\js\ui\resultlevelup.js" />
+    <None Include="..\js\ui\resultreward.js" />
     <None Include="..\js\ui\rewardslot.js" />
     <None Include="..\js\ui\skillbar.js" />
     <None Include="..\js\ui\stageinfo.js" />

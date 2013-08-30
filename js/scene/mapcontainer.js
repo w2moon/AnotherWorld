@@ -24,6 +24,7 @@ mapcontainer.prototype.showmap = function(name){
         this.submapid = 0;
     }
     this.curmap = wl.load_scene(name,this.submapid);
+
     this.rootNode.addChild(this.curmap,-1);
 };
 

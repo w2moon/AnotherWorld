@@ -18,6 +18,24 @@ wl.popmsg = function(msg){
     cc.log(msg);
 };
 
+wl.clipping_layer = function(w,h){
+    if(cc.ClippingNode == null){
+        return cc.Layer.create();
+    }
+    var clipper = cc.ClippingNode.create();
+    clipper.setContentSize(cc.size(w,h));
+
+    var drawnode = cc.DrawNode.create();
+    var rect = [cc.p(0,0),cc.p(w,0),cc.p(w,h),cc.p(0,h)];
+
+    var white = cc.c4f(1,1,1,1);
+    drawnode.drawPoly(rect,white,1,white);
+    clipper.setStencil(drawnode);
+
+
+    return clipper;
+}
+
 wl.filter_rate = function(arr){
     var r = 0;
     var todelete = []

@@ -48,6 +48,8 @@ require("ui/skillbar.js");
 require("ui/equipbar.js");
 require("ui/rewardslot.js");
 require("ui/datapanel.js");
+require("ui/resultreward.js");
+require("ui/resultlevelup.js");
 
 require("state/normal.js");
 require("state/start.js");

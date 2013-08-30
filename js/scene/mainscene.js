@@ -29,6 +29,17 @@ mainscene.prototype.onDidLoadFromCCB = function(){
         this["card"+i].setPosition(this.menu.convertToWorldSpace(this["slot"+i].getPosition()));
         this.rootNode.addChild(this["card"+i]);
 
+        
+        info={traveller:traveller,pro:[{level:1,hp:10,attack:10,defense:10,heal:10,startexp:20,maxexp:100,endexp:100},{level:2,hp:11,attack:11,defense:11,heal:11,startexp:0,maxexp:200,endexp:200},{level:3,hp:12,attack:12,defense:12,heal:12,startexp:0,maxexp:100,endexp:50}]}
+        var t = wl.load_scene("resultreward",info);
+        var c = this.rootNode.getContentSize();
+        t.setPosition(cc.p(c.width/2,c.height/2));
+        t.controller.playAnim();
+        this.rootNode.addChild(t);
+
+      //  this.rootNode.scheduleOnce(function(){t.controller.endAnim();},1);
+        
+
     }
     
     this.maskbg.setZOrder(MASK_LAYER);

@@ -296,6 +296,18 @@
     <None Include="..\js\scene\mainmap.js">
       <Filter>js\scene</Filter>
     </None>
+    <None Include="..\js\scene\mapcontainer.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\datapanel.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\resultreward.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\resultlevelup.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
