@@ -246,11 +246,12 @@ battleresult.prototype.showNext = function()
     var s = this.clip.getContentSize();
     while(this.idx < this.exppro.traveller.length && this.exppro.traveller[this.idx] != null){
         if(this.exppro.traveller[this.idx].pro.length >= 2){
-            var scene = wl.load_scene("resultlevelup",this.exppro.traveller[this.idx]);
-            scene.controller.playAnim();
-            scene.setPosition(cc.p(s.width/2,s.height/2));
-            this.clip.addChild(scene);
-            this.prescene = scene;
+            this.prescene = wl.load_scene("resultlevelup",this.exppro.traveller[this.idx]);
+          //  this.prescene.controller.playAnim();
+            this.prescene.setPosition(cc.p(s.width/2,s.height/2));
+            this.clip.addChild(this.prescene);
+
+            this.prescene.runAction(cc.Sequence(cc.MoveTo.create(0.4,cc.p(s.width*3/2,s.height/2)),cc.CallFunc.create(function(scene){scene.controller.playAnim();},this.prescene)));
 
             this.idx += 1;
             return;
@@ -259,10 +260,11 @@ battleresult.prototype.showNext = function()
         this.idx += 1;
     }
     
-     var scene = wl.load_scene("resultreward",this.exppro);
-     scene.controller.playAnim();
-     scene.setPosition(cc.p(s.width/2,s.height/2));
-     this.clip.addChild(scene);
-     this.prescene = scene;
+     this.prescene = wl.load_scene("resultreward",this.exppro);
+     this.prescene.controller.playAnim();
+     this.prescene.setPosition(cc.p(s.width/2,s.height/2));
+      this.prescene.runAction(cc.Squence(cc.MoveTo.create(0.4,cc.p(s.width*3/2,s.height/2)),cc.CallFunc.create(function(scene){scene.controller.playAnim();},this.prescene)));
+
+     this.clip.addChild(this.prescene);
      this.ended = true;
 };
