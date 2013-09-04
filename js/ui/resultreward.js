@@ -29,7 +29,10 @@ resultreward.prototype.onCreate = function(info){
 
 resultreward.prototype.playAnim = function(){
     this.elapsetime = 0;
-    this.endpercent = info.pro[this.idx].endexp/info.pro[this.idx].maxexp;
+    if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
+                this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
+           }
+    this.endpercent = this.info.pro[this.idx].endexp/this.info.pro[this.idx].maxexp;
     this.rootNode.update = function(dt){ this.controller.step(dt);};
     this.rootNode.scheduleUpdate();
 };
@@ -60,7 +63,9 @@ resultreward.prototype.endAnim = function(){
         
            
            this.idx = this.info.pro.length - 1;
-           
+           if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
+                this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
+           }
             this.expbar.setScaleX(this.info.pro[this.idx].endexp/this.info.pro[this.idx].maxexp);
             this.lblexp.setString(this.info.pro[this.idx].endexp+"/"+this.info.pro[this.idx].maxexp);
 
@@ -81,6 +86,7 @@ resultreward.prototype.step = function(dt){
 
 
         this.idx += 1;
+        this.rootNode.unscheduleUpdate();
         
         if(this.endpercent>=1){
         if(this.idx == 1){
@@ -112,7 +118,7 @@ resultreward.prototype.step = function(dt){
             this.showMainReward();
             this.showNormalReward();
         }
-        this.rootNode.unscheduleUpdate();
+        
 
     }
 };
@@ -124,14 +130,76 @@ resultreward.prototype.changeNextLevel = function(){
 
 resultreward.prototype.continueAnim = function(){
     this.elapsetime = 0;
-    this.endpercent = info.pro[this.idx].endexp/info.pro[this.idx].maxexp;
+    if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
+                this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
+           }
+    this.endpercent = this.info.pro[this.idx].endexp/this.info.pro[this.idx].maxexp;
     this.rootNode.scheduleUpdate();
 };
 
+var repr = ["addGold","addSoul","addEquip"];
+
 resultreward.prototype.showMainReward = function(){
+   
+    var img = null;
+    var text = "";
+
+    var ridx = this.info.rewards.length;
+    for(var r in this.info.rewards){
+        var  cidx = repr.indexOf(this.info.rewards[r][1]);
+        if(cidx != -1 && cidx < ridx){
+            ridx = cidx;
+            switch(this.info.rewards[r][1])
+            {
+                case "addGold":
+                    img = "mainscene/MM_diamond.png";
+                    text = ""+this.info.rewards[r][2];
+                break;
+                case "addEquip":
+                    img = equipmentbase[this.info.rewards[r][2]].icon;
+                    text = lang(equipmentbase[this.info.rewards[r][2]].name);
+                break;
+                case "addSoul":
+                    img = soulbase[this.info.rewards[r][2]].icon;
+                    text = lang(soulbase[this.info.rewards[r][2]].name);
+                break;
+                default:
+                    cc.log("rewardresult main error type:"+this.info.rewards[r][1]);
+                return;
+            }
+        }
+    }
+    if(ridx == this.info.rewards.length){
+        return;
+    }
+    this.info.rewards.splice(ridx,1);
+    this.hasmainreward = true;
+        var spr = cc.Sprite.create(img);
+        var lbl = cc.LabelTTF.create(text,"",12);
+
+        var p = this.diamond.getPosition();
+        spr.setPosition(p);
+        spr.setScale(2);
+        p.x += spr.getContentSize().width*spr.getScaleX();
+        lbl.setPosition(p);
+        this.rootNode.addChild(spr);
+        this.rootNode.addChild(lbl);
 };
 
 resultreward.prototype.showNormalReward = function(){
-    for(var k in this.info.rewards){
+    var y = this.item.getPosition().y;
+    var x = null;
+    if(this.hasmainreward == null){
+        y = this.diamond.getPosition().y;
+    }
+     for(var r in this.info.rewards){
+        var reward = wl.load_scene("rewardslot",this.info.rewards[r][1],wl.tonumber(this.info.rewards[r][2]));
+        if(x == null){
+            x =  - (this.info.rewards.length-1)*(5+reward.controller.bg.getContentSize().width)/2;
+        }
+        reward.setPosition(cc.p(x,y));
+        this.rootNode.addChild(reward);
+
+        x = x + 5+reward.controller.bg.getContentSize().width;
     }
 };

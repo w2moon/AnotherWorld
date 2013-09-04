@@ -40,6 +40,9 @@ resultlevelup.prototype.onCreate = function(info){
 
 resultlevelup.prototype.playAnim = function(){
     this.elapsetime = 0;
+    if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
+                this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
+           }
     this.endpercent = info.pro[this.idx].endexp/info.pro[this.idx].maxexp;
     this.rootNode.update = function(dt){ this.controller.step(dt);};
     this.rootNode.scheduleUpdate();
@@ -83,7 +86,9 @@ resultlevelup.prototype.endAnim = function(){
             this.lbladdattack.setString("+"+(this.info.pro[this.idx].attack - this.info.pro[0].attack));
             this.lbladddefense.setString("+"+(this.info.pro[this.idx].defense - this.info.pro[0].defense));
             this.lbladdheal.setString("+"+(this.info.pro[this.idx].heal - this.info.pro[0].heal));
-
+            if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
+                this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
+           }
             this.expbar.setScaleX(this.info.pro[this.idx].endexp/this.info.pro[this.idx].maxexp);
 
             return false;
@@ -148,6 +153,9 @@ resultlevelup.prototype.changeNextLevel = function(){
 
 resultlevelup.prototype.continueAnim = function(){
     this.elapsetime = 0;
+    if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
+                this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
+           }
     this.endpercent = info.pro[this.idx].endexp/info.pro[this.idx].maxexp;
     this.rootNode.scheduleUpdate();
 }
