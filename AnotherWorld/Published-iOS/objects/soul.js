@@ -32,16 +32,36 @@ wl.soul.prototype = {
         
     },
 
+     getProperty : function(name){
+       
+         return parseInt(soul.getBase()[name]*(1+soul.getStar()*0.1)*(soul.getLevel()/soul.getMaxLevel()));
+        
+    },
+
     addExp : function(v){
+        var pro = []
+           pro.push({level:this.dbobj.level,startexp:this.dbobj.exp,maxexp:this.getMaxExp(),endexp:this.dbobj.exp+v,hp:getProperty("MaxHP"),attack:getProperty("Attack"),defense:getProperty("Defense"),heal:getProperty("Heal")});
+       
         this.dbobj.exp += v;
         while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < this.getMaxLevel()){
             this.dbobj.exp -= this.getMaxExp();
             this.dbobj.level += 1;
+
+             pro[pro.length-1].endexp = 0;
+                
+                if(this.dbobj.level == MAX_ROLE_LEVEL){
+                    pro.push({level:this.dbobj.level,startexp:0,maxexp:0,endexp:0,hp:getProperty("MaxHP"),attack:getProperty("Attack"),defense:getProperty("Defense"),heal:getProperty("Heal")});
+                }
+                else{
+                    pro.push({level:this.dbobj.level,startexp:0,maxexp:this.getMaxExp(),endexp:this.dbobj.exp,hp:getProperty("MaxHP"),attack:getProperty("Attack"),defense:getProperty("Defense"),heal:getProperty("Heal")});
+                }
         }
 
         if(this.dbobj.level >= this.getMaxLevel()){
             this.dbobj.exp = 0;
         }
+
+        return pro;
     },
 
     isNew : function(){ return this.dbobj.isnew == 1;},

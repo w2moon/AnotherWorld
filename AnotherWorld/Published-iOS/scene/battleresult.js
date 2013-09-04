@@ -56,11 +56,11 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
          }
     }
     else{
-        wl.gvars.role.setHP(result.reward.hp);
+        //wl.gvars.role.setHP(result.reward.hp);
         wl.gvars.role.setCopper(result.reward.copper);
         wl.gvars.role.setGold(result.reward.gold);
-        wl.gvars.role.setExp(result.reward.exp);
-        wl.gvars.role.setLevel(result.reward.level);
+       // wl.gvars.role.setExp(result.reward.exp);
+       // wl.gvars.role.setLevel(result.reward.level);
         wl.gvars.role.setExtraSoulNum(result.reward.extrasoulnum);
         wl.gvars.role.setExtraEquipmentNum(result.reward.extraequipmentnum);
         wl.gvars.role.setExtraTravellerNum(result.reward.extratravellernum);
@@ -68,9 +68,9 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
 
     
     
-    
     var rewards = [];
     for(var k in result.reward){
+      
         switch(k)
         {
         case "equipments":
@@ -86,12 +86,14 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
             }
         break;
         case "addexp":
+       // cc.log("c "+result.reward[k] )
             if(result.reward[k] == 0){
-                continue;
+                //continue;
             }
-            if(result.virtualhttp){
-                wl.gvars.role.addExp(result.reward[k]);
-            }
+           // if(result.virtualhttp){
+           cc.log("dooo")
+             this.exppro = wl.gvars.role.addExp(result.reward[k]);
+           // }
             rewards.push([1,"addExp",result.reward[k]]);
         break;
         case "addhp":
@@ -166,7 +168,10 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         rewards.push([1,"addEquip",result.trinket.baseid]);
     }
 
-    this.rewards = rewards;
+   
+
+    this.exppro.rewards = rewards;
+    this.idx = 0;
      
      /*
      var x = null;
@@ -194,6 +199,8 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         this.controller.onMouseDown(event);
         return true;
     };
+
+    this.showNext();
     
 };
 
@@ -218,5 +225,46 @@ battleresult.prototype.onMouseDown = function(event)
 
 battleresult.prototype.showNext = function()
 {
-    wl.run_scene("mapcontainer",this.result.submap);
+    if(this.ended){
+        wl.run_scene("mapcontainer",this.result.submap);
+        return;
+    }
+    if(this.clip == null){
+        var csize = this.bg.getContentSize();
+        this.clip = wl.clipping_layer(csize.width,csize.height);
+        this.clip.setPosition(-csize.width/2,-csize.height/2)
+        this.rootNode.addChild(this.clip);
+    }
+    if(this.prescene){
+        if(!this.prescene.controller.endAnim()){
+            return;
+        }
+        this.prescene.removeFromParent();
+        this.prescene = null;
+    }
+
+    var s = this.clip.getContentSize();
+    while(this.idx < this.exppro.traveller.length && this.exppro.traveller[this.idx] != null){
+        if(this.exppro.traveller[this.idx].pro.length >= 2){
+            this.prescene = wl.load_scene("resultlevelup",this.exppro.traveller[this.idx]);
+          //  this.prescene.controller.playAnim();
+            this.prescene.setPosition(cc.p(s.width*3/2,s.height/2));
+            this.clip.addChild(this.prescene);
+
+            this.prescene.runAction(cc.Sequence(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.playAnim,this)));
+
+            this.idx += 1;
+            return;
+        
+        }
+        this.idx += 1;
+    }
+    
+     this.prescene = wl.load_scene("resultreward",this.exppro);
+     this.prescene.controller.playAnim();
+     this.prescene.setPosition(cc.p(s.width*3/2,s.height/2));
+      this.prescene.runAction(cc.Sequence(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.playAnim,this)));
+
+     this.clip.addChild(this.prescene);
+     this.ended = true;
 };

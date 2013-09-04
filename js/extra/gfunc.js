@@ -19,7 +19,7 @@ wl.popmsg = function(msg){
 };
 
 wl.clipping_layer = function(w,h){
-    if(cc.ClippingNode == null){
+    if(USE_CCB){
         return cc.Layer.create();
     }
     var clipper = cc.ClippingNode.create();

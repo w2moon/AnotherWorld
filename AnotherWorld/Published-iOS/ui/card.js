@@ -247,10 +247,20 @@ var uicard = function(){};
 uicard.prototype.onDidLoadFromCCB = function(){
 };
 
-uicard.prototype.playAnim = function(anim,repeat){
+uicard.prototype.stopAnim = function(){
+    this.skeleton.animationManager.runAnimationsForSequenceNamed(this.normalanim);
+    this.repeat = null;
+};
+
+uicard.prototype.playAnim = function(anim,repeat,duration){
     this.anim = anim;
     this.repeat = repeat;
     this.skeleton.animationManager.runAnimationsForSequenceNamed(anim);
+
+    if(duration != null){
+        this.stopaction = cc.Sequence.create(cc.DelayTime.create(duration),cc.CallFunc.create(this.stopAnim,this));
+        this.rootNode.runAction(this.stopaction);
+    }
     
 };
 
@@ -344,7 +354,7 @@ uicard.prototype.register_event = function(){
             this.playAnim("defense");
          };
           uicard.prototype.on_move = function(){
-            this.playAnim("move",true);
+            this.playAnim("move",true,MOVE_INTERVAL);
             cc.log("move anim")
          };
           uicard.prototype.on_dodge = function(){

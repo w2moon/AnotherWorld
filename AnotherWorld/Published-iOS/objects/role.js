@@ -374,10 +374,24 @@ wl.role.prototype = {
     addCopper : function(v){ this.dbobj.copper += v;},
     addGold : function(v){ this.dbobj.gold += v;},
     addExp : function(v){
+        var pro = {};
+               pro.pro = [{level:this.dbobj.level,startexp:this.dbobj.exp,maxexp:this.getMaxExp(),endexp:this.dbobj.exp+v}];
+               pro.traveller = [];
+        
         this.dbobj.exp += v;
+        
         while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL){
             this.dbobj.exp -= this.getMaxExp();
             this.dbobj.level += 1;
+
+                pro.pro[pro.pro.length-1].endexp = 0;
+                
+                if(this.dbobj.level == MAX_ROLE_LEVEL){
+                    pro.pro.push({level:this.dbobj.level,startexp:0,maxexp:0,endexp:0});
+                }
+                else{
+                    pro.pro.push({level:this.dbobj.level,startexp:0,maxexp:this.getMaxExp(),endexp:this.dbobj.exp});
+                }
         }
 
         if(this.dbobj.level >= MAX_ROLE_LEVEL){
@@ -390,10 +404,14 @@ wl.role.prototype = {
                 continue;
             }
             var traveller = this.getTraveller(id);
-            traveller.addExp(v);
 
-            traveller.getSoul().addExp(v);
+            var soul = traveller.getSoul().addExp(v);
+            pro.traveller.push(traveller.addExp(v));
+
+            pro.traveller[pro.traveller.length-1].soul = soul;
         }
+
+        return pro;
     },
     addLevel : function(v){
         this.dbobj.level += v;
@@ -410,7 +428,7 @@ wl.role.prototype = {
     
     getLevelInfo : function(){return rolelevel[this.getLevel()];},
     getMaxHP : function(){ return this.getLevelInfo().maxhp;},
-    getMaxExp : function(){ return this.getLevelInfo().maxexp;},
+    getMaxExp : function(){ return this.getLevelInfo().exp;},
     
     getMaxSoulNum : function(){return this.getExtraSoulNum() + this.getLevelInfo().maxsoulnum;},
     getMaxEquipNum : function(){return this.getExtraEquipmentNum() + this.getLevelInfo().maxequipnum;},

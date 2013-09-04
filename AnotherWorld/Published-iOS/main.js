@@ -79,6 +79,8 @@ require("ui/datapanel.js");
 require("ui/equipbar.js");
 require("ui/indicator.js");
 require("ui/loading.js");
+require("ui/resultlevelup.js");
+require("ui/resultreward.js");
 require("ui/rewardslot.js");
 require("ui/skillbar.js");
 require("ui/stageinfo.js");
