@@ -308,6 +308,18 @@
     <None Include="..\js\ui\resultlevelup.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\scene\starupsoul.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\combinesoul.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\equipmake.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\scene\equipstarup.js">
+      <Filter>js\scene</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

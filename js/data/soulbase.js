@@ -41,3 +41,114 @@ stage = wl.csv_idmap("stage.csv");
 wl.getLevelupExp = function(curlevel,rarity){
     return curlevel + curlevel*curlevel*rarity;
 };
+
+
+var combineid = {};
+
+var combineidex = {};
+
+var combinerace = {};
+
+var combineraceex = {};
+
+var mutation = {};
+
+for(var k in soulbase){
+    var info = soulbase[k];
+    if(info['canmutate'] == 1){
+        if (mutation[info['rarityclass']] == null){
+            mutation[info['rarityclass']] = [];
+        }
+        mutation[info['rarityclass']].push(k);
+    }
+
+    if(info['fatherid'] != 0){
+        if(combineid[info['fatherid']] == null){
+            combineid[info['fatherid']] = {'mapid':{},'maptype':{}};
+        }
+        if(info['motherid'] != 0){
+            combineid[info['fatherid']]['mapid'][info['motherid']] = info['id'];
+        }
+        else{
+            combineid[info['fatherid']]['maptype'][info['motherrace']] = info['id'];
+        }
+    }    
+        
+    if(info['fatherrace'] != 0){
+        if (combinerace[info['fatherrace']] == null){
+            combinerace[info['fatherrace']] = {'mapid':{},'maptype':{}};
+        }
+        if (info['motherid'] != 0){
+            combinerace[info['fatherrace']]['mapid'][info['motherid']] = info['id'];
+        }
+        else{
+            combinerace[info['fatherrace']]['maptype'][info['motherrace']] = info['id'];
+        }
+    }
+            
+    if(info['motherid'] != 0){
+        if (combineidex[info['motherid']]){
+            combineidex[info['motherid']] = {'mapid':{},'maptype':{}};
+        }
+        if(info['fatherid'] != 0){
+            combineidex[info['motherid']]['mapid'][info['fatherid']] = info['id'];
+        }
+        else{
+            combineidex[info['motherid']]['maptype'][info['fatherrace']] = info['id'];
+        }
+    }
+    
+    if(info['motherrace'] != 0){
+        if(combineraceex[info['motherrace']]){
+            combineraceex[info['motherrace']] = {'mapid':{},'maptype':{}};
+        }
+        if(info['fatherid'] != 0){
+            combineraceex[info['motherrace']]['mapid'][info['fatherid']] = info['id'];
+        }
+        else{
+            combineraceex[info['motherrace']]['maptype'][info['fatherrace']] = info['id'];
+        }
+    }
+}
+            
+wl.get_combineid = function(soulbaseid1,soulbaseid2){
+    var soultype1 = soulbase[soulbaseid1]['race'];
+    var soultype2 = soulbase[soulbaseid2]['race'];
+    if(combineid[soulbaseid1] != null){
+        if(combineid[soulbaseid1]['mapid'][soulbaseid2] != null){
+            return combineid[soulbaseid1]['mapid'][soulbaseid2];
+        }
+        if(combineid[soulbaseid1]['maptype'][soultype2] != null){
+            return combineid[soulbaseid1]['maptype'][soultype2];
+        }
+    }
+        
+    if(combinerace[soultype1] != null){
+        if(combinerace[soultype1]['mapid'][soulbaseid2] != null){
+            return combinerace[soultype1]['mapid'][soulbaseid2];
+        }
+        if(combinerace[soultype1]['maptype'][soultype2] != null){
+            return combinerace[soultype1]['maptype'][soultype2];
+        }
+    }
+        
+    if(combineidex[soulbaseid2] != null){
+        if (combineidex[soulbaseid2]['mapid'][soulbaseid1] != null){
+            return combineidex[soulbaseid2]['mapid'][soulbaseid1];
+        }
+        if (combineidex[soulbaseid2]['maptype'][soultype1] != null){
+            return combineidex[soulbaseid2]['maptype'][soultype1];
+        }
+    }
+        
+    if(combineraceex[soultype2] != null){
+        if(combineraceex[soultype2]['mapid'][soulbaseid1] != null ){
+            return combineraceex[soultype2]['mapid'][soulbaseid1];
+        }
+        if(combineraceex[soultype2]['maptype'][soultype1]){
+            return combineraceex[soultype2]['maptype'][soultype1];
+        }
+    }
+        
+    return null;
+};

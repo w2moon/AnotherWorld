@@ -598,6 +598,22 @@ wl.role.prototype = {
         }
         
     },
+
+    deleteSoul : function(soulid){
+        for(var k in this.souls){
+            if(this.souls[k].getId() == soulid){
+                 if(this.souls[k].dbobj.travellerid != 0){
+                    var traveller = this.getTraveller(this.souls[k].dbobj.travellerid);
+                    traveller.setSoulId(0);
+                 }
+
+                 this.souls.splice(k,1);
+
+                 break;
+            }
+        }
+        
+    },
     
     getTraveller : function(id){
         if(id == 0){

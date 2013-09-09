@@ -126,3 +126,7 @@ mainscene.prototype.onTravellerModified = function(slot){
     this.maskbg.setVisible(false);
 };
 
+mainscene.prototype.onSoulCombine = function(){
+    wl.run_scene("combinesoul");
+};
+

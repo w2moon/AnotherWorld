@@ -37,6 +37,13 @@ battlescene.prototype.onCreate = function(info,result)
 
     this.result = result;
     
+    cc.Director.getInstance().getScheduler().setTimeScale(5);
+
+    var bg = cc.Sprite.create(this.info.bg);
+    var c = bg.getContentSize();
+    bg.setPosition(cc.p(c.width/2,c.height/2));
+    this.rootNode.addChild(bg);
+
 
     var enemies = parse_enemy(this.info.enemy)
     
