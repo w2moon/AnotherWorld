@@ -133,16 +133,16 @@ wl.traveller.prototype = {
     
 
     getWeaponrId : function(){return this.dbobj.weaponrid;},
-    setWeaponrId : function(v){ this.dbobj.weaponrid = v;},
+    setWeaponrId : function(v){ this.dbobj.weaponrid = v; this.dbobj.slot[EQUIP_WEAPONR] = v;},
 
     getWeaponlId : function(){return this.dbobj.weaponlid;},
-    setWeaponlId : function(v){ this.dbobj.weaponlid = v;},
+    setWeaponlId : function(v){ this.dbobj.weaponlid = v;this.dbobj.slot[EQUIP_WEAPONL] = v;},
 
     getClothId : function(){return this.dbobj.clothid;},
-    setClothId : function(v){ this.dbobj.clothid = v;},
+    setClothId : function(v){ this.dbobj.clothid = v;this.dbobj.slot[EQUIP_CLOTH] = v;},
 
     getTrinketId : function(){return this.dbobj.trinketid;},
-    setTrinketId : function(v){ this.dbobj.trinketid = v;},
+    setTrinketId : function(v){ this.dbobj.trinketid = v;this.dbobj.slot[EQUIP_TRINKET] = v;},
 
    
 
@@ -202,7 +202,21 @@ wl.traveller.prototype = {
     },
 
     setEquip : function(pos,equipid){
-        this.dbobj.slot[pos] = equipid;
+        switch(pos){
+        case EQUIP_WEAPONR:
+            this.setWeaponrId(equipid);
+        break;
+        case EQUIP_WEAPONL:
+            this.setWeaponlId(equipid);
+        break;
+        case EQUIP_CLOTH:
+            this.setClothId(equipid);
+        break;
+        case EQUIP_TRINKET:
+            this.setTrinketId(equipid);
+        break;
+        }
+        //this.dbobj.slot[pos] = equipid;
     },
 
     getProperty : function(name){
@@ -212,7 +226,7 @@ wl.traveller.prototype = {
         {
             equip = this.getEquip(i);
             if(equip != null){
-                v += parseInt(equip.getBase()[name] * (equip.getLevel()/equip.getMaxLevel()));
+                v += equip.getProperty(name);//parseInt(equip.getBase()[name] * (equip.getLevel()/equip.getMaxLevel()));
             }
         }
         if(this.getSoul()){

@@ -163,6 +163,15 @@ resultreward.prototype.showMainReward = function(){
                     img = soulbase[this.info.rewards[r][2]].icon;
                     text = lang(soulbase[this.info.rewards[r][2]].name);
                 break;
+                case "addBlueprint":
+                    img = blueprint[this.info.rewards[r][2]].icon;
+                    text = lang(blueprint[this.info.rewards[r][2]].name);
+                break;
+                case "addMaterial":
+                    img = material[this.info.rewards[r][2]].icon;
+                    text = lang(material[this.info.rewards[r][2]].name);
+                    //var num = this.info.rewards[r][3];
+                break;
                 default:
                     cc.log("rewardresult main error type:"+this.info.rewards[r][1]);
                 return;

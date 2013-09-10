@@ -38,6 +38,9 @@ enemy = wl.csv_idmap("enemy.csv");
 
 stage = wl.csv_idmap("stage.csv");
 
+blueprint = wl.csv_idmap("blueprint.csv");
+material = wl.csv_idmap("material.csv");
+
 wl.getLevelupExp = function(curlevel,rarity){
     return curlevel + curlevel*curlevel*rarity;
 };

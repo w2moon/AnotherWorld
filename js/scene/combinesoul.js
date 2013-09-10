@@ -8,11 +8,19 @@ combinesoul.prototype.onDidLoadFromCCB = function()
 
 combinesoul.prototype.onPressFather = function()
 {
-    
+    this.clearChild();
 };
 
 combinesoul.prototype.onPressMother = function()
 {
+    this.clearChild();
+};
+
+combinesoul.prototype.clearChild = function(){
+    if(this.childcard != null){
+        this.childcard.removeFromChild();
+        this.childcard = null;
+    }
 };
 
 combinesoul.prototype.isChoosed = function(soulid){
@@ -71,10 +79,12 @@ combinesoul.prototype.onChoosed = function(isFather,soulid)
 
 combinesoul.prototype.onPressChild = function()
 {
+    cc.log("show child");
 };
 
 combinesoul.prototype.onPressBack = function()
 {
+    wl.run_scene("mainscene");
 };
 
 combinesoul.prototype.onPressCombine = function()
@@ -112,10 +122,29 @@ combinesoul.prototype.on_soul_combine = function(ret)
         var bid = wl.get_combineid(fathersoul.getBaseId(),mothersoul.getBaseId());
         var rarity = rarityclass[soulbase[bid]['rarityclass']]
 
-        wl.gvars.role.setCopper(wl.gvars.role.getCopper() - rarity['combinecopper']);
+        wl.gvars.role.subCopper(rarity['combinecopper']);
 
         wl.gvars.role.deleteSoul(this.fathercard.soulid);
         wl.gvars.role.deleteSoul(this.mothercard.soulid);
+
+        if(ret.soul.baseid != bid){
+        //mutaition
+        }
         wl.gvars.role.addSoul(ret.soul);
+
+        this.fathercard.removeFromParent();
+        this.fathercard = null;
+        this.mothercard.removeFromParent();
+        this.mothercard = null;
+
+        if(this.childcard != null){
+            this.childcard.removeFromParent();
+        }
+
+        var soul = wl.gvars.role.getSoul(ret.soul.id);
+        this.childcard.soulid = soulid;
+        this.childcard = wl.create_soulcard(soul.getBaseId());
+        this.childcard.setPosition(this.child.getPosition());
+        this.rootNode.addChild(this.childcard); 
         
 };

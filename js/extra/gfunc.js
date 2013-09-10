@@ -229,6 +229,15 @@ wl.gvars = {
  wl.csv_pool = function(file){
  
  };
+
+ wl.dict_add = function(d1,d2){
+    var d = {};
+
+    for(var k in d1){
+        d[k] = d1[k] + d2[k];
+    }
+    return d;
+  };
  
 wl.csv_lang = function(file){
     if(USE_CCB)

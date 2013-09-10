@@ -26,7 +26,7 @@ wl.empty_role = function(name,userid){
     souls:[],
     equipments:[],
     stages:{},
-    blueprint:[],
+    blueprints:[],
     materials:{}
     };
 };
@@ -57,8 +57,10 @@ wl.create_soul = function(baseid){
 };
 
 wl.merge_reward = function(ret,lr){
-    ret.equipments.concat(lr.equipments);
+            ret.equipments.concat(lr.equipments);
             ret.souls.concat(lr.souls);
+            ret.blueprints.concat(lr.blueprints);
+            ret.materials = wl.dict_add(ret.materials,lr.materials);
             ret.addexp += lr.addexp;
             ret.addhp += lr.addhp;
             ret.addcopper += lr.addcopper;
@@ -67,6 +69,32 @@ wl.merge_reward = function(ret,lr){
             ret.addextrasoulnum += lr.addextrasoulnum;
             ret.addextraequipmentnum += lr.addextraequipmentnum;
             ret.addextratravellernum += lr.addextratravellernum;
+};
+
+wl.virtual_role_save = function(){
+    var role = {};
+    for(var k in wl.gvars.role){
+        if(typeof(wl.gvars.role) != "object"){
+            role[k] = wl.gvars.role[k];
+        }
+        else if(wl.gvars.role[k].length == null){
+            role[k] = {};
+            for(var i in wl.gvars.role[k]){
+                role[k][i] = wl.gvars.role[k][i];
+            }
+        }
+        else{
+            role[k] = [];
+            if(wl.gvars.role[k].dbobj == null){
+                role[k] = wl.gvars.role[k].dbobj;
+            }
+            else
+            {
+                role[k] = dbobj;
+            }
+        }
+    }
+    wl.set("role_"+wl.gvars.role.getUserId(),wl.toJSONString(role));
 };
 
 wl.addReward = function(reward,level){
@@ -80,7 +108,9 @@ wl.addReward = function(reward,level){
         addextraequipmentnum:0,
         addextratravellernum:0,
         equipments:[],
-        souls:[]
+        souls:[],
+        blueprints:[],
+        materials:{}
     };
     for(var k in reward){
         if(wl.rand() >= reward[k][0]){
@@ -93,6 +123,17 @@ wl.addReward = function(reward,level){
         break;
         case "addSoul":
             ret.souls.push(wl.create_soul(reward[k][2]));
+        break;
+        case "addBlueprint":
+            ret.blueprints.push(reward[k][2]);
+        break;
+        case "addMaterial":
+            if(ret.materials[reward[k][2]] == null){
+                ret.materials[reward[k][2]] = 1;
+            }
+            else{
+                ret.materials[reward[k][2]] += 1;
+            }
         break;
         case "addExp":
             ret.addexp = ret.addexp + reward[k][2]*level;
@@ -372,6 +413,7 @@ wl.role.prototype = {
     subHP : function(hp) { this.dbobj.hp -= hp;if(this.dbobj.hp < 0){this.dbobj.hp=0;cc.log("subhp < 0:"+hp);}},
     addHP : function(hp){ this.dbobj.hp += hp; if(this.dbobj.hp > this.getMaxHP()){this.dbobj.hp = this.getMaxHP()}},
     addCopper : function(v){ this.dbobj.copper += v;},
+    subCopper : function(v){ this.dbobj.copper -= v;},
     addGold : function(v){ this.dbobj.gold += v;},
     addExp : function(v){
         var pro = {};
@@ -424,6 +466,32 @@ wl.role.prototype = {
     },
     addExtraTravellerNum : function(v){
         this.dbobj.extratravellernum += v;
+    },
+
+    addBlueprint : function(v){
+        for(var k in this.dbobj.blueprints){
+            if(this.dbobj.blueprints[k] == v){
+                return;
+            }
+        }
+        this.dbobj.blueprints.push(v);
+    },
+
+    addMaterial : function(v,n){
+        if(this.dbobj.materials[v] == null){
+            this.dbobj.materials[v] = n;
+        }
+        else{
+            this.dbobj.materials[v] += n;
+        }
+    },
+
+    getMaterialNum : function(v){
+        return this.dbobj.materials[v] || 0;
+    },
+
+    subMaterialNum : function(v,n){
+        this.dbobj.materials[v] -= n;
     },
     
     getLevelInfo : function(){return rolelevel[this.getLevel()];},
@@ -584,6 +652,30 @@ wl.role.prototype = {
         }
         else{
             equip.setdbobj(dbobj)
+        }
+    },
+
+    deleteEquip : function(eid){
+        for(var k in this.equipments){
+            if(this.equipments[k].getId() == eid){
+                if(this.equipments[k].isEquiped()){
+                    var traveller = wl.gvars.role.getTraveller(this.equipments[k].getTravellerId());
+                    if(traveller.getWeaponrId() == eid){
+                        traveller.setWeaponrId(0);
+                    }
+                    else if(traveller.getWeaponlId() == eid){
+                        traveller.setWeaponlId(0);
+                    }
+                    else if(traveller.getClothId() == eid){
+                        traveller.setClothId(0);
+                    }
+                    else if(traveller.getTrinketId() == eid){
+                        traveller.setTrinketId(0);
+                    }
+                }
+                this.equipments.splice(k,1);
+                return;
+            }
         }
     },
 

@@ -60,11 +60,22 @@ virtual_soul_combine = function(info){
                 role_delete_soul(info.soulid2);
 
                 if(wl.rand() < rarity.mutation){
-                    ids = data.mutation[rarityclass['id']]
-                    bid = ids[int(len(ids)*role.rand())]
-                soul = role.addSoul(bid)
-                ret['soul'] = soul.pack()
+                    var ids = mutation[rarity['id']]
+                    bid = ids[parseInt(ids.length*wl.rand())]
+                    
                 }
+
+                var soul = {
+                            id:wl.local_id(),
+                            baseid:bid,
+                            exp:0,
+                            star:0,
+                            level:1,
+                            skillexp:0,
+                            skilllevel:1
+                };
+                role.souls.push(soul);
+                ret['soul'] = soul;
             }
 
         }
