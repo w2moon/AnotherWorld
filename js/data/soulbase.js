@@ -90,7 +90,7 @@ for(var k in soulbase){
     }
             
     if(info['motherid'] != 0){
-        if (combineidex[info['motherid']]){
+        if (combineidex[info['motherid']] == null){
             combineidex[info['motherid']] = {'mapid':{},'maptype':{}};
         }
         if(info['fatherid'] != 0){
@@ -102,7 +102,7 @@ for(var k in soulbase){
     }
     
     if(info['motherrace'] != 0){
-        if(combineraceex[info['motherrace']]){
+        if(combineraceex[info['motherrace']] == null){
             combineraceex[info['motherrace']] = {'mapid':{},'maptype':{}};
         }
         if(info['fatherid'] != 0){
