@@ -18,6 +18,17 @@ wl.popmsg = function(msg){
     cc.log(msg);
 };
 
+wl.create_soulcard = function(soulbaseid,flip){
+    var soul = soulbase[soulbaseid];
+    var avatar = parse_action_params(this.getBase().avatar);
+    var ske = avatar[0];
+    if(flip){
+        ske = ske + "_flip";
+    }
+   avatar.shift();
+   return wl.load_scene("uicard",ske,avatar,""); 
+};
+
 wl.clipping_layer = function(w,h){
     if(USE_CCB){
         return cc.Layer.create();
@@ -218,6 +229,15 @@ wl.gvars = {
  wl.csv_pool = function(file){
  
  };
+
+ wl.dict_add = function(d1,d2){
+    var d = {};
+
+    for(var k in d1){
+        d[k] = d1[k] + d2[k];
+    }
+    return d;
+  };
  
 wl.csv_lang = function(file){
     if(USE_CCB)

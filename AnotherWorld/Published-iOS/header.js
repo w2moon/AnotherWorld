@@ -73,3 +73,7 @@ require("scene/travellername.js");
 require("scene/travellerinfo.js");
 require("scene/equipchoose.js");
 require("scene/mapcontainer.js");
+require("scene/combinesoul.js");
+require("scene/starupsoul.js");
+require("scene/equipmake.js");
+require("scene/equipstarup.js");

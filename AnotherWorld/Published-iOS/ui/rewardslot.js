@@ -32,6 +32,14 @@ rewardslot.prototype.onCreate = function(type,value){
             img = soulbase[value].icon;
             text = lang(soulbase[value].name);
         break;
+        case "addBlueprint":
+            img = blueprint[value].icon;
+            text = lang(blueprint[value].name);
+        break;
+        case "addMaterial":
+            img = material[value].icon;
+            text = lang(material[value].name);
+        break;
         default:
             cc.log("reward error type:"+type);
             return;

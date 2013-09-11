@@ -7,7 +7,7 @@ battleresult.prototype.onDidLoadFromCCB = function()
 battleresult.prototype.onCreate = function(result,info,clientresult)
 {
     this.result = result;
-
+    
     if(result.virtualhttp == null ){
         if(result.rc != clientresult){
             cc.log("result not same with server");
@@ -20,13 +20,19 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
     result.rc = retcode.BATTLE_RESULT_WIN;
     if(result.rc == retcode.BATTLE_RESULT_FAIL){
     //fail
-      //  return;
+        if(result.virtualhttp){
+            var role = wl.parseJSON(wl.get("role_"+wl.gvars.role.getUserId()));
+            role.hp -= info.hpcost;
+            wl.set("role_"+wl.gvars.role.getUserId(),wl.toJSONString(role));
+        }
+        return;
     }
 
     wl.gvars.role.subHP(info.hpcost);
     var completestate = wl.gvars.role.completeStage(result.stage_id,result.level);
 
     if(result.virtualhttp){
+
         //win
         result.reward = wl.addReward(parse_skill_params(info.reward),result.level);
         if(!wl.gvars.role.isCompleteStage(info.id)){
@@ -83,6 +89,18 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
             for(var sk in result.reward[k]){
                 wl.gvars.role.addSoul(result.reward[k][sk]);
                 rewards.push([1,"addSoul",result.reward[k][sk].baseid]);
+            }
+        break;
+        case "blueprints":
+            for(var sk in result.reward[k]){
+                wl.gvars.role.addBlueprint(result.reward[k][sk]);
+                rewards.push([1,"addBlueprint",result.reward[k][sk]]);
+            }
+        break;
+        case "materials":
+            for(var sk in result.reward[k]){
+                wl.gvars.role.addMaterial(sk,result.reward[k][sk]);
+                rewards.push([1,"addMaterial",sk,result.reward[k][sk]]);
             }
         break;
         case "addexp":
@@ -168,25 +186,16 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         rewards.push([1,"addEquip",result.trinket.baseid]);
     }
 
+
+    if(result.virtualhttp){
+        this.virtual_role_save();
+    }
    
 
     this.exppro.rewards = rewards;
     this.idx = 0;
      
-     /*
-     var x = null;
-    var y = 167;
-    for(var r in rewards){
-        var reward = wl.load_scene("rewardslot",rewards[r][1],wl.tonumber(rewards[r][2]));
-        if(x == null){
-            x = this.rootNode.getContentSize().width/2 - (rewards.length-1)*(5+reward.controller.bg.getContentSize().width)/2;
-        }
-        reward.setPosition(cc.p(x,y));
-        this.rootNode.addChild(reward);
-
-        x = x + 5+reward.controller.bg.getContentSize().width;
-    }
-    */
+    
 
     if(!USE_CCB){
         this.rootNode.registerWithTouchDispatcher();
@@ -251,7 +260,7 @@ battleresult.prototype.showNext = function()
             this.prescene.setPosition(cc.p(s.width*3/2,s.height/2));
             this.clip.addChild(this.prescene);
 
-            this.prescene.runAction(cc.Sequence(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.playAnim,this)));
+            this.prescene.runAction(cc.Sequence.create(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.prescene.controller.playAnim,this.prescene.controller)));
 
             this.idx += 1;
             return;
@@ -263,7 +272,7 @@ battleresult.prototype.showNext = function()
      this.prescene = wl.load_scene("resultreward",this.exppro);
      this.prescene.controller.playAnim();
      this.prescene.setPosition(cc.p(s.width*3/2,s.height/2));
-      this.prescene.runAction(cc.Sequence(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.playAnim,this)));
+     this.prescene.runAction(cc.Sequence.create(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.prescene.controller.playAnim,this.prescene.controller)));
 
      this.clip.addChild(this.prescene);
      this.ended = true;

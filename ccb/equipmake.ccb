@@ -206,7 +206,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>onPressOk</string>
+									<string>onPressMake</string>
 									<integer>1</integer>
 								</array>
 							</dict>
@@ -370,11 +370,11 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCMenu</string>
+				<string>menu</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>menu</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>

@@ -2039,8 +2039,8 @@
 										<string>Block</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<integer>0</integer>
+											<string>onSoulCombine</string>
+											<integer>1</integer>
 										</array>
 									</dict>
 									<dict>
@@ -2152,8 +2152,8 @@
 										<string>Block</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<integer>0</integer>
+											<string>onSoulStarup</string>
+											<integer>1</integer>
 										</array>
 									</dict>
 									<dict>
@@ -2265,8 +2265,8 @@
 										<string>Block</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<integer>0</integer>
+											<string>onEquipMake</string>
+											<integer>1</integer>
 										</array>
 									</dict>
 									<dict>
@@ -2378,8 +2378,8 @@
 										<string>Block</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<integer>0</integer>
+											<string>onEquipStarup</string>
+											<integer>1</integer>
 										</array>
 									</dict>
 									<dict>
