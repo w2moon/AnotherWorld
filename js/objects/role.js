@@ -395,8 +395,8 @@ wl.role.prototype = {
 
     getClass : function(){return "role";},
 
-    getUserid : function(){return this.dbobj.userid;},
-    setUserid : function(userid){ this.dbobj.userid = userid;},
+    getUserId : function(){return this.dbobj.userid;},
+    setUserId : function(userid){ this.dbobj.userid = userid;},
 
     getName : function(){return this.dbobj.name;},
     setName : function(name){ this.dbobj.name = name;},
@@ -425,10 +425,12 @@ wl.role.prototype = {
         
         this.dbobj.exp += v;
         
+        var leveluped = false;
+        
         while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL){
             this.dbobj.exp -= this.getMaxExp();
             this.dbobj.level += 1;
-
+            leveluped = true;
                 pro.pro[pro.pro.length-1].endexp = 0;
                 
                 if(this.dbobj.level == MAX_ROLE_LEVEL){
@@ -438,7 +440,8 @@ wl.role.prototype = {
                     pro.pro.push({level:this.dbobj.level,startexp:0,maxexp:this.getMaxExp(),endexp:this.dbobj.exp});
                 }
         }
-
+        
+        
         if(this.dbobj.level >= MAX_ROLE_LEVEL){
             this.dbobj.exp = 0;
         }

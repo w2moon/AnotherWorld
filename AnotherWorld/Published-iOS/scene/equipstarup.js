@@ -3,6 +3,87 @@ equipstarup.prototype.onDidLoadFromCCB = function()
 {
     this.target = null;
     this.selected = [];
+
+    this.objs = [];
+    
+
+     var size = this.rootNode.getContentSize();
+    this.scroll = wl.clipping_layer(size.width,size.height/3);
+
+    this.rootNode.addChild(this.scroll);
+
+    
+};
+
+equipstarup.prototype.onCreate = function(equipid)
+{
+    if(equipid == null){
+        this.showtarget();
+    }
+    else{
+        this.onChooseTarget(equipid);
+        this.showall();
+    }
+};
+
+equipstarup.prototype.onPressBack = function()
+{
+    wl.run_scene("mainscene");
+};
+
+equipstarup.prototype.clearObjs = function(){
+     for(var k in this.objs){
+        this.objs[k].removeFromParent();
+    }
+    this.objs = [];
+};
+
+equipstarup.prototype.showtarget = function(){
+
+   this.clearObjs();
+     
+
+    var equips = wl.gvars.role.getObjects();
+
+    
+    var x = 0;
+    var y = 0;
+    for(var k in equips){
+        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this.onChooseTarget,equips[k].getId());
+        equip.setPosition(x,y);
+        this.scroll.addChild(equip);
+
+        this.objs.push(equip);
+
+        y = y + 50;
+    }
+};
+
+equipstarup.prototype.showall = function(){
+    this.clearObjs();
+    this.selected = [];
+     var equips = wl.gvars.role.getObjects();
+
+    
+    var x = 0;
+    var y = 0;
+    for(var k in equips){
+        if(equips[k].getId() == this.target.id){
+            continue;
+        }
+        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this.onChooseSelect,equips[k].getId());
+        equip.setPosition(x,y);
+        this.scroll.addChild(equip);
+
+        this.objs.push(equip);
+
+        y = y + 50;
+    }
+};
+
+equipstarup.prototype.updateTarget = function(){
+    this.lbllevel.setString("LV"+this.target.getLevel());
+    this.lblexp.setString(this.target.getExp()+"/"+this.target.getMaxExp());
 };
 
 equipstarup.prototype.onChooseTarget = function(e)
@@ -17,10 +98,16 @@ equipstarup.prototype.onChooseTarget = function(e)
 
     var equip = wl.gvars.role.getEquipment(e);
     equip.id = e;
-    equip.setPosition(this.equipplace.getPosition());
+    equip.setPosition(this.menu.convertToWorldSpace(this.btnequip.getPosition()));
     this.rootNode.addChild(equip);
     this.target = equip;
+
+    this.updateTarget();
+
+    this.showall();
 };
+
+
 
 
 equipstarup.prototype.canBeTarget = function(e)
@@ -34,9 +121,7 @@ equipstarup.prototype.canBeTarget = function(e)
 }
 equipstarup.prototype.canBeSelect = function(e)
 {
-    if(e == this.traget.id){
-        return false;
-    }
+   
     for(var k in this.selected ){
         if(this.selected[k].id == e){
             return false;
@@ -45,33 +130,34 @@ equipstarup.prototype.canBeSelect = function(e)
     return true;
 }
 
-equipstarup.prototype.onAddSelect = function(e)
+equipstarup.prototype.onChooseSelect = function(e,n)
 {
-    if(!this.canBeSelect(e)){
-        wl.popmsg(lang("ENHENCE_CANNOT_BE_SELECT"));
+     if(e == this.traget.id){
         return;
     }
+    if(this.canBeSelect(e)){
+         n.selected();
+         n.id = e;
+         this.selected.push(n);
 
-    var equip = wl.gvars.role.getEquipment(e);
-    equip.id = e;
-    this.rootNode.addChild(equip);
-    this.selected.push(equip);
-
-    this.redrawSelect();
-};
-
-equipstarup.prototype.onDeleteSelect = function(e)
-{
-    for(var k in this.selected ){
-        if(this.selected[k] == e){
-            this.selected[k].removeFromParent();
-            this.selected.splice(k,1);
-            break;
+         this.redrawSelect();
+    }
+    else{
+         
+        for(var k in this.selected ){
+            if(this.selected[k].id == e){
+                this.selected.splice(k,1);
+                break;
+            }
         }
+        n.unselected();
+        this.redrawSelect();
     }
 
-    this.redrawSelect();
+   
 };
+
+
 
 equipstarup.prototype.redrawSelect = function(){
     var copper = 0;
@@ -84,9 +170,14 @@ equipstarup.prototype.redrawSelect = function(){
         totalexp += rarityclass.enhenceexp;
     }
 
-     
+     this.lblcost.setString(copper);
+     this.lbltotalexp.setString(totalexp);
 
    
+};
+
+equipstarup.prototype.onPressEquip = function()
+{
 };
 
 equipstarup.prototype.onPressEnhence = function()
@@ -154,4 +245,9 @@ equipstarup.prototype.on_equip_enhence = function(ret)
     }
     wl.gvars.role.subCopper(copper);
     wl.gvars.role.addEquip(ret.equip);
+
+    this.lblcost.setString(0);
+    this.lbltotalexp.setString(0);
+    this.updateTarget();
+    this.showall();
 };

@@ -27,7 +27,8 @@ wl.empty_role = function(name,userid){
     equipments:[],
     stages:{},
     blueprints:[],
-    materials:{}
+    materials:{},
+    meeted:[]
     };
 };
 
@@ -280,6 +281,8 @@ wl.create_enemy = function(tmp,num,factor,enemyid,enemylevel){
             tmp.souls.push(soul);
 
             traveller.soulid=soul.id;
+
+            wl.gvars.role.meet(einfo.soulid);
         }
         else{
             traveller.soulid = 0;
@@ -392,8 +395,8 @@ wl.role.prototype = {
 
     getClass : function(){return "role";},
 
-    getUserid : function(){return this.dbobj.userid;},
-    setUserid : function(userid){ this.dbobj.userid = userid;},
+    getUserId : function(){return this.dbobj.userid;},
+    setUserId : function(userid){ this.dbobj.userid = userid;},
 
     getName : function(){return this.dbobj.name;},
     setName : function(name){ this.dbobj.name = name;},
@@ -422,10 +425,12 @@ wl.role.prototype = {
         
         this.dbobj.exp += v;
         
+        var leveluped = false;
+        
         while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL){
             this.dbobj.exp -= this.getMaxExp();
             this.dbobj.level += 1;
-
+            leveluped = true;
                 pro.pro[pro.pro.length-1].endexp = 0;
                 
                 if(this.dbobj.level == MAX_ROLE_LEVEL){
@@ -435,7 +440,8 @@ wl.role.prototype = {
                     pro.pro.push({level:this.dbobj.level,startexp:0,maxexp:this.getMaxExp(),endexp:this.dbobj.exp});
                 }
         }
-
+        
+        
         if(this.dbobj.level >= MAX_ROLE_LEVEL){
             this.dbobj.exp = 0;
         }
@@ -492,6 +498,23 @@ wl.role.prototype = {
 
     subMaterialNum : function(v,n){
         this.dbobj.materials[v] -= n;
+    },
+
+    isMeeted : function(baseid){
+        for(var k in this.dbobj.meeted){
+            if(this.dbobj.meeted[k] == baseid){
+                return true;
+            }
+        }
+        return false;
+    },
+
+    meet : function(baseid){
+        if(this.isMeeted(baseid)){
+            return;
+        }
+        this.dbobj.meeted.push(baseid);
+        
     },
     
     getLevelInfo : function(){return rolelevel[this.getLevel()];},
@@ -751,6 +774,65 @@ wl.role.prototype = {
         }
     },
 
+    canMakeBlueprint : function(blueid){
+        var base = blueprint[blueid];
+
+         for(var i = 1;i<=6;++i){
+            if(base["mid"+i] == 0 ){
+                continue;
+            }
+           
+
+            if(wl.gvars.role.getMaterialNum(base["mid"+i]) < base["mnum"+i]){
+                return false;
+            }
+        }
+        return true;
+    },
+
+    getBlueprints : function(type){
+        var arr = [];
+
+        if(type != EQUIP_WEAPONR
+        &&type != EQUIP_WEAPONL
+        &&type != EQUIP_CLOTH
+        &&type != EQUIP_TRINKET){
+            wl.copyarr(this.dbobj.blueprints,arr);
+        }
+        else{
+            for(var k in this.dbobj.blueprints){
+                var equiptype = equipments[blueprint[this.dbobj.blueprints[k]].equipid].type;
+                switch(type)
+                {
+                case EQUIP_WEAPONR:
+                    if(equiptype == ETYPE_MAINHAND
+                    || equiptype == ETYPE_ONEHAND
+                    || equiptype == ETYPE_TWOHAND){
+                        arr.push(this.dbobj.blueprints[k]);
+                    }
+                break;
+                case EQUIP_WEAPONL:
+                    if(equiptype == ETYPE_OFFHAND
+                    || equiptype == ETYPE_ONEHAND){
+                        arr.push(this.dbobj.blueprints[k]);
+                    }
+                break;
+                case EQUIP_CLOTH:
+                    if(equiptype == ETYPE_CLOTH){
+                        arr.push(this.dbobj.blueprints[k]);
+                    }
+                break;
+                case EQUIP_TRINKET:
+                    if(equiptype == ETYPE_TRINKET){
+                        arr.push(this.dbobj.blueprints[k]);
+                    }
+                break;
+                }
+            }
+        }
+        return arr;
+    },
+
     getObjects : function(type){
         var arr = []
          if(type == EQUIP_SOUL){
@@ -783,11 +865,29 @@ wl.role.prototype = {
                         arr.push(this.equipments[k]);
                     }
                 break;
+                default:
+                    wl.copyarr(this.equipments,arr);
+                break;
                 }
                 
             }
          }
 
+        return arr;
+    },
+
+    getSouls : function(race){
+        var arr = [];
+        if(race == null){
+            wl.copyarr(this.souls,arr);
+        }
+        else{
+        for(var k in this.souls){
+            if(this.souls[k].getBase().type == race){
+                arr.push(this.souls[k]);
+            }
+        }
+        }
         return arr;
     },
 

@@ -561,6 +561,8 @@
 		<string></string>
 		<key>displayName</key>
 		<string>CCLayer</string>
+		<key>jsController</key>
+		<string>starupcoul</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>

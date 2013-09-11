@@ -27,6 +27,11 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         }
         return;
     }
+    
+    var sun = wl.load_scene("rollsun");
+    sun.setPosition(cc.p(-this.rootNode.getContentSize().width/2,-82));
+    wl.repeat_anim(sun,"start")
+    this.rootNode.addChild(sun,-1);
 
     wl.gvars.role.subHP(info.hpcost);
     var completestate = wl.gvars.role.completeStage(result.stage_id,result.level);
@@ -109,7 +114,6 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
                 //continue;
             }
            // if(result.virtualhttp){
-           cc.log("dooo")
              this.exppro = wl.gvars.role.addExp(result.reward[k]);
            // }
             rewards.push([1,"addExp",result.reward[k]]);
@@ -188,7 +192,7 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
 
 
     if(result.virtualhttp){
-        this.virtual_role_save();
+        wl.virtual_role_save();
     }
    
 
@@ -232,6 +236,7 @@ battleresult.prototype.onMouseDown = function(event)
 	this.showNext();
 };
 
+
 battleresult.prototype.showNext = function()
 {
     if(this.ended){
@@ -256,7 +261,7 @@ battleresult.prototype.showNext = function()
     while(this.idx < this.exppro.traveller.length && this.exppro.traveller[this.idx] != null){
         if(this.exppro.traveller[this.idx].pro.length >= 2){
             this.prescene = wl.load_scene("resultlevelup",this.exppro.traveller[this.idx]);
-          //  this.prescene.controller.playAnim();
+          
             this.prescene.setPosition(cc.p(s.width*3/2,s.height/2));
             this.clip.addChild(this.prescene);
 
@@ -268,9 +273,8 @@ battleresult.prototype.showNext = function()
         }
         this.idx += 1;
     }
-    
      this.prescene = wl.load_scene("resultreward",this.exppro);
-     this.prescene.controller.playAnim();
+     
      this.prescene.setPosition(cc.p(s.width*3/2,s.height/2));
      this.prescene.runAction(cc.Sequence.create(cc.MoveTo.create(0.4,cc.p(s.width/2,s.height/2)),cc.CallFunc.create(this.prescene.controller.playAnim,this.prescene.controller)));
 

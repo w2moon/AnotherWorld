@@ -17,6 +17,12 @@ wl.set = function(name,value){
 wl.popmsg = function(msg){
     cc.log(msg);
 };
+ 
+ wl.repeat_anim = function(o,anim){
+ o.animationManager.runAnimationsForSequenceNamed(anim);
+    o.animationManager.setCompletedAnimationCallback(o,function(){this.animationManager.runAnimationsForSequenceNamed(anim);});
+ 
+ };
 
 wl.create_soulcard = function(soulbaseid,flip){
     var soul = soulbase[soulbaseid];

@@ -8,7 +8,7 @@ starupsoul.prototype.onDidLoadFromCCB = function()
       var size = this.rootNode.getContentSize();
     this.scroll = wl.clipping_layer(size.width,size.height/3);
 
-    this.rootNode.addChild(this.scroll);\
+    this.rootNode.addChild(this.scroll);
 
     this.show(null,ORDER_DEFAULT);
 };
@@ -34,6 +34,10 @@ starupsoul.prototype.onChooseSeed = function()
     this.isChoosingFather = false;
 };
 
+starupsoul.prototype.onPressBack = function()
+{
+    wl.run_scene("mainscene");
+};
 
 starupsoul.prototype.show = function(race,order)
 {

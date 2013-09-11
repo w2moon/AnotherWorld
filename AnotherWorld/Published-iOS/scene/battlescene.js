@@ -39,6 +39,7 @@ battlescene.prototype.onCreate = function(info,result)
     
     cc.Director.getInstance().getScheduler().setTimeScale(5);
 
+    cc.log("bg "+this.info.bg)
     var bg = cc.Sprite.create(this.info.bg);
     var c = bg.getContentSize();
     bg.setPosition(cc.p(c.width/2,c.height/2));

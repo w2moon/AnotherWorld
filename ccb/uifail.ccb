@@ -150,6 +150,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>seqExpanded</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>animatedProperties</key>
@@ -654,9 +656,9 @@
 			<key>length</key>
 			<real>1.4333333969116211</real>
 			<key>name</key>
-			<string>Default Timeline</string>
+			<string>start</string>
 			<key>offset</key>
-			<real>0.2314152717590332</real>
+			<real>0.0</real>
 			<key>position</key>
 			<real>1.4333333969116211</real>
 			<key>resolution</key>

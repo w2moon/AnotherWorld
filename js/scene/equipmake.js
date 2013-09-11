@@ -33,6 +33,11 @@ var sort_blueprint_canmake = function(t1,t2){
      }
 };
 
+equipmake.prototype.onPressBack = function()
+{
+    wl.run_scene("mainscene");
+};
+
 equipmake.prototype.selecttype = function(type){
     var blueprints = wl.gvars.role.getBlueprints(type);
     for(var k in this.blueprints){

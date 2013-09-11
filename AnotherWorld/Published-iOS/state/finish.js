@@ -2,6 +2,7 @@ state_finish=function(){
      cc.log("finish")
      cc.Director.getInstance().getScheduler().setTimeScale(1);
 
+    var size = this.rootNode.getContentSize();
      this.on_result_logofinish = function(){
         cc.log("adddd")
         this.resultlogo.removeFromParent();
@@ -13,8 +14,11 @@ state_finish=function(){
 
      if(this.clientresult == retcode.BATTLE_RESULT_WIN){
         this.resultlogo = wl.load_scene("uiwin");
+         this.resultlogo.animationManager.runAnimationsForSequenceNamed("start");
 
         this.resultbg = wl.load_scene("winbg");
+         this.resultbg.setPosition(cc.p(-size.width/2,-size.height/2));
+         this.resultbg.animationManager.runAnimationsForSequenceNamed("start");
         this.resultlogo.addChild(this.resultbg,-1);
         this.resultbg.on_animation_finish = function(){this.animationManager.runAnimationsForSequenceNamed("start");};
         this.resultbg.animationManager.setCompletedAnimationCallback(this.resultbg,this.resultbg.on_animation_finish);
@@ -24,8 +28,11 @@ state_finish=function(){
     }
     else{   
         this.resultlogo = wl.load_scene("uifail");
-
+        this.resultlogo.animationManager.runAnimationsForSequenceNamed("start");
+        
         this.resultbg = wl.load_scene("failbg");
+        
+        this.resultbg.animationManager.runAnimationsForSequenceNamed("start");
         this.resultlogo.addChild(this.resultbg,-1);
         this.resultbg.on_animation_finish = function(){this.animationManager.runAnimationsForSequenceNamed("start");};
         this.resultbg.animationManager.setCompletedAnimationCallback(this.resultbg,this.resultbg.on_animation_finish);

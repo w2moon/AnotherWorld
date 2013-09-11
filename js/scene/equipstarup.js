@@ -26,6 +26,11 @@ equipstarup.prototype.onCreate = function(equipid)
     }
 };
 
+equipstarup.prototype.onPressBack = function()
+{
+    wl.run_scene("mainscene");
+};
+
 equipstarup.prototype.clearObjs = function(){
      for(var k in this.objs){
         this.objs[k].removeFromParent();

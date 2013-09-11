@@ -47,6 +47,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
 
 
+   
     
     /*
     

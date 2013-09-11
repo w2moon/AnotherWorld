@@ -127,6 +127,23 @@ mainscene.prototype.onTravellerModified = function(slot){
 };
 
 mainscene.prototype.onSoulCombine = function(){
+    cc.log("combinesoul")
     wl.run_scene("combinesoul");
 };
+
+mainscene.prototype.onSoulStarup = function(){
+    cc.log("starupsoul")
+    wl.run_scene("starupsoul");
+};
+
+mainscene.prototype.onEquipMake = function(){
+     cc.log("equipmake")
+    wl.run_scene("equipmake");
+};
+
+mainscene.prototype.onEquipStarup = function(){
+    cc.log("equipstarup")
+    wl.run_scene("equipstarup");
+};
+
 
