@@ -43,6 +43,8 @@ wl.clipping_layer = function(w,h){
     drawnode.drawPoly(rect,white,1,white);
     clipper.setStencil(drawnode);
 
+    clipper.setDirection(1);
+    clipper.setBounceable(true);
 
     return clipper;
 }

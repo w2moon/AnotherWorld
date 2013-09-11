@@ -320,6 +320,12 @@
     <None Include="..\js\scene\equipstarup.js">
       <Filter>js\scene</Filter>
     </None>
+    <None Include="..\js\ui\selectbar.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\bluebar.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

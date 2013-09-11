@@ -130,3 +130,16 @@ mainscene.prototype.onSoulCombine = function(){
     wl.run_scene("combinesoul");
 };
 
+mainscene.prototype.onSoulStarup = function(){
+    wl.run_scene("starupsoul");
+};
+
+mainscene.prototype.onEquipMake = function(){
+    wl.run_scene("equipmake");
+};
+
+mainscene.prototype.onEquipStarup = function(){
+    wl.run_scene("equipstarup");
+};
+
+
