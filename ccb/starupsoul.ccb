@@ -562,7 +562,7 @@
 		<key>displayName</key>
 		<string>CCLayer</string>
 		<key>jsController</key>
-		<string>starupcoul</string>
+		<string>starupsoul</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
@@ -634,6 +634,8 @@
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>
