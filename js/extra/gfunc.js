@@ -26,7 +26,7 @@ wl.popmsg = function(msg){
 
 wl.create_soulcard = function(soulbaseid,flip){
     var soul = soulbase[soulbaseid];
-    var avatar = parse_action_params(this.getBase().avatar);
+    var avatar = parse_action_params(soul.avatar);
     var ske = avatar[0];
     if(flip){
         ske = ske + "_flip";
@@ -49,11 +49,29 @@ wl.clipping_layer = function(w,h){
     drawnode.drawPoly(rect,white,1,white);
     clipper.setStencil(drawnode);
 
-    clipper.setDirection(1);
-    clipper.setBounceable(true);
 
     return clipper;
-}
+};
+
+wl.scroll_layer = function(w,h){
+    if(USE_CCB){
+        return cc.Layer.create();
+    }
+
+    var container = cc.Layer.create();
+    container.setAnchorPoint(cc.p(0,0));
+    container.setPosition(cc.p(0,0));
+    var size = cc.size(w,h);
+    
+    //container.setContentSize(size);
+
+    
+    
+    var scroll = cc.ScrollView.create(size,container);
+    scroll.setDirection(1);
+    scroll.setBounceable(true);
+    return scroll;
+};
 
 wl.filter_rate = function(arr){
     var r = 0;
@@ -242,7 +260,13 @@ wl.gvars = {
     var d = {};
 
     for(var k in d1){
+        if(d2[k] != null){
         d[k] = d1[k] + d2[k];
+        }
+        else
+        {
+        d[k] = d1[k];
+        }
     }
     return d;
   };

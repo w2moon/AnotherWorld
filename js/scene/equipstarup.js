@@ -8,7 +8,7 @@ equipstarup.prototype.onDidLoadFromCCB = function()
     
 
      var size = this.rootNode.getContentSize();
-    this.scroll = wl.clipping_layer(size.width,size.height/3);
+    this.scroll = wl.scroll_layer(size.width,size.height/3);
 
     this.rootNode.addChild(this.scroll);
 

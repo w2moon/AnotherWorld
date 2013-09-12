@@ -6,7 +6,7 @@ starupsoul.prototype.onDidLoadFromCCB = function()
     this.isChoosingFather = true;
      this.objs = [];
       var size = this.rootNode.getContentSize();
-    this.scroll = wl.clipping_layer(size.width,size.height/3);
+    this.scroll = wl.scroll_layer(size.width,size.height/3);
 
     this.rootNode.addChild(this.scroll);
 
@@ -61,7 +61,7 @@ starupsoul.prototype.chooseRace = function(race)
     this.objs = [];
     var souls = wl.gvars.role.getSouls(this.race);
     for(var k in souls){
-        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this.onChoosed,souls[k].getId());
+        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this,this.onChoosed,souls[k].getId());
         s.id = souls[k].getId();
         this.objs.push(s);
         this.scroll.addChild(s);
@@ -123,7 +123,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         var soul = wl.gvars.role.getSoul(soulid);
        n.selected();
         this.fathercard = wl.create_soulcard(soul.getBaseId());
-        this.fathercard.setPosition(this.father.getPosition());
+        this.fathercard.setPosition(this.menu.convertToWorldSpace(this.basesoul.getPosition()));
          this.fathercard.soulid = soulid;
           this.fathercard.node = n;
         this.rootNode.addChild(this.fathercard);
@@ -133,6 +133,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         if(this.fathercard != null){
             if(wl.gvars.role.getSoul(this.fathercard.soulid).getBaseId() != wl.gvars.role.getSoul(soulid).getBaseId()){
                 wl.popmsg(lang("STARUP_NOT_SAME_SOUL"));
+                cc.log(wl.gvars.role.getSoul(this.fathercard.soulid).getBaseId()+" vs "+wl.gvars.role.getSoul(soulid).getBaseId())
                 return;
             }
         }
@@ -146,18 +147,18 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         this.mothercard = wl.create_soulcard(soul.getBaseId(),true);
         this.mothercard.soulid = soulid;
         this.mothercard.node = n;
-        this.mothercard.setPosition(this.mother.getPosition());
+        this.mothercard.setPosition(this.menu.convertToWorldSpace(this.seedsoul.getPosition()));
         this.rootNode.addChild(this.mothercard);
     }
     this.isChoosingFather = !this.isChoosingFather;
     if(this.fathercard != null && this.mothercard != null){
         var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
         var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
-        var rarity = rarityclass[soulbase[fathersoul.baseid]['rarityclass']]
+        var rarity = rarityclass[fathersoul.getBase()['rarityclass']]
 
         var starupcopper = parse_action_params(rarity.starupcopper);
         var star = wl.clamp(fathersoul.star + mothersoul.star + 1,0,starupcopper.length);
-        if(starupcopper[star - 1] > role.copper){
+        if(starupcopper[star - 1] > wl.gvars.role.getCopper()){
             
         }
 
@@ -173,11 +174,11 @@ if(this.fathercard == null || this.mothercard == null){
 }
 var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
         var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
-        var rarity = rarityclass[soulbase[fathersoul.baseid]['rarityclass']]
+        var rarity = rarityclass[fathersoul.getBase()['rarityclass']]
 
         var starupcopper = parse_action_params(rarity.starupcopper);
         var star = wl.clamp(fathersoul.star + mothersoul.star + 1,0,starupcopper.length);
-        if(starupcopper[star - 1] > role.copper){
+        if(starupcopper[star - 1] > wl.gvars.role.getCopper()){
             wl.popmsg(lang("STARTUP_NOT_ENOUGH_COPPER"));
             return;
         }
@@ -190,13 +191,39 @@ var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
 starupsoul.prototype.on_soul_starup = function(ret)
 {
     if(ret.rc != retcode.OK){
-        cc.log("starup soul fail");
+        cc.log("starup soul fail"+ret.rc);
         return;
     }
 
     var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
         var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
-        var rarity = rarityclass[soulbase[fathersoul.baseid]['rarityclass']]
+        var rarity = rarityclass[fathersoul.getBase()['rarityclass']];
+
+        if(fathersoul.getTravellerId() != 0 && mothersoul.getTravellerId() != 0 )
+        {
+            if(mothersoul.getTravellerId() == wl.gvars.role.getHero()){
+                var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+                traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+                traveller.setSoulId(0);
+            }
+            else{
+                var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+                traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+                traveller.setSoulId(0);
+            }
+            
+        }
+        else (mothersoul.getTravellerId() != 0)
+        {
+            var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+              
+        }
 
         var starupcopper = parse_action_params(rarity.starupcopper);
         var star = wl.clamp(fathersoul.star + mothersoul.star + 1,0,starupcopper.length);

@@ -103,9 +103,13 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
             }
         break;
         case "materials":
+        for(var sk in result.reward[k]){
+            cc.log("aaa "+sk+" "+result.reward[k][sk])
+        }
             for(var sk in result.reward[k]){
                 wl.gvars.role.addMaterial(sk,result.reward[k][sk]);
                 rewards.push([1,"addMaterial",sk,result.reward[k][sk]]);
+                cc.log("kkkkk "+k+" "+sk+" "+typeof(sk)+" "+result.reward[k][sk])
             }
         break;
         case "addexp":

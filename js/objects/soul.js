@@ -91,6 +91,10 @@ wl.soul.prototype = {
     },
 
     getSkillId : function(){return this.getBase().skillid;},
-    hasSkill : function(){ return this.getBase().skillid != 0;}
+    hasSkill : function(){ return this.getBase().skillid != 0;},
+
+    getTravellerId : function(){
+        return this.dbobj.travellerid;   
+    }
    
 };

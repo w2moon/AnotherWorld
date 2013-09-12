@@ -1,5 +1,6 @@
 virtual_soul_combine = function(info){
     var ret = {};
+    ret.rc = retcode.OK;
     var role = wl.parseJSON(wl.get("role_"+info.userid));
 
     var role_get_soul = function(soulid){
@@ -49,15 +50,9 @@ virtual_soul_combine = function(info){
                     role.copper -= rarity['combinecopper'];
                 }
 
-                if(fathersoul.travellerid != 0){
-                    role_get_traveller(fathersoul.travellerid).soulid = 0;
-                }
-                 if(mothersoul.travellerid != 0){
-                    role_get_traveller(mothersoul.travellerid).soulid = 0;
-                }
 
-                role_delete_soul(info.soulid1);
-                role_delete_soul(info.soulid2);
+                
+                
 
                 if(wl.rand() < rarity.mutation){
                     var ids = mutation[rarity['id']]
@@ -72,10 +67,52 @@ virtual_soul_combine = function(info){
                             star:0,
                             level:1,
                             skillexp:0,
-                            skilllevel:1
+                            skilllevel:1,
+                            travellerid : 0
                 };
                 role.souls.push(soul);
                 ret['soul'] = soul;
+
+                ////////
+                 if(fathersoul.travellerid != 0 && mothersoul.travellerid != 0 )
+        {
+            if(mothersoul.travellerid == role.slot5){
+                var traveller = role_get_traveller(mothersoul.travellerid);
+                traveller.soulid = soul.id;
+                soul.travellerid = traveller.id;
+
+                traveller = role_get_traveller(fathersoul.travellerid);
+                traveller.soulid = 0;
+            }
+            else{
+                var traveller = role_get_traveller(fathersoul.travellerid);
+                traveller.soulid = soul.id;
+                soul.travellerid = traveller.id;
+
+                traveller = role_get_traveller(mothersoul.travellerid);
+                traveller.soulid = 0;
+            }
+            
+        }
+        else if(fathersoul.travellerid != 0)
+        {
+            var traveller = role_get_traveller(fathersoul.travellerid);
+               traveller.soulid = soul.id;
+               soul.travellerid = traveller.id;
+
+               
+        }
+        else (mothersoul.travellerid != 0)
+        {
+            var traveller = role_get_traveller(mothersoul.travellerid);
+                traveller.soulid = soul.id;
+                soul.travellerid = traveller.id;
+
+              
+        }
+        /////
+                role_delete_soul(info.soulid1);
+                role_delete_soul(info.soulid2);
             }
 
         }

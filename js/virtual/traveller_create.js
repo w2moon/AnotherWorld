@@ -1,6 +1,5 @@
 virtual_traveller_create = function(info){
     var ret = {};
-cc.log(2)
     var role = wl.parseJSON(wl.get("role_"+info.userid));
 
     var base = wl.get_rand(travellerbase);

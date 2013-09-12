@@ -8,7 +8,7 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.isChoosingFather = true;
 
       var size = this.rootNode.getContentSize();
-    this.scroll = wl.clipping_layer(size.width,size.height/3);
+    this.scroll = wl.scroll_layer(size.width,size.height/3);
 
     this.rootNode.addChild(this.scroll);
 
@@ -50,7 +50,7 @@ combinesoul.prototype.chooseRace = function(race)
     this.objs = [];
     var souls = wl.gvars.role.getSouls(this.race);
     for(var k in souls){
-        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this.onChoosed,souls[k].getId());
+        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this,this.onChoosed,souls[k].getId());
         s.id = souls[k].getId();
         this.objs.push(s);
         this.scroll.addChild(s);
@@ -197,6 +197,7 @@ combinesoul.prototype.on_soul_combine = function(ret)
 {
     if(ret.rc != retcode.OK){
         wl.popmsg(lang("COMBINE_FAIL"));
+        cc.log(ret.rc);
         return;
     }
 
@@ -207,6 +208,39 @@ combinesoul.prototype.on_soul_combine = function(ret)
 
         wl.gvars.role.subCopper(rarity['combinecopper']);
 
+        if(fathersoul.getTravellerId() != 0 && mothersoul.getTravellerId() != 0 )
+        {
+            if(mothersoul.getTravellerId() == wl.gvars.role.getHero()){
+                var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+                traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+                traveller.setSoulId(0);
+            }
+            else{
+                var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+                traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+                traveller.setSoulId(0);
+            }
+            
+        }
+        else if(fathersoul.getTravellerId() != 0)
+        {
+            var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+               
+        }
+        else (mothersoul.getTravellerId() != 0)
+        {
+            var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+                traveller.setSoulId(ret.soul.id);
+
+              
+        }
+
         wl.gvars.role.deleteSoul(this.fathercard.soulid);
         wl.gvars.role.deleteSoul(this.mothercard.soulid);
 
@@ -215,6 +249,8 @@ combinesoul.prototype.on_soul_combine = function(ret)
         }
         wl.gvars.role.addSoul(ret.soul);
 
+       
+
         this.fathercard.removeFromParent();
         this.fathercard = null;
         this.mothercard.removeFromParent();
@@ -222,12 +258,16 @@ combinesoul.prototype.on_soul_combine = function(ret)
 
         if(this.childcard != null){
             this.childcard.removeFromParent();
+            this.childcard = null;
         }
 
         var soul = wl.gvars.role.getSoul(ret.soul.id);
-        this.childcard.soulid = soulid;
+        
         this.childcard = wl.create_soulcard(soul.getBaseId());
+        this.childcard.soulid = ret.soul.id;
         this.childcard.setPosition(this.child.getPosition());
         this.rootNode.addChild(this.childcard); 
+
+        this.show(null,ORDER_DEFAULT);
         
 };

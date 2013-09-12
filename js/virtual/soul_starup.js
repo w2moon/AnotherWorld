@@ -53,7 +53,7 @@ virtual_soul_starup = function(info){
     }
 
     if(s1.level != rarity.maxlevel || s2.level != rarity.maxlevel){
-        ret.rc = retcode.STARUP_NOT_FOUND_SOUL;
+        ret.rc = retcode.STARUP_NOT_FULL_LEVEL;
         return ret;
     }
 
@@ -61,11 +61,36 @@ virtual_soul_starup = function(info){
     s1.star = star;
     s1.exp = 0;
     s1.level = 0;
-    if(s2.travellerid != 0){
-        var traveller = role_get_traveller(s2.travellerid);
-        traveller.soulid = 0;
+    ////////
+                 if(s1.travellerid != 0 && s2.travellerid != 0 )
+        {
+            if(s2.travellerid == role.slot5){
+                traveller = role_get_traveller(s1.travellerid);
+                traveller.soulid = 0;
 
-    }
+                var traveller = role_get_traveller(s2.travellerid);
+                traveller.soulid = s1.id;
+                s1.travellerid = s2.travellerid;
+
+                
+            }
+            else{
+                
+
+                traveller = role_get_traveller(s2.travellerid);
+                traveller.soulid = 0;
+            }
+            
+        }
+        else (s2.travellerid != 0)
+        {
+            var traveller = role_get_traveller(s2.travellerid);
+                traveller.soulid = s1.id;
+                s1.travellerid = s2.travellerid;
+
+              
+        }
+        /////
     role_delete_soul(s2.id);
 
     ret.soul = s1;

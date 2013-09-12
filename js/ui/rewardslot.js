@@ -3,7 +3,7 @@ var rewardslot = function(){};
 rewardslot.prototype.onDidLoadFromCCB = function(){
 };
 
-rewardslot.prototype.onCreate = function(type,value){
+rewardslot.prototype.onCreate = function(type,value,num){
     var img = null;
     var text = "";
     switch(type)
@@ -38,7 +38,7 @@ rewardslot.prototype.onCreate = function(type,value){
         break;
         case "addMaterial":
             img = material[value].icon;
-            text = lang(material[value].name);
+            text = lang(material[value].name)+"x"+num;
         break;
         default:
             cc.log("reward error type:"+type);
