@@ -49,7 +49,7 @@ equipstarup.prototype.showtarget = function(){
     var x = 0;
     var y = 0;
     for(var k in equips){
-        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this.onChooseTarget,equips[k].getId());
+        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this,this.onChooseTarget,equips[k].getId());
         equip.setPosition(x,y);
         this.scroll.addChild(equip);
 
@@ -71,7 +71,7 @@ equipstarup.prototype.showall = function(){
         if(equips[k].getId() == this.target.id){
             continue;
         }
-        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this.onChooseSelect,equips[k].getId());
+        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this,this.onChooseSelect,equips[k].getId());
         equip.setPosition(x,y);
         this.scroll.addChild(equip);
 
@@ -82,8 +82,9 @@ equipstarup.prototype.showall = function(){
 };
 
 equipstarup.prototype.updateTarget = function(){
-    this.lbllevel.setString("LV"+this.target.getLevel());
-    this.lblexp.setString(this.target.getExp()+"/"+this.target.getMaxExp());
+    this.lbllevel.setString("LV"+this.target.equip.getLevel());
+    cc.log("exp "+this.target.equip.getExp()+" "+this.target.equip.getMaxExp())
+    this.lblexp.setString(this.target.equip.getExp()+"/"+this.target.equip.getMaxExp());
 };
 
 equipstarup.prototype.onChooseTarget = function(e)
@@ -96,8 +97,11 @@ equipstarup.prototype.onChooseTarget = function(e)
         this.target.removeFromParent();
     }
 
-    var equip = wl.gvars.role.getEquipment(e);
+
+    var equip = cc.Sprite.create(wl.gvars.role.getEquipment(e).getBase().icon);
+    equip.equip = wl.gvars.role.getEquipment(e);
     equip.id = e;
+    
     equip.setPosition(this.menu.convertToWorldSpace(this.btnequip.getPosition()));
     this.rootNode.addChild(equip);
     this.target = equip;
@@ -132,7 +136,7 @@ equipstarup.prototype.canBeSelect = function(e)
 
 equipstarup.prototype.onChooseSelect = function(e,n)
 {
-     if(e == this.traget.id){
+     if(e == this.target.id){
         return;
     }
     if(this.canBeSelect(e)){
@@ -165,7 +169,7 @@ equipstarup.prototype.redrawSelect = function(){
 
     for(var k in this.selected ){
         var e = wl.gvars.role.getEquipment(this.selected[k].id);
-        var rarity = rarityclass[soulbase[e.baseid].rarityclass];
+        var rarity = rarityclass[e.getBase().rarityclass];
         copper += rarity.enhencecopper;
         totalexp += rarityclass.enhenceexp;
     }
@@ -207,7 +211,7 @@ equipstarup.prototype.onPressEnhence = function()
             return;
         }
 
-        var rarity = rarityclass[soulbase[e.baseid].rarityclass];
+        var rarity = rarityclass[e.getBase().rarityclass];
         copper += rarity.enhencecopper;
         totalexp += rarityclass.enhenceexp;
     }
@@ -218,7 +222,9 @@ equipstarup.prototype.onPressEnhence = function()
     }
 
      var msg = wl.msg.create("equip_enhence");
-     msg.equip = this.equip.id;
+     msg.equip = this.target.id;
+
+     cc.log("enhence "+msg.equip)
      msg.consume = [];
      for(var k in this.selected){
         msg.consume.push(this.selected[k].id);
@@ -238,7 +244,7 @@ equipstarup.prototype.on_equip_enhence = function(ret)
     for(var k in this.selected){
         var e = wl.gvars.role.getEquipment(this.selected[k].id);
         
-        var rarity = rarityclass[soulbase[e.baseid].rarityclass];
+        var rarity = rarityclass[e.getBase().rarityclass];
         copper += rarity.enhencecopper;
 
         wl.gvars.role.deleteEquip(this.selected[k].id);
@@ -248,6 +254,6 @@ equipstarup.prototype.on_equip_enhence = function(ret)
 
     this.lblcost.setString(0);
     this.lbltotalexp.setString(0);
-    this.updateTarget();
+   // this.updateTarget();
     this.showall();
 };

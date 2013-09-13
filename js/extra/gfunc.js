@@ -126,10 +126,17 @@ wl.run_scene=function(s){
 
 
  
-  if(arguments.length > 1 && scene.getChildren()[0].controller!=null && scene.getChildren()[0].controller.onCreate){
+  if( scene.getChildren()[0].controller!=null && scene.getChildren()[0].controller.onCreate){
        
+       if(arguments.length > 1 )
+       {
              var args = Array.prototype.slice.call(arguments, 1);
             scene.getChildren()[0].controller.onCreate.apply(scene.getChildren()[0].controller,args);
+            }
+            else
+            {
+             scene.getChildren()[0].controller.onCreate.apply(scene.getChildren()[0].controller);
+            }
  
     }
 };
@@ -138,10 +145,17 @@ wl.load_scene=function(s){
     var scene = cc.BuilderReader.load(s);
 
 
-     if(arguments.length > 1 && scene.controller!=null && scene.controller.onCreate){
+     if(  scene.controller!=null && scene.controller.onCreate){
        
+        if(arguments.length > 1)
+        {
              var args = Array.prototype.slice.call(arguments, 1);
             scene.controller.onCreate.apply(scene.controller,args);
+            }
+            else
+            {
+                scene.controller.onCreate.apply(scene.controller);
+            }
         
     }
     return scene;

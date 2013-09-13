@@ -71,7 +71,6 @@ cc.BuilderReader.load = function(file, owner, parentSize)
         if (!documentControllerName) continue;
 
         // Create a document controller
-        
         var controller = new _ccbGlobalContext[documentControllerName]();
         controller.controllerName = documentControllerName;
 

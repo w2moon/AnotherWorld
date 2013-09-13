@@ -18,20 +18,6 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
     }
 
 
-  
-
-
-    
-
- /*
-    var card = wl.load_scene("uicard",this.traveller.getSoul().getSkeleton(),this.traveller.getSoul().getAvatar(),this.traveller.getImg()); 
-    card.setPosition(this.travellercard.getPosition());
-    this.rootNode.addChild(card);
-    
-
-    this.travellercard.removeFromParent();
-    */
-
     if(this.traveller.getSoulId() != 0){
         var soul = cc.Sprite.create(this.traveller.getSoul().getBase().icon);
         soul.setPosition(cc.p(this.soul_mask.getContentSize().width/2,this.soul_mask.getContentSize().height/2));
@@ -70,6 +56,8 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
     if(!USE_CCB){
      this.rootNode.registerWithTouchDispatcher();
      }
+
+
      this.rootNode.onTouchesBegan = function( touches, event) {
         this.controller.onTouchesBegan(touches, event);
         return true;
@@ -83,14 +71,12 @@ travellerinfo.prototype.onCreate = function(traveller,copyed_traveller){
 
 travellerinfo.prototype.onTouchesBegan = function(touches,event)
 {
-cc.log("touch")
 	var loc = touches[0].getLocation();
 	this.processClick(loc);
 };
 
 travellerinfo.prototype.onMouseDown = function(event)
 {
-cc.log("mouse")
 	var loc = event.getLocation();
 	this.processClick(loc);
 };
@@ -102,7 +88,6 @@ travellerinfo.prototype.processClick = function(loc)
 };
 
 travellerinfo.prototype.onPressEquip = function(n){
-   cc.log("equipchoose"+n.getTag());
     wl.run_scene("equipchoose",n.getTag(),this.oldtraveller,this.traveller);
 };
 
