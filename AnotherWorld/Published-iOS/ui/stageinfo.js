@@ -57,7 +57,7 @@ stageinfo.prototype.onCreate = function(stageid,submapid){
     var y = 167;
 
     for(var r in rewards){
-        var reward = wl.load_scene("rewardslot",rewards[r][1],wl.tonumber(rewards[r][2]));
+        var reward = wl.load_scene("rewardslot",rewards[r][1],wl.tonumber(rewards[r][2]),rewards[r][3]);
         if(x == null){
             x = this.rootNode.getContentSize().width/2 - (rewards.length-1)*(5+reward.controller.bg.getContentSize().width)/2;
         }

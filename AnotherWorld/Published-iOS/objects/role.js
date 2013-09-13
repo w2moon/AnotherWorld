@@ -74,24 +74,63 @@ wl.merge_reward = function(ret,lr){
 
 wl.virtual_role_save = function(){
     var role = {};
-    for(var k in wl.gvars.role){
-        if(typeof(wl.gvars.role) != "object"){
-            role[k] = wl.gvars.role[k];
+    for(var k in wl.gvars.role.dbobj){
+        if(wl.gvars.role.dbobj[k] == null){
+            continue;
         }
-        else if(wl.gvars.role[k].length == null){
+        if(typeof(wl.gvars.role.dbobj[k]) != "object"){
+            role[k] = wl.gvars.role.dbobj[k];
+        }
+        else if(wl.gvars.role.dbobj[k].length == null){
+            role[k] = {};
+            for(var i in wl.gvars.role.dbobj[k]){
+                role[k][i] = wl.gvars.role.dbobj[k][i];
+            }
+        }
+        else{
+            role[k] = [];
+            for(var i in wl.gvars.role.dbobj[k]){
+                if( typeof(wl.gvars.role.dbobj[k][i]) != "object"){
+                    role[k].push(wl.gvars.role.dbobj[k][i]);
+                }
+                else if(wl.gvars.role.dbobj[k][i].dbobj != null)
+                {
+                    role[k] = wl.gvars.role.dbobj[k][i].dbobj;
+                }
+                else{
+                    cc.log("virtual save:"+k+" "+i);
+                }
+            }
+        }
+    }
+    for(var k in wl.gvars.role){
+        if(k == "dbobj"){
+            continue;
+        }
+        
+        if(typeof(wl.gvars.role[k]) == "function"){
+             continue;
+        }
+        if(wl.gvars.role[k].length == null){
             role[k] = {};
             for(var i in wl.gvars.role[k]){
+                
                 role[k][i] = wl.gvars.role[k][i];
             }
         }
         else{
             role[k] = [];
-            if(wl.gvars.role[k].dbobj == null){
-                role[k] = wl.gvars.role[k].dbobj;
-            }
-            else
-            {
-                role[k] = dbobj;
+            for(var i in wl.gvars.role[k]){
+                if( typeof(wl.gvars.role[k][i]) != "object"){
+                    role[k].push(wl.gvars.role[k][i]);
+                }
+                else if(wl.gvars.role[k][i].dbobj != null)
+                {
+                    role[k].push(wl.gvars.role[k][i].dbobj);
+                }
+                else{
+                    cc.log("virtual save:"+k+" "+i);
+                }
             }
         }
     }
@@ -129,12 +168,14 @@ wl.addReward = function(reward,level){
             ret.blueprints.push(reward[k][2]);
         break;
         case "addMaterial":
+            
             if(ret.materials[reward[k][2]] == null){
-                ret.materials[reward[k][2]] = 1;
+                ret.materials[reward[k][2]] = wl.tonumber(reward[k][3]);
             }
             else{
-                ret.materials[reward[k][2]] += 1;
+                ret.materials[reward[k][2]] += wl.tonumber(reward[k][3]);
             }
+            
         break;
         case "addExp":
             ret.addexp = ret.addexp + reward[k][2]*level;
@@ -166,6 +207,8 @@ wl.addReward = function(reward,level){
         break;
         }
     }
+
+    cc.log("aaa "+ret.materials[1])
     return ret;
 };
 
@@ -475,6 +518,7 @@ wl.role.prototype = {
     },
 
     addBlueprint : function(v){
+        cc.log("addb"+v)
         for(var k in this.dbobj.blueprints){
             if(this.dbobj.blueprints[k] == v){
                 return;
@@ -484,6 +528,7 @@ wl.role.prototype = {
     },
 
     addMaterial : function(v,n){
+        cc.log("addm"+v+" "+n)
         if(this.dbobj.materials[v] == null){
             this.dbobj.materials[v] = n;
         }
@@ -551,6 +596,8 @@ wl.role.prototype = {
 
     getSlot5 : function(){return this.dbobj.slot5;},
     setSlot5 : function(slot5){ this.dbobj.slot5 = slot5;},
+
+    getHero : function(){return this.dbobj.slot5;},
 
     getExtraSoulNum : function(){return this.dbobj.extrasoulnum;},
     setExtraSoulNum : function(extrasoulnum){ this.dbobj.extrasoulnum = extrasoulnum;},

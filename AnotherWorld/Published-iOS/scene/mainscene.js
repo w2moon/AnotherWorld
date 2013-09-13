@@ -23,7 +23,7 @@ mainscene.prototype.onDidLoadFromCCB = function(){
             continue;
         }
         this["slot"+i].setVisible(true);
-
+        
         var traveller = wl.gvars.role.getTraveller(travellerid);
         this["card"+i] = wl.load_scene("uicard",traveller.getSoul().getSkeleton(),traveller.getSoul().getAvatar(),traveller.getImg());
         this["card"+i].setPosition(this.menu.convertToWorldSpace(this["slot"+i].getPosition()));

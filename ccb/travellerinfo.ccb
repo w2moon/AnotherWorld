@@ -7,7 +7,7 @@
 	<key>currentResolution</key>
 	<integer>0</integer>
 	<key>currentSequenceId</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -336,14 +336,6 @@
 										<array>
 											<dict>
 												<key>name</key>
-												<string>visible</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
 												<string>anchorPoint</string>
 												<key>type</key>
 												<string>Point</string>
@@ -409,7 +401,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>traveller/eq_flower.png</string>
+													<string>traveller/btntoken.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -536,8 +528,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>50</real>
-									<real>50</real>
+									<real>65.625</real>
+									<real>38.541667938232422</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -592,7 +584,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 						</array>
 						<key>seqExpanded</key>
@@ -814,14 +806,6 @@
 										<array>
 											<dict>
 												<key>name</key>
-												<string>visible</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
 												<string>anchorPoint</string>
 												<key>type</key>
 												<string>Point</string>
@@ -887,7 +871,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>traveller/eq_equipment.png</string>
+													<string>traveller/btntoken.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1014,8 +998,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>50</real>
-									<real>50</real>
+									<real>74.375</real>
+									<real>58.958332061767578</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -1070,7 +1054,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 						</array>
 					</dict>
@@ -1300,14 +1284,6 @@
 										<array>
 											<dict>
 												<key>name</key>
-												<string>visible</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
 												<string>anchorPoint</string>
 												<key>type</key>
 												<string>Point</string>
@@ -1373,7 +1349,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>traveller/eq_head.png</string>
+													<string>traveller/btntoken.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1501,7 +1477,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>50</real>
+									<real>70.625</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -1556,7 +1532,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 						</array>
 					</dict>
@@ -1776,14 +1752,6 @@
 										<array>
 											<dict>
 												<key>name</key>
-												<string>visible</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
 												<string>anchorPoint</string>
 												<key>type</key>
 												<string>Point</string>
@@ -1849,7 +1817,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>traveller/eq_equipment.png</string>
+													<string>traveller/btntoken.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -1976,8 +1944,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>50</real>
-									<real>50</real>
+									<real>24.375</real>
+									<real>59</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -2032,7 +2000,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 						</array>
 					</dict>
@@ -2252,14 +2220,6 @@
 										<array>
 											<dict>
 												<key>name</key>
-												<string>visible</string>
-												<key>type</key>
-												<string>Check</string>
-												<key>value</key>
-												<false/>
-											</dict>
-											<dict>
-												<key>name</key>
 												<string>anchorPoint</string>
 												<key>type</key>
 												<string>Point</string>
@@ -2325,7 +2285,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>traveller/eq_body.png</string>
+													<string>traveller/btntoken.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -2351,6 +2311,8 @@
 												</array>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -2452,8 +2414,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>50</real>
-									<real>50</real>
+									<real>33.4375</real>
+									<real>38.5</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -2508,7 +2470,7 @@
 								<key>type</key>
 								<string>Byte</string>
 								<key>value</key>
-								<integer>0</integer>
+								<integer>255</integer>
 							</dict>
 						</array>
 					</dict>
@@ -2567,7 +2529,7 @@
 						<key>type</key>
 						<string>Degrees</string>
 						<key>value</key>
-						<real>90</real>
+						<real>0.0</real>
 					</dict>
 					<dict>
 						<key>name</key>
