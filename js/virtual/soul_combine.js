@@ -73,6 +73,17 @@ virtual_soul_combine = function(info){
                 role.souls.push(soul);
                 ret['soul'] = soul;
 
+                 var meeted = false;
+    for(var k in role.meeted){
+         if(role.meeted[k] == bid){
+            meeted = true;
+            break;
+        }
+    }
+    if(!meeted){
+        role.meeted.push(bid);
+    }
+
                 ////////
                  if(fathersoul.travellerid != 0 && mothersoul.travellerid != 0 )
         {
@@ -117,7 +128,8 @@ virtual_soul_combine = function(info){
 
         }
 
-
+   
+    
     wl.set("role_"+info.userid,wl.toJSONString(role));
     return ret;
 };

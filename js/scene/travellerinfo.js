@@ -119,7 +119,7 @@ travellerinfo.prototype.onApply = function(){
         msg.cloth = this.traveller.getClothId();
         modified = true;
      }
-     if(this.traveller.getTrinketId() != this.oldtraveller.getTrinketId()){
+      if(this.traveller.getTrinketId() != this.oldtraveller.getTrinketId()){
         msg.trinket = this.traveller.getTrinketId();
         modified = true;
      }
