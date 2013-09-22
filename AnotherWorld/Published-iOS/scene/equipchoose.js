@@ -2,6 +2,7 @@
 var equipchoose = function(){};
 
 equipchoose.prototype.onDidLoadFromCCB = function(){
+    cc.log("equip choose")
 };
 
 

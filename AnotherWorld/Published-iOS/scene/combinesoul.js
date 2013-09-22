@@ -155,6 +155,11 @@ combinesoul.prototype.onChoosed = function(soulid,n)
 
         this.lblcost.setString(rarity['combinecopper']);
         //this.lblmutation.setString(rarity['mutation']);
+
+        if(wl.gvars.role.isMeeted(bid)){
+        }
+        else{
+        }
     }
 };
 
@@ -262,7 +267,8 @@ combinesoul.prototype.on_soul_combine = function(ret)
         }
 
         var soul = wl.gvars.role.getSoul(ret.soul.id);
-        
+        wl.gvars.role.meet(soul.getBaseId());
+
         this.childcard = wl.create_soulcard(soul.getBaseId());
         this.childcard.soulid = ret.soul.id;
         this.childcard.setPosition(this.child.getPosition());

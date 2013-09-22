@@ -93,7 +93,9 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         case "souls":
             for(var sk in result.reward[k]){
                 wl.gvars.role.addSoul(result.reward[k][sk]);
+                wl.gvars.role.meet(result.reward[k][sk].baseid);
                 rewards.push([1,"addSoul",result.reward[k][sk].baseid]);
+                
             }
         break;
         case "blueprints":

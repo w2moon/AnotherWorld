@@ -404,7 +404,7 @@ wl.create_enemy = function(tmp,num,factor,enemyid,enemylevel){
 };
 
 wl.role_from_enemy = function(sinfo,enemies,level){
-    var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),travellers:[],souls:[],equipments:[]};
+    var tmp = {id:wl.local_id(),userid:1,name:lang(sinfo.rolename),slot1:0,slot2:0,slot3:0,slot4:0,slot5:0,travellers:[],souls:[],equipments:[]};
     
     
     var factor = level
@@ -418,9 +418,7 @@ wl.role_from_enemy = function(sinfo,enemies,level){
         wl.create_enemy(tmp,num,factor,wl.tonumber(enemies[k][0]),wl.tonumber(enemies[k][1]));
         
     }
-    for(var k in sinfo){
-        cc.log(k)
-    }
+   
     var heros = parse_enemy(sinfo.hero)
     for(var k in heros){
         if(wl.tonumber(heros[k][0]) == 0){

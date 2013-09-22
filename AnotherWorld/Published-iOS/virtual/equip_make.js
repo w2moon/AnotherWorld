@@ -40,7 +40,7 @@ virtual_equip_make = function(info){
     }
 
     ret.equip = wl.create_equip(base.equipid);
-    role.equips.push(ret.equip);
+    role.equipments.push(ret.equip);
 
     wl.set("role_"+info.userid,wl.toJSONString(role));
     return ret;
