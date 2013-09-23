@@ -222,23 +222,32 @@ wl.warrior.prototype = {
     },
 
     incHP : function(v){
+    /*
         var isCrit = wl.rand() < this.getProperty("Crit");
         if(isCrit){
             v *=2;
         }
+        */
         this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
 
         wl.dispatcher.notify(this,"incHP",v,isCrit);
     },
+    decHPProperty : function(pro,rate,trigger){
+        v = trigger.getProperty(pro)*rate;
+        this.decHP(v);
+    },
     decHP : function(v){
+        
         if(wl.rand() < this.getProperty("Dodge")){
             wl.dispatcher.notify(this,"dodge",v);
             return;
         }
+        /*
         var isCrit = wl.rand() < this.getProperty("Crit");
         if(isCrit){
             v *=2;
         }
+        */
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
 
         wl.dispatcher.notify(this,"decHP",v,isCrit);
@@ -296,6 +305,8 @@ wl.warrior.prototype = {
         warrior.setGuarder(this);
         wl.dispatcher.notify(this,"beGuarder",[warrior]);
     },
+
+    
 
     addBuff : function(buffid,trigger){
         var buffinfo = buffbase[buffid];
