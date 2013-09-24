@@ -326,6 +326,15 @@
     <None Include="..\js\ui\bluebar.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\skill\normal_magic.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\shoot.js">
+      <Filter>js\skill</Filter>
+    </None>
+    <None Include="..\js\skill\multi_attack.js">
+      <Filter>js\skill</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

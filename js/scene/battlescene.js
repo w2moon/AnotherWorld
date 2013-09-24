@@ -241,6 +241,31 @@ battlescene.prototype.turn_process = function(){
                 }
             }
             break;
+
+            case naturetype.randommulti:
+            {
+                var arr = []
+                for(var i in objs){
+                    if(objs[k] != null
+                       &&((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead()))){
+                        if(i == HERO_IDX && !selecthero)
+                        {
+                        }
+                        else
+                        {
+                            arr.push(objs[i]);
+                        }
+                    }
+                }
+                while(arr.length >0 &&num>0){
+                    
+                    var k = Math.random()*arr.length
+                    out_array.push(arr[k]);
+                    num--;
+                }
+            }
+            break;
            
             case naturetype.lowesthp:
             {

@@ -13,7 +13,8 @@ var skilltype = {
             'lowesthp':1,
             opposite:2,
              'left':3,
-            'right':4
+            'right':4,
+            'randommulti':5
           }
 
  var targettype = {

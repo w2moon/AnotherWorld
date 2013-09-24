@@ -31,12 +31,15 @@ require("skill/guard.js");
 require("skill/normal_attack.js");
 require("skill/assist_attack.js");
 require("skill/counter_attack.js");
+require("skill/multi_attack.js");
 require("skill/missile.js");
 require("skill/add_buffer.js");
 require("skill/normal_heal.js");
 require("skill/assist_heal.js");
 require("skill/valuebase_heal.js");
+require("skill/normal_magic.js");
 require("skill/instant_kill.js");
+require("skill/shoot.js");
 
 require("ui/loading.js");
 require("ui/indicator.js");

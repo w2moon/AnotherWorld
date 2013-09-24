@@ -212,7 +212,6 @@ wl.warrior.prototype = {
 
     incModifierDamagePercent : function(v){
         this.modifier_damage_percent += v;
-        cc.log("modifier_damage_percent "+this.modifier_damage_percent)
     },
     decModifierDamagePercent : function(v){
         this.modifier_damage_percent -= v;
@@ -229,7 +228,7 @@ wl.warrior.prototype = {
         }
         */
         this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
-
+        var isCrit = 0;
         wl.dispatcher.notify(this,"incHP",v,isCrit);
     },
     decHPProperty : function(pro,rate,trigger){
@@ -237,7 +236,11 @@ wl.warrior.prototype = {
         this.decHP(v);
     },
     decHP : function(v){
-        
+        v = parseInt(v*(1+this.modifier_damage_percent));
+        if(v <= 0){
+            v == 1;
+        }
+
         if(wl.rand() < this.getProperty("Dodge")){
             wl.dispatcher.notify(this,"dodge",v);
             return;
@@ -248,8 +251,9 @@ wl.warrior.prototype = {
             v *=2;
         }
         */
+        
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
-
+        var isCrit = 0;
         wl.dispatcher.notify(this,"decHP",v,isCrit);
 
         if(this.isDead()){
@@ -448,6 +452,9 @@ wl.warrior.prototype = {
                 }
             }
         }
+    },
+
+    shoot : function(){
     },
 
     attack : function(target,protype,prorate,nottriggerevent){

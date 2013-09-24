@@ -21,9 +21,18 @@
             }
         }
         else{
+             var targets = skill.getBattleField().select_target(skill.warrior.getPlayer(),params[0],parseInt(params[3]),skill.warrior.getTraveller().getNature(),true,trigger,event_targets);
+        
+            for(var k in targets){
+
+                tasks.push([targets[k],targets[k].addBuff,[parseInt(params[1])]]);
+                tasks.push([skill,skill.delay,[0.01]]);
+            }
+        }
+       /* else{
             tasks.push([skill.warrior,skill.warrior.addBuff,[parseInt(params[1])]]);
             tasks.push([skill,skill.delay,[0.01]]);
-        }
+        }*/
 
          
         
