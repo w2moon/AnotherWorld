@@ -23,10 +23,10 @@
             var posdes = skill.getBattleField().getAttackPosition(targets[k]);
 
            tasks.push([wl.actionbase,wl.actionbase.move_to, [skill.warrior,posdes]]);
-           tasks.push([skill,skill.delay,[MOVE_INTERVAL]]);
+           tasks.push([skill,skill.delay,[0.01]]);
 
             tasks.push([targets[k],targets[k].beDefender,[skill.warrior]]);
-            tasks.push([skill,skill.delay,[0.01]]);
+            tasks.push([skill,skill.delay,[MOVE_INTERVAL]]);
 
             tasks.push([targets[k],targets[k].defense,[skill.warrior]]);
             tasks.push([skill,skill.delay,[0.01]]);
