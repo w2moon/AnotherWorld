@@ -28,7 +28,6 @@
             for(var k in targets){
                 if(params[4] != null){
                     tasks.push([targets[k],targets[k].particle,[params[4]]]);
-                    cc.log(targets[k].getTraveller().getName())
                 }
                 tasks.push([targets[k],targets[k].addBuff,[parseInt(params[1])]]);
                 tasks.push([skill,skill.delay,[0.01]]);
