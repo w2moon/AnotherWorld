@@ -131,6 +131,7 @@ wl.skill.prototype = {
         if(this.getBase().energy != 0){
             this.warrior.decEnergy(this.getBase().energy);
         }
+        cc.log(this.getBase().id)
         this.startCoolDown();
         var fargs = Array.prototype.slice.call(arguments, 2);
         var args = [];
@@ -175,7 +176,9 @@ wl.skill.prototype = {
     
         }
 
-        this.warrior.getUI().showUseSkill(lang(this.getBase().name));               
+        if(parseInt(this.skillbase.id/1000) > 2){
+            this.warrior.getUI().controller.showUseSkill(lang(this.getBase().name));               
+        }
         return this.getBase().duration;
     },
 

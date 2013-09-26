@@ -353,6 +353,15 @@ uicard.prototype.register_event = function(){
 
 
          }
+
+        uicard.prototype.on_particle = function(particle){
+            var inst = cc.ParticleSystem.create(particle);
+            //inst.setPosition(-size.width/2,-size.height/2);
+			inst.setAutoRemoveOnFinish(true);
+            this.rootNode.addChild(inst);
+         };
+
+
           uicard.prototype.on_attack = function(){
             this.playAnim("attack");
             
@@ -369,7 +378,9 @@ uicard.prototype.register_event = function(){
             
          };
          uicard.prototype.showUseSkill = function(name){
-            this.rootNode.addChild();
+            var lb = cc.LabelTTF.create(name,"Helvetica",16);
+            lb.runAction(cc.Sequence.create(cc.MoveTo.create(1,cc.p(0,30)),cc.CallFunc.create(lb.removeFromParent,lb)));
+            this.rootNode.addChild(lb);
          };
          uicard.prototype.on_battle_init = function(){
 
@@ -382,10 +393,19 @@ uicard.prototype.register_event = function(){
          };
          uicard.prototype.on_incHP = function(v){
             this.updateHP();
+
+            var lb = cc.LabelTTF.create(v,"Helvetica",16);
+            lb.runAction(cc.Sequence.create(cc.MoveTo.create(1,cc.p(0,30)),cc.CallFunc.create(lb.removeFromParent,lb)));
+            this.rootNode.addChild(lb);
          }
 
           uicard.prototype.on_decHP = function(v){
             this.updateHP();
+
+
+            var lb = cc.LabelTTF.create(-v,"Helvetica",16);
+            lb.runAction(cc.Sequence.create(cc.MoveTo.create(1,cc.p(0,30)),cc.CallFunc.create(lb.removeFromParent,lb)));
+            this.rootNode.addChild(lb);
          }
 
          

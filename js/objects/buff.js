@@ -60,12 +60,12 @@ wl.buff.prototype = {
         if(logic == ""){
             return;
         }
-        var tmp = parse_skill_params(logic)
-        var arr = tmp[i].slice(1)
-        arr.push(this.triggers[0])
-        for(var i=1;i<tmp.length;++i){
-            
-            this.warrior[tmp[i][0]].apply(this.warrior,arr)
+        var tmp = parse_skill_params(logic);
+        for(var k=0;k<tmp.length;++k){
+            var arr = tmp[k].slice(1);
+            arr.push(this.triggers[0]);
+            this.warrior[tmp[k][0]].apply(this.warrior,arr)
+           
         }
 
         /*

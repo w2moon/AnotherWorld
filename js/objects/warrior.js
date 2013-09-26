@@ -231,6 +231,7 @@ wl.warrior.prototype = {
         wl.dispatcher.notify(this,"incHP",v,isCrit);
     },
     decHPProperty : function(pro,rate,trigger){
+        cc.log("property dec")
         v = trigger.getProperty(pro)*rate;
         this.decHP(v);
     },
@@ -420,7 +421,7 @@ wl.warrior.prototype = {
 
     action : function(){
         
-              for(var k in this.skills){
+              for(var k=this.skills.length-1;k>=0;k--){
                 if(this.skills[k].isActiveSkill() && this.skills[k].canBeCast()){
                     return this.skills[k].cast();
                 }
@@ -495,7 +496,8 @@ wl.warrior.prototype = {
     },
 
     particle : function(particle){
-         wl.dispatcher.notify(this,"particle",particle);
+        this.getUI().controller.on_particle(particle);
+         //wl.dispatcher.notify(this,"particle",particle);
     },
 
    
