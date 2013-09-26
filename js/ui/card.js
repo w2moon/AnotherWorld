@@ -316,17 +316,24 @@ uicard.prototype.onCreate = function(ske,avatar,img,warrior){
         return;
     }
 
+    this.hpid = cc.LabelTTF.create(0,"Helvetica",14);
+    this.rootNode.addChild(this.hpid);
+
     this.register_event();
 };
+
+uicard.prototype.updateHP = function(){
+    this.hpid.setString(this.warrior.getHP()+"/"+this.warrior.getMaxHP());
+}
 
 uicard.prototype.register_event = function(){
 
             
             wl.dispatcher.register(this.warrior,"battle_init",this.on_battle_init,this);
-            /*
+            
             wl.dispatcher.register(this.warrior,"incHP",this.on_incHP,this);
             wl.dispatcher.register(this.warrior,"decHP",this.on_decHP,this);
-
+            /*
             wl.dispatcher.register(this.warrior,"dead",this.on_dead,this);
 
 
@@ -361,20 +368,24 @@ uicard.prototype.register_event = function(){
            this.playAnim("dodge");
             
          };
-
+         uicard.prototype.showUseSkill = function(name){
+            this.rootNode.addChild();
+         };
          uicard.prototype.on_battle_init = function(){
+
+            this.updateHP();
            // this.indicator.setMax(this.warrior.getMaxEnergy());
             //this.indicator.setValue(this.warrior.getEnergy());
 
            // this.originpos = this.getPosition();
             
          };
-         uicard.prototype.on_incHP = function(){
-            //this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
+         uicard.prototype.on_incHP = function(v){
+            this.updateHP();
          }
 
           uicard.prototype.on_decHP = function(v){
-            //this.hpbar.setScaleX(this.warrior.getHP()/this.warrior.getTraveller().getMaxHP());
+            this.updateHP();
          }
 
          

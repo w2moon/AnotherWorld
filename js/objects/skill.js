@@ -174,7 +174,8 @@ wl.skill.prototype = {
             this.do_action_and_particle(this.battlefield,this.getBase().battlefieldaction,this.getBase().battlefieldparticle);
     
         }
-                            
+
+        this.warrior.getUI().showUseSkill(lang(this.getBase().name));               
         return this.getBase().duration;
     },
 

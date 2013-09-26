@@ -35,6 +35,7 @@ battlescene.prototype.onCreate = function(info,result)
     this.order_activate = 2;
     this.info = info;
 
+    this.clientresult = retcode.BATTLE_RESULT_FAIL;
     this.result = result;
     
   //  cc.Director.getInstance().getScheduler().setTimeScale(5);
