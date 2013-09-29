@@ -31,7 +31,7 @@
                     tasks.push([targets[k],targets[k].particle,[params[4]]]);
                 }
                 tasks.push([targets[k],targets[k].addBuff,[parseInt(params[1])]]);
-                tasks.p ush([skill,skill.delay,[0.01]]);
+                tasks.push([skill,skill.delay,[0.01]]);
             }
         }
        /* else{

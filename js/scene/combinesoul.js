@@ -13,6 +13,8 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.rootNode.addChild(this.scroll);
 
 
+    this.lblcost.setString(0);
+    this.lblhas.setString(wl.gvars.role.getCopper());
     this.show(null,ORDER_DEFAULT);
 };
 
@@ -36,6 +38,11 @@ combinesoul.prototype.show = function(race,order)
     this.chooseRace(race);
     this.chooseOrder(order);
 
+
+};
+
+combinesoul.prototype.onPressOrder = function()
+{
 
 };
 
