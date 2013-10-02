@@ -6,11 +6,24 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.childcard = null;
     this.objs = [];
     this.isChoosingFather = true;
+    this.isFirstEnter = true;
+    
+    var size = this.rootNode.getContentSize();
+    var center = cc.p(size.width/2,size.height*42.3/100);
+    
+    var spr = cc.Sprite.create("equip/bg_equipment1.png");
+    var con = spr.getContentSize();
+    
+    spr.setPosition(center);
+    this.chooseLayer = cc.Layer.create();
+    this.chooseLayer.addChild(spr);
 
-      var size = this.rootNode.getContentSize();
-    this.scroll = wl.scroll_layer(size.width,size.height/3);
-
-    this.rootNode.addChild(this.scroll);
+    
+    this.scroll = wl.scroll_layer(con.width,con.size);
+    this.scroll.setPosition(center);
+    
+    this.chooseLayer.addChild(this.scroll);
+    this.rootNode.addChild(this.chooseLayer);
 
 
     this.lblcost.setString(0);

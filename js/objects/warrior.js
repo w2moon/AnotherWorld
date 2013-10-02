@@ -313,6 +313,8 @@ wl.warrior.prototype = {
     
 
     addBuff : function(buffid,trigger){
+        cc.log("trigger")
+        cc.log(trigger)
         var buffinfo = buffbase[buffid];
         if(buffinfo.multiple == 1)
         {

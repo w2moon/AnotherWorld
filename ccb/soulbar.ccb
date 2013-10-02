@@ -1552,6 +1552,8 @@ sdfkkfkdfkdf</string>
 		<string></string>
 		<key>displayName</key>
 		<string>CCLayer</string>
+		<key>jsController</key>
+		<string>soulbar</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
@@ -1611,6 +1613,8 @@ sdfkkfkdfkdf</string>
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

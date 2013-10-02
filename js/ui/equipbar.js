@@ -15,13 +15,13 @@ equipbar.prototype.onCreate = function(equip,isequiped,oldtraveller,traveller,sl
 
 
    
-    this.icon.init(base.icon);
+    wl.set_texture(this.icon,base.icon);
 
     this.name.setString(lang(base.name));
 
     if(equip.hasSkill()){
         var skillinfo = skillbase[equip.getSkillId()];
-        this.skillicon.init(skillinfo.icon);
+        wl.set_texture(this.skillicon,skillinfo.icon);
         this.lbldesc.setString(lang(skillinfo.description));
     }
     else{
@@ -32,8 +32,7 @@ equipbar.prototype.onCreate = function(equip,isequiped,oldtraveller,traveller,sl
     if(isequiped){
         this.lblstatus.setVisible(true);
         this.newmark.setVisible(false);
-        this.bg.init("equip/bg_equipment_now.png");
-
+        wl.set_texture(this.bg,"equip/bg_equipment_now.png");
         this.line = cc.Sprite.create("equip/line_select.png");
         this.line.setPosition(0,-this.bg.getContentSize().height/2+2);
         this.rootNode.addChild(this.line);
@@ -81,7 +80,7 @@ equipbar.prototype.onCreate = function(equip,isequiped,oldtraveller,traveller,sl
         this.lblpro.setVisible(false);
     }
     else{
-        this.proicon.init(proicon);
+        wl.set_texture(this.proicon,proicon);
         this.lblpro.setString(maxpro);
     }
 
@@ -123,7 +122,7 @@ equipbar.prototype.onPressPutOn = function(){
     switch(this.slot)
         {
         case EQUIP_SOUL:
-            wl.popmsg(lang("MSG_CANNOT_TAKEOFF_SOUL"));
+                this.traveller.dbobj.soulid = this.equip.getId();
         break;
         case EQUIP_WEAPONR:
             this.traveller.dbobj.weaponrid = this.equip.getId();
