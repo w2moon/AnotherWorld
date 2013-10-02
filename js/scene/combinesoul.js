@@ -181,6 +181,16 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         else{
         }
     }
+    else if(this.isFirstEnter)
+    {
+        this.isFirstEnter = false;
+        this.isChoosingFather = false;
+        this.show(null,ORDER_DEFAULT);
+    }
+    else {
+        cc.log("notsee")
+        this.chooseLayer.setVisible(false);
+    }
 };
 
 
