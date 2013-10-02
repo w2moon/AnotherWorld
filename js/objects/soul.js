@@ -33,8 +33,8 @@ wl.soul.prototype = {
     },
 
      getProperty : function(name){
-       
-         return parseInt(soul.getBase()[name]*(1+soul.getStar()*0.1)*(soul.getLevel()/soul.getMaxLevel()));
+       cc.log(this.getBase()[name]+" "+this.getStar()+" "+this.getLevel()+" "+this.getMaxLevel())
+         return parseInt(this.getBase()[name]*(1+this.getStar()*0.1)*(this.getLevel()/this.getMaxLevel()));
         
     },
 

@@ -23,7 +23,7 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.scroll.setPosition(center);
     
     this.chooseLayer.addChild(this.scroll);
-    this.rootNode.addChild(this.chooseLayer);
+    this.rootNode.addChild(this.chooseLayer,1);
 
 
     this.lblcost.setString(0);
@@ -47,7 +47,7 @@ combinesoul.prototype.show = function(race,order)
 {
     
     
-
+this.chooseLayer.setVisible(true);
     this.chooseRace(race);
     this.chooseOrder(order);
 
@@ -70,7 +70,7 @@ combinesoul.prototype.chooseRace = function(race)
     this.objs = [];
     var souls = wl.gvars.role.getSouls(this.race);
     for(var k in souls){
-        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this,this.onChoosed,souls[k].getId());
+        var s = wl.load_scene("soulbar",souls[k],this,this.onChoosed);
         s.id = souls[k].getId();
         this.objs.push(s);
         this.scroll.addChild(s);
@@ -105,10 +105,10 @@ combinesoul.prototype.chooseOrder = function(order)
     }
 
     var x = 0;
-    var y = 0;
+    var y =this.rootNode.getContentSize().height/2-90;
     for(var k in this.objs){
         this.objs[k].setPosition(x,y);
-        y += 50;
+        y -= 77;
     }
 }
 combinesoul.prototype.clearChild = function(){
@@ -143,9 +143,11 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         }
 
         var soul = wl.gvars.role.getSoul(soulid);
-       n.selected();
+    //   n.selected();
         this.fathercard = wl.create_soulcard(soul.getBaseId());
-        this.fathercard.setPosition(this.father.getPosition());
+        var pos = this.father.getPosition();
+        pos.y += 40;
+        this.fathercard.setPosition(pos);
          this.fathercard.soulid = soulid;
           this.fathercard.node = n;
         this.rootNode.addChild(this.fathercard);
@@ -157,20 +159,26 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         }
 
         var soul = wl.gvars.role.getSoul(soulid);
-        n.selected();
+      //  n.selected();
         this.mothercard = wl.create_soulcard(soul.getBaseId(),true);
         this.mothercard.soulid = soulid;
         this.mothercard.node = n;
-        this.mothercard.setPosition(this.mother.getPosition());
+        var pos = this.mother.getPosition();
+        pos.y += 40;
+        this.mothercard.setPosition(pos);
         this.rootNode.addChild(this.mothercard);
     
     }
     this.isChoosingFather = !this.isChoosingFather;
 
+    this.chooseLayer.setVisible(false);
     if(this.fathercard != null && this.mothercard != null){
         var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
         var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
         var bid = wl.get_combineid(fathersoul.getBaseId(),mothersoul.getBaseId());
+        if(soulbase[bid] == null){
+            cc.log("combine error : "+fathersoul.getBaseId() +" "+mothersoul.getBaseId());
+        }
         var rarity = rarityclass[soulbase[bid]['rarityclass']]
 
         this.lblcost.setString(rarity['combinecopper']);
@@ -187,10 +195,7 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         this.isChoosingFather = false;
         this.show(null,ORDER_DEFAULT);
     }
-    else {
-        cc.log("notsee")
-        this.chooseLayer.setVisible(false);
-    }
+  
 };
 
 
@@ -265,14 +270,20 @@ combinesoul.prototype.on_soul_combine = function(ret)
         {
             var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
                 traveller.setSoulId(ret.soul.id);
+             cc.log("fffff")
 
                
         }
         else (mothersoul.getTravellerId() != 0)
         {
             var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+            if(traveller != null){
                 traveller.setSoulId(ret.soul.id);
-
+            }
+            else{
+                cc.log("t m null")
+            }
+            cc.log("ggggg")
               
         }
 
@@ -282,6 +293,7 @@ combinesoul.prototype.on_soul_combine = function(ret)
         if(ret.soul.baseid != bid){
         //mutaition
         }
+    
         wl.gvars.role.addSoul(ret.soul);
 
        
@@ -295,15 +307,19 @@ combinesoul.prototype.on_soul_combine = function(ret)
             this.childcard.removeFromParent();
             this.childcard = null;
         }
-
-        var soul = wl.gvars.role.getSoul(ret.soul.id);
+    this.child.setVisible(false);
+    this.btnok.setVisible(false);
+    this.lblcombine.setVisible(false);
+    var soul = wl.gvars.role.getSoul(ret.soul.id);
         wl.gvars.role.meet(soul.getBaseId());
 
         this.childcard = wl.create_soulcard(soul.getBaseId());
         this.childcard.soulid = ret.soul.id;
-        this.childcard.setPosition(this.child.getPosition());
+    var pos = this.child.getPosition();
+    pos.y -= 40;
+        this.childcard.setPosition(pos);
         this.rootNode.addChild(this.childcard); 
 
-        this.show(null,ORDER_DEFAULT);
+    //    this.show(null,ORDER_DEFAULT);
         
 };

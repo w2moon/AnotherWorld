@@ -55,7 +55,16 @@ wl.clipping_layer = function(w,h){
 
 wl.scroll_layer = function(w,h){
     if(USE_CCB){
-        return cc.Layer.create();
+        var layer = cc.Layer.create();
+        layer.__addChild = layer.addChild;
+        layer.childpos = cc.p(0,0);
+ layer.addChild = function(n,l){
+    n.setPosition(this.childpos);
+ this.childpos.y += n.controller.bg.getContentSize().height+30;
+ this.__addChild(n);
+ cc.log("added")
+ };
+        return layer;
     }
 
     var container = cc.Layer.create();
