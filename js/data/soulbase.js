@@ -109,6 +109,7 @@ for(var k in soulbase){
             combineraceex[info['motherrace']]['mapid'][info['fatherid']] = info['id'];
         }
         else{
+            
             combineraceex[info['motherrace']]['maptype'][info['fatherrace']] = info['id'];
         }
     }
@@ -127,6 +128,9 @@ wl.get_combineid = function(soulbaseid1,soulbaseid2){
     }
         
     if(combinerace[soultype1] != null){
+        cc.log(soultype1)
+        cc.log(soultype2)
+        cc.log(combineraceex[soultype1]['maptype'][soultype2])
         if(combinerace[soultype1]['mapid'][soulbaseid2] != null){
             return combinerace[soultype1]['mapid'][soulbaseid2];
         }
@@ -136,22 +140,24 @@ wl.get_combineid = function(soulbaseid1,soulbaseid2){
     }
         
     if(combineidex[soulbaseid2] != null){
-        if (combineidex[soulbaseid2]['mapid'][soulbaseid1] != null){
-            return combineidex[soulbaseid2]['mapid'][soulbaseid1];
+        if (combineidex[soulbaseid1]['mapid'][soulbaseid2] != null){
+            return combineidex[soulbaseid1]['mapid'][soulbaseid2];
         }
-        if (combineidex[soulbaseid2]['maptype'][soultype1] != null){
-            return combineidex[soulbaseid2]['maptype'][soultype1];
+        if (combineidex[souylbaseid1]['maptype'][soultype2] != null){
+            return combineidex[soulbaseid1]['maptype'][soultype2];
         }
     }
         
     if(combineraceex[soultype2] != null){
-        if(combineraceex[soultype2]['mapid'][soulbaseid1] != null ){
-            return combineraceex[soultype2]['mapid'][soulbaseid1];
+        if(combineraceex[soultype1]['mapid'][soulbaseid2] != null ){
+            return combineraceex[soultype1]['mapid'][soulbaseid2];
         }
-        if(combineraceex[soultype2]['maptype'][soultype1]){
-            return combineraceex[soultype2]['maptype'][soultype1];
+        if(combineraceex[soultype1]['maptype'][soultype2] != null){
+            return combineraceex[soultype1]['maptype'][soultype2];
         }
     }
         
     return null;
 };
+
+cc.log(wl.get_combineid(4000,1000))

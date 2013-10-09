@@ -29,6 +29,15 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.lblcost.setString(0);
     this.lblhas.setString(wl.gvars.role.getCopper());
     this.show(null,ORDER_DEFAULT);
+    this.animate();
+};
+
+combinesoul.prototype.animate = function()
+{
+    var size = this.rootNode.getContentSize();
+    this.chooseLayer.setPosition(cc.p(0,-size.height*42.3/100));
+    
+    this.chooseLayer.runAction(cc.MoveTo.create(0.2,cc.p(0,0)));
 };
 
 combinesoul.prototype.onPressFather = function()
