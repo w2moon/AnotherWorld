@@ -35,6 +35,64 @@ wl.create_soulcard = function(soulbaseid,flip){
    return wl.load_scene("uicard",ske,avatar,""); 
 };
 
+wl.create_animation = function(dt,filename,framenum,colnum){
+    
+         var animation = cc.Animation.create();
+         animation.initWithSpriteFrames(null,dt);
+
+         if(typeof(filename) == "object"){
+                
+                for(var i=1;i<filename.length;++i){
+                    if(filename[i] == ""){
+                        continue;
+                    }
+                    animation.addSpriteFrameWithFileName(filename[i]);
+                }
+         }
+         else{
+            if(framenum == null){
+                cc.log("create animation need framenum and colnum");
+            }
+            var texture = cc.TextureCache.sharedTextureCache().addImage(filename);
+            var frame = cc.SpriteFrame.createWithTexture(texture,cc.rect(0, 0, texture.contentSize.width, texture.contentSize.height));
+
+            var rownum = Math.ceil(framenum/colnum);
+            var uw = parseInt(texture.contentSize.width/colnum);
+            var uh = parseInt(texture.contentSize.height/rownum);
+            for(var row =0;i<rownum;++row){
+                for(var col =0;col<colnum;++col){
+                    animation.addSpriteFrameWithTexture(texture,cc.rect(col*uw,row*uh,uw,uh));
+                }
+            }
+         }
+
+         return animation;
+};
+
+wl.play_animation = function(node,x,y,dt,animfile,loop){
+    var arr = animfile.split(/;/);
+    var anim = null;
+    if(arr.length<=1){
+       anim = wl.create_animation(dt,arr);
+    }
+    else{
+        arr = animfile.split(/:/);
+        anim = wl.create_animation(dt,arr[0],wl.tonumber(arr[1]),wl.tonumber(arr[2]));
+    }
+    var animate = cc.Animate.create(anim); 
+    var action = null;
+    if(loop != null && loop != false){
+        action = cc.RepeatForever.create(animate);
+    }
+    else
+    {
+        action = cc.Sequence.create(animate,cc.CallFunc.create(node.removeFromParent,node));   
+    }
+    
+    
+    //node.runAction(action);
+};
+
 wl.clipping_layer = function(w,h){
     if(USE_CCB){
         return cc.Layer.create();

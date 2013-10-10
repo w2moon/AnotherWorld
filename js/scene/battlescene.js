@@ -54,7 +54,7 @@ battlescene.prototype.onCreate = function(info,result)
     }
     this.battlefield = wl.load_scene(bfname)
     this.level = result.level;
-    this.rootNode.addChild(this.battlefield)
+    this.rootNode.addChild(this.battlefield);
     
 
 

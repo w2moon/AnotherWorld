@@ -1,4 +1,12 @@
  var combinesoul = function(){}
+
+
+ var SOUL_ORDER_DEFAULT = 0;
+ var SOUL_ORDER_RARITY = 1;
+ var SOUL_ORDER_DEFAULT_REVERSE = 2;
+ var SOUL_ORDER_RARITY_REVERSE = 3;
+  var SOUL_ORDER_NUM = 4;
+
 combinesoul.prototype.onDidLoadFromCCB = function()
 {
     this.fathercard = null;
@@ -28,7 +36,7 @@ combinesoul.prototype.onDidLoadFromCCB = function()
 
     this.lblcost.setString(0);
     this.lblhas.setString(wl.gvars.role.getCopper());
-    this.show(null,ORDER_DEFAULT);
+    this.show(null,SOUL_ORDER_DEFAULT);
     this.animate();
 };
 
@@ -52,20 +60,21 @@ combinesoul.prototype.onPressMother = function()
     this.clearChild();
 };
 
-combinesoul.prototype.show = function(race,order)
+combinesoul.prototype.show = function(race,order,notanim)
 {
     
     
 this.chooseLayer.setVisible(true);
     this.chooseRace(race);
-    this.chooseOrder(order);
+    this.chooseOrder(order,notanim);
 
 
 };
 
 combinesoul.prototype.onPressOrder = function()
 {
-
+    this.chooseRace(this.race);
+    this.chooseOrder((this.order+1)%SOUL_ORDER_NUM);
 };
 
 combinesoul.prototype.chooseRace = function(race)
@@ -91,7 +100,7 @@ var sort_soul_rarity = function(t1,t2){
 };
 
 
-combinesoul.prototype.chooseOrder = function(order)
+combinesoul.prototype.chooseOrder = function(order,notanim)
 {
     if(order != null){
         this.order = order;
@@ -99,15 +108,15 @@ combinesoul.prototype.chooseOrder = function(order)
 
     switch(this.order){
        
-       case ORDER_DEFAULT:
+       case SOUL_ORDER_DEFAULT:
        break;
-       case ORDER_RARITY:
+       case SOUL_ORDER_RARITY:
             this.objs.sort(sort_soul_rarity);
        break;
-       case ORDER_DEFAULT_REVERSE:
+       case SOUL_ORDER_DEFAULT_REVERSE:
             this.objs.reverse();
        break;
-       case ORDER_RARITY_REVERSE:
+       case SOUL_ORDER_RARITY_REVERSE:
             this.objs.sort(sort_soul_rarity);
             this.objs.reverse();
        break;
@@ -116,7 +125,19 @@ combinesoul.prototype.chooseOrder = function(order)
     var x = 0;
     var y =this.rootNode.getContentSize().height/2-90;
     for(var k in this.objs){
-        this.objs[k].setPosition(x,y);
+        if(notanim){
+             this.objs[k].setPosition(x,y);
+        }
+        else
+        {
+            if(k%2==0){
+                this.objs[k].setPosition(x + this.rootNode.getContentSize().width,y);
+            }
+            else{
+                this.objs[k].setPosition(x - this.rootNode.getContentSize().width,y);
+            }
+            this.objs[k].runAction(cc.EaseElasticOut.create(cc.MoveTo.create(0.5,cc.p(x,y))));
+        }
         y -= 77;
     }
 }
@@ -202,7 +223,7 @@ combinesoul.prototype.onChoosed = function(soulid,n)
     {
         this.isFirstEnter = false;
         this.isChoosingFather = false;
-        this.show(null,ORDER_DEFAULT);
+        this.show(null,SOUL_ORDER_DEFAULT,true);
     }
   
 };

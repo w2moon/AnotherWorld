@@ -139,10 +139,16 @@
          };
 
          layer.on_particle = function(particle){
-            var inst = cc.ParticleSystem.create(particle);
-            inst.setPosition(-size.width/2,-size.height/2);
-			inst.setAutoRemoveOnFinish(true);
-            this.addChild(inst);
+            if(particle.length - particle.lastIndexOf(".plist") == 6){
+                var inst = cc.ParticleSystem.create(particle);
+                inst.setPosition(-size.width/2,-size.height/2);
+			    inst.setAutoRemoveOnFinish(true);
+                this.addChild(inst);
+            }
+            else
+            {
+                wl.play_animation(this,0,0,0.2,particle)
+            }
          };
 
          layer.move = function(dt){
