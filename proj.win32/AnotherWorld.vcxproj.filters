@@ -335,6 +335,9 @@
     <None Include="..\js\skill\multi_attack.js">
       <Filter>js\skill</Filter>
     </None>
+    <None Include="..\js\ui\soulbar.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

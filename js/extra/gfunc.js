@@ -38,22 +38,21 @@ wl.create_soulcard = function(soulbaseid,flip){
 wl.create_animation = function(dt,filename,framenum,colnum){
     
          var animation = cc.Animation.create();
-         animation.initWithSpriteFrames(null,dt);
+         animation.initWithSpriteFrames([],dt);
 
          if(typeof(filename) == "object"){
-                
-                for(var i=1;i<filename.length;++i){
-                    if(filename[i] == ""){
-                        continue;
-                    }
-                    animation.addSpriteFrameWithFileName(filename[i]);
+                var istart = wl.tonumber(filename[1]);
+                var iend = wl.tonumber(filename[2]);
+                for(var i=istart;i<=iend.length;++i){
+               
+                    animation.addSpriteFrameWithFile(filename[0]+i+".png");
                 }
          }
          else{
             if(framenum == null){
                 cc.log("create animation need framenum and colnum");
             }
-            var texture = cc.TextureCache.sharedTextureCache().addImage(filename);
+            var texture = cc.TextureCache.getInstance().addImage(filename);
             var frame = cc.SpriteFrame.createWithTexture(texture,cc.rect(0, 0, texture.contentSize.width, texture.contentSize.height));
 
             var rownum = Math.ceil(framenum/colnum);
@@ -72,12 +71,21 @@ wl.create_animation = function(dt,filename,framenum,colnum){
 wl.play_animation = function(node,x,y,dt,animfile,loop){
     var arr = animfile.split(/;/);
     var anim = null;
-    if(arr.length<=1){
+
+    var spr = null;
+    if(arr.length>1){
        anim = wl.create_animation(dt,arr);
+       spr = cc.Sprite.create(arr[0]+arr[1]+".png");
     }
     else{
         arr = animfile.split(/:/);
         anim = wl.create_animation(dt,arr[0],wl.tonumber(arr[1]),wl.tonumber(arr[2]));
+        var tex = cc.TextureCache.getInstance().textureForKey(arr[0]);
+        var rownum = Math.ceil(wl.tonumber(arr[1])/wl.tonumber(arr[2]));
+        var uw = parseInt(tex.contentSize.width/wl.tonumber(arr[2]));
+        var uh = parseInt(tex.contentSize.height/rownum);
+        
+        spr = cc.Sprite.create(arr[0],cc.rect(0,0,uw,uh));
     }
     var animate = cc.Animate.create(anim); 
     var action = null;
@@ -86,11 +94,12 @@ wl.play_animation = function(node,x,y,dt,animfile,loop){
     }
     else
     {
-        action = cc.Sequence.create(animate,cc.CallFunc.create(node.removeFromParent,node));   
+        action = cc.Sequence.create(animate,cc.CallFunc.create(spr.removeFromParent,spr));   
     }
     
-    
-    //node.runAction(action);
+    spr.setPosition(x,y);
+    node.addChild(spr);
+    spr.runAction(action);
 };
 
 wl.clipping_layer = function(w,h){

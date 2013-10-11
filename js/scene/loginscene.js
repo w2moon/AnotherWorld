@@ -47,7 +47,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
 
 
-    wl.play_animation(this,size.width/2,size.height/2,0.2,"anim/7/0.png;anim/7/1.png;anim/7/2.png;anim/7/3.png;anim/7/4.png;anim/7/5.png;anim/7/6.png;anim/7/7.png;anim/7/8.png;anim/7/9.png;anim/7/10.png;",true);
+    wl.play_animation(this.rootNode,size.width/2,size.height/2,0.04,"anim/7/resources-auto/;0;1");
     
     /*
     

@@ -363,6 +363,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\ui\rewardslot.js" />
     <None Include="..\js\ui\selectbar.js" />
     <None Include="..\js\ui\skillbar.js" />
+    <None Include="..\js\ui\soulbar.js" />
     <None Include="..\js\ui\stageinfo.js" />
     <None Include="..\js\ui\token.js" />
     <None Include="..\js\ui\uiitem.js" />
