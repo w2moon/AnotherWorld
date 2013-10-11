@@ -36,11 +36,13 @@ wl.create_soulcard = function(soulbaseid,flip){
 };
 
 wl.create_animation = function(dt,filename,framenum,colnum){
-    
+ 
+ var arr = [];
          var animation = cc.Animation.create();
-         animation.initWithSpriteFrames([],dt);
+         animation.initWithSpriteFrames(arr,dt);
 
          if(typeof(filename) == "object"){
+ 
                 var istart = wl.tonumber(filename[1]);
                 var iend = wl.tonumber(filename[2]);
                 for(var i=istart;i<=iend.length;++i){
