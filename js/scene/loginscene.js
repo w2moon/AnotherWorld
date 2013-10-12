@@ -47,7 +47,10 @@ loginscene.prototype.onDidLoadFromCCB = function()
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
 
 
-    wl.play_animation(this.rootNode,size.width/2,size.height/2,0.04,"anim/7/;0;1");
+    //wl.play_animation(this.rootNode,size.width/2,size.height/2,0.04,"anim/7/;0;1");
+    var img = cc.Image.create();
+    img.initWithImageFile("h3.jpg",0);
+    img.face("haarcascades/haarcascade_frontalface_alt.xml","muct76.model");
     
     /*
     
