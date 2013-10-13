@@ -39,7 +39,13 @@ wl.create_animation = function(dt,filename,framenum,colnum){
  
  var arr = [];
          var animation = cc.Animation.create();
-         animation.initWithSpriteFrames(arr,dt);
+ if(USE_CCB){
+ animation.initWithSpriteFramesDelay(arr,dt);
+ }
+ else{
+ animation.initWithSpriteFrames(arr,dt);
+ }
+         
 
          if(typeof(filename) == "object"){
  

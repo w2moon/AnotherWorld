@@ -371,6 +371,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peng wang (8TDP72H5XG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng wang (8TDP72H5XG)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -418,6 +420,8 @@
 					"-ljs_static",
 				);
 				PRODUCT_NAME = AnotherWorld;
+				PROVISIONING_PROFILE = "2673DB1E-C5E6-4AA8-8246-4D3AB1132640";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2673DB1E-C5E6-4AA8-8246-4D3AB1132640";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -430,6 +434,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "iPhone Developer: peng wang (8TDP72H5XG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: peng wang (8TDP72H5XG)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -474,6 +480,8 @@
 					"-ljs_static",
 				);
 				PRODUCT_NAME = AnotherWorld;
+				PROVISIONING_PROFILE = "2673DB1E-C5E6-4AA8-8246-4D3AB1132640";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5026FF9A-4BC1-4AE9-A749-96319A556F56";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = armv7;
