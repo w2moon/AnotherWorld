@@ -40,7 +40,7 @@ wl.create_animation = function(dt,filename,framenum,colnum){
  var arr = [];
          var animation = cc.Animation.create();
  if(USE_CCB){
- animation.initWithSpriteFramesDelay(arr,dt);
+ animation.setDelayPerUnit(dt);
  }
  else{
  animation.initWithSpriteFrames(arr,dt);
@@ -48,10 +48,10 @@ wl.create_animation = function(dt,filename,framenum,colnum){
          
 
          if(typeof(filename) == "object"){
- 
                 var istart = wl.tonumber(filename[1]);
                 var iend = wl.tonumber(filename[2]);
-                for(var i=istart;i<=iend.length;++i){
+
+                for(var i=istart;i<=iend;++i){
                
                     animation.addSpriteFrameWithFile(filename[0]+i+".png");
                 }
@@ -61,14 +61,22 @@ wl.create_animation = function(dt,filename,framenum,colnum){
                 cc.log("create animation need framenum and colnum");
             }
             var texture = cc.TextureCache.getInstance().addImage(filename);
-            var frame = cc.SpriteFrame.createWithTexture(texture,cc.rect(0, 0, texture.contentSize.width, texture.contentSize.height));
+            var frame = cc.SpriteFrame.createWithTexture(texture,cc.rect(0, 0, texture.contentSize().width, texture.contentSize().height));
 
             var rownum = Math.ceil(framenum/colnum);
-            var uw = parseInt(texture.contentSize.width/colnum);
-            var uh = parseInt(texture.contentSize.height/rownum);
-            for(var row =0;i<rownum;++row){
+            var uw = parseInt(texture.contentSize().width/colnum);
+            var uh = parseInt(texture.contentSize().height/rownum);
+
+            for(var row =0;row<rownum;++row){
                 for(var col =0;col<colnum;++col){
+
+ if(USE_CCB){
+ 
+ animation.addSpriteFrameWithTextureRect(texture,cc.rect(col*uw,row*uh,uw,uh));
+ }
+ else{
                     animation.addSpriteFrameWithTexture(texture,cc.rect(col*uw,row*uh,uw,uh));
+ }
                 }
             }
          }
@@ -90,9 +98,8 @@ wl.play_animation = function(node,x,y,dt,animfile,loop){
         anim = wl.create_animation(dt,arr[0],wl.tonumber(arr[1]),wl.tonumber(arr[2]));
         var tex = cc.TextureCache.getInstance().textureForKey(arr[0]);
         var rownum = Math.ceil(wl.tonumber(arr[1])/wl.tonumber(arr[2]));
-        var uw = parseInt(tex.contentSize.width/wl.tonumber(arr[2]));
-        var uh = parseInt(tex.contentSize.height/rownum);
-        
+        var uw = parseInt(tex.contentSize().width/wl.tonumber(arr[2]));
+        var uh = parseInt(tex.contentSize().height/rownum);
         spr = cc.Sprite.create(arr[0],cc.rect(0,0,uw,uh));
     }
     var animate = cc.Animate.create(anim); 
