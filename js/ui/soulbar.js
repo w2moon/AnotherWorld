@@ -37,9 +37,11 @@ soulbar.prototype.onPressSelect = function(){
        || (this.obj.mothercard !=null && this.obj.mothercard.soulid == this.soul.getId()))
     {
         this.mask.setVisible(true);
+        this.lblselect.setString(lang("TXT_SELECT"));
     }
     else
     {
+        this.lblselect.setString(lang("TXT_CANCEL"));
         this.mask.setVisible(false);
     }
     

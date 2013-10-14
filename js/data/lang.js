@@ -2,10 +2,10 @@
 (function(){
  
  if(USE_CCB){
-    lang = function(s){
-        return s;
-    };
-    return;
+    //lang = function(s){
+   //     return s;
+   // };
+   // return;
  }
 var code = "cn";
  if(!USE_CCB){

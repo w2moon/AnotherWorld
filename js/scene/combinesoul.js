@@ -31,6 +31,16 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.scroll.setPosition(center);
     
     this.chooseLayer.addChild(this.scroll);
+    
+    var sl = cc.Sprite.create("equip/shou.png");
+    sl.setPosition(cc.p(sl.getContentSize().width/2-9,con.height-sl.getContentSize().height/2-3));
+    this.chooseLayer.addChild(sl);
+    
+    var sr = cc.Sprite.create("equip/shou.png");
+    sr.setPosition(cc.p(con.width-sr.getContentSize().width/2+9,con.height-sl.getContentSize().height/2-3));
+    sr.setFlipX(true);
+    this.chooseLayer.addChild(sr);
+    
     this.rootNode.addChild(this.chooseLayer,1);
 
 
@@ -136,7 +146,7 @@ combinesoul.prototype.chooseOrder = function(order,notanim)
             else{
                 this.objs[k].setPosition(x - this.rootNode.getContentSize().width,y);
             }
-            this.objs[k].runAction(cc.EaseElasticOut.create(cc.MoveTo.create(0.5,cc.p(x,y))));
+            this.objs[k].runAction(cc.Sequence.create(cc.DelayTime.create(0.2),cc.EaseSineOut.create(cc.MoveTo.create(0.3,cc.p(x,y)))));
         }
         y -= 77;
     }

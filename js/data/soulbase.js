@@ -114,6 +114,8 @@ for(var k in soulbase){
         }
     }
 }
+
+
             
 wl.get_combineid = function(soulbaseid1,soulbaseid2){
     var soultype1 = soulbase[soulbaseid1]['race'];
