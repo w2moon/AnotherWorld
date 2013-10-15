@@ -10,7 +10,7 @@ soulbar.prototype.onCreate = function(soul,obj,func){
     this.func = func;
     
     this.lblname.setString(lang(this.soul.getBase().name));
-    this.lbldesc.setString(lang(this.soul.getBase().desc));
+    this.lbldesc.setString("      "+lang(this.soul.getBase().desc));
     this.lbllevel.setString("LV"+this.soul.getLevel());
     this.lblhp.setString(this.soul.getProperty("MaxHP"));
     this.lblatk.setString(this.soul.getProperty("Attack"));
@@ -36,12 +36,15 @@ soulbar.prototype.onPressSelect = function(){
     if((this.obj.fathercard != null && this.obj.fathercard.soulid == this.soul.getId())
        || (this.obj.mothercard !=null && this.obj.mothercard.soulid == this.soul.getId()))
     {
+        cc.log("cancel");
+        this.lblselect.setString(lang("TXT_CANCEL"));
         this.mask.setVisible(true);
-        this.lblselect.setString(lang("TXT_SELECT"));
+        
     }
     else
     {
-        this.lblselect.setString(lang("TXT_CANCEL"));
+        cc.log("select");
+        this.lblselect.setString(lang("TXT_SELECT"));
         this.mask.setVisible(false);
     }
     
