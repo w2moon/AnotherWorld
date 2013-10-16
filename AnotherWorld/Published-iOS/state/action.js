@@ -29,7 +29,9 @@ var func = function(){
                         for(var k in this.players){
                            if(this.players[k].isDead()){
                                this.state = state_finish
-                               this.clientresult = this.players[k].role != wl.gvars.role;
+                               if(this.players[k].role != wl.gvars.role){
+                                    this.clientresult = retcode.BATTLE_RESULT_WIN;
+                                }
                                return 0
                            }
                         }

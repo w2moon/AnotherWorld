@@ -1,4 +1,12 @@
  var combinesoul = function(){}
+
+
+ var SOUL_ORDER_DEFAULT = 0;
+ var SOUL_ORDER_RARITY = 1;
+ var SOUL_ORDER_DEFAULT_REVERSE = 2;
+ var SOUL_ORDER_RARITY_REVERSE = 3;
+  var SOUL_ORDER_NUM = 4;
+
 combinesoul.prototype.onDidLoadFromCCB = function()
 {
     this.fathercard = null;
@@ -6,14 +14,48 @@ combinesoul.prototype.onDidLoadFromCCB = function()
     this.childcard = null;
     this.objs = [];
     this.isChoosingFather = true;
+    this.isFirstEnter = true;
+    
+    var size = this.rootNode.getContentSize();
+    var center = cc.p(size.width/2,size.height*42.3/100);
+    
+    var spr = cc.Sprite.create("equip/bg_equipment1.png");
+    var con = spr.getContentSize();
+    
+    spr.setPosition(center);
+    this.chooseLayer = cc.Layer.create();
+    this.chooseLayer.addChild(spr);
 
-      var size = this.rootNode.getContentSize();
-    this.scroll = wl.scroll_layer(size.width,size.height/3);
+    
+    this.scroll = wl.scroll_layer(con.width,con.size);
+    this.scroll.setPosition(center);
+    
+    this.chooseLayer.addChild(this.scroll);
+    
+    var sl = cc.Sprite.create("equip/shou.png");
+    sl.setPosition(cc.p(sl.getContentSize().width/2-9,con.height-sl.getContentSize().height/2-3));
+    this.chooseLayer.addChild(sl);
+    
+    var sr = cc.Sprite.create("equip/shou.png");
+    sr.setPosition(cc.p(con.width-sr.getContentSize().width/2+9,con.height-sl.getContentSize().height/2-3));
+    sr.setFlipX(true);
+    this.chooseLayer.addChild(sr);
+    
+    this.rootNode.addChild(this.chooseLayer,1);
 
-    this.rootNode.addChild(this.scroll);
 
+    this.lblcost.setString(0);
+    this.lblhas.setString(wl.gvars.role.getCopper());
+    this.show(null,SOUL_ORDER_DEFAULT);
+    this.animate();
+};
 
-    this.show(null,ORDER_DEFAULT);
+combinesoul.prototype.animate = function()
+{
+    var size = this.rootNode.getContentSize();
+    this.chooseLayer.setPosition(cc.p(0,-size.height*42.3/100));
+    
+    this.chooseLayer.runAction(cc.MoveTo.create(0.2,cc.p(0,0)));
 };
 
 combinesoul.prototype.onPressFather = function()
@@ -28,15 +70,21 @@ combinesoul.prototype.onPressMother = function()
     this.clearChild();
 };
 
-combinesoul.prototype.show = function(race,order)
+combinesoul.prototype.show = function(race,order,notanim)
 {
     
     
-
+this.chooseLayer.setVisible(true);
     this.chooseRace(race);
-    this.chooseOrder(order);
+    this.chooseOrder(order,notanim);
 
 
+};
+
+combinesoul.prototype.onPressOrder = function()
+{
+    this.chooseRace(this.race);
+    this.chooseOrder((this.order+1)%SOUL_ORDER_NUM);
 };
 
 combinesoul.prototype.chooseRace = function(race)
@@ -50,7 +98,7 @@ combinesoul.prototype.chooseRace = function(race)
     this.objs = [];
     var souls = wl.gvars.role.getSouls(this.race);
     for(var k in souls){
-        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this,this.onChoosed,souls[k].getId());
+        var s = wl.load_scene("soulbar",souls[k],this,this.onChoosed);
         s.id = souls[k].getId();
         this.objs.push(s);
         this.scroll.addChild(s);
@@ -62,7 +110,7 @@ var sort_soul_rarity = function(t1,t2){
 };
 
 
-combinesoul.prototype.chooseOrder = function(order)
+combinesoul.prototype.chooseOrder = function(order,notanim)
 {
     if(order != null){
         this.order = order;
@@ -70,25 +118,37 @@ combinesoul.prototype.chooseOrder = function(order)
 
     switch(this.order){
        
-       case ORDER_DEFAULT:
+       case SOUL_ORDER_DEFAULT:
        break;
-       case ORDER_RARITY:
+       case SOUL_ORDER_RARITY:
             this.objs.sort(sort_soul_rarity);
        break;
-       case ORDER_DEFAULT_REVERSE:
+       case SOUL_ORDER_DEFAULT_REVERSE:
             this.objs.reverse();
        break;
-       case ORDER_RARITY_REVERSE:
+       case SOUL_ORDER_RARITY_REVERSE:
             this.objs.sort(sort_soul_rarity);
             this.objs.reverse();
        break;
     }
 
     var x = 0;
-    var y = 0;
+    var y =this.rootNode.getContentSize().height/2-90;
     for(var k in this.objs){
-        this.objs[k].setPosition(x,y);
-        y += 50;
+        if(notanim){
+             this.objs[k].setPosition(x,y);
+        }
+        else
+        {
+            if(k%2==0){
+                this.objs[k].setPosition(x + this.rootNode.getContentSize().width,y);
+            }
+            else{
+                this.objs[k].setPosition(x - this.rootNode.getContentSize().width,y);
+            }
+            this.objs[k].runAction(cc.Sequence.create(cc.DelayTime.create(0.2),cc.EaseSineOut.create(cc.MoveTo.create(0.3,cc.p(x,y)))));
+        }
+        y -= 77;
     }
 }
 combinesoul.prototype.clearChild = function(){
@@ -123,9 +183,11 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         }
 
         var soul = wl.gvars.role.getSoul(soulid);
-       n.selected();
+    //   n.selected();
         this.fathercard = wl.create_soulcard(soul.getBaseId());
-        this.fathercard.setPosition(this.father.getPosition());
+        var pos = this.father.getPosition();
+        pos.y += 40;
+        this.fathercard.setPosition(pos);
          this.fathercard.soulid = soulid;
           this.fathercard.node = n;
         this.rootNode.addChild(this.fathercard);
@@ -137,20 +199,26 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         }
 
         var soul = wl.gvars.role.getSoul(soulid);
-        n.selected();
+      //  n.selected();
         this.mothercard = wl.create_soulcard(soul.getBaseId(),true);
         this.mothercard.soulid = soulid;
         this.mothercard.node = n;
-        this.mothercard.setPosition(this.mother.getPosition());
+        var pos = this.mother.getPosition();
+        pos.y += 40;
+        this.mothercard.setPosition(pos);
         this.rootNode.addChild(this.mothercard);
     
     }
     this.isChoosingFather = !this.isChoosingFather;
 
+    this.chooseLayer.setVisible(false);
     if(this.fathercard != null && this.mothercard != null){
         var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
         var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
         var bid = wl.get_combineid(fathersoul.getBaseId(),mothersoul.getBaseId());
+        if(soulbase[bid] == null){
+            cc.log("combine error : "+fathersoul.getBaseId() +" "+mothersoul.getBaseId());
+        }
         var rarity = rarityclass[soulbase[bid]['rarityclass']]
 
         this.lblcost.setString(rarity['combinecopper']);
@@ -161,6 +229,13 @@ combinesoul.prototype.onChoosed = function(soulid,n)
         else{
         }
     }
+    else if(this.isFirstEnter)
+    {
+        this.isFirstEnter = false;
+        this.isChoosingFather = false;
+        this.show(null,SOUL_ORDER_DEFAULT,true);
+    }
+  
 };
 
 
@@ -235,14 +310,20 @@ combinesoul.prototype.on_soul_combine = function(ret)
         {
             var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
                 traveller.setSoulId(ret.soul.id);
+             cc.log("fffff")
 
                
         }
         else (mothersoul.getTravellerId() != 0)
         {
             var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+            if(traveller != null){
                 traveller.setSoulId(ret.soul.id);
-
+            }
+            else{
+                cc.log("t m null")
+            }
+            cc.log("ggggg")
               
         }
 
@@ -252,6 +333,7 @@ combinesoul.prototype.on_soul_combine = function(ret)
         if(ret.soul.baseid != bid){
         //mutaition
         }
+    
         wl.gvars.role.addSoul(ret.soul);
 
        
@@ -265,15 +347,19 @@ combinesoul.prototype.on_soul_combine = function(ret)
             this.childcard.removeFromParent();
             this.childcard = null;
         }
-
-        var soul = wl.gvars.role.getSoul(ret.soul.id);
+    this.child.setVisible(false);
+    this.btnok.setVisible(false);
+    this.lblcombine.setVisible(false);
+    var soul = wl.gvars.role.getSoul(ret.soul.id);
         wl.gvars.role.meet(soul.getBaseId());
 
         this.childcard = wl.create_soulcard(soul.getBaseId());
         this.childcard.soulid = ret.soul.id;
-        this.childcard.setPosition(this.child.getPosition());
+    var pos = this.child.getPosition();
+    pos.y -= 40;
+        this.childcard.setPosition(pos);
         this.rootNode.addChild(this.childcard); 
 
-        this.show(null,ORDER_DEFAULT);
+    //    this.show(null,ORDER_DEFAULT);
         
 };

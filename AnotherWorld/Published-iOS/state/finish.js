@@ -4,14 +4,12 @@ state_finish=function(){
 
     var size = this.rootNode.getContentSize();
      this.on_result_logofinish = function(){
-        cc.log("adddd")
         this.resultlogo.removeFromParent();
 
         var battleresult = wl.load_scene("battleresult",this.result,this.info,this.clientresult);
         battleresult.setPosition(cc.p(this.rootNode.getContentSize().width/2,this.rootNode.getContentSize().height/2));
         this.rootNode.addChild(battleresult);
      };
-
      if(this.clientresult == retcode.BATTLE_RESULT_WIN){
         this.resultlogo = wl.load_scene("uiwin");
          this.resultlogo.animationManager.runAnimationsForSequenceNamed("start");

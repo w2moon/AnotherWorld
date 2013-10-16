@@ -35,9 +35,10 @@ battlescene.prototype.onCreate = function(info,result)
     this.order_activate = 2;
     this.info = info;
 
+    this.clientresult = retcode.BATTLE_RESULT_FAIL;
     this.result = result;
     
-    cc.Director.getInstance().getScheduler().setTimeScale(5);
+  //  cc.Director.getInstance().getScheduler().setTimeScale(5);
 
     cc.log("bg "+this.info.bg)
     var bg = cc.Sprite.create(this.info.bg);
@@ -53,7 +54,7 @@ battlescene.prototype.onCreate = function(info,result)
     }
     this.battlefield = wl.load_scene(bfname)
     this.level = result.level;
-    this.rootNode.addChild(this.battlefield)
+    this.rootNode.addChild(this.battlefield);
     
 
 
@@ -237,6 +238,31 @@ battlescene.prototype.turn_process = function(){
                     var k = Math.random()*arr.length
                     out_array.push(arr[k]);
                     arr.splice(k,1);
+                    num--;
+                }
+            }
+            break;
+
+            case naturetype.randommulti:
+            {
+                var arr = []
+                for(var i in objs){
+                    if(objs[k] != null
+                       &&((needalive && !objs[k].isDead())
+                    || (!needalive && objs[k].isDead()))){
+                        if(i == HERO_IDX && !selecthero)
+                        {
+                        }
+                        else
+                        {
+                            arr.push(objs[i]);
+                        }
+                    }
+                }
+                while(arr.length >0 &&num>0){
+                    
+                    var k = Math.random()*arr.length
+                    out_array.push(arr[k]);
                     num--;
                 }
             }

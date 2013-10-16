@@ -89,10 +89,15 @@ equipchoose.prototype.showPage = function(type){
     container.setContentSize(size);
 
     
+    if(!USE_CCB){
+        this.scroll = cc.ScrollView.create(size,container);
+        this.scroll.setDirection(1);
+        this.scroll.setBounceable(true);
+    }
+    else{
+        this.scroll = container;
+    }
     
-    this.scroll = cc.ScrollView.create(size,container);
-    this.scroll.setDirection(1);
-    this.scroll.setBounceable(true);
     this.rootNode.addChild(this.scroll);
 };
 

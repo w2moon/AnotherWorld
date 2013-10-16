@@ -50,6 +50,7 @@ wl.create_soul = function(baseid){
     id:wl.local_id(),
     baseid : baseid,
     travellerid : 0,
+        star : 0,
     exp : 0,
     level : 1,
     skillexp : 0,
@@ -764,7 +765,9 @@ wl.role.prototype = {
             if(this.souls[k].getId() == soulid){
                  if(this.souls[k].dbobj.travellerid != 0){
                     var traveller = this.getTraveller(this.souls[k].dbobj.travellerid);
-                    traveller.setSoulId(0);
+                     if(traveller.getSoulId() == soulid){
+                         traveller.setSoulId(0);
+                     }
                  }
 
                  this.souls.splice(k,1);

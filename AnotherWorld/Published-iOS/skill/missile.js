@@ -5,7 +5,7 @@
   
        var params = parse_action_params(skill.getBase().param);
         
-       var targets = skill.getBattleField().select_target(skill.warrior.getPlayer(),skill.warrior,targettype.enemy,parseInt(params[0]),skill.warrior.getTraveller().getNature(),true,trigger,event_targets);
+       var targets = skill.getBattleField().select_target(skill.warrior.getPlayer(),skill.warrior,targettype.enemy,parseInt(params[1]),params[0],true,trigger,event_targets);
         
        var tasks = [];
         
@@ -33,6 +33,14 @@
             }
             
             tasks.push([skill,skill.delay,[params[5]]]);
+
+             tasks.push([targets[k],targets[k].beDefender,[skill.warrior]]);
+            tasks.push([skill,skill.delay,[0.01]]);
+
+            tasks.push([targets[k],targets[k].defense,[skill.warrior]]);
+            tasks.push([skill,skill.delay,[0.01]]);
+
+            tasks.push([skill.warrior,skill.warrior.attack, [targets[k],params[6],parseInt(params[7])]]);
             tasks.push([token,token.explode, [skill.getBattleField(),posdes]]);
           
        }

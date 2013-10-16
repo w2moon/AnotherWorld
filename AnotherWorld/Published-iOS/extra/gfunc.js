@@ -35,6 +35,88 @@ wl.create_soulcard = function(soulbaseid,flip){
    return wl.load_scene("uicard",ske,avatar,""); 
 };
 
+wl.create_animation = function(dt,filename,framenum,colnum){
+ 
+ var arr = [];
+         var animation = cc.Animation.create();
+ if(USE_CCB){
+ animation.setDelayPerUnit(dt);
+ }
+ else{
+ animation.initWithSpriteFrames(arr,dt);
+ }
+         
+
+         if(typeof(filename) == "object"){
+                var istart = wl.tonumber(filename[1]);
+                var iend = wl.tonumber(filename[2]);
+
+                for(var i=istart;i<=iend;++i){
+               
+                    animation.addSpriteFrameWithFile(filename[0]+i+".png");
+                }
+         }
+         else{
+            if(framenum == null){
+                cc.log("create animation need framenum and colnum");
+            }
+            var texture = cc.TextureCache.getInstance().addImage(filename);
+            var frame = cc.SpriteFrame.createWithTexture(texture,cc.rect(0, 0, texture.contentSize().width, texture.contentSize().height));
+
+            var rownum = Math.ceil(framenum/colnum);
+            var uw = parseInt(texture.contentSize().width/colnum);
+            var uh = parseInt(texture.contentSize().height/rownum);
+
+            for(var row =0;row<rownum;++row){
+                for(var col =0;col<colnum;++col){
+
+ if(USE_CCB){
+ 
+ animation.addSpriteFrameWithTextureRect(texture,cc.rect(col*uw,row*uh,uw,uh));
+ }
+ else{
+                    animation.addSpriteFrameWithTexture(texture,cc.rect(col*uw,row*uh,uw,uh));
+ }
+                }
+            }
+         }
+
+         return animation;
+};
+
+wl.play_animation = function(node,x,y,dt,animfile,loop){
+    var arr = animfile.split(/;/);
+    var anim = null;
+
+    var spr = null;
+    if(arr.length>1){
+       anim = wl.create_animation(dt,arr);
+       spr = cc.Sprite.create(arr[0]+arr[1]+".png");
+    }
+    else{
+        arr = animfile.split(/:/);
+        anim = wl.create_animation(dt,arr[0],wl.tonumber(arr[1]),wl.tonumber(arr[2]));
+        var tex = cc.TextureCache.getInstance().textureForKey(arr[0]);
+        var rownum = Math.ceil(wl.tonumber(arr[1])/wl.tonumber(arr[2]));
+        var uw = parseInt(tex.contentSize().width/wl.tonumber(arr[2]));
+        var uh = parseInt(tex.contentSize().height/rownum);
+        spr = cc.Sprite.create(arr[0],cc.rect(0,0,uw,uh));
+    }
+    var animate = cc.Animate.create(anim); 
+    var action = null;
+    if(loop != null && loop != false){
+        action = cc.RepeatForever.create(animate);
+    }
+    else
+    {
+        action = cc.Sequence.create(animate,cc.CallFunc.create(spr.removeFromParent,spr));   
+    }
+    
+    spr.setPosition(x,y);
+    node.addChild(spr);
+    spr.runAction(action);
+};
+
 wl.clipping_layer = function(w,h){
     if(USE_CCB){
         return cc.Layer.create();
@@ -55,7 +137,16 @@ wl.clipping_layer = function(w,h){
 
 wl.scroll_layer = function(w,h){
     if(USE_CCB){
-        return cc.Layer.create();
+        var layer = cc.Layer.create();
+        layer.__addChild = layer.addChild;
+        layer.childpos = cc.p(0,0);
+ layer.addChild = function(n,l){
+    n.setPosition(this.childpos);
+ this.childpos.y += n.controller.bg.getContentSize().height+30;
+ this.__addChild(n);
+ cc.log("added")
+ };
+        return layer;
     }
 
     var container = cc.Layer.create();
@@ -126,10 +217,17 @@ wl.run_scene=function(s){
 
 
  
-  if(arguments.length > 1 && scene.getChildren()[0].controller!=null && scene.getChildren()[0].controller.onCreate){
+  if( scene.getChildren()[0].controller!=null && scene.getChildren()[0].controller.onCreate){
        
+       if(arguments.length > 1 )
+       {
              var args = Array.prototype.slice.call(arguments, 1);
             scene.getChildren()[0].controller.onCreate.apply(scene.getChildren()[0].controller,args);
+            }
+            else
+            {
+             scene.getChildren()[0].controller.onCreate.apply(scene.getChildren()[0].controller);
+            }
  
     }
 };
@@ -138,10 +236,17 @@ wl.load_scene=function(s){
     var scene = cc.BuilderReader.load(s);
 
 
-     if(arguments.length > 1 && scene.controller!=null && scene.controller.onCreate){
+     if(  scene.controller!=null && scene.controller.onCreate){
        
+        if(arguments.length > 1)
+        {
              var args = Array.prototype.slice.call(arguments, 1);
             scene.controller.onCreate.apply(scene.controller,args);
+            }
+            else
+            {
+                scene.controller.onCreate.apply(scene.controller);
+            }
         
     }
     return scene;
@@ -272,10 +377,7 @@ wl.gvars = {
   };
  
 wl.csv_lang = function(file){
-    if(USE_CCB)
-    {
-       // return function(){return "ccb not load text"};
-    }
+    
     var ret = {};
      var str = cc.FileUtils.getInstance().getStringFromFile(file);
     var arr = wl.load_csv(str)

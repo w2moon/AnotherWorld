@@ -6,6 +6,19 @@ battleresult.prototype.onDidLoadFromCCB = function()
 
 battleresult.prototype.onCreate = function(result,info,clientresult)
 {
+
+  if(!USE_CCB){
+        this.rootNode.registerWithTouchDispatcher();
+     }
+     this.rootNode.onTouchesBegan = function( touches, event) {
+        this.controller.onTouchesBegan(touches, event);
+        return true;
+    };
+    this.rootNode.onMouseDown = function( event) {
+        this.controller.onMouseDown(event);
+        return true;
+    };
+
     this.result = result;
     
     if(result.virtualhttp == null ){
@@ -15,9 +28,8 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
         }
     }
     else{
-        result.rc = retcode.BATTLE_RESULT_FAIL;
+      result.rc = clientresult;
     }
-    result.rc = retcode.BATTLE_RESULT_WIN;
     if(result.rc == retcode.BATTLE_RESULT_FAIL){
     //fail
         if(result.virtualhttp){
@@ -25,6 +37,7 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
             role.hp -= info.hpcost;
             wl.set("role_"+wl.gvars.role.getUserId(),wl.toJSONString(role));
         }
+        this.ended = true;
         return;
     }
     
@@ -207,17 +220,7 @@ battleresult.prototype.onCreate = function(result,info,clientresult)
      
     
 
-    if(!USE_CCB){
-        this.rootNode.registerWithTouchDispatcher();
-     }
-     this.rootNode.onTouchesBegan = function( touches, event) {
-        this.controller.onTouchesBegan(touches, event);
-        return true;
-    };
-    this.rootNode.onMouseDown = function( event) {
-        this.controller.onMouseDown(event);
-        return true;
-    };
+  
 
     this.showNext();
     

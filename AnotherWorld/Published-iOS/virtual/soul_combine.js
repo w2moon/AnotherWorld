@@ -113,13 +113,21 @@ virtual_soul_combine = function(info){
 
                
         }
-        else (mothersoul.travellerid != 0)
+        else if(mothersoul.travellerid != 0)
         {
             var traveller = role_get_traveller(mothersoul.travellerid);
+            cc.log(mothersoul.travellerid)
+            cc.log(mothersoul.travellerid != 0)
+            cc.log(typeof(mothersoul.travellerid))
+            if(traveller!=null){
                 traveller.soulid = soul.id;
                 soul.travellerid = traveller.id;
+            }
+            else{
+                cc.log("s t m null")
+            }
 
-              
+            
         }
         /////
                 role_delete_soul(info.soulid1);

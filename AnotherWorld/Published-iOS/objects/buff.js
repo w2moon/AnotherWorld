@@ -60,9 +60,12 @@ wl.buff.prototype = {
         if(logic == ""){
             return;
         }
-        var tmp = parse_skill_params(logic)
-        for(var i=1;i<tmp.length;++i){
-            this.warrior[tmp[i][0]].apply(this.warrior,tmp[i].slice(1))
+        var tmp = parse_skill_params(logic);
+        for(var k=0;k<tmp.length;++k){
+            var arr = tmp[k].slice(1);
+            arr.push(this.triggers[0]);
+            this.warrior[tmp[k][0]].apply(this.warrior,arr)
+           
         }
 
         /*
@@ -108,18 +111,15 @@ wl.buff.prototype = {
     },
 
     on_start : function(){
-    cc.log("start buff"+this.buffbase.startaction+" "+this.buffbase.id)
         this.doLogic(this.buffbase.startlogic,this.buffbase.startparam,this.buffbase.startvalue*this.stack);
        
         this.do_action_and_particle(this.warrior,this.buffbase.startaction,this.buffbase.startparticle);
     },
     on_interval : function(){
-    cc.log("interval buff")
         this.doLogic(this.buffbase.intervallogic,this.buffbase.intervalparam,this.buffbase.intervalvalue*this.stack);
         this.do_action_and_particle(this.warrior,this.buffbase.intervalaction,this.buffbase.intervalparticle);
     },
     on_end : function(){
-    cc.log("end buff")
         this.doLogic(this.buffbase.endlogic,this.buffbase.endparam,this.buffbase.endvalue*this.stack);
         this.do_action_and_particle(this.warrior,this.buffbase.endaction,this.buffbase.endparticle);
     },

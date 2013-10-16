@@ -10,6 +10,7 @@
         var tasks = [];
        
         tasks.push([skill.warrior,skill.warrior.particle,[params[3]]]);
+        tasks.push([skill,skill.delay,[0.4]]);
         for(var k in targets){
         
            tasks.push([targets[k],targets[k].incHP, [value*parseFloat(params[2])]]);

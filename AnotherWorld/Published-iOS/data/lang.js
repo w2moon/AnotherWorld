@@ -1,12 +1,16 @@
 
 (function(){
+ 
  if(USE_CCB){
-    lang = function(s){
-        return s;
-    };
-    return;
+    //lang = function(s){
+   //     return s;
+   // };
+   // return;
  }
-var code = cc.Application.getInstance().getCurrentLanguage();
+var code = "cn";
+ if(!USE_CCB){
+    code = cc.Application.getInstance().getCurrentLanguage();
+ }
 var name = "cn";
 switch(code)
 {

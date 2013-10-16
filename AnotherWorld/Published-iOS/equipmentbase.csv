@@ -1,4 +1,4 @@
 id,icon,type,name,desc,copper,rarityclass,skillid,MaxHP,Attack,Defense,Heal,Speed,Dodge,Crit
-1,soul.png,1,EQUIP_NAME_1,EQUIP_DESC_1,1,1,2000,0,1,0,1,0,0,0
+1,soul.png,1,EQUIP_NAME_1,EQUIP_DESC_1,1,1,2000,0,50,0,1,0,0,0
 2,soul.png,5,EQUIP_NAME_2,EQUIP_DESC_2,2,1,0,10,0,1,0,1,0,0
 3,soul.png,6,EQUIP_NAME_3,EQUIP_DESC_3,3,1,0,0,1,1,1,1,0,0

@@ -32,10 +32,16 @@ loginscene.prototype.onDidLoadFromCCB = function()
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
     }
      */
-    
+     var size = cc.Director.getInstance().getWinSize();
+
+    //var wind = cc.WindLayer.create();
+   // wind.initWithWindCount(3);
+   // wind.setPosition(cc.p(size.width/2,size.height/2));
+   // this.rootNode.addChild(wind);
+
     var aboutNode = cc.BuilderReader.load("sk_human");
 	//this.rootNode.addChild(aboutNode);
-    var size = cc.Director.getInstance().getWinSize();
+   
 	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50,size.height/2+wl.winscale*50));
      aboutNode.animationManager.runAnimationsForSequenceNamed("attack");
     aboutNode.on_animation_finish = function()
@@ -47,8 +53,9 @@ loginscene.prototype.onDidLoadFromCCB = function()
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
 
 
-   
-    
+   // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light2/;1;16",true);
+    // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light1.png:16:5",true);
+       
     /*
     
     var img = cc.Image.create();

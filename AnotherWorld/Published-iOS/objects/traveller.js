@@ -107,6 +107,7 @@ wl.traveller.prototype = {
         if(this.getSkill2Id() != 0){
             skills.push([this.getSkill2Id(),this.getSkill2Level(),EQUIP_SKILL2]);
         }
+        
         return skills;
     },
 

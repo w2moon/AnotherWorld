@@ -128,8 +128,7 @@ wl.warrior.prototype = {
 
  
 
-  
-
+   
 
 
   
@@ -212,7 +211,6 @@ wl.warrior.prototype = {
 
     incModifierDamagePercent : function(v){
         this.modifier_damage_percent += v;
-        cc.log("modifier_damage_percent "+this.modifier_damage_percent)
     },
     decModifierDamagePercent : function(v){
         this.modifier_damage_percent -= v;
@@ -222,25 +220,40 @@ wl.warrior.prototype = {
     },
 
     incHP : function(v){
+    /*
         var isCrit = wl.rand() < this.getProperty("Crit");
         if(isCrit){
             v *=2;
         }
+        */
         this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
-
+        var isCrit = 0;
         wl.dispatcher.notify(this,"incHP",v,isCrit);
     },
+    decHPProperty : function(pro,rate,trigger){
+        cc.log("property dec")
+        v = trigger.getProperty(pro)*rate;
+        this.decHP(v);
+    },
     decHP : function(v){
+        v = parseInt(v*(1+this.modifier_damage_percent));
+        if(v <= 0){
+            v == 1;
+        }
+
         if(wl.rand() < this.getProperty("Dodge")){
             wl.dispatcher.notify(this,"dodge",v);
             return;
         }
+        /*
         var isCrit = wl.rand() < this.getProperty("Crit");
         if(isCrit){
             v *=2;
         }
+        */
+        
         this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
-
+        var isCrit = 0;
         wl.dispatcher.notify(this,"decHP",v,isCrit);
 
         if(this.isDead()){
@@ -297,7 +310,11 @@ wl.warrior.prototype = {
         wl.dispatcher.notify(this,"beGuarder",[warrior]);
     },
 
+    
+
     addBuff : function(buffid,trigger){
+        cc.log("trigger")
+        cc.log(trigger)
         var buffinfo = buffbase[buffid];
         if(buffinfo.multiple == 1)
         {
@@ -406,7 +423,7 @@ wl.warrior.prototype = {
 
     action : function(){
         
-              for(var k in this.skills){
+              for(var k=this.skills.length-1;k>=0;k--){
                 if(this.skills[k].isActiveSkill() && this.skills[k].canBeCast()){
                     return this.skills[k].cast();
                 }
@@ -437,6 +454,9 @@ wl.warrior.prototype = {
                 }
             }
         }
+    },
+
+    shoot : function(){
     },
 
     attack : function(target,protype,prorate,nottriggerevent){
@@ -478,7 +498,8 @@ wl.warrior.prototype = {
     },
 
     particle : function(particle){
-         wl.dispatcher.notify(this,"particle",particle);
+        this.getUI().controller.on_particle(particle);
+         //wl.dispatcher.notify(this,"particle",particle);
     },
 
    
