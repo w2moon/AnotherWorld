@@ -34,10 +34,10 @@ loginscene.prototype.onDidLoadFromCCB = function()
      */
      var size = cc.Director.getInstance().getWinSize();
 
-    //var wind = cc.WindLayer.create();
-   // wind.initWithWindCount(3);
-   // wind.setPosition(cc.p(size.width/2,size.height/2));
-   // this.rootNode.addChild(wind);
+    var wind = cc.WindLayer.create();
+    wind.initWithWindCount(3);
+    wind.setPosition(cc.p(size.width/2,size.height/2));
+    this.rootNode.addChild(wind);
 
     var aboutNode = cc.BuilderReader.load("sk_human");
 	//this.rootNode.addChild(aboutNode);
