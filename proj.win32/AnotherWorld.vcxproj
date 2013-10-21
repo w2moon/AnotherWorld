@@ -98,7 +98,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\fork\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\fork\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\fork\extensions;$(ProjectDir)..\..\fork\scripting\javascript\bindings;$(ProjectDir)..\..\fork\cocos2dx;$(ProjectDir)..\..\fork\cocos2dx\include;$(ProjectDir)..\..\fork\cocos2dx\kazmath\include;$(ProjectDir)..\..\fork\cocos2dx\platform\win32;$(ProjectDir)..\..\fork\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\fork\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\fork\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(ProjectDir)..\..\cocos2d-x\scripting\javascript\spidermonkey-win32\include;$(ProjectDir)..\..\cocos2d-x\external\chipmunk\include\chipmunk;$(ProjectDir)..\..\cocos2d-x\extensions;$(ProjectDir)..\..\cocos2d-x\scripting\javascript\bindings;$(ProjectDir)..\..\cocos2d-x\cocos2dx;$(ProjectDir)..\..\cocos2d-x\cocos2dx\include;$(ProjectDir)..\..\cocos2d-x\cocos2dx\kazmath\include;$(ProjectDir)..\..\cocos2d-x\cocos2dx\platform\win32;$(ProjectDir)..\..\cocos2d-x\cocos2dx\platform\third_party\win32;$(ProjectDir)..\..\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;$(ProjectDir)..\..\cocos2d-x\CocosDenshion\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;USE_WIN32_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -116,8 +116,8 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\fork\scripting\javascript\spidermonkey-win32\lib\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\fork\external\opencv\lib\*.dll" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\scripting\javascript\spidermonkey-win32\lib\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\cocos2d-x\external\opencv\lib\*.dll" "$(OutDir)"
 </Command>
     </PreLinkEvent>
     <Link>
@@ -131,7 +131,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\fork\external\opencv\lib\*.dll" "$(OutDir)"
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 if exist "$(OutDir)\AnotherWorldRes" rd /s /q "$(OutDir)\AnotherWorldRes"
 mkdir "$(OutDir)\AnotherWorldRes"
-xcopy "$(ProjectDir)..\..\fork\scripting\javascript\bindings\js\*.js" "$(OutDir)\AnotherWorldRes" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\scripting\javascript\bindings\js\*.js" "$(OutDir)\AnotherWorldRes" /e /Y
 xcopy "$(ProjectDir)..\js" "$(OutDir)\AnotherWorldRes\" /e /Y
 xcopy "$(ProjectDir)..\res" "$(OutDir)\AnotherWorldRes\" /e /Y
 xcopy "$(ProjectDir)..\ccb" "$(OutDir)\AnotherWorldRes\" /e /Y
@@ -144,7 +144,7 @@ xcopy "$(ProjectDir)..\data" "$(OutDir)\AnotherWorldRes\" /e /Y</Command>
       <Command>if not exist "$(OutDir)..\..\published\win32" mkdir "$(OutDir)..\..\published\win32"
 if exist "$(OutDir)..\..\jslib" rd /s /q "$(OutDir)..\..\jslib"
 mkdir "$(OutDir)..\..\jslib"
-xcopy "$(ProjectDir)..\..\fork\scripting\javascript\bindings\js\*.js" "$(OutDir)..\..\jslib" /e /Y
+xcopy "$(ProjectDir)..\..\cocos2d-x\scripting\javascript\bindings\js\*.js" "$(OutDir)..\..\jslib" /e /Y
 xcopy "$(OutDir)*.dll" "$(OutDir)\..\..\published\win32\" /Y
 xcopy "$(OutDir)*.exe" "$(OutDir)\..\..\published\win32\" /Y</Command>
     </PostBuildEvent>
