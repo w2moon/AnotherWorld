@@ -34,7 +34,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
      */
      var size = cc.Director.getInstance().getWinSize();
 
-    //var wind = cc.WindLayer.create();
+   // var wind = cc.WindLayer.create();
    // wind.initWithWindCount(3);
    // wind.setPosition(cc.p(size.width/2,size.height/2));
    // this.rootNode.addChild(wind);
@@ -53,7 +53,7 @@ loginscene.prototype.onDidLoadFromCCB = function()
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
 
 
-   // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light2/;1;16",true);
+    wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/combine/;1;13",true);
     // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light1.png:16:5",true);
        
     /*

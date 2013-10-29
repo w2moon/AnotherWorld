@@ -89,10 +89,12 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>login/login_bg.png</string>
+							<string>loginui/login_bg.png</string>
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>

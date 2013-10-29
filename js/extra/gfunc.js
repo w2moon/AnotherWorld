@@ -92,6 +92,8 @@ wl.play_animation = function(node,x,y,dt,animfile,loop){
     if(arr.length>1){
        anim = wl.create_animation(dt,arr);
        spr = cc.Sprite.create(arr[0]+arr[1]+".png");
+ cc.log(arr[0]+arr[1]+".png")
+ cc.log(spr)
     }
     else{
         arr = animfile.split(/:/);

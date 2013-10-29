@@ -59,7 +59,14 @@ starupsoul.prototype.chooseRace = function(race)
         this.objs[k].removeFromParent();
     }
     this.objs = [];
-    var souls = wl.gvars.role.getSouls(this.race);
+    var temps = wl.gvars.role.getSouls(this.race);
+    var souls = [];
+    for(var k in temps){
+        if(temps[k].getMaxLevel() == temps[k].getLevel()){
+            souls.push(temps);
+        }
+    }
+
     for(var k in souls){
         var s = wl.load_scene("selectbar",souls[k].getBase().icon,this,this.onChoosed,souls[k].getId());
         s.id = souls[k].getId();

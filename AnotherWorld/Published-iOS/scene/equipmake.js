@@ -39,6 +39,7 @@ equipmake.prototype.onPressBack = function()
 };
 
 equipmake.prototype.selecttype = function(type){
+    this.bluetype=type;
     var blueprints = wl.gvars.role.getBlueprints(type);
     for(var k in this.blueprints){
         this.blueprints.removeFromParent();
@@ -49,6 +50,7 @@ equipmake.prototype.selecttype = function(type){
         s.id = blueprints[k];
         this.scroll.addChild(s);
         this.blueprints.push(s);
+       
     }
 };
 
@@ -68,7 +70,7 @@ equipmake.prototype.orderby = function(order){
         var x = 0;
         var y = 0;
         for(var k in this.blueprints){
-            this.blueprints.setPosition(x,y);
+            this.blueprints[k].setPosition(x,y);
             y = y + 50;
         }
     },
@@ -78,8 +80,9 @@ equipmake.prototype.onChoosePluePrint = function(blueid,selectednode)
     if(this.selectednode != null){
         this.selectednode.unselected();
     }
-    this.selectednode.selected();
+  
     this.selectednode = selectednode;
+      this.selectednode.selected();
     this.choosedid = blueid;
 
     var base = blueprint[blueid];
@@ -92,7 +95,7 @@ equipmake.prototype.onChoosePluePrint = function(blueid,selectednode)
     this.equip = cc.Sprite.create(equipmentbase[base.equipid].icon);
     this.equip.setPosition(this.menu.convertToWorldSpace(this.btnoutput.getPosition()));
     this.rootNode.addChild(this.equip);
-    this.lblname.setString(lang(equipmentbase[base.equipid].name));
+   // this.lblname.setString(lang(equipmentbase[base.equipid].name));
 
     for(var i = 1;i<=6;++i){
         if(base["mid"+i] == 0 ){
@@ -161,6 +164,8 @@ equipmake.prototype.on_equip_make = function(ret)
     }
     wl.gvars.role.addEquip(ret.equip);
 
-    this.equip.removeFromChild();
+    
+
+    
 
 };
