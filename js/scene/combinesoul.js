@@ -7,48 +7,50 @@
  var SOUL_ORDER_RARITY_REVERSE = 3;
   var SOUL_ORDER_NUM = 4;
 
-combinesoul.prototype.onDidLoadFromCCB = function()
-{
-    this.fathercard = null;
-    this.mothercard = null;
-    this.childcard = null;
-    this.objs = [];
-    this.isChoosingFather = true;
-    this.isFirstEnter = true;
-    
-    var size = this.rootNode.getContentSize();
-    var center = cc.p(size.width/2,size.height*42.3/100);
-    
-    var spr = cc.Sprite.create("equip/bg_equipment1.png");
-    var con = spr.getContentSize();
-    
-    spr.setPosition(center);
-    this.chooseLayer = cc.Layer.create();
-    this.chooseLayer.addChild(spr);
+  combinesoul.prototype.onDidLoadFromCCB = function () {
+     
+      this.fathercard = null;
+      this.mothercard = null;
+      this.childcard = null;
+      this.objs = [];
+      this.isChoosingFather = true;
+      this.isFirstEnter = true;
 
-    
-    this.scroll = wl.scroll_layer(con.width,con.size);
-    this.scroll.setPosition(center);
-    
-    this.chooseLayer.addChild(this.scroll);
-    
-    var sl = cc.Sprite.create("equip/shou.png");
-    sl.setPosition(cc.p(sl.getContentSize().width/2-9,con.height-sl.getContentSize().height/2-3));
-    this.chooseLayer.addChild(sl);
-    
-    var sr = cc.Sprite.create("equip/shou.png");
-    sr.setPosition(cc.p(con.width-sr.getContentSize().width/2+9,con.height-sl.getContentSize().height/2-3));
-    sr.setFlipX(true);
-    this.chooseLayer.addChild(sr);
-    
-    this.rootNode.addChild(this.chooseLayer,1);
+      var size = this.rootNode.getContentSize();
+      var center = cc.p(size.width / 2, size.height * 42.3 / 100);
+
+      var spr = cc.Sprite.create("equip/bg_equipment1.png");
+      var con = spr.getContentSize();
+
+      spr.setPosition(center);
+
+      this.chooseLayer = cc.Layer.create();
+      this.chooseLayer.addChild(spr);
 
 
-    this.lblcost.setString(0);
-    this.lblhas.setString(wl.gvars.role.getCopper());
-    this.show(null,SOUL_ORDER_DEFAULT);
-    this.animate();
-};
+      this.scroll = wl.scroll_layer(con.width, con.size);
+      this.scroll.setPosition(center);
+
+      this.chooseLayer.addChild(this.scroll);
+
+      
+
+      var sl = cc.Sprite.create("equip/shou.png");
+      sl.setPosition(cc.p(sl.getContentSize().width / 2 - 9, con.height - sl.getContentSize().height / 2 - 3));
+      this.chooseLayer.addChild(sl);
+      
+      var sr = cc.Sprite.create("equip/shou.png");
+      sr.setPosition(cc.p(con.width - sr.getContentSize().width / 2 + 9, con.height - sl.getContentSize().height / 2 - 3));
+      sr.setFlipX(true);
+      this.chooseLayer.addChild(sr);
+
+      this.rootNode.addChild(this.chooseLayer, 1);
+
+      this.lblcost.setString(0);
+      this.lblhas.setString(wl.gvars.role.getCopper());
+      this.show(null, SOUL_ORDER_DEFAULT);
+      this.animate();
+  };
 
 combinesoul.prototype.animate = function()
 {

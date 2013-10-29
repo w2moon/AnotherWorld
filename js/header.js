@@ -51,6 +51,7 @@ require("ui/skillbar.js");
 require("ui/equipbar.js");
 require("ui/bluebar.js");
 require("ui/selectbar.js");
+require("ui/soulbar.js");
 require("ui/rewardslot.js");
 require("ui/datapanel.js");
 require("ui/resultreward.js");

@@ -92,8 +92,7 @@ wl.play_animation = function(node,x,y,dt,animfile,loop){
     if(arr.length>1){
        anim = wl.create_animation(dt,arr);
        spr = cc.Sprite.create(arr[0]+arr[1]+".png");
- cc.log(arr[0]+arr[1]+".png")
- cc.log(spr)
+ 
     }
     else{
         arr = animfile.split(/:/);
@@ -142,15 +141,13 @@ wl.scroll_layer = function(w,h){
         var layer = cc.Layer.create();
         layer.__addChild = layer.addChild;
         layer.childpos = cc.p(0,0);
- layer.addChild = function(n,l){
-    n.setPosition(this.childpos);
- this.childpos.y += n.controller.bg.getContentSize().height+30;
- this.__addChild(n);
- cc.log("added")
- };
+        layer.addChild = function(n,l){
+            n.setPosition(this.childpos);
+            this.childpos.y += n.controller.bg.getContentSize().height+30;
+            this.__addChild(n);
+        };
         return layer;
     }
-
     var container = cc.Layer.create();
     container.setAnchorPoint(cc.p(0,0));
     container.setPosition(cc.p(0,0));
