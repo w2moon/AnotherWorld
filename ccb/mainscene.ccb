@@ -146,7 +146,7 @@
 						<key>type</key>
 						<string>Byte</string>
 						<key>value</key>
-						<integer>0</integer>
+						<integer>255</integer>
 					</dict>
 				</array>
 				<key>seqExpanded</key>
@@ -1595,7 +1595,7 @@
 						<key>value</key>
 						<array>
 							<real>0.0</real>
-							<real>130</real>
+							<real>0.0</real>
 							<integer>0</integer>
 						</array>
 					</dict>
@@ -1747,7 +1747,7 @@
 						<key>value</key>
 						<array>
 							<real>81.510406494140625</real>
-							<real>120.90000152587891</real>
+							<real>84.895828247070312</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -3131,7 +3131,7 @@
 						<key>value</key>
 						<array>
 							<real>49.999996185302734</real>
-							<real>-15.100000381469727</real>
+							<real>3.125</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -3212,7 +3212,7 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50</real>
+							<real>50.3125</real>
 							<real>50</real>
 							<integer>4</integer>
 						</array>
@@ -3443,7 +3443,7 @@
 			<key>offset</key>
 			<real>0.0</real>
 			<key>position</key>
-			<real>0.3333333432674408</real>
+			<real>0.0</real>
 			<key>resolution</key>
 			<real>30</real>
 			<key>scale</key>
