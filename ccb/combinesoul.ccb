@@ -2121,7 +2121,7 @@
 				<key>displayName</key>
 				<string>menutitle</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>menutitle</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -2191,8 +2191,6 @@
 						<true/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
