@@ -56,6 +56,9 @@ require("ui/rewardslot.js");
 require("ui/datapanel.js");
 require("ui/resultreward.js");
 require("ui/resultlevelup.js");
+require("ui/infobox.js");
+require("ui/starupresult.js");
+require("ui/equipmakeresult.js");
 
 require("state/normal.js");
 require("state/start.js");

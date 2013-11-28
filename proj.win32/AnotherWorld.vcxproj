@@ -356,7 +356,9 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\ui\create_ui.js" />
     <None Include="..\js\ui\datapanel.js" />
     <None Include="..\js\ui\equipbar.js" />
+    <None Include="..\js\ui\equipmakeresult.js" />
     <None Include="..\js\ui\indicator.js" />
+    <None Include="..\js\ui\infobox.js" />
     <None Include="..\js\ui\loading.js" />
     <None Include="..\js\ui\resultlevelup.js" />
     <None Include="..\js\ui\resultreward.js" />
@@ -365,6 +367,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\ui\skillbar.js" />
     <None Include="..\js\ui\soulbar.js" />
     <None Include="..\js\ui\stageinfo.js" />
+    <None Include="..\js\ui\starupresult.js" />
     <None Include="..\js\ui\token.js" />
     <None Include="..\js\ui\uiitem.js" />
     <None Include="..\js\ui\uisoul.js" />
@@ -372,6 +375,14 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\virtual\battle_stage.js" />
     <None Include="..\js\virtual\equip_enhence.js" />
     <None Include="..\js\virtual\equip_make.js" />
+    <None Include="..\js\virtual\friend_applicant_list.js" />
+    <None Include="..\js\virtual\friend_apply.js" />
+    <None Include="..\js\virtual\friend_approve.js" />
+    <None Include="..\js\virtual\friend_delete.js" />
+    <None Include="..\js\virtual\friend_list.js" />
+    <None Include="..\js\virtual\friend_refuse.js" />
+    <None Include="..\js\virtual\friend_reward_get.js" />
+    <None Include="..\js\virtual\friend_reward_list.js" />
     <None Include="..\js\virtual\login.js" />
     <None Include="..\js\virtual\mail_read.js" />
     <None Include="..\js\virtual\mail_receive.js" />
@@ -380,6 +391,7 @@ xcopy "$(ProjectDir)..\..\Shared\games\CrystalCraze\Published-Android" "$(OutDir
     <None Include="..\js\virtual\region_list.js" />
     <None Include="..\js\virtual\register.js" />
     <None Include="..\js\virtual\role_create.js" />
+    <None Include="..\js\virtual\role_search.js" />
     <None Include="..\js\virtual\role_slot.js" />
     <None Include="..\js\virtual\soul_combine.js" />
     <None Include="..\js\virtual\soul_starup.js" />

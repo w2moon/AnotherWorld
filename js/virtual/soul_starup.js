@@ -52,10 +52,10 @@ virtual_soul_starup = function(info){
         return ret;
     }
 
-    if(s1.level != rarity.maxlevel || s2.level != rarity.maxlevel){
-        ret.rc = retcode.STARUP_NOT_FULL_LEVEL;
-        return ret;
-    }
+    //if(s1.level != rarity.maxlevel || s2.level != rarity.maxlevel){
+    //    ret.rc = retcode.STARUP_NOT_FULL_LEVEL;
+    //    return ret;
+   // }
 
     role.copper -= starupcopper[star-1];
     s1.star = star;
@@ -82,7 +82,7 @@ virtual_soul_starup = function(info){
             }
             
         }
-        else (s2.travellerid != 0)
+        else if (s2.travellerid != 0)
         {
             var traveller = role_get_traveller(s2.travellerid);
                 traveller.soulid = s1.id;

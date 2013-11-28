@@ -81,7 +81,7 @@ equipchoose.prototype.showPage = function(type){
          var bar = wl.load_scene("equipbar",this.objs[k],cur == this.objs[k],this.oldtraveller,this.traveller,this.type);
         bar.setPosition(cc.p(x,y-bar.controller.bg.getContentSize().height/2-15));
         container.addChild(bar);
-        y = y + bar.controller.bg.getContentSize().height;
+        y = y - bar.controller.bg.getContentSize().height;
         h = h + bar.controller.bg.getContentSize().height;
     }
 

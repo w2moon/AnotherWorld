@@ -338,6 +338,42 @@
     <None Include="..\js\ui\soulbar.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\ui\infobox.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\starupresult.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\equipmakeresult.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\virtual\role_search.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_applicant_list.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_apply.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_approve.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_delete.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_list.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_refuse.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_reward_get.js">
+      <Filter>js\virtual</Filter>
+    </None>
+    <None Include="..\js\virtual\friend_reward_list.js">
+      <Filter>js\virtual</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
