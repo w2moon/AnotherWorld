@@ -374,6 +374,18 @@
     <None Include="..\js\virtual\friend_reward_list.js">
       <Filter>js\virtual</Filter>
     </None>
+    <None Include="..\js\scene\friendscene.js">
+      <Filter>js\scene</Filter>
+    </None>
+    <None Include="..\js\ui\rewardbtn.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\applicantbar.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\friendbar.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />
