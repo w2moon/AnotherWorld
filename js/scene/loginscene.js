@@ -51,7 +51,7 @@ loginscene.prototype.onDidLoadFromCCB = function () {
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode, aboutNode.on_animation_finish);
 
    
-    wl.play_animation(this.rootNode, size.width / 2, size.height / 2, 0.075, "anim/combine2/;1;16", true);
+   // wl.play_animation(this.rootNode, size.width / 2, size.height / 2, 0.075, "anim/combine2/;1;16", true);
     // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light1.png:16:5",true);
 
     /*
@@ -304,7 +304,16 @@ loginscene.prototype.onPressStart = function()
          loginscene.prototype.role_entered = function(player){
             wl.gvars.role = new wl.role(player);
             if( wl.gvars.role.travellers.length == 0){
-                wl.run_scene("travellercreate");
+                //wl.run_scene("travellercreate");
+                this.anim = wl.load_scene("startanim");
+                this.rootNode.addChild(this.anim);
+                this.anim.on_animation_finish = function () {
+                    wl.run_scene("travellercreate");
+                    
+                    
+                }
+                
+                this.anim.animationManager.setCompletedAnimationCallback(this.anim, this.anim.on_animation_finish);
             }
             else{
                 this.start_game();
