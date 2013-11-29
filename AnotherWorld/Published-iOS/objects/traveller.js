@@ -1,10 +1,36 @@
 
-wl.traveller = function(dbobj,owner){
+wl.traveller = function (dbobj, owner) {
     this.dbobj = dbobj;
     this.owner = owner;
 
     this.hp = 0;
-}
+};
+
+wl.traveller_create = function (soulid, owner) {
+    return new wl.traveller( 
+                    {
+                        id:wl.local_id(),
+                        name:"",
+                        img:"",
+                        exp:0,
+                        level:1,
+                        view:1,
+                        skill1id:0,
+                        skill1exp:0,
+                        skill1level:1,
+                        skill2id:0,
+                        skill1exp:0,
+                        skill1level:1,
+                        nature:2,
+                        soulid:soulid,
+                        weaponid:0,
+                        clothid:0,
+                        trinketid:0,
+                        slot:[0,0,0,0],
+                        pro:[]
+                     }
+                    ,owner);
+};
 
 wl.traveller.prototype = {
     getClass : function(){return "traveller";},

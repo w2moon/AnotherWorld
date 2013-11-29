@@ -5,12 +5,36 @@ equipstarup.prototype.onDidLoadFromCCB = function()
     this.selected = [];
 
     this.objs = [];
-    
 
-     var size = this.rootNode.getContentSize();
-    this.scroll = wl.scroll_layer(size.width,size.height/3);
 
-    this.rootNode.addChild(this.scroll);
+    var size = this.rootNode.getContentSize();
+    var center = cc.p(size.width / 2, size.height * 42.3 / 100);
+
+    var spr = cc.Sprite.create("equip/bg_equipment1.png");
+    var con = spr.getContentSize();
+
+    spr.setPosition(center);
+
+    this.chooseLayer = cc.Layer.create();
+    this.chooseLayer.addChild(spr);
+
+    this.conheight = con.height;
+    this.scroll = wl.scroll_layer(con.width, con.height);
+
+    this.chooseLayer.addChild(this.scroll);
+
+
+
+    var sl = cc.Sprite.create("equip/shou.png");
+    sl.setPosition(cc.p(sl.getContentSize().width / 2 - 9, con.height - sl.getContentSize().height / 2 - 3));
+    this.chooseLayer.addChild(sl);
+
+    var sr = cc.Sprite.create("equip/shou.png");
+    sr.setPosition(cc.p(con.width - sr.getContentSize().width / 2 + 9, con.height - sl.getContentSize().height / 2 - 3));
+    sr.setFlipX(true);
+    this.chooseLayer.addChild(sr);
+
+    this.rootNode.addChild(this.chooseLayer, 1);
 
     
 };

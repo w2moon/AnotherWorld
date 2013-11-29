@@ -1,16 +1,62 @@
  var starupsoul = function(){}
-starupsoul.prototype.onDidLoadFromCCB = function()
-{
-    this.fathercard = null;
-    this.mothercard = null;
-    this.isChoosingFather = true;
+ starupsoul.prototype.onDidLoadFromCCB = function () {
+     this.fathercard = null;
+     this.mothercard = null;
+     this.isChoosingFather = true;
      this.objs = [];
-      var size = this.rootNode.getContentSize();
-    this.scroll = wl.scroll_layer(size.width,size.height/3);
+     this.isFirstEnter = true;
+     var size = this.rootNode.getContentSize();
+     var center = cc.p(size.width / 2, size.height * 42.3 / 100);
 
-    this.rootNode.addChild(this.scroll);
+     var spr = cc.Sprite.create("equip/bg_equipment1.png");
+     var con = spr.getContentSize();
 
-    this.show(null,ORDER_DEFAULT);
+     spr.setPosition(center);
+
+     this.chooseLayer = cc.Layer.create();
+     this.chooseLayer.addChild(spr);
+
+     this.conheight = con.height;
+     this.scroll = wl.scroll_layer(con.width, con.height);
+
+     this.chooseLayer.addChild(this.scroll);
+
+
+     var sl = cc.Sprite.create("equip/shou.png");
+     sl.setPosition(cc.p(sl.getContentSize().width / 2 - 9, con.height - sl.getContentSize().height / 2 - 3));
+     this.chooseLayer.addChild(sl);
+
+     var sr = cc.Sprite.create("equip/shou.png");
+     sr.setPosition(cc.p(con.width - sr.getContentSize().width / 2 + 9, con.height - sl.getContentSize().height / 2 - 3));
+     sr.setFlipX(true);
+     this.chooseLayer.addChild(sr);
+
+     this.rootNode.addChild(this.chooseLayer, 1);
+
+     if (this.hasStarUpSoul()) {
+         this.lbltitle.setString(lang("TXT_STARUP_BASE"));
+         wl.warn_obj(this.lbltitle);
+         this.show(null, ORDER_DEFAULT);
+         this.animate();
+     }
+     else {
+         this.lbltitle.setString(lang("TXT_STARUP_TITLE"));
+         this.chooseLayer.setVisible(false);
+         wl.popmsg(lang("TXT_STARUP_LEVELLIMIT"), this.rootNode);
+     }
+
+
+ };
+
+ starupsoul.prototype.animate = function () {
+     var size = this.rootNode.getContentSize();
+     this.chooseLayer.setPosition(cc.p(0, -size.height * 42.3 / 100));
+
+     this.chooseLayer.runAction(cc.MoveTo.create(0.2, cc.p(0, 0)));
+ };
+
+ starupsoul.prototype.hasStarUpSoul = function () {
+     return wl.gvars.role.getCanStarUpSouls(this.race).length >= 2;
 };
 
 starupsoul.prototype.isChoosed = function(soulid){
@@ -27,57 +73,99 @@ starupsoul.prototype.isChoosed = function(soulid){
 starupsoul.prototype.onChooseBase = function()
 {
     this.isChoosingFather = true;
+    this.lbltitle.setString(lang("TXT_STARUP_BASE"));
+    wl.warn_obj(this.lbltitle);
+    this.clearChild();
+    this.show(null, SOUL_ORDER_DEFAULT, true);
 };
 
 starupsoul.prototype.onChooseSeed = function()
 {
     this.isChoosingFather = false;
+    this.lbltitle.setString(lang("TXT_STARUP_SEED"));
+    wl.warn_obj(this.lbltitle);
+    this.clearChild();
+    this.show(null, SOUL_ORDER_DEFAULT, true);
 };
-
+starupsoul.prototype.showCombineUI = function () {
+    this.chooseLayer.setVisible(false);
+    this.menu.setEnabled(true);
+    this.lbltitle.setString(lang("TXT_STARUP_TITLE"));
+    wl.warn_obj(this.lbltitle);
+}
 starupsoul.prototype.onPressBack = function()
 {
-    wl.run_scene("mainscene");
+    if (this.chooseLayer.isVisible()) {
+        
+        this.showCombineUI();
+    }
+    else {
+        wl.run_scene("mainscene");
+    }
 };
 
-starupsoul.prototype.show = function(race,order)
+starupsoul.prototype.show = function (race, order, notanim)
 {
-    
-    
+
+    this.menu.setEnabled(false);
+
+    this.chooseLayer.setVisible(true);
 
     this.chooseRace(race);
-    this.chooseOrder(order);
+    this.chooseOrder(order, notanim);
 
 
 };
 
-starupsoul.prototype.chooseRace = function(race)
-{
-    if(race != null){
+starupsoul.prototype.onPressOrder = function () {
+    this.chooseRace(this.race);
+    this.chooseOrder((this.order + 1) % SOUL_ORDER_NUM);
+};
+
+
+starupsoul.prototype.chooseRace = function (race) {
+    if (race != null) {
         this.race = race;
     }
-    for(var k in this.objs){
+    for (var k in this.objs) {
         this.objs[k].removeFromParent();
     }
     this.objs = [];
-    var temps = wl.gvars.role.getSouls(this.race);
-    var souls = [];
-    for(var k in temps){
-        if(temps[k].getMaxLevel() == temps[k].getLevel()){
-            souls.push(temps);
+    var souls = null;
+    if (!this.isChoosingFather) {
+        if (this.fathercard != null) {
+            souls = wl.gvars.role.getSeedSouls(this.fathercard.soulid);
+        }
+        else {
+            this.isChoosingFather = true;
+            souls = wl.gvars.role.getCanStarUpSouls(this.race);
+            this.lbltitle.setString(lang("TXT_STARUP_BASE"));
+            wl.warn_obj(this.lbltitle);
         }
     }
+    else {
+        souls = wl.gvars.role.getCanStarUpSouls(this.race);
+    }
 
-    for(var k in souls){
-        var s = wl.load_scene("selectbar",souls[k].getBase().icon,this,this.onChoosed,souls[k].getId());
+    for (var k in souls) {
+        var s = wl.load_scene("soulbar", souls[k], this, this.onChoosed);
         s.id = souls[k].getId();
+        if (this.fathercard != null && this.fathercard.soulid == souls[k].getId()) {
+            this.fathercard.node = s.controller;
+        }
+        else if (this.mothercard != null && this.mothercard.soulid == souls[k].getId()) {
+            this.mothercard.node = s.controller;
+        }
         this.objs.push(s);
         this.scroll.addChild(s);
     }
 };
 
+var sort_soul_rarity = function (t1, t2) {
+    return soulbase[t2.id].rarityclass < soulbase[t1.id].rarityclass;
+};
 
-
-starupsoul.prototype.chooseOrder = function(order)
+starupsoul.prototype.chooseOrder = function (order, notanim)
 {
     if(order != null){
         this.order = order;
@@ -99,18 +187,44 @@ starupsoul.prototype.chooseOrder = function(order)
        break;
     }
 
-    var x = 0;
-    var y = 0;
-    for(var k in this.objs){
-        this.objs[k].setPosition(x,y);
-        y += 50;
-    }
+var x = this.rootNode.getContentSize().width / 2;
+var y = this.conheight - 77 / 2 - 15; // this.rootNode.getContentSize().height / 2 - 90;
+for (var k in this.objs) {
+    if (notanim) {
+        this.objs[k].setPosition(x, y);
+    }
+    else {
+        if (k % 2 == 0) {
+            this.objs[k].setPosition(x + this.rootNode.getContentSize().width, y);
+        }
+        else {
+            this.objs[k].setPosition(x - this.rootNode.getContentSize().width, y);
+        }
+        this.objs[k].runAction(cc.Sequence.create(cc.DelayTime.create(0.2), cc.EaseSineOut.create(cc.MoveTo.create(0.3, cc.p(x, y)))));
+    }
+    y -= 77;
+}
 }
+
+starupsoul.prototype.clearChild = function () {
+    
+};
+
+
 
 starupsoul.prototype.onChoosed = function(soulid,n)
 {
     if(this.isChoosed(soulid)){
-        wl.popmsg(lang("STARUPSOUL_CANNOT_USE_SAME_SOULID"));
+        if (this.fathercard != null && this.fathercard.soulid == soulid) {
+            this.fathercard.node.unselected();
+            this.fathercard.removeFromParent();
+            this.fathercard = null;
+        }
+        else {
+            this.mothercard.node.unselected();
+            this.mothercard.removeFromParent();
+            this.mothercard = null;
+        }
         return;
     }
 
@@ -118,8 +232,12 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         
         if(this.mothercard != null){
             if(wl.gvars.role.getSoul(this.mothercard.soulid).getBaseId() != wl.gvars.role.getSoul(soulid).getBaseId()){
-                wl.popmsg(lang("STARUP_NOT_SAME_SOUL"));
-                return;
+                //wl.popmsg(lang("STARUP_NOT_SAME_SOUL"));
+                //return;
+                this.mothercard.node.unselected();
+                this.mothercard.removeFromParent();
+                this.mothercard = null;
+
             }
         }
         if(this.fathercard != null){
@@ -128,7 +246,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         }
 
         var soul = wl.gvars.role.getSoul(soulid);
-       n.selected();
+      // n.selected();
         this.fathercard = wl.create_soulcard(soul.getBaseId());
         this.fathercard.setPosition(this.menu.convertToWorldSpace(this.basesoul.getPosition()));
          this.fathercard.soulid = soulid;
@@ -139,9 +257,11 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         
         if(this.fathercard != null){
             if(wl.gvars.role.getSoul(this.fathercard.soulid).getBaseId() != wl.gvars.role.getSoul(soulid).getBaseId()){
-                wl.popmsg(lang("STARUP_NOT_SAME_SOUL"));
-                cc.log(wl.gvars.role.getSoul(this.fathercard.soulid).getBaseId()+" vs "+wl.gvars.role.getSoul(soulid).getBaseId())
-                return;
+                //wl.popmsg(lang("STARUP_NOT_SAME_SOUL"));
+                // return;
+                this.fathercard.node.unselected();
+                this.fathercard.removeFromParent();
+                this.fathercard = null;
             }
         }
         if(this.mothercard != null){
@@ -150,7 +270,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         }
 
          var soul = wl.gvars.role.getSoul(soulid);
-        n.selected();
+       // n.selected();
         this.mothercard = wl.create_soulcard(soul.getBaseId(),true);
         this.mothercard.soulid = soulid;
         this.mothercard.node = n;
@@ -158,6 +278,8 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         this.rootNode.addChild(this.mothercard);
     }
     this.isChoosingFather = !this.isChoosingFather;
+    this.menu.setEnabled(true);
+
     if(this.fathercard != null && this.mothercard != null){
         var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
         var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
@@ -168,73 +290,112 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         if(starupcopper[star - 1] > wl.gvars.role.getCopper()){
             
         }
-
+        this.showCombineUI();
         this.lblcost.setString(starupcopper[star - 1]);
+    }
+    else if (this.isFirstEnter) {
+        this.isFirstEnter = false;
+        this.isChoosingFather = false;
+        this.show(null, SOUL_ORDER_DEFAULT, true);
+        this.lbltitle.setString(lang("TXT_STARUP_SEED"));
+        wl.warn_obj(this.lbltitle);
+    }
+    else if (this.fathercard == null) {
+        this.isChoosingFather = true;
+        this.show(null, SOUL_ORDER_DEFAULT, true);
+        this.lbltitle.setString(lang("TXT_STARUP_BASE"));
+        wl.warn_obj(this.lbltitle);
+    }
+    else if (this.mothercard == null) {
+        this.isChoosingFather = false;
+        this.show(null, SOUL_ORDER_DEFAULT, true);
+        this.lbltitle.setString(lang("TXT_STARUP_SEED"));
+        wl.warn_obj(this.lbltitle);
     }
 };
 
-starupsoul.prototype.onPressConfirm = function()
-{
+starupsoul.prototype.onPressConfirm = function () {
 
-if(this.fathercard == null || this.mothercard == null){
-    return;
-}
-var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
-        var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
-        var rarity = rarityclass[fathersoul.getBase()['rarityclass']]
+    if (this.fathercard == null || this.mothercard == null) {
+        return;
+    }
+    var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
+    var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
+    var rarity = rarityclass[fathersoul.getBase()['rarityclass']]
 
-        var starupcopper = parse_action_params(rarity.starupcopper);
-        var star = wl.clamp(fathersoul.star + mothersoul.star + 1,0,starupcopper.length);
-        if(starupcopper[star - 1] > wl.gvars.role.getCopper()){
-            wl.popmsg(lang("STARTUP_NOT_ENOUGH_COPPER"));
-            return;
-        }
- var msg = wl.msg.create("soul_starup");
-     msg.soulid1 = this.fathercard.soulid;
+    var starupcopper = parse_action_params(rarity.starupcopper);
+    var star = wl.clamp(fathersoul.star + mothersoul.star + 1, 0, starupcopper.length);
+    if (starupcopper[star - 1] > wl.gvars.role.getCopper()) {
+        wl.popmsg(lang("STARTUP_NOT_ENOUGH_COPPER"));
+        return;
+    }
+
+    this.menu.setEnabled(false);
+    this.menutitle.setEnabled(false);
+    var msg = wl.msg.create("soul_starup");
+    msg.soulid1 = this.fathercard.soulid;
     msg.soulid2 = this.mothercard.soulid;
-     wl.http.send(msg,this.on_soul_starup,this);
+    wl.http.send(msg, this.on_soul_starup, this);
 };
 
-starupsoul.prototype.on_soul_starup = function(ret)
-{
-    if(ret.rc != retcode.OK){
-        cc.log("starup soul fail"+ret.rc);
+starupsoul.prototype.on_soul_starup = function (ret) {
+    
+    if (ret.rc != retcode.OK) {
+        cc.log("starup soul fail" + ret.rc);
+        this.menu.setEnabled(true);
+        this.menutitle.setEnabled(true);
         return;
     }
 
     var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
-        var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
-        var rarity = rarityclass[fathersoul.getBase()['rarityclass']];
+    var mothersoul = wl.gvars.role.getSoul(this.mothercard.soulid);
+    var rarity = rarityclass[fathersoul.getBase()['rarityclass']];
 
-        if(fathersoul.getTravellerId() != 0 && mothersoul.getTravellerId() != 0 )
-        {
-            if(mothersoul.getTravellerId() == wl.gvars.role.getHero()){
-                var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
-                traveller.setSoulId(ret.soul.id);
-
-                traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
-                traveller.setSoulId(0);
-            }
-            else{
-                var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
-                traveller.setSoulId(ret.soul.id);
-
-                traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
-                traveller.setSoulId(0);
-            }
-            
-        }
-        else (mothersoul.getTravellerId() != 0)
-        {
+    if (fathersoul.getTravellerId() != 0 && mothersoul.getTravellerId() != 0) {
+        if (mothersoul.getTravellerId() == wl.gvars.role.getHero()) {
             var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
-                traveller.setSoulId(ret.soul.id);
+            traveller.setSoulId(ret.soul.id);
 
-              
+            traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+            traveller.setSoulId(0);
+        }
+        else {
+            var traveller = wl.gvars.role.getTraveller(fathersoul.getTravellerId());
+            traveller.setSoulId(ret.soul.id);
+
+            traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+            traveller.setSoulId(0);
         }
 
-        var starupcopper = parse_action_params(rarity.starupcopper);
-        var star = wl.clamp(fathersoul.star + mothersoul.star + 1,0,starupcopper.length);
-       wl.gvars.role.subCopper(starupcopper[star - 1]);
-       wl.gvars.role.deleteSoul(this.mothercard.soulid);
+    }
+    else if (mothersoul.getTravellerId() != 0) {
+        var traveller = wl.gvars.role.getTraveller(mothersoul.getTravellerId());
+        traveller.setSoulId(ret.soul.id);
+
+
+    }
+
+    var starupcopper = parse_action_params(rarity.starupcopper);
+    var star = wl.clamp(fathersoul.star + mothersoul.star + 1, 0, starupcopper.length);
+    wl.gvars.role.subCopper(starupcopper[star - 1]);
+    wl.gvars.role.deleteSoul(this.mothercard.soulid);
     wl.gvars.role.addSoul(ret.soul);
+
+    this.fathercard.removeFromParent();
+    this.fathercard = null;
+
+    this.mothercard.removeFromParent();
+    this.mothercard = null;
+
+    var size = this.rootNode.getContentSize();
+    this.outbg = wl.load_scene("starupresult",ret.soul.id,this.onFinish,this);
+    this.rootNode.addChild(this.outbg);
+};
+
+starupsoul.prototype.onFinish = function () {
+    this.menu.setEnabled(true);
+    this.menutitle.setEnabled(true);
+
+    this.outbg.removeFromParent();
+    this.outbg = null;
 };

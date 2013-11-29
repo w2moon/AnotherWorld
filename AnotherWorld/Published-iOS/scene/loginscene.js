@@ -5,57 +5,55 @@
 var loginscene = function(){};
 
 
-loginscene.prototype.onDidLoadFromCCB = function()
-{
-    if(USE_VIRTUAL_HTTP){
+loginscene.prototype.onDidLoadFromCCB = function () {
+    if (USE_VIRTUAL_HTTP) {
         wl.http.attach(this.rootNode);
     }
     cc.log("loaded");
-   // this.lblRegion.setString("loading");
- 
-    cc.log("winscale:"+wl.winscale)
+    // this.lblRegion.setString("loading");
 
-   //cc.log(lang("SKILL_NAME_1001"))
+    cc.log("winscale:" + wl.winscale)
+    
+    //cc.log(lang("SKILL_NAME_1001"))
     /*
     for(var i=1;i<10;++i){
     var aboutNode = cc.BuilderReader.load("sk_human");
-	this.rootNode.addChild(aboutNode);
+    this.rootNode.addChild(aboutNode);
     var size = cc.Director.getInstance().getWinSize();
-	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50*i,size.height/2+wl.winscale*50*i));
+    aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50*i,size.height/2+wl.winscale*50*i));
     aboutNode.animationManager.runAnimationsForSequenceNamed("stand");
     aboutNode.on_animation_finish = function()
-{
-	 this.animationManager.runAnimationsForSequenceNamed("stand");
+    {
+    this.animationManager.runAnimationsForSequenceNamed("stand");
    
-}
+    }
        
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
     }
-     */
-     var size = cc.Director.getInstance().getWinSize();
+    */
+    var size = cc.Director.getInstance().getWinSize();
 
-   // var wind = cc.WindLayer.create();
-   // wind.initWithWindCount(3);
-   // wind.setPosition(cc.p(size.width/2,size.height/2));
-   // this.rootNode.addChild(wind);
+    // var wind = cc.WindLayer.create();
+    // wind.initWithWindCount(3);
+    // wind.setPosition(cc.p(size.width/2,size.height/2));
+    // this.rootNode.addChild(wind);
 
     var aboutNode = cc.BuilderReader.load("sk_human");
-	//this.rootNode.addChild(aboutNode);
-   
-	aboutNode.setPosition(cc.p(size.width/2+wl.winscale*50,size.height/2+wl.winscale*50));
-     aboutNode.animationManager.runAnimationsForSequenceNamed("attack");
-    aboutNode.on_animation_finish = function()
-    {
+    //this.rootNode.addChild(aboutNode);
+
+    aboutNode.setPosition(cc.p(size.width / 2 + wl.winscale * 50, size.height / 2 + wl.winscale * 50));
+    aboutNode.animationManager.runAnimationsForSequenceNamed("attack");
+    aboutNode.on_animation_finish = function () {
         this.animationManager.runAnimationsForSequenceNamed("attack");
-        
+
     }
-    
-    aboutNode.animationManager.setCompletedAnimationCallback(aboutNode,aboutNode.on_animation_finish);
 
+    aboutNode.animationManager.setCompletedAnimationCallback(aboutNode, aboutNode.on_animation_finish);
 
-    wl.play_animation(this.rootNode,size.width/2,size.height/2,0.075,"anim/combine2/;1;16",true);
+   
+    wl.play_animation(this.rootNode, size.width / 2, size.height / 2, 0.075, "anim/combine2/;1;16", true);
     // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light1.png:16:5",true);
-       
+
     /*
     
     var img = cc.Image.create();
@@ -65,32 +63,31 @@ loginscene.prototype.onDidLoadFromCCB = function()
     mask.initWithImageFile("human_head.png",1);
     var arr = img.parse("haarcascades/haarcascade_frontalface_alt.xml",1);
     if(arr.length == 0){
-        cc.log("not found heads");
+    cc.log("not found heads");
     }
     else
     {
-        cc.log("detected:"+arr.length)
+    cc.log("detected:"+arr.length)
     }
     var y = 50;
     for(var k in arr){
-        var r = arr[k].getValue();
-        cc.log(r.x+" "+r.y+" "+r.width+" "+r.height);
-        var subimg = img.createSubImage(r);
+    var r = arr[k].getValue();
+    var subimg = img.createSubImage(r);
 
-        var efimg = subimg.effect(4);
-        var masked = subimg.mask(mask);
-        var t2d = cc.Texture2D.create()
-        t2d.initWithImage(masked);
+    var efimg = subimg.effect(4);
+    var masked = subimg.mask(mask);
+    var t2d = cc.Texture2D.create()
+    t2d.initWithImage(masked);
         
-        var header = cc.Sprite.createWithTexture(t2d)
-        var size = cc.Director.getInstance().getWinSize();
-        header.setPosition(cc.p(size.width/2,y));
-        y=y+header.getContentSize().height;
-        this.rootNode.addChild(header);
+    var header = cc.Sprite.createWithTexture(t2d)
+    var size = cc.Director.getInstance().getWinSize();
+    header.setPosition(cc.p(size.width/2,y));
+    y=y+header.getContentSize().height;
+    this.rootNode.addChild(header);
         
     }
-     */
-    
+    */
+
 };
 
 
@@ -111,7 +108,9 @@ loginscene.prototype.onPressLoginDirect = function()
 
 loginscene.prototype.onPressLoginAccount = function()
 {
-	//wl.run_scene("createtraveller");
+    //wl.run_scene("createtraveller");
+
+    wl.popmsg("dfsdfsdf");
 }
 
 loginscene.prototype.onPressStart = function()
@@ -230,9 +229,7 @@ loginscene.prototype.onPressStart = function()
          loginscene.prototype.on_region_list = function(ret){
             this.stop_loading();
 
-            for(var k in ret.regions){
-                cc.log(k+" "+ret.regions[k].url);
-            }
+            
 
             wl.gvars.regions = ret.regions;
 

@@ -279,50 +279,51 @@ uicard.prototype.on_animation_finish = function(){
     }
 }
 
-uicard.prototype.onCreate = function(ske,avatar,img,warrior){
+uicard.prototype.onCreate = function (ske, avatar, img, warrior) {
     this.warrior = warrior
-  
-    
+
+
 
     this.skeleton = wl.load_scene(ske)
+    this.skeleton.setPosition(cc.p(-5,0));
     this.rootNode.addChild(this.skeleton)
-    
-    this.normalanim = "stand";
-    
-    this.skeleton.animationManager.setCompletedAnimationCallback(this,this.on_animation_finish);
 
-    this.playAnim(this.normalanim,true)
+    this.normalanim = "stand";
+
+    this.skeleton.animationManager.setCompletedAnimationCallback(this, this.on_animation_finish);
+
+    this.playAnim(this.normalanim, true)
 
     img = "";
-         if(!wl.isNoneString(img)){
-               var dataimg = new cc.Image();
-               dataimg.initWithBase64(img,DEFAULT_HEAD_WIDTH,DEFAULT_HEAD_HEIGHT);
-              
-               dataimg.resize(128,128);
+    if (!wl.isNoneString(img)) {
+        var dataimg = new cc.Image();
+        dataimg.initWithBase64(img, DEFAULT_HEAD_WIDTH, DEFAULT_HEAD_HEIGHT);
 
-               var mask = new cc.Image()
-               mask.initWithImageFile(HEAD_MASK,1)
-               var t2d = cc.Texture2D.create()
-               t2d.initWithImage(dataimg.mask(mask))
+        dataimg.resize(128, 128);
 
-               this.skeleton.controller.part0.setTexture(t2d);
-         }
-         else{
-            wl.set_texture(this.skeleton.controller.part0,avatar[0]);
-         }
+        var mask = new cc.Image()
+        mask.initWithImageFile(HEAD_MASK, 1)
+        var t2d = cc.Texture2D.create()
+        t2d.initWithImage(dataimg.mask(mask))
 
-         for(var i = 1;i<avatar.length;++i){
-            if(avatar[i] == ""){
-                continue;
-            }
-            wl.set_texture(this.skeleton.controller["part"+i],avatar[i]);
-         }
+        this.skeleton.controller.part0.setTexture(t2d);
+    }
+    else {
+        wl.set_texture(this.skeleton.controller.part0, avatar[0]);
+    }
 
-    if(warrior == null){
+    for (var i = 1; i < avatar.length; ++i) {
+        if (avatar[i] == "") {
+            continue;
+        }
+        wl.set_texture(this.skeleton.controller["part" + i], avatar[i]);
+    }
+
+    if (warrior == null) {
         return;
     }
 
-    this.hpid = cc.LabelTTF.create(0,"Helvetica",14);
+    this.hpid = cc.LabelTTF.create(0, "Helvetica", 14);
     this.rootNode.addChild(this.hpid);
 
     this.register_event();

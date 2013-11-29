@@ -28,11 +28,8 @@ resultreward.prototype.onCreate = function(info){
 };
 
 resultreward.prototype.playAnim = function(){
-    cc.log("!!!!!!")
     this.elapsetime = 0;
-    if(this.info.pro[this.idx] == null){
-        cc.log(this.idx+" "+this.info.pro.length)
-            }
+   
     if(this.info.pro[this.idx].endexp > this.info.pro[this.idx].maxexp){
                 this.info.pro[this.idx].endexp = this.info.pro[this.idx].maxexp;
            }

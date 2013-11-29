@@ -435,62 +435,62 @@ var sort_name = function(t1,t2){return lang(t2.getBase().name)<lang(t1.getBase()
 
 wl.role.prototype = {
 
-    getClass : function(){return "role";},
+    getClass: function () { return "role"; },
 
-    getUserId : function(){return this.dbobj.userid;},
-    setUserId : function(userid){ this.dbobj.userid = userid;},
+    getUserId: function () { return this.dbobj.userid; },
+    setUserId: function (userid) { this.dbobj.userid = userid; },
 
-    getName : function(){return this.dbobj.name;},
-    setName : function(name){ this.dbobj.name = name;},
+    getName: function () { return this.dbobj.name; },
+    setName: function (name) { this.dbobj.name = name; },
 
-    getId : function(){return this.dbobj.id;},
-    setId : function(id){ this.dbobj.id = id;},
+    getId: function () { return this.dbobj.id; },
+    setId: function (id) { this.dbobj.id = id; },
 
-    getExp : function(){return this.dbobj.exp;},
-    setExp : function(exp){ this.dbobj.exp = exp;},
+    getExp: function () { return this.dbobj.exp; },
+    setExp: function (exp) { this.dbobj.exp = exp; },
 
-    getLevel : function(){return this.dbobj.level;},
-    setLevel : function(level){ this.dbobj.level = level;},
+    getLevel: function () { return this.dbobj.level; },
+    setLevel: function (level) { this.dbobj.level = level; },
 
-    getHP : function(){return this.dbobj.hp;},
-    setHP : function(hp){ this.dbobj.hp = hp;},
+    getHP: function () { return this.dbobj.hp; },
+    setHP: function (hp) { this.dbobj.hp = hp; },
 
-    subHP : function(hp) { this.dbobj.hp -= hp;if(this.dbobj.hp < 0){this.dbobj.hp=0;cc.log("subhp < 0:"+hp);}},
-    addHP : function(hp){ this.dbobj.hp += hp; if(this.dbobj.hp > this.getMaxHP()){this.dbobj.hp = this.getMaxHP()}},
-    addCopper : function(v){ this.dbobj.copper += v;},
-    subCopper : function(v){ this.dbobj.copper -= v;},
-    addGold : function(v){ this.dbobj.gold += v;},
-    addExp : function(v){
+    subHP: function (hp) { this.dbobj.hp -= hp; if (this.dbobj.hp < 0) { this.dbobj.hp = 0; cc.log("subhp < 0:" + hp); } },
+    addHP: function (hp) { this.dbobj.hp += hp; if (this.dbobj.hp > this.getMaxHP()) { this.dbobj.hp = this.getMaxHP() } },
+    addCopper: function (v) { this.dbobj.copper += v; },
+    subCopper: function (v) { this.dbobj.copper -= v; },
+    addGold: function (v) { this.dbobj.gold += v; },
+    addExp: function (v) {
         var pro = {};
-               pro.pro = [{level:this.dbobj.level,startexp:this.dbobj.exp,maxexp:this.getMaxExp(),endexp:this.dbobj.exp+v}];
-               pro.traveller = [];
-        
+        pro.pro = [{ level: this.dbobj.level, startexp: this.dbobj.exp, maxexp: this.getMaxExp(), endexp: this.dbobj.exp + v}];
+        pro.traveller = [];
+
         this.dbobj.exp += v;
-        
+
         var leveluped = false;
-        
-        while(this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL){
+
+        while (this.dbobj.exp >= this.getMaxExp() && this.dbobj.level < MAX_ROLE_LEVEL) {
             this.dbobj.exp -= this.getMaxExp();
             this.dbobj.level += 1;
             leveluped = true;
-                pro.pro[pro.pro.length-1].endexp = 0;
-                
-                if(this.dbobj.level == MAX_ROLE_LEVEL){
-                    pro.pro.push({level:this.dbobj.level,startexp:0,maxexp:0,endexp:0});
-                }
-                else{
-                    pro.pro.push({level:this.dbobj.level,startexp:0,maxexp:this.getMaxExp(),endexp:this.dbobj.exp});
-                }
+            pro.pro[pro.pro.length - 1].endexp = 0;
+
+            if (this.dbobj.level == MAX_ROLE_LEVEL) {
+                pro.pro.push({ level: this.dbobj.level, startexp: 0, maxexp: 0, endexp: 0 });
+            }
+            else {
+                pro.pro.push({ level: this.dbobj.level, startexp: 0, maxexp: this.getMaxExp(), endexp: this.dbobj.exp });
+            }
         }
-        
-        
-        if(this.dbobj.level >= MAX_ROLE_LEVEL){
+
+
+        if (this.dbobj.level >= MAX_ROLE_LEVEL) {
             this.dbobj.exp = 0;
         }
 
-        for(var i=1;i<SLOT_NUM;++i){
-            var id = this["getSlot"+i]();
-            if(id == 0){
+        for (var i = 1; i < SLOT_NUM; ++i) {
+            var id = this["getSlot" + i]();
+            if (id == 0) {
                 continue;
             }
             var traveller = this.getTraveller(id);
@@ -498,187 +498,186 @@ wl.role.prototype = {
             var soul = traveller.getSoul().addExp(v);
             pro.traveller.push(traveller.addExp(v));
 
-            pro.traveller[pro.traveller.length-1].soul = soul;
+            pro.traveller[pro.traveller.length - 1].soul = soul;
         }
 
         return pro;
     },
-    addLevel : function(v){
+    addLevel: function (v) {
         this.dbobj.level += v;
     },
-    addExtraSoulNum : function(v){
+    addExtraSoulNum: function (v) {
         this.dbobj.extrasoulnum += v;
     },
-    addExtraEquipmentNum : function(v){
+    addExtraEquipmentNum: function (v) {
         this.dbobj.extraequipmentnum += v;
     },
-    addExtraTravellerNum : function(v){
+    addExtraTravellerNum: function (v) {
         this.dbobj.extratravellernum += v;
     },
 
-    addBlueprint : function(v){
-        cc.log("addb"+v)
-        for(var k in this.dbobj.blueprints){
-            if(this.dbobj.blueprints[k] == v){
+    addBlueprint: function (v) {
+        cc.log("addb" + v)
+        for (var k in this.dbobj.blueprints) {
+            if (this.dbobj.blueprints[k] == v) {
                 return;
             }
         }
         this.dbobj.blueprints.push(v);
     },
 
-    addMaterial : function(v,n){
-        cc.log("addm"+v+" "+n)
-        if(this.dbobj.materials[v] == null){
+    addMaterial: function (v, n) {
+        cc.log("addm" + v + " " + n)
+        if (this.dbobj.materials[v] == null) {
             this.dbobj.materials[v] = n;
         }
-        else{
+        else {
             this.dbobj.materials[v] += n;
         }
     },
 
-    getMaterialNum : function(v){
+    getMaterialNum: function (v) {
         return this.dbobj.materials[v] || 0;
     },
 
-    subMaterialNum : function(v,n){
+    subMaterialNum: function (v, n) {
         this.dbobj.materials[v] -= n;
     },
 
-    isMeeted : function(baseid){
-        for(var k in this.dbobj.meeted){
-            if(this.dbobj.meeted[k] == baseid){
+    isMeeted: function (baseid) {
+        for (var k in this.dbobj.meeted) {
+            if (this.dbobj.meeted[k] == baseid) {
                 return true;
             }
         }
         return false;
     },
 
-    meet : function(baseid){
-        if(this.isMeeted(baseid)){
+    meet: function (baseid) {
+        if (this.isMeeted(baseid)) {
             return;
         }
         this.dbobj.meeted.push(baseid);
-        
+
     },
-    
-    getLevelInfo : function(){return rolelevel[this.getLevel()];},
-    getMaxHP : function(){ return this.getLevelInfo().maxhp;},
-    getMaxExp : function(){ return this.getLevelInfo().exp;},
-    
-    getMaxSoulNum : function(){return this.getExtraSoulNum() + this.getLevelInfo().maxsoulnum;},
-    getMaxEquipNum : function(){return this.getExtraEquipmentNum() + this.getLevelInfo().maxequipnum;},
-    getMaxTravellerNum : function(){return this.getExtraTravellerNum() + this.getLevelInfo().maxtravellernum;},
 
-    getCopper : function(){return this.dbobj.copper;},
-    setCopper : function(copper){ this.dbobj.copper = copper;},
+    getLevelInfo: function () { return rolelevel[this.getLevel()]; },
+    getMaxHP: function () { return this.getLevelInfo().maxhp; },
+    getMaxExp: function () { return this.getLevelInfo().exp; },
 
-    getGold : function(){return this.dbobj.gold;},
-    setGold : function(id){ this.dbobj.gold = gold;},
+    getMaxSoulNum: function () { return this.getExtraSoulNum() + this.getLevelInfo().maxsoulnum; },
+    getMaxEquipNum: function () { return this.getExtraEquipmentNum() + this.getLevelInfo().maxequipnum; },
+    getMaxTravellerNum: function () { return this.getExtraTravellerNum() + this.getLevelInfo().maxtravellernum; },
 
-    getCharged : function(){return this.dbobj.charged;},
-    setCharged : function(charged){ this.dbobj.charged = charged;},
+    getCopper: function () { return this.dbobj.copper; },
+    setCopper: function (copper) { this.dbobj.copper = copper; },
 
-    getLastSeed : function(){return this.dbobj.lastseed;},
-    setLastSeed : function(lastseed){ this.dbobj.lastseed = lastseed;},
+    getGold: function () { return this.dbobj.gold; },
+    setGold: function (id) { this.dbobj.gold = gold; },
 
-    getSlot1 : function(){return this.dbobj.slot1;},
-    setSlot1 : function(slot1){ this.dbobj.slot1 = slot1;},
-  
-    getSlot2 : function(){return this.dbobj.slot2;},
-    setSlot2 : function(slot2){ this.dbobj.slot2 = slot2;},
+    getCharged: function () { return this.dbobj.charged; },
+    setCharged: function (charged) { this.dbobj.charged = charged; },
 
-    getSlot3 : function(){return this.dbobj.slot3;},
-    setSlot3 : function(slot3){ this.dbobj.slot3 = slot3;},
+    getLastSeed: function () { return this.dbobj.lastseed; },
+    setLastSeed: function (lastseed) { this.dbobj.lastseed = lastseed; },
 
-    getSlot4 : function(){return this.dbobj.slot4;},
-    setSlot4 : function(slot4){ this.dbobj.slot4 = slot4;},
+    getSlot1: function () { return this.dbobj.slot1; },
+    setSlot1: function (slot1) { this.dbobj.slot1 = slot1; },
 
-    getSlot5 : function(){return this.dbobj.slot5;},
-    setSlot5 : function(slot5){ this.dbobj.slot5 = slot5;},
+    getSlot2: function () { return this.dbobj.slot2; },
+    setSlot2: function (slot2) { this.dbobj.slot2 = slot2; },
 
-    getHero : function(){return this.dbobj.slot5;},
+    getSlot3: function () { return this.dbobj.slot3; },
+    setSlot3: function (slot3) { this.dbobj.slot3 = slot3; },
 
-    getExtraSoulNum : function(){return this.dbobj.extrasoulnum;},
-    setExtraSoulNum : function(extrasoulnum){ this.dbobj.extrasoulnum = extrasoulnum;},
+    getSlot4: function () { return this.dbobj.slot4; },
+    setSlot4: function (slot4) { this.dbobj.slot4 = slot4; },
 
-    getExtraEquipmentNum : function(){return this.dbobj.extraequipmentnum;},
-    setExtraEquipmentNum : function(extraequipmentnum){ this.dbobj.extraequipmentnum = extraequipmentnum;},
+    getSlot5: function () { return this.dbobj.slot5; },
+    setSlot5: function (slot5) { this.dbobj.slot5 = slot5; },
 
-    getExtraTravellerNum : function(){return this.dbobj.extratravellernum;},
-    setExtraTravellerNum : function(slot1){ this.dbobj.extratravellernum = extratravellernum;},
+    getHero: function () { return this.dbobj.slot5; },
 
-    getDateLastUpdate : function(){return this.dbobj.date_lastupdate;},
-    setDateLastUpdate : function(slot1){ this.dbobj.date_lastupdate = date_lastupdate;},
+    getExtraSoulNum: function () { return this.dbobj.extrasoulnum; },
+    setExtraSoulNum: function (extrasoulnum) { this.dbobj.extrasoulnum = extrasoulnum; },
 
-    getDateLastEnter : function(){return this.dbobj.date_lastenter;},
-    setDateLastEnter : function(date_lastenter){ this.dbobj.date_lastenter = date_lastenter;},
+    getExtraEquipmentNum: function () { return this.dbobj.extraequipmentnum; },
+    setExtraEquipmentNum: function (extraequipmentnum) { this.dbobj.extraequipmentnum = extraequipmentnum; },
 
-    getDateCreate : function(){return this.dbobj.date_create;},
-    setDateCreate : function(date_create){ this.dbobj.date_create = date_create;},
+    getExtraTravellerNum: function () { return this.dbobj.extratravellernum; },
+    setExtraTravellerNum: function (slot1) { this.dbobj.extratravellernum = extratravellernum; },
+
+    getDateLastUpdate: function () { return this.dbobj.date_lastupdate; },
+    setDateLastUpdate: function (slot1) { this.dbobj.date_lastupdate = date_lastupdate; },
+
+    getDateLastEnter: function () { return this.dbobj.date_lastenter; },
+    setDateLastEnter: function (date_lastenter) { this.dbobj.date_lastenter = date_lastenter; },
+
+    getDateCreate: function () { return this.dbobj.date_create; },
+    setDateCreate: function (date_create) { this.dbobj.date_create = date_create; },
 
     ////////////////////////////
 
-   getTravellerSlot : function(travellerid){
-        for(var i=1;i<=SLOT_NUM;++i){
-            if(travellerid == this["getSlot"+i]()){
+    getTravellerSlot: function (travellerid) {
+        for (var i = 1; i <= SLOT_NUM; ++i) {
+            if (travellerid == this["getSlot" + i]()) {
                 return i;
             }
         }
         return null;
-   },
+    },
 
-    addTraveller : function(dbobj){
+    addTraveller: function (dbobj) {
         var traveller = this.getTraveller(dbobj.id);
-        if(traveller == null){
-            if(this.getSlot5() == 0){
+        if (traveller == null) {
+            if (this.getSlot5() == 0) {
                 this.setSlot5(dbobj.id);
                 this.dbobj.name = dbobj.name;
-                if(this.dbobj.level == 0){
+                if (this.dbobj.level == 0) {
                     this.dbobj.level = 1;
                 }
             }
-            this.travellers.push(new wl.traveller(dbobj,this));
+            this.travellers.push(new wl.traveller(dbobj, this));
         }
-        else{
-            if(traveller.dbobj.soulid != dbobj.soulid){
+        else {
+            if (traveller.dbobj.soulid != dbobj.soulid) {
                 var oldsoul = this.getSoul(traveller.dbobj.soulid);
                 //error:add same soul at the same time
-                if(oldsoul != null){
+                if (oldsoul != null) {
                     oldsoul.dbobj.travellerid = 0;
                 }
                 var newsoul = this.getSoul(dbobj.soulid);
-                if(newsoul != null){
+                if (newsoul != null) {
                     newsoul.dbobj.travellerid = dbobj.id;
                 }
             }
-            for(var k in dbobj.slot){
-                if(dbobj.slot[k] != traveller.dbobj.slot[k]){
+            for (var k in dbobj.slot) {
+                if (dbobj.slot[k] != traveller.dbobj.slot[k]) {
                     var oldequip = this.getEquipment(traveller.dbobj.slot[k]);
-                    if(oldequip != null){
+                    if (oldequip != null) {
                         oldequip.dbobj.travellerid = 0;
                     }
                     var newequip = this.getEquipment(dbobj.slot[k]);
-                    if(newequip != null){
+                    if (newequip != null) {
                         newequip.dbobj.travellerid = dbobj.id;
                     }
                 }
             }
-            
+
             traveller.setdbobj(dbobj);
         }
     },
 
-    isCompleteStage : function(stageid,level){
+    isCompleteStage: function (stageid, level) {
         return this.dbobj.stages[stageid] != level;
     },
 
-    completeStage : function(stageid,stagelevel){
+    completeStage: function (stageid, stagelevel) {
         var state = COMPLETE_OK;
-        if(this.dbobj.stages[stageid] == null)
-        {
+        if (this.dbobj.stages[stageid] == null) {
             state = COMPLETE_FIRST;
         }
-        else if(this.dbobj.stages[stageid] < stagelevel){
+        else if (this.dbobj.stages[stageid] < stagelevel) {
             state = COMPLETE_LEVEL;
         }
         this.dbobj.stages[stageid] = stagelevel;
@@ -686,16 +685,16 @@ wl.role.prototype = {
         return state;
     },
 
-    canEnterSubMap : function(submapid){
+    canEnterSubMap: function (submapid) {
         var needmap = submaps[submapid].needmap;
-        if(needmap != 0){
-            if(submaps[needmap] == null){
-                cc.log("submap:"+submapid+" not found:"+needmap);
+        if (needmap != 0) {
+            if (submaps[needmap] == null) {
+                cc.log("submap:" + submapid + " not found:" + needmap);
                 return false;
             }
             var stages = parse_action_params(submaps[needmap].stages);
-            for(var k in stages){
-                if(!this.canEnterStage(needmap,stages[k])){
+            for (var k in stages) {
+                if (!this.canEnterStage(needmap, stages[k])) {
                     return false;
                 }
             }
@@ -703,268 +702,314 @@ wl.role.prototype = {
         return true;
     },
 
-    canEnterStage : function(stageid){
-        if(stage[stageid] == null){
+    canEnterStage: function (stageid) {
+        if (stage[stageid] == null) {
             return false;
         }
-        if(stage[stageid].stageneed != 0){
+        if (stage[stageid].stageneed != 0) {
             return this.isCompleteStage(stage[stageid].stageneed);
         }
         return true;
     },
 
-    addEquip : function(dbobj){
-       var equip = this.getEquipment(dbobj.id);
-        if(equip == null){
+    addEquip: function (dbobj) {
+        var equip = this.getEquipment(dbobj.id);
+        if (equip == null) {
             dbobj.isnew = 1;
             this.equipments.push(new wl.equipment(dbobj));
         }
-        else{
+        else {
             equip.setdbobj(dbobj)
         }
     },
 
-    deleteEquip : function(eid){
-        for(var k in this.equipments){
-            if(this.equipments[k].getId() == eid){
-                if(this.equipments[k].isEquiped()){
+    deleteEquip: function (eid) {
+        for (var k in this.equipments) {
+            if (this.equipments[k].getId() == eid) {
+                if (this.equipments[k].isEquiped()) {
                     var traveller = wl.gvars.role.getTraveller(this.equipments[k].getTravellerId());
-                    if(traveller.getWeaponrId() == eid){
+                    if (traveller.getWeaponrId() == eid) {
                         traveller.setWeaponrId(0);
                     }
-                    else if(traveller.getWeaponlId() == eid){
+                    else if (traveller.getWeaponlId() == eid) {
                         traveller.setWeaponlId(0);
                     }
-                    else if(traveller.getClothId() == eid){
+                    else if (traveller.getClothId() == eid) {
                         traveller.setClothId(0);
                     }
-                    else if(traveller.getTrinketId() == eid){
+                    else if (traveller.getTrinketId() == eid) {
                         traveller.setTrinketId(0);
                     }
                 }
-                this.equipments.splice(k,1);
+                this.equipments.splice(k, 1);
                 return;
             }
         }
     },
 
-    addSoul : function(dbobj){
+    getSoulNum: function () {
+        return this.souls.length;
+    },
+    addSoul: function (dbobj) {
         var soul = this.getSoul(dbobj.id);
-        if(soul == null){
+        if (soul == null) {
             dbobj.isnew = 1;
             this.souls.push(new wl.soul(dbobj));
         }
-        else{
+        else {
             soul.setdbobj(dbobj)
         }
-        
+
     },
 
-    deleteSoul : function(soulid){
-        for(var k in this.souls){
-            if(this.souls[k].getId() == soulid){
-                 if(this.souls[k].dbobj.travellerid != 0){
+    deleteSoul: function (soulid) {
+        for (var k in this.souls) {
+            if (this.souls[k].getId() == soulid) {
+                if (this.souls[k].dbobj.travellerid != 0) {
                     var traveller = this.getTraveller(this.souls[k].dbobj.travellerid);
-                     if(traveller.getSoulId() == soulid){
-                         traveller.setSoulId(0);
-                     }
-                 }
+                    if (traveller.getSoulId() == soulid) {
+                        traveller.setSoulId(0);
+                    }
+                }
 
-                 this.souls.splice(k,1);
+                this.souls.splice(k, 1);
 
-                 break;
+                break;
             }
         }
-        
+
     },
-    
-    getTraveller : function(id){
-        if(id == 0){
+
+    getTraveller: function (id) {
+        if (id == 0) {
             return null;
         }
-        for(var k in this.travellers){
-            if(this.travellers[k].getId() == id){
+        for (var k in this.travellers) {
+            if (this.travellers[k].getId() == id) {
                 return this.travellers[k];
             }
         }
         return null;
     },
-    
-    getSlotTravellers : function(){
+
+    getSlotTravellers: function () {
         var slots = [];
         var travellerid = 0;
-        for(var i=1;i<=5;i++){
-           travellerid = this.dbobj["slot"+i];
-           if(travellerid != 0){
+        for (var i = 1; i <= 5; i++) {
+            travellerid = this.dbobj["slot" + i];
+            if (travellerid != 0) {
                 slots.push(this.getTraveller(travellerid));
-           }
-           else
-           {
+            }
+            else {
                 slots.push(null);
-           }
+            }
         }
         return slots;
     },
 
-    
-     
-    orderObjects : function(order,objs){
-        switch(order)
-        {
-        case ORDER_DEFAULT:
-        break;
-        case ORDER_RARITY:
-            objs.sort(sort_rarity);
-        break;
-        case ORDER_NAME:
-            objs.sort(sort_name);
-        break;
+
+
+    orderObjects: function (order, objs) {
+        switch (order) {
+            case ORDER_DEFAULT:
+                break;
+            case ORDER_RARITY:
+                objs.sort(sort_rarity);
+                break;
+            case ORDER_NAME:
+                objs.sort(sort_name);
+                break;
         }
     },
 
-    canMakeBlueprint : function(blueid){
+    canMakeBlueprint: function (blueid) {
         var base = blueprint[blueid];
 
-         for(var i = 1;i<=6;++i){
-            if(base["mid"+i] == 0 ){
+        for (var i = 1; i <= 6; ++i) {
+            if (base["mid" + i] == 0) {
                 continue;
             }
-           
 
-            if(wl.gvars.role.getMaterialNum(base["mid"+i]) < base["mnum"+i]){
+
+            if (wl.gvars.role.getMaterialNum(base["mid" + i]) < base["mnum" + i]) {
                 return false;
             }
         }
         return true;
     },
 
-    getBlueprints : function(type){
+    getBlueprints: function (type) {
         var arr = [];
 
-        if(type != EQUIP_WEAPONR
-        &&type != EQUIP_WEAPONL
-        &&type != EQUIP_CLOTH
-        &&type != EQUIP_TRINKET){
-            wl.copyarr(this.dbobj.blueprints,arr);
+        if (type != EQUIP_WEAPONR
+        && type != EQUIP_WEAPONL
+        && type != EQUIP_CLOTH
+        && type != EQUIP_TRINKET) {
+            wl.copyarr(this.dbobj.blueprints, arr);
         }
-        else{
-            for(var k in this.dbobj.blueprints){
+        else {
+            for (var k in this.dbobj.blueprints) {
                 var equiptype = equipments[blueprint[this.dbobj.blueprints[k]].equipid].type;
-                switch(type)
-                {
-                case EQUIP_WEAPONR:
-                    if(equiptype == ETYPE_MAINHAND
+                switch (type) {
+                    case EQUIP_WEAPONR:
+                        if (equiptype == ETYPE_MAINHAND
                     || equiptype == ETYPE_ONEHAND
-                    || equiptype == ETYPE_TWOHAND){
-                        arr.push(this.dbobj.blueprints[k]);
-                    }
-                break;
-                case EQUIP_WEAPONL:
-                    if(equiptype == ETYPE_OFFHAND
-                    || equiptype == ETYPE_ONEHAND){
-                        arr.push(this.dbobj.blueprints[k]);
-                    }
-                break;
-                case EQUIP_CLOTH:
-                    if(equiptype == ETYPE_CLOTH){
-                        arr.push(this.dbobj.blueprints[k]);
-                    }
-                break;
-                case EQUIP_TRINKET:
-                    if(equiptype == ETYPE_TRINKET){
-                        arr.push(this.dbobj.blueprints[k]);
-                    }
-                break;
+                    || equiptype == ETYPE_TWOHAND) {
+                            arr.push(this.dbobj.blueprints[k]);
+                        }
+                        break;
+                    case EQUIP_WEAPONL:
+                        if (equiptype == ETYPE_OFFHAND
+                    || equiptype == ETYPE_ONEHAND) {
+                            arr.push(this.dbobj.blueprints[k]);
+                        }
+                        break;
+                    case EQUIP_CLOTH:
+                        if (equiptype == ETYPE_CLOTH) {
+                            arr.push(this.dbobj.blueprints[k]);
+                        }
+                        break;
+                    case EQUIP_TRINKET:
+                        if (equiptype == ETYPE_TRINKET) {
+                            arr.push(this.dbobj.blueprints[k]);
+                        }
+                        break;
                 }
             }
         }
         return arr;
     },
 
-    getObjects : function(type){
+    getObjects: function (type) {
         var arr = []
-         if(type == EQUIP_SOUL){
-                wl.copyarr(this.souls,arr);
-         }
-         else{
-            for(var k in this.equipments){
-                switch(type)
-                {
-                case EQUIP_WEAPONR:
-                    if(this.equipments[k].getType() == ETYPE_MAINHAND
+        if (type == EQUIP_SOUL) {
+            wl.copyarr(this.souls, arr);
+        }
+        else {
+            for (var k in this.equipments) {
+                switch (type) {
+                    case EQUIP_WEAPONR:
+                        if (this.equipments[k].getType() == ETYPE_MAINHAND
                     || this.equipments[k].getType() == ETYPE_ONEHAND
-                    || this.equipments[k].getType() == ETYPE_TWOHAND){
-                        arr.push(this.equipments[k]);
-                    }
-                break;
-                case EQUIP_WEAPONL:
-                    if(this.equipments[k].getType() == ETYPE_OFFHAND
-                    || this.equipments[k].getType() == ETYPE_ONEHAND){
-                        arr.push(this.equipments[k]);
-                    }
-                break;
-                case EQUIP_CLOTH:
-                    if(this.equipments[k].getType() == ETYPE_CLOTH){
-                        arr.push(this.equipments[k]);
-                    }
-                break;
-                case EQUIP_TRINKET:
-                    if(this.equipments[k].getType() == ETYPE_TRINKET){
-                        arr.push(this.equipments[k]);
-                    }
-                break;
-                default:
-                    wl.copyarr(this.equipments,arr);
-                break;
+                    || this.equipments[k].getType() == ETYPE_TWOHAND) {
+                            arr.push(this.equipments[k]);
+                        }
+                        break;
+                    case EQUIP_WEAPONL:
+                        if (this.equipments[k].getType() == ETYPE_OFFHAND
+                    || this.equipments[k].getType() == ETYPE_ONEHAND) {
+                            arr.push(this.equipments[k]);
+                        }
+                        break;
+                    case EQUIP_CLOTH:
+                        if (this.equipments[k].getType() == ETYPE_CLOTH) {
+                            arr.push(this.equipments[k]);
+                        }
+                        break;
+                    case EQUIP_TRINKET:
+                        if (this.equipments[k].getType() == ETYPE_TRINKET) {
+                            arr.push(this.equipments[k]);
+                        }
+                        break;
+                    default:
+                        wl.copyarr(this.equipments, arr);
+                        break;
                 }
-                
+
             }
-         }
+        }
 
         return arr;
     },
 
-    getSouls : function(race){
+    getSouls: function (race) {
         var arr = [];
-        if(race == null){
-            wl.copyarr(this.souls,arr);
+        if (race == null) {
+            wl.copyarr(this.souls, arr);
         }
-        else{
-        for(var k in this.souls){
-            if(this.souls[k].getBase().type == race){
-                arr.push(this.souls[k]);
+        else {
+            for (var k in this.souls) {
+                if (this.souls[k].getBase().type == race) {
+                    arr.push(this.souls[k]);
+                }
             }
-        }
         }
         return arr;
     },
 
-    getSoul : function(id){
-        if(id == 0){
+    getMaxLevelSouls: function (race) {
+        var temps = this.getSouls(race);
+        var souls = [];
+        for (var k in temps) {
+            if (temps[k].getMaxLevel() == temps[k].getLevel()) {
+                souls.push(temps);
+            }
+        }
+        return souls;
+    },
+    getCanStarUpSouls: function (race) {
+        var temps = this.getSouls(race);
+        var maps = {}
+        var souls = [];
+        for (var k in temps) {
+            //if (temps[k].getMaxLevel() == temps[k].getLevel()) {
+                if (maps[temps[k].getBaseId()] == null) {
+                    maps[temps[k].getBaseId()] = [];
+                }
+                maps[temps[k].getBaseId()].push(temps[k]);
+           // }
+        }
+        for (var k in maps) {
+            if (maps[k].length >= 2) {
+                cc.log(k+" len:"+maps[k].length)
+                wl.copyarr(maps[k], souls);
+            }
+        }
+        return souls;
+    },
+
+    getSeedSouls: function (soulid) {
+        var soul = this.getSoul(soulid);
+        var souls = [];
+        if (soul == null) {
+            return souls;
+        }
+        for (var k in this.souls) {
+            if (
+            this.souls[k] != soul
+            && this.souls[k].getBaseId() == soul.getBaseId() ){
+           // && this.souls[k].getMaxLevel() == this.souls[k].getLevel()) {
+                souls.push(this.souls[k]);
+            }
+        }
+        return souls;
+    },
+    getSoul: function (id) {
+        if (id == 0) {
             return null;
         }
-        for(var k in this.souls){
-            if(this.souls[k].getId() == id){
+        for (var k in this.souls) {
+            if (this.souls[k].getId() == id) {
                 return this.souls[k];
             }
         }
         return null;
     },
 
-    getEquipment : function(id){
-        if(id == 0){
+    getEquipment: function (id) {
+        if (id == 0) {
             return null;
         }
-        for(var k in this.equipments){
-            if(this.equipments[k].getId() == id){
+        for (var k in this.equipments) {
+            if (this.equipments[k].getId() == id) {
                 return this.equipments[k];
             }
         }
         return null;
     },
-    findEquip : function(baseid){
-        for(var k in this.equipments){
-            if(this.equipments[k].getBaseId() == baseid){
+    findEquip: function (baseid) {
+        for (var k in this.equipments) {
+            if (this.equipments[k].getBaseId() == baseid) {
                 return this.equipments[k];
             }
         }
