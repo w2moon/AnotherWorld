@@ -312,7 +312,7 @@ loginscene.prototype.onPressStart = function()
                     
                     
                 }
-                
+                this.anim.animationManager.runAnimationsForSequenceNamed("Default Timeline");
                 this.anim.animationManager.setCompletedAnimationCallback(this.anim, this.anim.on_animation_finish);
             }
             else{
