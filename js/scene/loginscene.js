@@ -65,6 +65,7 @@ loginscene.prototype.onDidLoadFromCCB = function () {
     // this.rootNode.update = function (dt) { this.controller.treeUpdate(dt); };
     // this.rootNode.scheduleUpdate();
 
+
     /*
     
     var img = cc.Image.create();
@@ -112,6 +113,7 @@ loginscene.prototype.treeUpdate = function () {
         arr.splice(idx,1);
     }
 }
+
 
 
 var charactor = function(){}
@@ -334,7 +336,8 @@ loginscene.prototype.onPressStart = function()
                     
                     
                 }
-                
+
+                this.anim.animationManager.runAnimationsForSequenceNamed("Default Timeline");
                 this.anim.animationManager.setCompletedAnimationCallback(this.anim, this.anim.on_animation_finish);
             }
             else{
