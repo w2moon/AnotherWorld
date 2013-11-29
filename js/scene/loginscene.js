@@ -1,7 +1,4 @@
 
-    
-   
-
 var loginscene = function(){};
 
 
@@ -13,7 +10,7 @@ loginscene.prototype.onDidLoadFromCCB = function () {
     // this.lblRegion.setString("loading");
 
     cc.log("winscale:" + wl.winscale)
-
+    
     //cc.log(lang("SKILL_NAME_1001"))
     /*
     for(var i=1;i<10;++i){
@@ -67,6 +64,7 @@ loginscene.prototype.onDidLoadFromCCB = function () {
 
     // this.rootNode.update = function (dt) { this.controller.treeUpdate(dt); };
     // this.rootNode.scheduleUpdate();
+
     /*
     
     var img = cc.Image.create();
@@ -114,6 +112,7 @@ loginscene.prototype.treeUpdate = function () {
         arr.splice(idx,1);
     }
 }
+
 
 var charactor = function(){}
 
@@ -327,7 +326,16 @@ loginscene.prototype.onPressStart = function()
          loginscene.prototype.role_entered = function(player){
             wl.gvars.role = new wl.role(player);
             if( wl.gvars.role.travellers.length == 0){
-                wl.run_scene("travellercreate");
+                //wl.run_scene("travellercreate");
+                this.anim = wl.load_scene("startanim");
+                this.rootNode.addChild(this.anim);
+                this.anim.on_animation_finish = function () {
+                    wl.run_scene("travellercreate");
+                    
+                    
+                }
+                
+                this.anim.animationManager.setCompletedAnimationCallback(this.anim, this.anim.on_animation_finish);
             }
             else{
                 this.start_game();
