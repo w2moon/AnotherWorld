@@ -1,7 +1,4 @@
 
-    
-   
-
 var loginscene = function(){};
 
 
@@ -50,9 +47,24 @@ loginscene.prototype.onDidLoadFromCCB = function () {
 
     aboutNode.animationManager.setCompletedAnimationCallback(aboutNode, aboutNode.on_animation_finish);
 
-   
-   // wl.play_animation(this.rootNode, size.width / 2, size.height / 2, 0.075, "anim/combine2/;1;16", true);
+
+    //wl.play_animation(this.rootNode, size.width / 2, size.height / 2, 0.075, "anim/combine2/;1;16", true);
     // wl.play_animation(this.rootNode,size.width/2,size.height/2,0.1,"anim/light1.png:16:5",true);
+
+    for (var i = 1; i <= 4; ++i) {
+        var cloud = this["cloud" + i];
+        var dis = (4-i) + wl.sysrand() * 5;
+        var dt = 0.8 + wl.sysrand();
+        var move1 = cc.MoveTo.create(dt, cc.p(cloud.getPosition().x, cloud.getPosition().y + dis));
+        var move2 = cc.MoveTo.create(dt, cc.p(cloud.getPosition().x, cloud.getPosition().y));
+        var seq = cc.Sequence.create(move1, move2);
+        cloud.runAction(cc.RepeatForever.create(seq));
+    }
+    this.rootNode.schedule(this.treeUpdate, 1);
+
+    // this.rootNode.update = function (dt) { this.controller.treeUpdate(dt); };
+    // this.rootNode.scheduleUpdate();
+
 
     /*
     
@@ -89,6 +101,18 @@ loginscene.prototype.onDidLoadFromCCB = function () {
     */
 
 };
+
+
+loginscene.prototype.treeUpdate = function () {
+    var num = parseInt(1 + wl.sysrand() * 3);
+    var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    while (num > 0) {
+        var idx = parseInt(wl.sysrand() * arr.length);
+        this.controller["tree" + arr[idx]].animationManager.runAnimationsForSequenceNamed("swing");
+        num--;
+        arr.splice(idx,1);
+    }
+}
 
 
 
@@ -312,7 +336,8 @@ loginscene.prototype.onPressStart = function()
                     
                     
                 }
-                
+
+                this.anim.animationManager.runAnimationsForSequenceNamed("Default Timeline");
                 this.anim.animationManager.setCompletedAnimationCallback(this.anim, this.anim.on_animation_finish);
             }
             else{

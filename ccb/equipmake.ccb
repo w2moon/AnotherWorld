@@ -331,8 +331,6 @@
 								</array>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -1411,7 +1409,7 @@
 				<key>displayName</key>
 				<string>title</string>
 				<key>memberVarAssignmentName</key>
-				<string>bg</string>
+				<string>title</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>

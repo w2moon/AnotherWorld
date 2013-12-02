@@ -1,5 +1,5 @@
 id,name,desc,rolename,bg,rewardfirst,reward,hpcost,levelneed,stageneed,res,temperature,hero,enemy
-1001,STAGE_NAME_1001,STAGE_DESC_1001,ROLE_NAME_1001,trainmap/1_bg-01-01.png,"1,addBlueprint,1;","1,addExp,10;1,addCopper,10000;1,addSoul,1000;1,addSoul,1001;",1,0,0,battlescene,fine,"1,1;",
+1001,STAGE_NAME_1001,STAGE_DESC_1001,ROLE_NAME_1001,trainmap/1_bg-01-01.png,"1,addBlueprint,1;","1,addExp,10;1,addCopper,10;1,addSoul,1000;1,addBlueprint,1;1,addMaterial,1,10;",1,0,0,battlescene,fine,"1,1;",
 1002,STAGE_NAME_1002,STAGE_DESC_1002,ROLE_NAME_1002,trainmap/1_bg-01-01.png,"1,addMaterial,1,10;","1,addExp,10;1,addCopper,10;",1,0,1001,battlescene,fine,"2,1;",
 1003,STAGE_NAME_1003,STAGE_DESC_1003,ROLE_NAME_1003,trainmap/1_bg-01-01.png,,"1,addExp,20;1,addCopper,10;",1,0,1002,battlescene,fine,,"0,0;1,1;1,1;0,0;"
 1004,STAGE_NAME_1004,STAGE_DESC_1004,ROLE_NAME_1004,trainmap/1_bg-01-01.png,"1,addSoul,3000;","1,addExp,20;1,addCopper,10;",1,0,1003,battlescene,rain,,"0,0;2,1;2,1;0,0;"
