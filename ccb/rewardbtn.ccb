@@ -162,8 +162,6 @@
 						</array>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -473,9 +471,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>num</string>
+				<string>spnum</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>spnum</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -536,6 +534,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
