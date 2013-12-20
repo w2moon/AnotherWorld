@@ -386,6 +386,12 @@
     <None Include="..\js\ui\friendbar.js">
       <Filter>js\ui</Filter>
     </None>
+    <None Include="..\js\ui\prochange.js">
+      <Filter>js\ui</Filter>
+    </None>
+    <None Include="..\js\ui\searchbar.js">
+      <Filter>js\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AnotherWorld.rc" />

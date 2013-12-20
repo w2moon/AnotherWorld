@@ -31,6 +31,9 @@
 
      this.rootNode.addChild(this.chooseLayer, 1);
 
+    
+
+
      this.lbltitle.setString(lang("TXT_MAKE_TITLE"));
      this.selecttype();
 
@@ -41,7 +44,7 @@
      this.lblhas.setString(wl.gvars.role.getCopper());
 
      for (var i = 1; i <= 5; ++i) {
-        
+
          var lbl = this["lbl" + i];
          var lblbg = this["sp" + i];
          lbl.setVisible(false);
@@ -151,7 +154,7 @@ equipmake.prototype.onChoosePluePrint = function (blueid, selectednode) {
     }
     this.equip = cc.Sprite.create(equipmentbase[base.equipid].icon);
     this.equip.setPosition(this.menu.convertToWorldSpace(this.btnoutput.getPosition()));
-    this.rootNode.addChild(this.equip);
+    this.objlayer.addChild(this.equip);
     // this.lblname.setString(lang(equipmentbase[base.equipid].name));
     this.lblcost.setString(base.copper);
     for (var i = 1; i <= 5; ++i) {
@@ -172,7 +175,7 @@ equipmake.prototype.onChoosePluePrint = function (blueid, selectednode) {
 
         btn.spr = cc.Sprite.create(mbase.icon);
         btn.spr.setPosition(this.menu.convertToWorldSpace(btn.getPosition()));
-        this.rootNode.addChild(btn.spr);
+        this.objlayer.addChild(btn.spr);
 
         this.updateNumber(i);
 
@@ -249,6 +252,10 @@ equipmake.prototype.on_equip_make = function (ret) {
 
     wl.gvars.role.subCopper(base.copper)
 
+
+    var cpos = this.menu.convertToWorldSpace(this.btnoutput.getPosition());
+
+
     for (var i = 1; i <= 5; ++i) {
         if (base["mid" + i] == 0) {
             continue;
@@ -256,14 +263,34 @@ equipmake.prototype.on_equip_make = function (ret) {
         wl.gvars.role.subMaterialNum(base["mid" + i], base["mnum" + i]);
         this.updateNumber(i);
 
+        wl.fade(this["btn"+i].spr, 0.3, 255, 0);
+
+        var pos = this.menu.convertToWorldSpace(this["btn" + i].getPosition());
+        var anim = wl.play_animation(this.rootNode, pos.x, pos.y, 0.03, "anim/bomb/;1;14");
+        anim.runAction(cc.MoveTo.create(0.4, cpos));
     }
+    wl.fade_delay(this.equip, 0.4,0.3, 255, 0);
+    wl.play_animation_delay(this.rootNode, 0.3, cpos.x, cpos.y, 0.03, "anim/dissolve2/;1;21").setScale(2);
+
     wl.gvars.role.addEquip(ret.equip);
     this.lblhas.setString(wl.gvars.role.getCopper());
-    this.equipresultui = wl.load_scene("equipmakeresult", ret.equip.id, this.onMakeFinish,this);
+
+    this.makeequipid = ret.equip.id;
+    
+
+    this.rootNode.runAction(cc.Sequence.create(cc.DelayTime.create(0.7),cc.CallFunc.create(this.animEnd,this)));
+
+
+
+};
+
+equipmake.prototype.animEnd = function () {
+    this.equipresultui = wl.load_scene("equipmakeresult", this.makeequipid, this.onMakeFinish, this);
     this.rootNode.addChild(this.equipresultui);
-
-
-
+  //  wl.foreach_call(this.equipresultui, "setOpacity", 0);
+   // wl.fade(this.equipresultui, 0.3, 0, 255);
+    var pos = this.equip.getPosition();
+    wl.play_animation_delay(this.equipresultui, 0.2, pos.x, pos.y, 0.03, "anim/gasbomb/;0;9").setScale(2);
 };
 
 equipmake.prototype.onPressOutput = function () {
@@ -273,7 +300,15 @@ equipmake.prototype.onPressMaterial = function () {
 };
 
 equipmake.prototype.onMakeFinish = function () {
-
+    var base = blueprint[this.choosedid];
+    wl.fade(this.equip, 0.3, 0, 255);
+    for (var i = 1; i <= 5; ++i) {
+        if (base["mid" + i] == 0) {
+            continue;
+        }
+        wl.fade(this["btn" + i].spr, 0.3, 0, 255);
+    }
+    
     this.menu.setEnabled(true);
     this.menutitle.setEnabled(true);
     this.equipresultui.removeFromParent();

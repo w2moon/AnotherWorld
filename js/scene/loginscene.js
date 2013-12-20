@@ -10,7 +10,7 @@ loginscene.prototype.onDidLoadFromCCB = function () {
     // this.lblRegion.setString("loading");
 
     cc.log("winscale:" + wl.winscale)
-    
+
     //cc.log(lang("SKILL_NAME_1001"))
     /*
     for(var i=1;i<10;++i){
@@ -53,14 +53,14 @@ loginscene.prototype.onDidLoadFromCCB = function () {
 
     for (var i = 1; i <= 4; ++i) {
         var cloud = this["cloud" + i];
-        var dis = (4-i) + wl.sysrand() * 5;
+        var dis = (4 - i) + wl.sysrand() * 5;
         var dt = 0.8 + wl.sysrand();
         var move1 = cc.MoveTo.create(dt, cc.p(cloud.getPosition().x, cloud.getPosition().y + dis));
         var move2 = cc.MoveTo.create(dt, cc.p(cloud.getPosition().x, cloud.getPosition().y));
         var seq = cc.Sequence.create(move1, move2);
         cloud.runAction(cc.RepeatForever.create(seq));
     }
-    this.rootNode.schedule(this.treeUpdate, 1);
+   
 
     // this.rootNode.update = function (dt) { this.controller.treeUpdate(dt); };
     // this.rootNode.scheduleUpdate();

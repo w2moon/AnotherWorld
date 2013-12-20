@@ -250,7 +250,10 @@ skeleton.prototype.onDidLoadFromCCB = function(){
 
 var uicard = function(){};
 
-uicard.prototype.onDidLoadFromCCB = function(){
+uicard.prototype.onDidLoadFromCCB = function () {
+    this.skillicon.setVisible(false);
+    this.skillbtn.setVisible(false);
+    this.hpbg.setVisible(false);
 };
 
 uicard.prototype.stopAnim = function(){
@@ -285,8 +288,8 @@ uicard.prototype.onCreate = function (ske, avatar, img, warrior) {
 
 
     this.skeleton = wl.load_scene(ske)
-    this.skeleton.setPosition(cc.p(-5,0));
-    this.rootNode.addChild(this.skeleton)
+    this.skeleton.setPosition(cc.p(-5, 0));
+    this.objlayer.addChild(this.skeleton)
 
     this.normalanim = "stand";
 
@@ -326,12 +329,54 @@ uicard.prototype.onCreate = function (ske, avatar, img, warrior) {
     this.hpid = cc.LabelTTF.create(0, "Helvetica", 14);
     this.rootNode.addChild(this.hpid);
 
+    this.hpbg.setVisible(true);
     this.register_event();
 };
 
-uicard.prototype.updateHP = function(){
-    this.hpid.setString(this.warrior.getHP()+"/"+this.warrior.getMaxHP());
-}
+uicard.prototype.showSkill = function (skill) {
+    if (this.skill != skill) {
+        this.skill = skill;
+        wl.set_texture(this.skillicon, skill.getBase().icon);
+    }
+    if (!this.skillicon.isVisible()) {
+
+        this.skillicon.stopAllActions();
+        this.skillbtn.stopAllActions();
+
+        this.skillicon.setVisible(true);
+        this.skillbtn.setVisible(true);
+
+        wl.fade(this.skillbtn, 0.3, 0, 255);
+        wl.fade(this.skillicon, 0.3, 0, 255, this.skillFadeIn, this);
+    }
+
+};
+
+uicard.prototype.skillFadeIn = function () {
+};
+
+uicard.prototype.hideSkill = function () {
+    if (this.skillicon.isVisible()) {
+
+        this.skillicon.stopAllActions();
+        this.skillbtn.stopAllActions();
+
+        wl.fade(this.skillbtn, 0.3, 255, 0);
+        wl.fade(this.skillicon, 0.3, 255, 0, this.skillFadeOut, this);
+    }
+};
+
+uicard.prototype.skillFadeOut = function () {
+
+    this.skillicon.setVisible(false);
+    this.skillbtn.setVisible(false);
+};
+
+uicard.prototype.updateHP = function () {
+    this.hpid.setString(this.warrior.getHP() + "/" + this.warrior.getMaxHP());
+
+    this.hpbar.setScaleX(this.warrior.getHP() / this.warrior.getMaxHP());
+};
 
 uicard.prototype.register_event = function(){
 
@@ -396,8 +441,13 @@ uicard.prototype.register_event = function(){
             //this.indicator.setValue(this.warrior.getEnergy());
 
            // this.originpos = this.getPosition();
-            
-         };
+
+        };
+
+        uicard.prototype.showHP = function () {
+        };
+        uicard.prototype.hideHP = function () {
+        };
          uicard.prototype.on_incHP = function(v){
             this.updateHP();
 

@@ -1,56 +1,28 @@
-var bluebar = function(){};
+var friendbar = function(){};
 
-bluebar.prototype.onDidLoadFromCCB = function(){
+friendbar.prototype.onDidLoadFromCCB = function () {
 };
 
-bluebar.prototype.onCreate = function (linker, blueid) {
-    this.blueid = blueid;
-    this.linker = linker;
+friendbar.prototype.onCreate = function (friend, obj, objfunc) {
+    this.friend = friend;
+    this.obj = obj;
+    this.objfunc = objfunc;
 
-    var base = equipmentbase[blueprint[blueid].equipid];
-    wl.set_texture(this.icon, base.icon);
-    this.lblstatus.setVisible(false);
-    this.newmark.setVisible(false);
-    this.name.setString(lang(base.name) + lang("TXT_BLUEPRINT"));
+    this.lblname.setString(this.friend.getName());
+    this.lbllevel.setString(lang("TXT_LEVEL") + this.friend.getLevel());
+    this.lblvalue.setString(lang("TXT_VALUE") + this.friend.getValue());
 
-    if (base.skillid != 0) {
-        var skillinfo = skillbase[base.skillid];
-        wl.set_texture(this.skillicon, skillinfo.icon);
-        this.lbldesc.setString(lang(skillinfo.description));
+    this.btndelete.setVisible(false);
+
+    var now = new Date();
+    if (wl.day_distance(this.friend.getLastEnterTime(), now / 1000) == 0) {
+        this.mask.setVisible(true);
     }
     else {
-        this.skillicon.setVisible(false);
-        this.lbldesc.setString(lang(base.description));
-    }
-    var proicon = null;
-    var maxpro = 0;
-    if (base.MaxHP != 0) {
-        proicon = "traveller/HP.png";
-        maxpro = base.MaxHP;
-    }
-    if (base.Attack != 0) {
-        proicon = "traveller/atk.png";
-        maxpro = base.Attack;
-    }
-    if (base.Defense != 0) {
-        proicon = "traveller/def.png";
-        maxpro = base.Defense;
-    }
-    if (base.Heal != 0) {
-        proicon = "traveller/rec.png";
-        maxpro = base.Heal;
-    }
-
-    if (proicon == null) {
-        this.proicon.setVisible(false);
-        this.lblpro.setVisible(false);
-    }
-    else {
-        wl.set_texture(this.proicon, proicon);
-        this.lblpro.setString(maxpro);
+        this.mask.setVisible(false);
     }
 };
 
-bluebar.prototype.onPressChoose = function (n) {
-    this.linker.onChoosePluePrint(this.blueid,n);
+friendbar.prototype.onPressDelete = function (n) {
+    this.objfunc.apply(this.obj,[this.friend]);
 };

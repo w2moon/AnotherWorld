@@ -31,7 +31,9 @@
      sr.setFlipX(true);
      this.chooseLayer.addChild(sr);
 
-     this.rootNode.addChild(this.chooseLayer, 1);
+     this.objlayer.addChild(this.chooseLayer, 1);
+
+     this.maskbg.setOpacity(0);
 
      if (this.hasStarUpSoul()) {
          this.lbltitle.setString(lang("TXT_STARUP_BASE"));
@@ -70,8 +72,14 @@ starupsoul.prototype.isChoosed = function(soulid){
     return false;
 };
 
-starupsoul.prototype.onChooseBase = function()
-{
+starupsoul.prototype.onChooseBase = function () {
+    if (!this.hasStarUpSoul()) {
+
+        this.lbltitle.setString(lang("TXT_STARUP_TITLE"));
+        this.chooseLayer.setVisible(false);
+        wl.popmsg(lang("TXT_STARUP_LEVELLIMIT"), this.rootNode);
+        return;
+    }
     this.isChoosingFather = true;
     this.lbltitle.setString(lang("TXT_STARUP_BASE"));
     wl.warn_obj(this.lbltitle);
@@ -79,8 +87,14 @@ starupsoul.prototype.onChooseBase = function()
     this.show(null, SOUL_ORDER_DEFAULT, true);
 };
 
-starupsoul.prototype.onChooseSeed = function()
-{
+starupsoul.prototype.onChooseSeed = function() {
+    if (!this.hasStarUpSoul()) {
+
+        this.lbltitle.setString(lang("TXT_STARUP_TITLE"));
+        this.chooseLayer.setVisible(false);
+        wl.popmsg(lang("TXT_STARUP_LEVELLIMIT"), this.rootNode);
+        return;
+    }
     this.isChoosingFather = false;
     this.lbltitle.setString(lang("TXT_STARUP_SEED"));
     wl.warn_obj(this.lbltitle);
@@ -251,7 +265,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         this.fathercard.setPosition(this.menu.convertToWorldSpace(this.basesoul.getPosition()));
          this.fathercard.soulid = soulid;
           this.fathercard.node = n;
-        this.rootNode.addChild(this.fathercard);
+        this.objlayer.addChild(this.fathercard);
     }
     else{
         
@@ -275,7 +289,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
         this.mothercard.soulid = soulid;
         this.mothercard.node = n;
         this.mothercard.setPosition(this.menu.convertToWorldSpace(this.seedsoul.getPosition()));
-        this.rootNode.addChild(this.mothercard);
+        this.objlayer.addChild(this.mothercard);
     }
     this.isChoosingFather = !this.isChoosingFather;
     this.menu.setEnabled(true);
@@ -317,6 +331,7 @@ starupsoul.prototype.onChoosed = function(soulid,n)
 starupsoul.prototype.onPressConfirm = function () {
 
     if (this.fathercard == null || this.mothercard == null) {
+        wl.popmsg(lang("TXT_STARUP_LEVELLIMIT"), this.rootNode);
         return;
     }
     var fathersoul = wl.gvars.role.getSoul(this.fathercard.soulid);
@@ -339,7 +354,7 @@ starupsoul.prototype.onPressConfirm = function () {
 };
 
 starupsoul.prototype.on_soul_starup = function (ret) {
-    
+
     if (ret.rc != retcode.OK) {
         cc.log("starup soul fail" + ret.rc);
         this.menu.setEnabled(true);
@@ -379,23 +394,52 @@ starupsoul.prototype.on_soul_starup = function (ret) {
     var star = wl.clamp(fathersoul.star + mothersoul.star + 1, 0, starupcopper.length);
     wl.gvars.role.subCopper(starupcopper[star - 1]);
     wl.gvars.role.deleteSoul(this.mothercard.soulid);
-    wl.gvars.role.addSoul(ret.soul);
 
-    this.fathercard.removeFromParent();
-    this.fathercard = null;
+
+    this.origpro = [fathersoul.getStar(), fathersoul.getProperty("Attack"), fathersoul.getProperty("Defense"), fathersoul.getProperty("Heal"), fathersoul.getProperty("MaxHP")];
+    wl.gvars.role.addSoul(ret.soul);
+    this.curpro = [fathersoul.getStar(), fathersoul.getProperty("Attack"), fathersoul.getProperty("Defense"), fathersoul.getProperty("Heal"), fathersoul.getProperty("MaxHP")];
+    
+
+    var bpos = this.menu.convertToWorldSpace(this.basesoul.getPosition());
+    var spos = this.menu.convertToWorldSpace(this.seedsoul.getPosition());
+    wl.play_animation(this.objlayer, spos.x, spos.y, 0.03, "anim/bomb/;1;14");
+    wl.play_animation_delay(this.objlayer, 0.5, bpos.x, bpos.y, 0.05, "anim/levelup2/;1;14").setScale(2);
 
     this.mothercard.removeFromParent();
     this.mothercard = null;
 
-    var size = this.rootNode.getContentSize();
-    this.outbg = wl.load_scene("starupresult",ret.soul.id,this.onFinish,this);
-    this.rootNode.addChild(this.outbg);
+    wl.fade(this.fathercard, 0.3, 255, 0, this.starupFadeOut, this);
+
 };
+
+starupsoul.prototype.starupFadeOut = function () {
+    wl.fade(this.fathercard, 0.3, 0, 255, this.starupFadeIn, this);
+}
+
+starupsoul.prototype.starupFadeIn = function () {
+    this.probox = wl.load_scene("prochange", this.origpro, this.curpro);
+    var pos = this.menu.convertToWorldSpace(this.seedsoul.getPosition());
+    pos.x -= 10;
+    this.probox.setPosition(cc.p(pos.x - 100, pos.y));
+    this.objlayer.addChild(this.probox);
+
+    wl.fade(this.probox, 0.5, 0, 255);
+    this.probox.runAction(cc.EaseIn.create(cc.MoveTo.create(0.5, pos), 0.4));
+
+    wl.wait_touch(this.onFinish, this);
+
+    this.maskbg.setOpacity(200);
+
+
+}
 
 starupsoul.prototype.onFinish = function () {
     this.menu.setEnabled(true);
     this.menutitle.setEnabled(true);
 
-    this.outbg.removeFromParent();
-    this.outbg = null;
+    this.probox.removeFromParent();
+    this.probox = null;
+
+    this.maskbg.setOpacity(0);
 };

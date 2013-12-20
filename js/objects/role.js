@@ -19,9 +19,9 @@ wl.empty_role = function(name,userid){
     extrasoulnum:0,
     extraequipmentnum:0,
     extratravellernum:0,
-    date_lastupdate:0,
-    date_lastenter:0,
-    date_create:0,
+    date_lastupdate: wl.get_time(),
+    date_lastenter: wl.get_time(),
+    date_create: wl.get_time(),
     travellers:[],
     souls:[],
     equipments:[],
@@ -37,7 +37,7 @@ wl.create_equip = function(baseid){
     id:wl.local_id(),
     baseid : baseid,
     travellerid : 0,
-    star : 0,
+    star : 1,
     exp : 0,
     level : 1,
     skillexp : 0,
@@ -50,7 +50,7 @@ wl.create_soul = function(baseid){
     id:wl.local_id(),
     baseid : baseid,
     travellerid : 0,
-        star : 0,
+        star : 1,
     exp : 0,
     level : 1,
     skillexp : 0,
@@ -237,9 +237,9 @@ wl.tmp_dbrole = function(name){
         extrasoulnum:0,
         extraequipmentnum:0,
         extratravellernum:0,
-        date_lastupdate:0,
-        date_lastenter:0,
-        date_create:0,
+        date_lastupdate: wl.get_time(),
+        date_lastenter: wl.get_time(),
+        date_create: wl.get_time(),
 
         travellers:[
             {id:1,name:"1",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1000,skill1exp:0,skill1level:1,nature:2,soulid:2,weaponid:1,clothid:2,trinketid:3,slot:[1,0,2,3],pro:[]},
@@ -249,11 +249,11 @@ wl.tmp_dbrole = function(name){
             {id:5,name:"5",img:"",exp:0,level:1,view:1,skill1id:2000,skill1exp:0,skill1level:1,skill2id:1002,skill1exp:0,skill1level:0,nature:2,soulid:1,weaponid:0,clothid:0,trinketid:0,slot:[],pro:[]}
         ],
         souls:[
-            {id:1,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1},
-            {id:2,baseid:2,star:0,exp:0,level:2,skillexp:0,skilllevel:1},
-            {id:3,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1},
-            {id:4,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1},
-            {id:5,baseid:1,star:0,exp:0,level:1,skillexp:0,skilllevel:1}
+            {id:1,baseid:1,star:1,exp:0,level:1,skillexp:0,skilllevel:1},
+            {id:2,baseid:2,star:1,exp:0,level:2,skillexp:0,skilllevel:1},
+            {id:3,baseid:1,star:1,exp:0,level:1,skillexp:0,skilllevel:1},
+            {id:4,baseid:1,star:1,exp:0,level:1,skillexp:0,skilllevel:1},
+            {id:5,baseid:1,star:1,exp:0,level:1,skillexp:0,skilllevel:1}
         ],
         equipments:[
             {id:1,baseid:1,exp:0,level:1},
@@ -442,6 +442,10 @@ wl.role.prototype = {
 
     getName: function () { return this.dbobj.name; },
     setName: function (name) { this.dbobj.name = name; },
+
+    getLastEnterTime: function () { return this.dbobj.date_lastenter; },
+
+    getValue: function () { return 0; },
 
     getId: function () { return this.dbobj.id; },
     setId: function (id) { this.dbobj.id = id; },
@@ -881,39 +885,44 @@ wl.role.prototype = {
     },
 
     getObjects: function (type) {
-        var arr = []
+        var arr = [];
+
         if (type == EQUIP_SOUL) {
             wl.copyarr(this.souls, arr);
         }
         else {
-            for (var k in this.equipments) {
-                switch (type) {
-                    case EQUIP_WEAPONR:
-                        if (this.equipments[k].getType() == ETYPE_MAINHAND
+            if (type == null) {
+                wl.copyarr(this.equipments, arr);
+            }
+            else {
+                for (var k in this.equipments) {
+                    switch (type) {
+                        case EQUIP_WEAPONR:
+                            if (this.equipments[k].getType() == ETYPE_MAINHAND
                     || this.equipments[k].getType() == ETYPE_ONEHAND
                     || this.equipments[k].getType() == ETYPE_TWOHAND) {
-                            arr.push(this.equipments[k]);
-                        }
-                        break;
-                    case EQUIP_WEAPONL:
-                        if (this.equipments[k].getType() == ETYPE_OFFHAND
+                                arr.push(this.equipments[k]);
+                            }
+                            break;
+                        case EQUIP_WEAPONL:
+                            if (this.equipments[k].getType() == ETYPE_OFFHAND
                     || this.equipments[k].getType() == ETYPE_ONEHAND) {
-                            arr.push(this.equipments[k]);
-                        }
-                        break;
-                    case EQUIP_CLOTH:
-                        if (this.equipments[k].getType() == ETYPE_CLOTH) {
-                            arr.push(this.equipments[k]);
-                        }
-                        break;
-                    case EQUIP_TRINKET:
-                        if (this.equipments[k].getType() == ETYPE_TRINKET) {
-                            arr.push(this.equipments[k]);
-                        }
-                        break;
-                    default:
-                        wl.copyarr(this.equipments, arr);
-                        break;
+                                arr.push(this.equipments[k]);
+                            }
+                            break;
+                        case EQUIP_CLOTH:
+                            if (this.equipments[k].getType() == ETYPE_CLOTH) {
+                                arr.push(this.equipments[k]);
+                            }
+                            break;
+                        case EQUIP_TRINKET:
+                            if (this.equipments[k].getType() == ETYPE_TRINKET) {
+                                arr.push(this.equipments[k]);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
             }
@@ -953,15 +962,15 @@ wl.role.prototype = {
         var souls = [];
         for (var k in temps) {
             //if (temps[k].getMaxLevel() == temps[k].getLevel()) {
-                if (maps[temps[k].getBaseId()] == null) {
-                    maps[temps[k].getBaseId()] = [];
-                }
-                maps[temps[k].getBaseId()].push(temps[k]);
-           // }
+            if (maps[temps[k].getBaseId()] == null) {
+                maps[temps[k].getBaseId()] = [];
+            }
+            maps[temps[k].getBaseId()].push(temps[k]);
+            // }
         }
         for (var k in maps) {
             if (maps[k].length >= 2) {
-                cc.log(k+" len:"+maps[k].length)
+                cc.log(k + " len:" + maps[k].length)
                 wl.copyarr(maps[k], souls);
             }
         }
@@ -977,8 +986,8 @@ wl.role.prototype = {
         for (var k in this.souls) {
             if (
             this.souls[k] != soul
-            && this.souls[k].getBaseId() == soul.getBaseId() ){
-           // && this.souls[k].getMaxLevel() == this.souls[k].getLevel()) {
+            && this.souls[k].getBaseId() == soul.getBaseId()) {
+                // && this.souls[k].getMaxLevel() == this.souls[k].getLevel()) {
                 souls.push(this.souls[k]);
             }
         }

@@ -17,9 +17,7 @@ function run()
 {
   
     wl.run_scene("loginscene");
-	
 
-   
   
 }
 

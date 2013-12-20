@@ -59,6 +59,11 @@ require("ui/resultlevelup.js");
 require("ui/infobox.js");
 require("ui/starupresult.js");
 require("ui/equipmakeresult.js");
+require("ui/prochange.js");
+require("ui/friendbar.js");
+require("ui/searchbar.js");
+require("ui/rewardbtn.js");
+require("ui/applicantbar.js");
 
 require("state/normal.js");
 require("state/start.js");
@@ -86,3 +91,4 @@ require("scene/combinesoul.js");
 require("scene/starupsoul.js");
 require("scene/equipmake.js");
 require("scene/equipstarup.js");
+require("scene/friendscene.js");

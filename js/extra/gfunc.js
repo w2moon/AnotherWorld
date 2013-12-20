@@ -24,11 +24,27 @@
         }
     };
 
+    wl.get_time = function () {
+        var t = new Date();
+        return t.getTime();
+    };
+    wl.day_distance = function (d1, d2) {//second,if > 0,d2 is the future
+        var t1 = new Date(d1 * 1000);
+        var t2 = new Date(d2 * 1000);
+        t1.setMinutes(0);
+        t1.setHours(0);
+        t1.setSeconds(0);
+        t2.setMinutes(0);
+        t2.setHours(0);
+        t2.setSeconds(0);
+        return (t2 - t1) / (24 * 3600);
+    }
+
     wl.popmsg = function (msg, parent, func, funcowner) {
         if (parent == null) {
             parent = wl.get_scene();
         }
-        wl.foreach_ifcall(parent,function(){return true;},"setEnabled",false);
+        wl.foreach_ifcall(parent, function () { return true; }, "setEnabled", false);
         var ui = wl.load_scene("infobox", msg, func, funcowner);
 
         var size = parent.getContentSize();
@@ -178,6 +194,37 @@
         return spr;
     };
 
+    wl.ansi_length = function (s) {
+        return s.replace(/[^\x00-\xff]/g, "**").length
+    };
+
+    wl.analyze_string = function (s) {
+        var starttoken = null;
+        var lasttoken = 0;
+        var arr = [];
+        for (var i = 0; i < s.length; ++i) {
+            if (starttoken == null && s[i] == "[") {
+                starttoken = i + 1;
+                arr.push(s.substr(lasttoken, i - lasttoken));
+                continue;
+            }
+
+            if (s[i] == "]") {
+
+                lasttoken = i + 1;
+                arr.push(s.substr(starttoken, i - starttoken).split(":"));
+                starttoken = null;
+            }
+            else if (s.length - 1 == i) {
+                arr.push(s.substr(lasttoken, i - lasttoken + 1));
+            }
+
+
+        }
+        return arr;
+
+    };
+
 
     wl.clipping_layer = function (w, h) {
         if (USE_CCB) {
@@ -253,12 +300,17 @@
                             cur++;
                             var v = to + (1 - cur / num) * (from - to);
                             wl.foreach_call(obj, "setOpacity", v);
-                            if (cur == num) {
-                                func.apply(funcowner);
-                            }
+
                         })
                                        );
-        obj.runAction(cc.Repeat.create(seq, num));
+        if (func == null) {
+            obj.runAction(cc.Sequence.create(cc.Repeat.create(seq, num)));
+
+        }
+        else {
+            obj.runAction(cc.Sequence.create(cc.Repeat.create(seq, num), cc.CallFunc.create(function () { func.apply(funcowner); })));
+        }
+
 
     };
 
@@ -272,38 +324,42 @@
                             cur++;
                             var v = to + (1 - cur / num) * (from - to);
                             wl.foreach_call(obj, "setOpacity", v);
-                            if (cur == num - 1) {
-                                func.apply(funcowner);
-                            }
+
                         })
                                        );
-        obj.runAction(cc.Sequence.create(cc.DelayTime.create(delay), cc.Repeat.create(seq, num)));
+        if (func == null) {
+            obj.runAction(cc.Sequence.create(cc.DelayTime.create(delay), cc.Repeat.create(seq, num)));
 
+        }
+        else {
+            obj.runAction(cc.Sequence.create(cc.DelayTime.create(delay), cc.Repeat.create(seq, num), cc.CallFunc.create(function () { func.apply(funcowner); })));
+        }
     };
 
     wl.wait_touch = function (func, funcowner) {
         var rootnode = wl.get_scene();
         var obj = cc.Layer.create();
+        obj.setTouchEnabled(true);
         rootnode.addChild(obj);
-        if (!USE_CCB) {
-            obj.registerWithTouchDispatcher();
-        }
+
 
 
         obj.onTouchesBegan = function (touches, event) {
+
             var loc = touches[0].getLocation();
-            func.apply(funcowner);
-            obj.unregisterScriptTouchHandler();
             obj.removeFromParent();
             obj = null;
+            func.apply(funcowner);
+
             return true;
         };
         obj.onMouseDown = function (event) {
+
             var loc = event.getLocation();
-            func.apply(funcowner);
-            obj.unregisterScriptTouchHandler();
             obj.removeFromParent();
             obj = null;
+            func.apply(funcowner);
+
             return true;
         };
     };

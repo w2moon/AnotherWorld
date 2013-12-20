@@ -62,7 +62,7 @@ virtual_traveller_create = function(info){
                             id:wl.local_id(),
                             baseid:base.soulbaseid,
                             exp:0,
-                            star:0,
+                            star:1,
                             level:1,
                             skillexp:0,
                             skilllevel:1
