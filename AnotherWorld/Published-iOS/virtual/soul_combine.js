@@ -64,7 +64,7 @@ virtual_soul_combine = function(info){
                             id:wl.local_id(),
                             baseid:bid,
                             exp:0,
-                            star:0,
+                            star:1,
                             level:1,
                             skillexp:0,
                             skilllevel:1,

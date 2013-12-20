@@ -138,4 +138,7 @@ mainscene.prototype.onEquipStarup = function(){
     wl.run_scene("equipstarup");
 };
 
+mainscene.prototype.onPressFriend = function () {
+    wl.run_scene("friendscene");
+};
 

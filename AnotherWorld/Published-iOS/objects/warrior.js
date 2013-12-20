@@ -33,504 +33,519 @@ wl.warrior = function(player,battlefield,traveller){
 };
 
 wl.warrior.prototype = {
-    getClass : function(){return "warrior";},
-    battle_init : function(ui){
+    getClass: function () { return "warrior"; },
+    battle_init: function (ui) {
         this.ui = ui;
         this.setMaxHP(this.traveller.getProperty("MaxHP"));
         this.setHP(this.traveller.getProperty("MaxHP"));
-        
+
         var maxenergy = 3;
         /*
         for(var k in this.skills){
-            this.skills[k].battle_init();
-            if(this.skills[k].isActiveSkill() && this.skills[k].getNeedEnergy() > maxenergy){
-                maxenergy = this.skills[k].getNeedEnergy();
-            }
+        this.skills[k].battle_init();
+        if(this.skills[k].isActiveSkill() && this.skills[k].getNeedEnergy() > maxenergy){
+        maxenergy = this.skills[k].getNeedEnergy();
+        }
         }
         */
         this.setMaxEnergy(maxenergy);
         this.setEnergy(0);
-        wl.dispatcher.notify(this,"battle_init");
+        wl.dispatcher.notify(this, "battle_init");
     },
 
-    getProperty : function(name){
-        var v = (this.getBaseProperty(name) + this.getExtraProperty(name))*(1+this.getRateProperty(name));
-        if( v < 0 ){
+
+
+    getProperty: function (name) {
+        var v = (this.getBaseProperty(name) + this.getExtraProperty(name)) * (1 + this.getRateProperty(name));
+        if (v < 0) {
             return 0;
         }
         return v;
     },
 
-    getBaseProperty : function(name){
-        return (this.base_property[name] || 0)+this.traveller.getProperty(name);
+    getBaseProperty: function (name) {
+        return (this.base_property[name] || 0) + this.traveller.getProperty(name);
     },
-    incBaseProperty : function(name,v){
-        if(this.base_property[name] == null){
+    incBaseProperty: function (name, v) {
+        if (this.base_property[name] == null) {
             this.base_property[name] = 0;
         }
         this.base_property[name] += v;
 
-        wl.dispatcher.notify(this,"inc"+name,v);
+        wl.dispatcher.notify(this, "inc" + name, v);
     },
 
-    decBaseProperty : function(name,v){
-        if(this.base_property[name] == null){
+    decBaseProperty: function (name, v) {
+        if (this.base_property[name] == null) {
             this.base_property[name] = 0;
         }
         this.base_property[name] -= v;
 
-        wl.dispatcher.notify(this,"dec"+name,v);
+        wl.dispatcher.notify(this, "dec" + name, v);
     },
 
-    getExtraProperty : function(name){
+    getExtraProperty: function (name) {
         return this.extra_property[name] || 0;
     },
 
-    incExtraProperty : function(name,v){
-        if(this.extra_property[name] == null){
+    incExtraProperty: function (name, v) {
+        if (this.extra_property[name] == null) {
             this.extra_property[name] = 0;
         }
         this.extra_property[name] += v;
 
-        wl.dispatcher.notify(this,"incExtra"+name,v);
+        wl.dispatcher.notify(this, "incExtra" + name, v);
     },
 
-    decExtraProperty : function(name,v){
-        if(this.extra_property[name] == null){
+    decExtraProperty: function (name, v) {
+        if (this.extra_property[name] == null) {
             this.extra_property[name] = 0;
         }
         this.extra_property[name] -= v;
 
-        wl.dispatcher.notify(this,"decExtra"+name,v);
+        wl.dispatcher.notify(this, "decExtra" + name, v);
     },
 
-    getRateProperty : function(name){
+    getRateProperty: function (name) {
         return this.rate_property[name] || 0;
     },
 
-    incRateProperty : function(name,v){
-        if(this.rate_property[name] == null){
+    incRateProperty: function (name, v) {
+        if (this.rate_property[name] == null) {
             this.rate_property[name] = 0;
         }
         this.rate_property[name] += v;
 
-        wl.dispatcher.notify(this,"incRate"+name,v);
+        wl.dispatcher.notify(this, "incRate" + name, v);
     },
 
-    decRateProperty : function(name,v){
-        if(this.rate_property[name] == null){
+    decRateProperty: function (name, v) {
+        if (this.rate_property[name] == null) {
             this.rate_property[name] = 0;
         }
         this.rate_property[name] -= v;
 
-        wl.dispatcher.notify(this,"decRate"+name,v);
+        wl.dispatcher.notify(this, "decRate" + name, v);
     },
 
- 
-
-   
 
 
-  
-    getUI : function(){
+
+
+
+
+    getUI: function () {
         return this.ui;
     },
 
-     getBattleField : function(){
+    getBattleField: function () {
         return this.battlefield;
     },
 
-    isEnemy : function(warrior){
+    isEnemy: function (warrior) {
         return this.getPlayer() != warrior.getPlayer();
     },
 
-    isAlly : function(warrior){
+    isAlly: function (warrior) {
         return this.getPlayer() == warrior.getPlayer();
     },
 
-    getPlayer : function(){
+    getPlayer: function () {
         return this.player;
     },
 
-    getTraveller : function(){
+    getTraveller: function () {
         return this.traveller;
     },
 
-    setEnergy : function(v){
+    setEnergy: function (v) {
         this.energy = v;
     },
-    getEnergy : function(){
-        return this.energy;
+    getEnergy: function () {
+        return this.getPlayer().getEnergy();
     },
 
-    setMaxEnergy : function(v){
+    setMaxEnergy: function (v) {
         this.maxenergy = v;
     },
-    getMaxEnergy : function(){
+    getMaxEnergy: function () {
         return this.maxenergy;
     },
 
-    getHP : function(){
+    getHP: function () {
         return this.hp;
     },
-    setHP : function(hp){ 
+    setHP: function (hp) {
         this.hp = hp;
     },
 
-    setMaxHP : function(v){
+    setMaxHP: function (v) {
         this.maxhp = v;
     },
-    getMaxHP : function(){
+    getMaxHP: function () {
         return this.maxhp;
     },
-  
-    
-/////////////////////////////
-    incDisabled : function(v){
+
+
+    /////////////////////////////
+    incDisabled: function (v) {
         this.disabled += v;
     },
-    decDisabled : function(v){
+    decDisabled: function (v) {
         this.disabled -= v;
     },
-    isDisabled : function(){
+    isDisabled: function () {
         return this.disabled > 0;
     },
 
 
-    incSkillDisabled : function(v){
+    incSkillDisabled: function (v) {
         this.skilldisabled += v;
     },
-    decSkillDisabled : function(v){
+    decSkillDisabled: function (v) {
         this.skilldisabled -= v;
     },
-    isSkillDisabled : function(){
+    isSkillDisabled: function () {
         return this.skilldisabled > 0;
     },
 
-   
 
-    incModifierDamagePercent : function(v){
+
+    incModifierDamagePercent: function (v) {
         this.modifier_damage_percent += v;
     },
-    decModifierDamagePercent : function(v){
+    decModifierDamagePercent: function (v) {
         this.modifier_damage_percent -= v;
     },
-    getModifierDamagePercent : function(){
+    getModifierDamagePercent: function () {
         return this.modifier_damage_percent;
     },
 
-    incHP : function(v){
-    /*
+    incHP: function (v) {
+        /*
         var isCrit = wl.rand() < this.getProperty("Crit");
         if(isCrit){
-            v *=2;
+        v *=2;
         }
         */
-        this.setHP(wl.clamp(this.getHP()+v,0,this.getMaxHP()))
+        this.setHP(wl.clamp(this.getHP() + v, 0, this.getMaxHP()))
         var isCrit = 0;
-        wl.dispatcher.notify(this,"incHP",v,isCrit);
+        wl.dispatcher.notify(this, "incHP", v, isCrit);
     },
-    decHPProperty : function(pro,rate,trigger){
+    decHPProperty: function (pro, rate, trigger) {
         cc.log("property dec")
-        v = trigger.getProperty(pro)*rate;
+        v = trigger.getProperty(pro) * rate;
         this.decHP(v);
     },
-    decHP : function(v){
-        v = parseInt(v*(1+this.modifier_damage_percent));
-        if(v <= 0){
+    decHP: function (v) {
+        v = parseInt(v * (1 + this.modifier_damage_percent));
+        if (v <= 0) {
             v == 1;
         }
 
-        if(wl.rand() < this.getProperty("Dodge")){
-            wl.dispatcher.notify(this,"dodge",v);
+        if (wl.rand() < this.getProperty("Dodge")) {
+            wl.dispatcher.notify(this, "dodge", v);
             return;
         }
         /*
         var isCrit = wl.rand() < this.getProperty("Crit");
         if(isCrit){
-            v *=2;
+        v *=2;
         }
         */
-        
-        this.setHP(wl.clamp(this.getHP()-v,0,this.getMaxHP()))
-        var isCrit = 0;
-        wl.dispatcher.notify(this,"decHP",v,isCrit);
 
-        if(this.isDead()){
+        this.setHP(wl.clamp(this.getHP() - v, 0, this.getMaxHP()))
+        var isCrit = 0;
+        wl.dispatcher.notify(this, "decHP", v, isCrit);
+
+        if (this.isDead()) {
             this.dead();
         }
     },
-    incMaxHP : function(v){
-        this.setMaxHP(this.getMaxHP()+v)
+    incMaxHP: function (v) {
+        this.setMaxHP(this.getMaxHP() + v)
 
-        wl.dispatcher.notify(this,"incMaxHP",v);
+        wl.dispatcher.notify(this, "incMaxHP", v);
     },
-    decMaxHP : function(v){
-        this.setMaxHP(wl.clamp(this.getMaxHP()-v,0,this.getMaxHP()))
+    decMaxHP: function (v) {
+        this.setMaxHP(wl.clamp(this.getMaxHP() - v, 0, this.getMaxHP()))
 
-        wl.dispatcher.notify(this,"decMaxHP",v);
-    },
-
-    incEnergy : function(v){
-        this.setEnergy(wl.clamp(this.getEnergy()+v,0,this.getMaxEnergy()))
- 
-        wl.dispatcher.notify(this,"incEnergy",v);
-    },
-    decEnergy : function(v){
-        this.setEnergy(wl.clamp(this.getEnergy()-v,0,this.getMaxEnergy()))
-
-        wl.dispatcher.notify(this,"decEnergy",v);
-    },
-    incMaxEnergy : function(v){
-        this.setMaxEnergy(this.getMaxEnergy()+v)
-
-        wl.dispatcher.notify(this,"incMaxEnergy",v);
-    },
-    decMaxEnergy : function(v){
-        this.setMaxEnergy(wl.clamp(this.getMaxEnergy()-v,0,this.getMaxEnergy()))
-
-        wl.dispatcher.notify(this,"decMaxEnergy",v);
+        wl.dispatcher.notify(this, "decMaxHP", v);
     },
 
+    incEnergy: function (v) {
+        this.getPlayer().incEnergy(v);
+        //this.setEnergy(wl.clamp(this.getEnergy()+v,0,this.getMaxEnergy()))
 
-    beDefender : function(attacker){
-        wl.dispatcher.notify(this,"beDefender",[attacker]);
+        wl.dispatcher.notify(this, "incEnergy", v);
+    },
+    decEnergy: function (v) {
+        this.getPlayer().decEnergy(v);
+        //this.setEnergy(wl.clamp(this.getEnergy()-v,0,this.getMaxEnergy()))
+
+        wl.dispatcher.notify(this, "decEnergy", v);
+    },
+    incMaxEnergy: function (v) {
+        this.setMaxEnergy(this.getMaxEnergy() + v)
+
+        wl.dispatcher.notify(this, "incMaxEnergy", v);
+    },
+    decMaxEnergy: function (v) {
+        this.setMaxEnergy(wl.clamp(this.getMaxEnergy() - v, 0, this.getMaxEnergy()))
+
+        wl.dispatcher.notify(this, "decMaxEnergy", v);
     },
 
-    setGuarder : function(warrior){
+
+    beDefender: function (attacker) {
+        wl.dispatcher.notify(this, "beDefender", [attacker]);
+    },
+
+    setGuarder: function (warrior) {
         this.guarder = warrior;
     },
 
-    getGuarder : function(){
+    getGuarder: function () {
         return this.guarder;
     },
 
-    beGuarder : function(warrior){
+    beGuarder: function (warrior) {
         warrior.setGuarder(this);
-        wl.dispatcher.notify(this,"beGuarder",[warrior]);
+        wl.dispatcher.notify(this, "beGuarder", [warrior]);
     },
 
-    
 
-    addBuff : function(buffid,trigger){
+
+    addBuff: function (buffid, trigger) {
         cc.log("trigger")
         cc.log(trigger)
         var buffinfo = buffbase[buffid];
-        if(buffinfo.multiple == 1)
-        {
+        if (buffinfo.multiple == 1) {
             var buff = null;
-            for(var k in this.buffs){
-                if(this.buffs[k].getId() == buffid
-                && this.buffs[k].hasLink(trigger)){
+            for (var k in this.buffs) {
+                if (this.buffs[k].getId() == buffid
+                && this.buffs[k].hasLink(trigger)) {
                     buff = this.buffs[k];
                     break;
                 }
             }
-            if(buff == null){
-                buff = new wl.buff(this,this.battlefield,buffinfo);
+            if (buff == null) {
+                buff = new wl.buff(this, this.battlefield, buffinfo);
                 buff.addLink(trigger);
                 this.buffs.push(buff);
             }
-            else{
-                if(buffinfo.stack > buff.getStack()){
-                    buff.setStack( buff.getStack() + 1);
+            else {
+                if (buffinfo.stack > buff.getStack()) {
+                    buff.setStack(buff.getStack() + 1);
                 }
                 buff.refreshDuration();
             }
-            
+
         }
-        else{
+        else {
             var isnew = true;
-            for(var k in this.buffs){
-                if(this.buffs[k].getId() == buffid){
-                   this.buffs[k].addLink(trigger);
-                   this.buffs[k].refreshDuration();
-                   isnew = false;
-                   break;
+            for (var k in this.buffs) {
+                if (this.buffs[k].getId() == buffid) {
+                    this.buffs[k].addLink(trigger);
+                    this.buffs[k].refreshDuration();
+                    isnew = false;
+                    break;
                 }
             }
-            if(isnew){
-                var buff = new wl.buff(this,this.battlefield,buffinfo);
+            if (isnew) {
+                var buff = new wl.buff(this, this.battlefield, buffinfo);
                 buff.addLink(trigger);
                 this.buffs.push(buff);
             }
         }
-        
+
     },
 
-    removeBuff : function(buffid,trigger){
-        for(var k in this.buffs){
-            if(this.buffs[k].getId() == buffid && this.buffs[k].hasLink(trigger)){
+    removeBuff: function (buffid, trigger) {
+        for (var k in this.buffs) {
+            if (this.buffs[k].getId() == buffid && this.buffs[k].hasLink(trigger)) {
                 this.buffs[k].removeLink(trigger);
-                if(this.buffs[k].isCleared()){
+                if (this.buffs[k].isCleared()) {
                     this.buffs[k].destroy();
-                    this.buffs.splice(k,1);
+                    this.buffs.splice(k, 1);
                 }
                 return;
             }
         }
     },
 
-    clearBuffs : function(){
-        for(var k in this.buffs){
+    clearBuffs: function () {
+        for (var k in this.buffs) {
             this.buffs[k].destroy();
         }
         this.buffs = [];
     },
     /////////////////////////////////////////////////////////////////
 
-    
 
-    isDead : function(){return this.getHP() <= 0;},
 
-    dead : function() {
+    isDead: function () { return this.getHP() <= 0; },
+
+    dead: function () {
         this.clearBuffs();
-        wl.dispatcher.notify(this,"dead");
+        wl.dispatcher.notify(this, "dead");
     },
 
-    
 
-    calc_damage : function(attacker,defenser,protype,prorate){
+
+    calc_damage: function (attacker, defenser, protype, prorate) {
         var damage = attacker.getProperty('Attack') - defenser.getProperty('Defense');
-        damage = parseInt(damage*(1+defenser.getModifierDamagePercent()));
-        if(damage <= 0)
-        {
+        damage = parseInt(damage * (1 + defenser.getModifierDamagePercent()));
+        if (damage <= 0) {
             damage = 1;
         }
         return damage;
     },
 
-    calc_heal : function(healer,reciever,protype,prorate){
+    calc_heal: function (healer, reciever, protype, prorate) {
         var v = healer.getProperty('Heal');
-        if(v < 0)
-        {
+        if (v < 0) {
             v = 0;
         }
         return v;
     },
 
-    canAction : function(){
-        if(this.isDisabled()){
+    canAction: function () {
+        if (this.isDisabled()) {
             return false;
         }
 
-        if(this.isDead()){
+        if (this.isDead()) {
             return false;
         }
 
         return true;
     },
 
-    action : function(){
-        
-              for(var k=this.skills.length-1;k>=0;k--){
-                if(this.skills[k].isActiveSkill() && this.skills[k].canBeCast()){
-                    return this.skills[k].cast();
-                }
-              }
-              
-           
-         return 0;
+    action: function () {
+
+        for (var k = this.skills.length - 1; k >= 0; k--) {
+            if (this.skills[k].isActiveSkill() && this.skills[k].canBeCast()) {
+                return this.skills[k].cast();
+            }
+        }
+
+
+        return 0;
     },
 
-    newturn : function(){
+    refreshSkillState: function () {
+        if (this.player.role != wl.gvars.role) {
+            return;
+        }
+        for (var k = this.skills.length - 1; k >= 0; k--) {
+            if (this.skills[k].canBeCast()) {
+                this.ui.controller.showSkill(this.skills[k]);
+            }
+            else {
+                this.ui.controller.hideSkill();
+            }
+        }
     },
 
-    endturn : function(){
-        for(var k in this.skills){
-              this.skills[k].update();
+    newturn: function () {
+    },
+
+    endturn: function () {
+        for (var k in this.skills) {
+            this.skills[k].update();
         }
         var todelete = []
-        for(var k in this.buffs){
-              if(this.buffs[k].update()){
-                    todelete.push(this.buffs[k]);
-              }
+        for (var k in this.buffs) {
+            if (this.buffs[k].update()) {
+                todelete.push(this.buffs[k]);
+            }
         }
-        for(var k in todelete){
-            for(var i in this.buffs){
-                if(this.buffs[i] === todelete[k]){
-                    this.buffs.splice(i,1);
+        for (var k in todelete) {
+            for (var i in this.buffs) {
+                if (this.buffs[i] === todelete[k]) {
+                    this.buffs.splice(i, 1);
                     break;
                 }
             }
         }
     },
 
-    shoot : function(){
+    shoot: function () {
     },
 
-    attack : function(target,protype,prorate,nottriggerevent){
+    attack: function (target, protype, prorate, nottriggerevent) {
         var realtarget = target
-        if(target.getGuarder() != null){
+        if (target.getGuarder() != null) {
             realtarget = target.getGuarder();
-            this.getBattleField().addTask(realtarget,realtarget.moveBack);
+            this.getBattleField().addTask(realtarget, realtarget.moveBack);
             target.setGuarder(null);
         }
-       
 
-        var damage = this.calc_damage(this,realtarget,protype,prorate);
+
+        var damage = this.calc_damage(this, realtarget, protype, prorate);
         realtarget.decHP(damage);
-            
-      if(nottriggerevent !== true){
-        wl.dispatcher.notify(this,"attack",[realtarget]);
-    }
-        
 
-        
+        if (nottriggerevent !== true) {
+            wl.dispatcher.notify(this, "attack", [realtarget]);
+        }
+
+
+
     },
 
-    defense : function(attacker){
-        if(this.getGuarder() != null){
-             wl.dispatcher.notify(this.getGuarder(),"defense",[attacker]);
+    defense: function (attacker) {
+        if (this.getGuarder() != null) {
+            wl.dispatcher.notify(this.getGuarder(), "defense", [attacker]);
         }
-        else{
-             wl.dispatcher.notify(this,"defense",[attacker]);
+        else {
+            wl.dispatcher.notify(this, "defense", [attacker]);
         }
     },
 
-    heal : function(target,protype,prorate,nottriggerevent){
+    heal: function (target, protype, prorate, nottriggerevent) {
         var realtarget = target
-        var value = this.calc_heal(this,realtarget,protype,prorate)
+        var value = this.calc_heal(this, realtarget, protype, prorate)
         realtarget.incHP(value);
-        if(nottriggerevent !== true){
-            wl.dispatcher.notify(this,"heal",[realtarget],value);
+        if (nottriggerevent !== true) {
+            wl.dispatcher.notify(this, "heal", [realtarget], value);
         }
     },
 
-    particle : function(particle){
+    particle: function (particle) {
         this.getUI().controller.on_particle(particle);
-         //wl.dispatcher.notify(this,"particle",particle);
+        //wl.dispatcher.notify(this,"particle",particle);
     },
 
-   
+
 
     /////////////////////////////////////////////////////////
-    moveTo : function(des){
-        wl.dispatcher.notify(this,"moveTo",des);
+    moveTo: function (des) {
+        wl.dispatcher.notify(this, "moveTo", des);
     },
-    moveBack : function(){
-        wl.dispatcher.notify(this,"moveBack");
+    moveBack: function () {
+        wl.dispatcher.notify(this, "moveBack");
     },
 
     ///////////////////////////////
-    on_event : function(){
+    on_event: function () {
         var args = Array.prototype.slice.call(arguments, 0);
         var tasks = [];
-         for(var k in this.skills){
-                if(!this.skills[k].isActiveSkill()){
-                   // var arr = new Array();
-                  //  arr.push(this.skills[k]);
-                   // arr.push(this.skills[k].on_event);
-                   // for(var i in args){
-                  //      arr.push(args[i]);
-                  //  }
-                    //this.battlefield.addTaskTail.apply(this.battlefield,arr);
-                    tasks.push([this.skills[k],this.skills[k].on_event,args]);
+        for (var k in this.skills) {
+            if (!this.skills[k].isActiveSkill()) {
+                // var arr = new Array();
+                //  arr.push(this.skills[k]);
+                // arr.push(this.skills[k].on_event);
+                // for(var i in args){
+                //      arr.push(args[i]);
+                //  }
+                //this.battlefield.addTaskTail.apply(this.battlefield,arr);
+                tasks.push([this.skills[k], this.skills[k].on_event, args]);
 
-                    //this.skills[k].on_event.apply(this.skills[k],args);
-                }
-         }
-         this.battlefield.addTasks(tasks);
+                //this.skills[k].on_event.apply(this.skills[k],args);
+            }
+        }
+        this.battlefield.addTasks(tasks);
     }
-   
+
 };

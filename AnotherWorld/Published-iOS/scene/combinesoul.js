@@ -485,7 +485,8 @@ combinesoul.prototype.onPressCombine = function () {
      this.datapanel.setPosition(cc.p(0, -(this.datapanel.controller.dataheader.getContentSize().height / 2 + size.height / 2)));
      this.datapanel.runAction(cc.MoveTo.create(0.2, cc.p(0, this.datapanel.controller.h - size.height / 2)));
 
-     wl.wait_touch(this.combineFinished,this);
+     wl.wait_touch(this.combineFinished, this);
+     cc.log("wait")
  };
 
  combinesoul.prototype.combineFinished = function () {
@@ -507,6 +508,14 @@ combinesoul.prototype.onPressCombine = function () {
      }
      this.lblcost.setString(0);
      this.lblhas.setString(wl.gvars.role.getCopper());
-     this.show(null, SOUL_ORDER_DEFAULT);
-     this.animate();
+
+     if (wl.gvars.role.getSoulNum() < 2) {
+         this.lbltitle.setString(lang("TXT_COMBINE_TITLE"));
+         wl.popmsg(lang("TXT_COMBINE_NUM"), this.rootNode);
+         this.chooseLayer.setVisible(false);
+     }
+     else {
+         this.show(null, SOUL_ORDER_DEFAULT);
+         this.animate();
+     }
  };

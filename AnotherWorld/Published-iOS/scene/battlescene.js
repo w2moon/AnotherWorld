@@ -89,15 +89,19 @@ battlescene.prototype.addTasks = function(){
      this.functask.adds.apply(this.functask,Array.prototype.slice.call(arguments, 0))       
 };
 
-battlescene.prototype.initBattle = function(roles)
-{
+battlescene.prototype.initBattle = function (roles) {
     this.players = [];
     this.warriors = [];
-    for(var k in roles){
-       var player = new wl.player(roles[k],this);
-       this.players.push(player);
-       this.init_role(player,k);
+    this.toskill = [];
+    for (var k in roles) {
+        var player = new wl.player(roles[k], this);
+        this.players.push(player);
+        this.init_role(player, k);
     }
+};
+
+battlescene.prototype.useSkill = function (skill) {
+    this.toskill.push(skill);
 };
 
  battlescene.prototype.init_role = function(player,idx){

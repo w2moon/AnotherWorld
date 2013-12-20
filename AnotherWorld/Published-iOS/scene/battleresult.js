@@ -1,3 +1,5 @@
+
+ 
  var battleresult = function(){}
 battleresult.prototype.onDidLoadFromCCB = function()
 {

@@ -1,43 +1,64 @@
+ 
  var equipstarup = function(){}
-equipstarup.prototype.onDidLoadFromCCB = function()
-{
-    this.target = null;
-    this.selected = [];
+ equipstarup.prototype.onDidLoadFromCCB = function () {
+     this.target = null;
+     this.selected = [];
 
-    this.objs = [];
-
-
-    var size = this.rootNode.getContentSize();
-    var center = cc.p(size.width / 2, size.height * 42.3 / 100);
-
-    var spr = cc.Sprite.create("equip/bg_equipment1.png");
-    var con = spr.getContentSize();
-
-    spr.setPosition(center);
-
-    this.chooseLayer = cc.Layer.create();
-    this.chooseLayer.addChild(spr);
-
-    this.conheight = con.height;
-    this.scroll = wl.scroll_layer(con.width, con.height);
-
-    this.chooseLayer.addChild(this.scroll);
+     this.objs = [];
 
 
+     var size = this.rootNode.getContentSize();
+     var center = cc.p(size.width / 2, size.height * 42.3 / 100);
 
-    var sl = cc.Sprite.create("equip/shou.png");
-    sl.setPosition(cc.p(sl.getContentSize().width / 2 - 9, con.height - sl.getContentSize().height / 2 - 3));
-    this.chooseLayer.addChild(sl);
+     var spr = cc.Sprite.create("equip/bg_equipment1.png");
+     var con = spr.getContentSize();
 
-    var sr = cc.Sprite.create("equip/shou.png");
-    sr.setPosition(cc.p(con.width - sr.getContentSize().width / 2 + 9, con.height - sl.getContentSize().height / 2 - 3));
-    sr.setFlipX(true);
-    this.chooseLayer.addChild(sr);
+     spr.setPosition(center);
 
-    this.rootNode.addChild(this.chooseLayer, 1);
+     this.chooseLayer = cc.Layer.create();
+     this.chooseLayer.addChild(spr);
 
-    
-};
+     this.conheight = con.height;
+     this.scroll = wl.scroll_layer(con.width, con.height);
+
+     this.chooseLayer.addChild(this.scroll);
+
+
+
+     var sl = cc.Sprite.create("equip/shou.png");
+     sl.setPosition(cc.p(sl.getContentSize().width / 2 - 9, con.height - sl.getContentSize().height / 2 - 3));
+     this.chooseLayer.addChild(sl);
+
+     var sr = cc.Sprite.create("equip/shou.png");
+     sr.setPosition(cc.p(con.width - sr.getContentSize().width / 2 + 9, con.height - sl.getContentSize().height / 2 - 3));
+     sr.setFlipX(true);
+     this.chooseLayer.addChild(sr);
+
+     this.rootNode.addChild(this.chooseLayer, 1);
+
+     this.lblchooseend.setVisible(false);
+     this.btnchooseend.setVisible(false);
+
+     this.lblok.setString(lang("TXT_ENHENCE_START"));
+
+     
+
+ };
+
+ equipstarup.prototype.showTitleNormal = function () {
+     this.lbltitle.setString(lang("TXT_ENHENCE_TITLE"));
+     wl.warn_obj(this.lbltitle);
+ };
+
+ equipstarup.prototype.showTitleTarget = function () {
+     this.lbltitle.setString(lang("TXT_ENHENCE_TARGET"));
+     wl.warn_obj(this.lbltitle);
+ };
+
+ equipstarup.prototype.showTitleChoose = function () {
+     this.lbltitle.setString(lang("TXT_ENHENCE_CHOOSE"));
+     wl.warn_obj(this.lbltitle);
+ };
 
 equipstarup.prototype.onCreate = function(equipid)
 {
@@ -62,52 +83,84 @@ equipstarup.prototype.clearObjs = function(){
     this.objs = [];
 };
 
-equipstarup.prototype.showtarget = function(){
+equipstarup.prototype.clearSelected = function () {
+    for (var k in this.selected) {
+        this.selected[k].removeFromParent();
+    }
+    this.selected = [];
+};
 
-   this.clearObjs();
-     
+equipstarup.prototype.selecttype = function (type) {
+    this.bluetype = type;
+    var blueprints = wl.gvars.role.getBlueprints(type);
+    for (var k in this.blueprints) {
+        this.blueprints.removeFromParent();
+    }
+    this.blueprints = [];
 
-    var equips = wl.gvars.role.getObjects();
+    for (var k in blueprints) {
+        var s = wl.load_scene("bluebar", this, blueprints[k]);
+        s.id = blueprints[k];
+        this.scroll.addChild(s);
+        this.blueprints.push(s);
 
-    
-    var x = 0;
-    var y = 0;
-    for(var k in equips){
-        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this,this.onChooseTarget,equips[k].getId());
-        equip.setPosition(x,y);
-        this.scroll.addChild(equip);
-
-        this.objs.push(equip);
-
-        y = y + 50;
     }
 };
 
-equipstarup.prototype.showall = function(){
-    this.clearObjs();
-    this.selected = [];
-     var equips = wl.gvars.role.getObjects();
+equipstarup.prototype.showtarget = function () {
 
-    
-    var x = 0;
-    var y = 0;
-    for(var k in equips){
-        if(equips[k].getId() == this.target.id){
-            continue;
-        }
-        var equip = wl.load_scene("selectbar",equips[k].getBase().icon,this,this.onChooseSelect,equips[k].getId());
-        equip.setPosition(x,y);
+    this.clearObjs();
+    this.showTitleTarget();
+    this.chooseLayer.setVisible(true);
+    var equips = wl.gvars.role.getObjects();
+
+
+    var x = this.rootNode.getContentSize().width / 2;
+    var y = this.conheight - 77 / 2 - 10;
+    for (var k in equips) {
+        var equip = wl.load_scene("selectbar", equips[k], this, this.onChooseTarget);
+        equip.setPosition(x, y);
+        equip.controller.check.setVisible(false);
+        equip.controller.checkbox.setVisible(false);
         this.scroll.addChild(equip);
 
         this.objs.push(equip);
 
-        y = y + 50;
+        y -= 70;
     }
+};
+
+equipstarup.prototype.showall = function () {
+    this.clearObjs();
+    this.chooseLayer.setVisible(true);
+    this.showTitleChoose();
+    this.lblchooseend.setVisible(true);
+    this.btnchooseend.setVisible(true);
+
+    //this.selected = [];
+    var equips = wl.gvars.role.getObjects();
+
+
+    var x = this.rootNode.getContentSize().width / 2;
+    var y = this.conheight - 77 / 2 - 10;
+    for (var k in equips) {
+        if (equips[k].getId() == this.target.id) {
+            continue;
+        }
+        var equip = wl.load_scene("selectbar", equips[k], this, this.onChooseSelect);
+        equip.setPosition(x, y);
+        this.scroll.addChild(equip);
+
+        this.objs.push(equip);
+
+        y -= 70;
+    }
+
+    this.redrawSelect();
 };
 
 equipstarup.prototype.updateTarget = function(){
     this.lbllevel.setString("LV"+this.target.equip.getLevel());
-    cc.log("exp "+this.target.equip.getExp()+" "+this.target.equip.getMaxExp())
     this.lblexp.setString(this.target.equip.getExp()+"/"+this.target.equip.getMaxExp());
 };
 
@@ -158,54 +211,122 @@ equipstarup.prototype.canBeSelect = function(e)
     return true;
 }
 
-equipstarup.prototype.onChooseSelect = function(e,n)
-{
-     if(e == this.target.id){
+equipstarup.prototype.onChooseSelect = function (e) {
+    if (e == this.target.id) {
         return;
     }
-    if(this.canBeSelect(e)){
-         n.selected();
-         n.id = e;
-         this.selected.push(n);
+    if (this.canBeSelect(e)) {
+        var n = cc.Sprite.create(wl.gvars.role.getEquipment(e).getBase().icon);
+        this.rootNode.addChild(n);
+        n.id = e;
+        
+        this.selected.push(n);
 
-         this.redrawSelect();
+        this.redrawSelect();
     }
-    else{
-         
-        for(var k in this.selected ){
-            if(this.selected[k].id == e){
-                this.selected.splice(k,1);
+    else {
+
+        for (var k in this.selected) {
+            if (this.selected[k].id == e) {
+                this.selected[k].removeFromParent();
+                this.selected.splice(k, 1);
                 break;
             }
         }
-        n.unselected();
         this.redrawSelect();
     }
 
-   
+
 };
 
+equipstarup.prototype.onChooseEnd = function () {
+    this.chooseLayer.setVisible(false);
+    this.lblchooseend.setVisible(false);
+    this.btnchooseend.setVisible(false);
 
+    this.showTitleNormal();
+};
 
-equipstarup.prototype.redrawSelect = function(){
+equipstarup.prototype.redrawSelect = function () {
     var copper = 0;
     var totalexp = 0;
 
-    for(var k in this.selected ){
+    for (var k in this.selected) {
         var e = wl.gvars.role.getEquipment(this.selected[k].id);
         var rarity = rarityclass[e.getBase().rarityclass];
         copper += rarity.enhencecopper;
         totalexp += rarityclass.enhenceexp;
+
+        var idx = wl.tonumber(k) + 1;
+        if (idx > 5) {
+            continue;
+        }
+
+        this.selected[k].setPosition(this.menubox.convertToWorldSpace(this["btnbox" + idx].getPosition()));
     }
 
-     this.lblcost.setString(copper);
-     this.lbltotalexp.setString(totalexp);
+    if (this.objs[0] != null && this.objs[0].controller.invalidmask != null) {
+        if (this.selected.length >= ENHENCE_MAX_NUM) {
+            for (var i in this.objs) {
+                if (this.canBeSelect(this.objs[i].controller.equip.getId())) {
+                    this.objs[i].controller.invalidmask.setVisible(true);
+                    this.objs[i].controller.btncheck.setEnabled(false);
+                }
+                else {
+                    this.objs[i].controller.invalidmask.setVisible(false);
+                    this.objs[i].controller.btncheck.setEnabled(true);
+                }
+            }
+        }
+        else {
+            for (var i in this.objs) {
+                this.objs[i].controller.invalidmask.setVisible(false);
+                this.objs[i].controller.btncheck.setEnabled(true);
+            }
+        }
+    }
 
-   
+    this.lblcost.setString(copper);
+    this.lbltotalexp.setString(totalexp);
+
+    if (this.target != null) {
+        this.lblname.setString(lang(this.target.equip.getBase().name));
+
+        if (this.selected.length > 0) {
+            var newequip = this.target.equip.copy();
+            newequip.addExp(totalexp);
+            this.lblatk.setString(this.target.equip.getProperty("Attack") + "->" + newequip.getProperty("Attack"));
+            this.lbldef.setString(this.target.equip.getProperty("Defense") + "->" + newequip.getProperty("Defense"));
+            this.lblheal.setString(this.target.equip.getProperty("Heal") + "->" + newequip.getProperty("Heal"));
+            this.lblhp.setString(this.target.equip.getProperty("MaxHP") + "->" + newequip.getProperty("MaxHP"));
+        }
+        else {
+            this.lblatk.setString(this.target.equip.getProperty("Attack"));
+            this.lbldef.setString(this.target.equip.getProperty("Defense"));
+            this.lblheal.setString(this.target.equip.getProperty("Heal"));
+            this.lblhp.setString(this.target.equip.getProperty("MaxHP"));
+        }
+
+    }
 };
 
-equipstarup.prototype.onPressEquip = function()
-{
+equipstarup.prototype.onPressEquip = function () {
+    this.clearSelected();
+    this.showtarget();
+    
+};
+
+equipstarup.prototype.onPressBox = function (n) {
+    var idx = n.getTag() - 1;
+    if (this.selected[idx] == null) {
+   
+        this.showall();
+    }
+    else {
+        this.selected[idx].removeFromParent();
+        this.selected.splice(idx, 1);
+        this.showall();
+    }
 };
 
 equipstarup.prototype.onPressEnhence = function()
@@ -256,28 +377,58 @@ equipstarup.prototype.onPressEnhence = function()
      wl.http.send(msg,this.on_equip_enhence,this);
 };
 
-equipstarup.prototype.on_equip_enhence = function(ret)
-{
-    if(ret.rc != retcode.OK){
-        cc.log("enhence fail:"+ret.rc);
+equipstarup.prototype.on_equip_enhence = function (ret) {
+    if (ret.rc != retcode.OK) {
+        cc.log("enhence fail:" + ret.rc);
         return;
     }
 
-     var copper = 0;
+    var copper = 0;
 
-    for(var k in this.selected){
+    var cpos = this.target.getPosition();
+
+    for (var k in this.selected) {
         var e = wl.gvars.role.getEquipment(this.selected[k].id);
-        
+
         var rarity = rarityclass[e.getBase().rarityclass];
         copper += rarity.enhencecopper;
 
         wl.gvars.role.deleteEquip(this.selected[k].id);
+        
+        wl.fade(this.selected[k], 0.3, 255, 0);
+        var pos = this.selected[k].getPosition();
+        var anim = wl.play_animation(this.rootNode, pos.x, pos.y, 0.03, "anim/bomb/;1;14");
+        anim.runAction(cc.MoveTo.create(0.4, cpos));
     }
+    
     wl.gvars.role.subCopper(copper);
     wl.gvars.role.addEquip(ret.equip);
 
     this.lblcost.setString(0);
     this.lbltotalexp.setString(0);
-   // this.updateTarget();
-    this.showall();
+
+    wl.fade(this.target, 0.3, 255, 0, this.starupFadeOut, this);
+    wl.play_animation_delay(this.rootNode, 0.5, cpos.x, cpos.y, 0.05, "anim/levelup2/;1;14").setScale(2);
+
+};
+
+equipstarup.prototype.starupFadeOut = function () {
+    wl.fade(this.target, 0.3, 0, 255, this.starupFadeIn, this);
+};
+
+equipstarup.prototype.starupFadeIn = function () {
+    for (var k in this.selected) {
+        this.selected[k].removeFromParent();
+    }
+    this.selected = [];
+
+    this.lblatk.setString(this.target.equip.getProperty("Attack"));
+    this.lbldef.setString(this.target.equip.getProperty("Defense"));
+    this.lblheal.setString(this.target.equip.getProperty("Heal"));
+    this.lblhp.setString(this.target.equip.getProperty("MaxHP"));
+
+    wl.warn_obj(this.lblatk);
+    wl.warn_obj(this.lbldef);
+    wl.warn_obj(this.lblheal);
+    wl.warn_obj(this.lblhp);
 };

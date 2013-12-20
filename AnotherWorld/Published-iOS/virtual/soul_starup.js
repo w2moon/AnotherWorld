@@ -33,7 +33,7 @@ virtual_soul_starup = function(info){
 
     var s1 = role_get_soul(info.soulid1);
     var s2 = role_get_soul(info.soulid2);
-
+    
     if(s1.baseid != s2.baseid){
         ret.rc = retcode.STARUP_NOT_SAME_SOUL;
         return ret;
@@ -41,7 +41,7 @@ virtual_soul_starup = function(info){
     
     var rarity = rarityclass[soulbase[s1.baseid].rarityclass];
     var starupcopper = parse_action_params(rarity.starupcopper);
-    var star = wl.clamp(s1.star + s2.star + 1,0,starupcopper.length);
+    var star = wl.clamp(s1.star + s2.star, 0, starupcopper.length);
     if(starupcopper[star-1] > role.copper){
         ret.rc = retcode.STARTUP_NOT_ENOUGH_COPPER;
         return ret;
@@ -60,7 +60,7 @@ virtual_soul_starup = function(info){
     role.copper -= starupcopper[star-1];
     s1.star = star;
     s1.exp = 0;
-    s1.level = 0;
+    s1.level = 1;
     ////////
                  if(s1.travellerid != 0 && s2.travellerid != 0 )
         {
