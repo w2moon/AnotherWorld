@@ -525,6 +525,8 @@
 						</array>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>baseClass</key>
@@ -1117,9 +1119,9 @@
 						<key>displayName</key>
 						<string>light2</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>light2</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>1</integer>
 						<key>properties</key>
 						<array>
 							<dict>
