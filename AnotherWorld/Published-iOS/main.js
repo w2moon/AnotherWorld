@@ -2,7 +2,6 @@
 
 require("jsb.js");
 
-require("MainScene.js");
 require("app.js");
 require("config.js");
 require("data/anim.js");

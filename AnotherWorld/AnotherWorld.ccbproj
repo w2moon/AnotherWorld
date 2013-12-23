@@ -72,10 +72,6 @@
 	<array>
 		<dict>
 			<key>path</key>
-			<string>Resources</string>
-		</dict>
-		<dict>
-			<key>path</key>
 			<string>../res</string>
 		</dict>
 		<dict>
