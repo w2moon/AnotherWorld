@@ -629,9 +629,9 @@
 				<key>displayName</key>
 				<string>CCMenu</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>menuyes</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -824,9 +824,9 @@
 				<key>displayName</key>
 				<string>CCMenu</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>menuno</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -903,9 +903,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>lblstart</string>
+				<string>lblyes</string>
 				<key>memberVarAssignmentName</key>
-				<string>lblstart</string>
+				<string>lblyes</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -1019,9 +1019,9 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>lblcancel</string>
+				<string>lblno</string>
 				<key>memberVarAssignmentName</key>
-				<string>lblcancel</string>
+				<string>lblno</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>
@@ -1126,6 +1126,8 @@
 						<string>取消</string>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
