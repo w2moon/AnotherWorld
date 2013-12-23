@@ -1652,9 +1652,9 @@
 				<key>displayName</key>
 				<string>magiclight</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>magiclight</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -1710,6 +1710,8 @@
 						<true/>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>
