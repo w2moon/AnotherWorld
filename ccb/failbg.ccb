@@ -1575,6 +1575,14 @@
 				<array>
 					<dict>
 						<key>name</key>
+						<string>visible</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
 						<string>position</string>
 						<key>type</key>
 						<string>Position</string>
@@ -1720,8 +1728,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-137</real>
-									<real>-247</real>
+									<real>-150</real>
+									<real>331</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1733,7 +1741,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -1853,8 +1861,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-112</real>
-									<real>-254</real>
+									<real>-126</real>
+									<real>304</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1866,7 +1874,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -1986,8 +1994,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-86</real>
-									<real>-273</real>
+									<real>-99</real>
+									<real>269</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -1999,7 +2007,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2119,8 +2127,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>-58</real>
-									<real>-252</real>
+									<real>-65</real>
+									<real>251</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2132,7 +2140,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2253,7 +2261,7 @@
 								<key>value</key>
 								<array>
 									<real>-29</real>
-									<real>-279</real>
+									<real>279</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2265,7 +2273,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2386,7 +2394,7 @@
 								<key>value</key>
 								<array>
 									<real>-5</real>
-									<real>-251</real>
+									<real>251</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2398,7 +2406,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2519,7 +2527,7 @@
 								<key>value</key>
 								<array>
 									<real>22</real>
-									<real>-265</real>
+									<real>265</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2531,7 +2539,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2652,7 +2660,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>-242</real>
+									<real>242</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2664,7 +2672,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2785,7 +2793,7 @@
 								<key>value</key>
 								<array>
 									<real>80</real>
-									<real>-281</real>
+									<real>281</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2797,7 +2805,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -2918,7 +2926,7 @@
 								<key>value</key>
 								<array>
 									<real>110</real>
-									<real>-254</real>
+									<real>254</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -2930,7 +2938,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -3051,7 +3059,7 @@
 								<key>value</key>
 								<array>
 									<real>137</real>
-									<real>-285</real>
+									<real>285</real>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -3063,7 +3071,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>1</real>
 								</array>
 							</dict>
 							<dict>
@@ -3153,14 +3161,6 @@
 							<false/>
 							<integer>0</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>180</real>
 					</dict>
 					<dict>
 						<key>name</key>
